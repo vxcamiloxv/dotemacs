@@ -1,0 +1,27 @@
+(defun python-auto-super ()
+  (interactive)
+  (let (methodname classname)
+    (save-excursion
+      (--python-beginning-of-defun)
+      (back-to-indentation)
+      (or (looking-at "def[ \t]+\\([a-zA-Z0-9_]+\\)")
+          (error "Can't determine method name"))
+      (setq methodname (match-string 1))
+      (--python-backward-up-list)
+      (or (looking-at "[ \t]*class[ \t]+\\([a-zA-Z0-9_]+\\)")
+          (error "Can't determine class name"))
+      (setq classname (match-string 1)))
+    (insert (format "super(%s, self).%s()" classname methodname))
+    (backward-char)))
+
+(defun --python-beginning-of-defun()
+  (if (< emacs-major-version 24)
+      (python-beginning-of-defun)
+    (python-nav-beginning-of-defun)))
+
+(defun --python-backward-up-list()
+  (if (< emacs-major-version 24)
+      (python-beginning-of-block)
+    (python-nav-backward-up-list)))
+
+(provide 'python-auto-super)

@@ -1,0 +1,1 @@
+("~/Documents/Server/FamiliaVegan/familiavegan/" "~/.emacs.d/modes/auto-complete/" "~/.emacs.d/modes/emacs-for-python/" "~/.emacs.d/el-get/package/elpa/jedi-20130714.1228/" "~/.emacs.d/modes/emacs-powerline/" "~/.emacs.d/modes/ergoemacs-mode/" "~/Documents/Server/FamiliaVegan/familiavegan/familiavegan/")
