@@ -1,1 +1,152 @@
-/home/arder/.emacs
+(require 'cl)
+
+(load-file "~/.emacs.d/themes/tron-theme.el")
+(require 'tron-theme)
+
+;; Gnereal Paths
+(add-to-list 'load-path "~/.emacs.d")
+(let ((default-directory "~/.emacs.d/"))
+  (setq load-path
+      (append
+        (let ((load-path (copy-sequence load-path))) ;; Shadow
+          (append 
+            (copy-sequence (normal-top-level-add-to-load-path '(".")))
+            (normal-top-level-add-subdirs-to-load-path)))
+         load-path)))
+                                                       
+;; Paquetes
+(require 'setup-package)
+
+;; Load up the general config
+(require 'general)
+(require 'conf-init)
+(require 'shortcuts)
+(require 'base-color)
+
+;; Python IDE
+(autoload 'python-mode "python-mode.el" "Python mode." t)
+(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
+(setq py-smart-indentation t)
+
+;(package-initialize)
+;(require 'elpy)
+;(elpy-enable)
+
+;(load-file "~/.emacs.d/modes/emacs-for-python/epy-init.el")
+
+(require 'python-django)
+(require 'pony-mode)
+
+(require 'python-pep8)
+(require 'python-pylint)
+            
+;; Auto-complete
+(require 'auto-complete)
+(global-auto-complete-mode t)
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories  "~/.emacs.d/ac-dict")
+(ac-config-default)
+(setq ac-delay 0.2)
+(setq ac-auto-show-menu 0.3)
+
+(add-hook 'python-mode-hook 'auto-complete-mode)
+
+;;Flycheck
+(require 'conf-flycheck)
+
+;; Line Numeber
+(require 'conf-linum)
+
+;; Auto Pair
+(add-to-list 'load-path "~/.emacs.d/modes/autopair")  
+(require 'autopair)
+(autopair-global-mode) ;; enable autopair in all buffers
+
+;; Install a custom mode line
+;(require 'conf-powerline)
+(load-file "~/.emacs.d/emacs/mode-line.el")
+
+;; Finalize things
+;; (load-file "~/.emacs.d/emacs/finalize.el")
+
+;; Pump.io
+;(add-to-list 'load-path "~/.emacs.d/modes/pumpio-el/src")
+;(add-to-list 'load-path "~/.emacs.d/modes/emacs-oauth")
+;(require 'pumpio-control)
+
+
+;; Colour theme and other gui related config
+(load-file "~/.emacs.d/conf/gui-config.el")  
+
+;; El-get!  This installs a bunch of the modes I use
+(load-file "~/.emacs.d/emacs/modes/elget.el")
+
+;; Load colors and theme things
+;; (load-file "~/.emacs.d/emacs/colors.el")
+;; (load-file "~/.emacs.d/themes/dark-emacs-theme.el")
+;; (require 'dark-emacs-theme)
+;; (package-initialize)
+;; (load-theme 'zenburn t)
+;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
+;; (load-theme 'solarized-dark t)
+
+;;Color shell text
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; Tree Directory
+(require 'nav)
+ ;;(nav-disable-overeager-window-splitting)
+
+(autoload 'dirtree "dirtree" "Add directory to tree view")
+(defun ep-dirtree ()
+  (interactive)
+    (dirtree-in-buffer eproject-root t))
+
+;; Sr SpeedBar
+;(load-file "~/.emacs.d/modes/sr-speedbar.el")
+;(require 'sr-speedbar)    
+
+;; Aditionals Modes
+(load-file "~/.emacs.d/emacs/modes/column-marker.el")
+(load-file "~/.emacs.d/emacs/modes/css.el")
+(load-file "~/.emacs.d/emacs/modes/erc.el")
+(load-file "~/.emacs.d/emacs/modes/eshell.el")
+;(load-file "~/.emacs.d/emacs/modes/flymake.el")
+;(load-file "~/.emacs.d/emacs/modes/identica.el")
+(load-file "~/.emacs.d/emacs/modes/longlines.el")
+(load-file "~/.emacs.d/emacs/modes/magit.el")
+(load-file "~/.emacs.d/emacs/modes/mozrepl.el")
+(load-file "~/.emacs.d/emacs/modes/yasnippet.el")
+;(load-file "~/.emacs.d/emacs/modes/org.el")
+(load-file "~/.emacs.d/emacs/modes/php.el")
+(load-file "~/.emacs.d/emacs/modes/tramp.el")
+(load-file "~/.emacs.d/emacs/modes/visual-regexp.el")
+(load-file "~/.emacs.d/emacs/modes/wordcount.el")
+(load-file "~/.emacs.d/emacs/modes/ido.el")
+(load-file "~/.emacs.d/emacs/modes/smex.el")
+(load-file "~/.emacs.d/emacs/modes/uniquify.el")
+(load-file "~/.emacs.d/emacs/modes/ediff.el")
+(load-file "~/.emacs.d/emacs/modes/ace-jump.el")
+(load-file "~/.emacs.d/emacs/modes/web-mode.el")
+(load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
+(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
+(load-file "~/.emacs.d/emacs/modes/paredit.el")
+(load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
+(require 'conf-ideskel)
+(require 'conf-popwin)
+(require 'conf-jedi)
+(require 'conf-buffer-management)
+(require 'conf-file-management)
+;(require 'conf-helm)
+(require 'conf-skewer)
+(require 'conf-projectile)
+(require 'conf-ibuffer)
+(require 'conf-dired)
+(require 'buffer-move)
+(require 'conf-python)
+(require 'conf-auto-indent)
+
+;; Emacs IDE
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+;(require 'eide)
+;(eide-start)
