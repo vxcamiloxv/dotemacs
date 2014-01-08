@@ -4,6 +4,18 @@
 *.sql
 *.sqlite
 
-#git                #
+# Other files       #
 #####################
-*.git
+projectile-bookmarks.eld
+session.*
+*.cache
+eproject.lst
+ede-projects.el
+history
+ac-comphist.dat
+project-explorer-cache
+
+# Git               #
+#####################
+.gitignore
+.*
