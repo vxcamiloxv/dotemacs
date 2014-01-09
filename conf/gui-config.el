@@ -11,21 +11,21 @@
 
 ;; Smooth Scroll
 
-    (defun gcm-scroll-down ()
-      (interactive)
-      (scroll-up 1))
+(defun gcm-scroll-down ()
+  (interactive)
+  (scroll-up 1))
 
-    (defun gcm-scroll-up ()
-      (interactive)
-      (scroll-down 1))
+(defun gcm-scroll-up ()
+  (interactive)
+  (scroll-down 1))
 
-    (global-set-key [next] 'gcm-scroll-down)
-    (global-set-key [prior]  'gcm-scroll-up)
-                  
-(setq scroll-step 1) 
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time 
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling 
-         
+(global-set-key [next] 'gcm-scroll-down)
+(global-set-key [prior]  'gcm-scroll-up)
+
+(setq scroll-step 1)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -45,10 +45,10 @@
  '(transient-mark-mode t)
  '(truncate-lines t)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
- '(windmove-wrap-around t) 
+ '(windmove-wrap-around t)
 )
- 
- 
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -72,11 +72,11 @@
                   ;        (or (file-remote-p default-directory 'user) user-login-name)
 
 
-;; window opacity utilities 
+;; window opacity utilities
 (load-file "~/.emacs.d/conf/nifty.el")
 (require 'nifty)
 
-                 
+
 ;;; Code:
 (setq debug-on-error t
       debug-on-signal nil
@@ -98,7 +98,7 @@
   (if (region-active-p)
       (kill-region (region-beginning) (region-end))
     (kill-region (line-beginning-position) (line-beginning-position 2)) ) )
-    
+
 ;; Adjust Margin
 (defun toggle-margin-right ()
   "Toggle the right margin between `fill-column' or window width.
@@ -108,7 +108,7 @@ This command is convenient when reading novel, documentation."
       (set-window-margins nil 0 (- (window-body-width) fill-column))
     (set-window-margins nil 0 0) ) )
 
- 
+
 ;-----------------------------------------------------------------
 ; Indentation
 ;-----------------------------------------------------------------
@@ -117,7 +117,7 @@ This command is convenient when reading novel, documentation."
 (setq c-basic-offset 4)
 (setq sgml-basic-offset 4)
 (setq css-indent-offset 4)
-(setq nxml-child-indent 4)   
+(setq nxml-child-indent 4)
 
 ;----------------
 ; MenuBar+
