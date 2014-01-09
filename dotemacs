@@ -58,9 +58,8 @@
 (require 'conf-linum)
 
 ;; Auto Pair
-(add-to-list 'load-path "~/.emacs.d/modes/autopair")  
-(require 'autopair)
-(autopair-global-mode) ;; enable autopair in all buffers
+;(require 'conf-autopair)
+(require 'conf-smartparens)
 
 ;; Install a custom mode line
 ;(require 'conf-powerline)
@@ -145,6 +144,8 @@
 (require 'buffer-move)
 (require 'conf-python)
 (require 'conf-auto-indent)
+(require 'conf-hideshow)
+(require 'conf-mwm)
 
 ;; Emacs IDE
 ;(add-to-list 'load-path "~/.emacs.d/site-lisp/")

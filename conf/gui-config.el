@@ -9,7 +9,23 @@
 ;; Tabs | this has impact in performance
 (require 'conf-tabbar)
 
+;; Smooth Scroll
 
+    (defun gcm-scroll-down ()
+      (interactive)
+      (scroll-up 1))
+
+    (defun gcm-scroll-up ()
+      (interactive)
+      (scroll-down 1))
+
+    (global-set-key [next] 'gcm-scroll-down)
+    (global-set-key [prior]  'gcm-scroll-up)
+                  
+(setq scroll-step 1) 
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time 
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling 
+         
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
