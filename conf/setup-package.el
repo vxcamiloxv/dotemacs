@@ -4,9 +4,10 @@
 (defvar gnu '("gnu" . "http://elpa.gnu.org/packages/"))
 (defvar melpa '("melpa" . "http://melpa.milkbox.net/packages/"))
 
-;; Add marmalade to package repos
-(add-to-list 'package-archives marmalade)
+;; Add package repos
+(add-to-list 'package-archives marmalade t)
 (add-to-list 'package-archives melpa t)
+(add-to-list 'package-archives gnu t)
 
 (package-initialize)
 
