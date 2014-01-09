@@ -66,6 +66,8 @@
 
 (setq max-specpdl-size 9000)
 
+(electric-pair-mode 1)
+
 ; always use spaces, not tabs, when indenting
 (setq indent-tabs-mode nil)
 
@@ -75,7 +77,7 @@
 ; truncate lines even in partial-width windows
 (setq truncate-partial-width-windows t)
 
-; don't blink the cursor
+; cursor
 (blink-cursor-mode t)
 
 ;;Delete trailing space
@@ -156,7 +158,6 @@
 ;; Don't minimize my emacs! Honestly wtf
 (when window-system
   (progn
-    (setq scroll-bar-mode nil)
     (tool-bar-mode nil)
     (menu-bar-mode nil)))
 

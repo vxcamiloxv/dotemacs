@@ -10,12 +10,21 @@
 (require 'conf-tabbar)
 
 ;; Smooth Scroll
-(setq scroll-step 1
-      scroll-conservatively 1000)
 
-;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time 
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-;(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse    
+    (defun gcm-scroll-down ()
+      (interactive)
+      (scroll-up 1))
+
+    (defun gcm-scroll-up ()
+      (interactive)
+      (scroll-down 1))
+
+    (global-set-key [next] 'gcm-scroll-down)
+    (global-set-key [prior]  'gcm-scroll-up)
+                  
+(setq scroll-step 1) 
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time 
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling 
          
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
