@@ -38,17 +38,17 @@
 
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 ;; Initialize Pymacs
-;(load-file "~/.emacs.d/elpa/pymacs-0.25/pymacs.el")
-;(require 'pymacs)
+(load-file "~/.emacs.d/elpa/pymacs-0.25/pymacs.el")
+(require 'pymacs)
 
-;(autoload 'pymacs-apply "pymacs")
-;(autoload 'pymacs-call "pymacs")
-;(autoload 'pymacs-eval "pymacs" nil t)
-;(autoload 'pymacs-exec "pymacs" nil t)
-;(autoload 'pymacs-load "pymacs" nil t)
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
 ;; Initialize Rope
-;(pymacs-load "ropemacs" "rope-")
-;(setq ropemacs-enable-autoimport t)
+(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-autoimport t)
 	                 
 (provide 'conf-python)             
 

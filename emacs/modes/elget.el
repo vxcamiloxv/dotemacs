@@ -12,10 +12,13 @@
 
 ;; local sources
 (setq el-get-sources
-      '((:name "yasnippet"
-               :description "YASnippet is a template system for Emacs."
-               :type git
-               :url "https://github.com/capitaomorte/yasnippet.git")
+        '((:name yasnippet
+              :website "https://github.com/capitaomorte/yasnippet.git"
+              :description "YASnippet is a template system for Emacs."
+              :type github
+              :pkgname "capitaomorte/yasnippet"
+              :features "yasnippet"
+              :compile "yasnippet.el")
         (:name "visual-regexp"
                :description "Visual regexps"
                :type git
@@ -71,7 +74,7 @@
 
 (setq my-packages
       (append
-       '("el-get" "org-mode" "calfw" "ace-jump-mode"
+       '("el-get" "org-mode" "yasnippet" "calfw" "ace-jump-mode"
          "paredit" "visual-regexp" "web-mode" "smex"
          "browse-kill-ring" "hy-mode" "rainbow-mode"
          "smartparens") ; "dropdown-list")
@@ -79,4 +82,3 @@
        '("magit")))
 
 (el-get 'sync my-packages)
-

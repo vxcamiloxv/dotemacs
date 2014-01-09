@@ -2,7 +2,7 @@
 
 (setq yas-snippet-dirs
       '("~/.emacs.d/emacs/yas-snippets"   ;; personal snippets
-        "~/.emacs.d/modes/yasnippet/snippets"  ; third party snippets
+        "~/.emacs.d/modes/yasnippet"  ; third party snippets
         "~/.emacs.d/snippets"
         "~/.emacs.d/snippets/django"
         "~/.emacs.d/snippets/text-mode"

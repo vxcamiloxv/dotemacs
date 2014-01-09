@@ -15,9 +15,9 @@
 (defvar backup-dir (expand-file-name "~/.backup/"))
 (if (file-directory-p backup-dir)
     (setq backup-directory-alist (list (cons ".*" backup-dir)))
-    (setq auto-save-list-file-prefix backup-dir)  
+    (setq auto-save-list-file-prefix backup-dir)
     (setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
-            
+
   (message "Directory does not exist: ~/.backup"))
 (setq backup-by-copying t    ; Don't delink hardlinks
       delete-old-versions t  ; Clean up the backups
@@ -35,7 +35,7 @@
                   week))
       (message "%s" file)
       (delete-file file))))
-      
+
 ;; ---------
 ;; Make debian/ubuntu work nicely with cvs emacs
 ;; ---------
@@ -49,7 +49,7 @@
 ;;         (debian-startup debian-emacs-flavor)
 ;;         (mapcar '(lambda (f)
 ;;                    (and (not (string= (substring f -3) "/.."))
-;;                         (file-directory-p f) 
+;;                         (file-directory-p f)
 ;;                         (add-to-list 'load-path f)))
 ;;                 (directory-files "/usr/share/emacs/site-lisp" t)))))
 
@@ -61,15 +61,15 @@
 
 (recentf-mode 1)
 (global-visual-line-mode 1)
-(setq pop-up-frames nil) 
+(setq pop-up-frames nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq max-specpdl-size 9000)
 
-(electric-pair-mode 1)
-
 ; always use spaces, not tabs, when indenting
 (setq indent-tabs-mode nil)
+(setq default-tab-width 4)
+(setq default-tab-indent 4)
 
 ; each line of text gets one line on the screen (i.e., text will run
 ; off the left instead of wrapping around onto a new line)
@@ -77,14 +77,14 @@
 ; truncate lines even in partial-width windows
 (setq truncate-partial-width-windows t)
 
-; cursor
+; don't blink the cursor
 (blink-cursor-mode t)
 
 ;;Delete trailing space
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Resaltado linea
-(global-hl-line-mode t) 
+(global-hl-line-mode t)
 (set-face-background hl-line-face "gray13")
 
 ;; Semantic | CEDET
@@ -158,6 +158,7 @@
 ;; Don't minimize my emacs! Honestly wtf
 (when window-system
   (progn
+    (setq scroll-bar-mode nil)
     (tool-bar-mode nil)
     (menu-bar-mode nil)))
 
@@ -221,7 +222,7 @@
   (interactive "cUnderline with:")
   (if (looking-at "^$")
       (next-line -1))
-  (end-of-line)  
+  (end-of-line)
   (let ((linelen (current-column)))
     (insert "\n")
     (while (> linelen 0)
@@ -325,17 +326,17 @@
          (concat "execfile('" activate-file
                  "', dict(__file__='" activate-file "'))"))
       (error "No ./bin/activate_this.py in that virtualenv (maybe update virtualenv?)"))))
-  
+
 
 ; (global-set-key (kbd "C-c r") 'rename-buffer-with-directory)
 
 (defun blender-style ()
   (interactive)
   (c-set-style "bsd")
-  (setq indent-tabs-mode nil) 
+  (setq indent-tabs-mode nil)
   (setq tab-width 4)
   (setq c-basic-offset 4))
-  
+
 ;; En1arg3 y0ur w1|\|dow!!!
 (defun undo-or-shrink-horizontally ()
   "Either undo or shrink horizontally, depending on whether we're
@@ -421,9 +422,9 @@ in X or in a terminal"
 
 ;; Cua Copy/Paste
 ;(cua-mode t)
-    ;(setq cua-auto-tabify-rectangles nil) 
-    ;(transient-mark-mode 1) 
-    ;(setq cua-keep-region-after-copy t) 
+    ;(setq cua-auto-tabify-rectangles nil)
+    ;(transient-mark-mode 1)
+    ;(setq cua-keep-region-after-copy t)
     ;(cua-selection-mode t)
 
 

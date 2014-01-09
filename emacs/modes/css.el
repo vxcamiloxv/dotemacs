@@ -12,5 +12,6 @@
 
 (add-hook 'css-mode-hook
   (lambda ()
-    (rainbow-mode 1)))
-
+    (rainbow-mode 1)
+   )
+)
