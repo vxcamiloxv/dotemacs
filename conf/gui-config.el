@@ -13,10 +13,9 @@
 (setq scroll-step 1
       scroll-conservatively 1000)
 
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time 
+;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time 
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-(setq scroll-step 1) ;; keyboard scroll one line at a time      
+;(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse    
          
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
