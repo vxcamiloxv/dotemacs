@@ -59,10 +59,10 @@
 (global-set-key (kbd "C-q ") 'kill-this-buffer)
 
 ;; window positioning
-(global-set-key (kbd "C-=") 'enlarge-window)
-(global-set-key (kbd "C--") 'shrink-window)
-(global-set-key (kbd "C-+") 'enlarge-window-horizontally)
-(global-set-key (kbd "C-_") 'shrink-window-horizontally)
+(global-set-key (kbd "s-=") 'enlarge-window)
+(global-set-key (kbd "s--") 'shrink-window)
+(global-set-key (kbd "s-+") 'enlarge-window-horizontally)
+(global-set-key (kbd "s-_") 'shrink-window-horizontally)
 
 (global-set-key (kbd "<C-s-up>")     'buf-move-up)
 (global-set-key (kbd "<C-s-down>")   'buf-move-down)
@@ -73,10 +73,6 @@
 (global-set-key (kbd "\C-cl") 'jump-to-register)
 (global-set-key (kbd "\C-cs") 'window-configuration-to-register)
 
-(global-set-key (kbd "C-=") 'enlarge-window)
-(global-set-key (kbd "C--") 'shrink-window)
-(global-set-key (kbd "C-+") 'enlarge-window-horizontally)
-(global-set-key (kbd "C-_") 'undo-or-shrink-horizontally)
 (global-set-key (kbd "C-c x") 'execute-extended-command)
 (global-set-key [S-prior] 'beginning-of-buffer)
 (global-set-key [S-next] 'end-of-buffer)
@@ -150,8 +146,8 @@
                 '(lambda()
                  (interactive)
                  (modify-frame-parameters nil `((alpha . 100)))))
-                 
-                 
+
+
 ;; toggle two most recent buffers
 (fset 'quick-switch-buffer [?\C-x ?b return])
 (global-set-key (kbd "s-q") 'quick-switch-buffer)
@@ -163,14 +159,14 @@
 
 
 ;; Copy file path to kill ring
-(global-set-key (kbd "C-x M-w") 'copy-current-file-path)      
-           
+(global-set-key (kbd "C-x M-w") 'copy-current-file-path)
+
 ;; PopWin
 (global-set-key (kbd "C-<escape>") 'popwin:close-popup-window)
 (global-set-key (kbd "s-4") 'popwin:popup-buffer)
 (global-set-key (kbd "s-3") 'popwin:popup-last-buffer)
-(global-set-key (kbd "s-2") 'popwin:display-buffer) 
-(global-set-key (kbd "s-1") 'popwin:one-window)     
+(global-set-key (kbd "s-2") 'popwin:display-buffer)
+(global-set-key (kbd "s-1") 'popwin:one-window)
 
 ;;Skewer
 (global-set-key (kbd "M-<f12>") 'run-skewer)
@@ -179,7 +175,13 @@
 
 ;; Projects
 (global-set-key (kbd "C-<f11>") 'dired-jump-other-window)
-(global-set-key (kbd "C-<f10>") 'direx-project:jump-to-project-root-other-window)  
+(global-set-key (kbd "C-<f10>") 'direx-project:jump-to-project-root-other-window)
 (global-set-key (kbd "C-<f9>") 'direx:jump-to-directory-other-window)
 (global-set-key (kbd "C-<f8>") 'project-explorer-open)
 (global-set-key (kbd "C-<f7>") 'direx:jump-to-directory)
+
+;; smart-forward
+(global-set-key (kbd "M-<up>") 'smart-up)
+(global-set-key (kbd "M-<down>") 'smart-down)
+(global-set-key (kbd "M-<left>") 'smart-backward)
+(global-set-key (kbd "M-<right>") 'smart-forward)

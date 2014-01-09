@@ -9,11 +9,11 @@
   (setq load-path
       (append
         (let ((load-path (copy-sequence load-path))) ;; Shadow
-          (append 
+          (append
             (copy-sequence (normal-top-level-add-to-load-path '(".")))
             (normal-top-level-add-subdirs-to-load-path)))
          load-path)))
-                                                       
+
 ;; Paquetes
 (require 'setup-package)
 
@@ -39,12 +39,13 @@
 
 (require 'python-pep8)
 (require 'python-pylint)
-            
+
 ;; Auto-complete
 (require 'auto-complete)
 (global-auto-complete-mode t)
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories  "~/.emacs.d/ac-dict")
+(autoload 'auto-complete-mode "auto-complete" t)
 (ac-config-default)
 (setq ac-delay 0.2)
 (setq ac-auto-show-menu 0.3)
@@ -75,7 +76,7 @@
 
 
 ;; Colour theme and other gui related config
-(load-file "~/.emacs.d/conf/gui-config.el")  
+(load-file "~/.emacs.d/conf/gui-config.el")
 
 ;; El-get!  This installs a bunch of the modes I use
 (load-file "~/.emacs.d/emacs/modes/elget.el")
@@ -103,7 +104,7 @@
 
 ;; Sr SpeedBar
 ;(load-file "~/.emacs.d/modes/sr-speedbar.el")
-;(require 'sr-speedbar)    
+;(require 'sr-speedbar)
 
 ;; Aditionals Modes
 (load-file "~/.emacs.d/emacs/modes/column-marker.el")
@@ -145,7 +146,17 @@
 (require 'conf-python)
 (require 'conf-auto-indent)
 (require 'conf-hideshow)
-(require 'conf-mwm)
+(require 'conf-paredit)
+(require 'conf-perspective)
+
+;; Test
+(require 'expand-region)
+(require 'delsel)
+(require 'jump-char)
+;(require 'eproject)
+(require 'smart-forward)
+(require 'change-inner)
+;(require 'multifiles)
 
 ;; Emacs IDE
 ;(add-to-list 'load-path "~/.emacs.d/site-lisp/")

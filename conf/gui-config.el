@@ -1,5 +1,3 @@
-;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-
 ;; navigate thru windows using M-<arrow>
 (windmove-default-keybindings 'meta)
 
@@ -26,6 +24,9 @@
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
+;; Keep cursor away from edges when scrolling up/down
+(require 'smooth-scrolling)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -42,7 +43,6 @@
  '(inhibit-startup-screen t)
  '(iswitchb-mode t)
  '(savehist-mode t nil (savehist))
- '(transient-mark-mode t)
  '(truncate-lines t)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(windmove-wrap-around t)
@@ -113,6 +113,7 @@ This command is convenient when reading novel, documentation."
 ; Indentation
 ;-----------------------------------------------------------------
 (setq-default indent-tabs-mode nil)
+(setq default-tab-indent 4)
 (setq-default tab-width 4)
 (setq c-basic-offset 4)
 (setq sgml-basic-offset 4)
@@ -123,4 +124,22 @@ This command is convenient when reading novel, documentation."
 ; MenuBar+
 ;-----------------
 (load-file "~/.emacs.d/modes/menu-bar+.el")
-(eval-after-load "menu-bar" '(require 'menu-bar+))        
+(eval-after-load "menu-bar" '(require 'menu-bar+))
+
+;; Highlight escape sequences
+(require 'highlight-escape-sequences)
+(hes-mode)
+(put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
+
+;; Make zooming affect frame instead of buffers
+(require 'zoom-frm)
+
+;; Unclutter the modeline
+(require 'diminish)
+(eval-after-load "paredit" '(diminish 'paredit-mode))
+(eval-after-load "tagedit" '(diminish 'tagedit-mode))
+(eval-after-load "skewer-mode" '(diminish 'skewer-mode))
+(eval-after-load "skewer-css" '(diminish 'skewer-css-mode))
+(eval-after-load "skewer-html" '(diminish 'skewer-html-mode))
+(eval-after-load "smartparens" '(diminish 'smartparens-mode))
+(eval-after-load "guide-key" '(diminish 'guide-key-mode))
