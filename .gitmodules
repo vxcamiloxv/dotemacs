@@ -1,0 +1,15 @@
+[submodule "modes/auto-complete"]
+	path = modes/auto-complete
+	url = git://github.com/auto-complete/auto-complete.git
+[submodule "modes/yasnippet"]
+	path = modes/yasnippet
+	url = git://github.com/capitaomorte/yasnippet.git
+[submodule "themes/emacs-tron-theme"]
+	path = themes/emacs-tron-theme
+	url = https://github.com/ivanmarcin/emacs-tron-theme.git
+[submodule "themes/solarized-emacs"]
+	path = themes/solarized-emacs
+	url = https://github.com/syl20bnr/solarized-emacs.git
+[submodule "themes/emacs-color-theme-solarized"]
+	path = themes/emacs-color-theme-solarized
+	url = https://github.com/sellout/emacs-color-theme-solarized.git
