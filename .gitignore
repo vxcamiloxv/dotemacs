@@ -1,0 +1,30 @@
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# Other files       #
+#####################
+projectile-bookmarks.eld
+session.*
+*.cache
+places
+.smex-items
+savefile/
+semanticdb
+url
+auto-save-list
+recentf
+savehist
+saveplace
+eproject.lst
+ede-projects.el
+history
+ac-comphist.dat
+project-explorer-cache
+
+### Allow ###
+!.yas*
+!/emacs/
+!emacs/
