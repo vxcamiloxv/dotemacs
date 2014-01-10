@@ -50,7 +50,7 @@
  ;; This doesn't work for revert, I don't know.
  ;;(add-hook 'after-revert-hook 'ztl-modification-state-change)
  (add-hook 'first-change-hook 'ztl-on-buffer-modification)
-  
+
 (defun tabbar-buffer-groups ()
    "Return the list of group names the current buffer belongs to.
 Return a list of one element based on major mode."
@@ -73,17 +73,17 @@ Return a list of one element based on major mode."
      ((member (buffer-name)
               '("*Backtrace*" "*Compile-Log*" "*Messages*"))
       "Debugger"
-     )         
+     )
      ((member (buffer-name)
               '("xyz" "day" "m3" "abi" "for" "nws" "eng" "f_g" "tim" "tmp"))
       "Main"
       )
      ((memq major-mode '(python-mode php-mode emacs-lisp-mode sh-mode makefile-gmake-mode perl-mode c-mode c++-mode django-mode python-django))
       "Programming"
-      )      
+      )
      ((memq major-mode '(nxhtml-mode web-mode avascript-mode js-mode js2-mode javascript js2-refactor emmet-mode css-mode-hook css-mode))
       "Web"
-      )       
+      )
      ((eq major-mode 'dired-mode)
       "Dired"
       )
@@ -124,7 +124,6 @@ Return a list of one element based on major mode."
               (list "Misc"))
              (t (list dir))))))
 
-
 ;; Show ALL Tabs
 (setq tbbr-md "all")
  (defun toggle-tabbar-mode ()
@@ -139,7 +138,7 @@ Return a list of one element based on major mode."
           (progn ;; else
             (setq tabbar-buffer-groups-function 'tabbar-buffer-groups)
             (setq tbbr-md "groups"))))
-            
+
 ;(defun tabbar-switch-to-default-grouping ()
 ;  (interactive)
 ;  (setq tabbar-buffer-groups-function 'tabbar-buffer-groups))

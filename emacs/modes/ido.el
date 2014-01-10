@@ -12,7 +12,7 @@
 (setq ido-ignore-extensions t)
 
 ;; Maybe we can disable tramp stuff via this?
-;(setq ido-work-directory-list-ignore-regexps 
+;(setq ido-work-directory-list-ignore-regexps
 
 ; Always open in the same window
 (setq ido-default-buffer-method 'selected-window)

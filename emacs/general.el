@@ -410,9 +410,6 @@ in X or in a terminal"
 
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
-;; highlight current line
-;; Kinda cool but not really needed right now
-; (global-hl-line-mode +1)
 
 ; lock files borking git-annex-assistant autocommits.  Disabling for now.
 ;; We can re-enable both of these once .gitignore support comes to git-annex
@@ -447,9 +444,6 @@ in X or in a terminal"
 
 ;; Show me empty lines after buffer end
 (set-default 'indicate-empty-lines t)
-
-;; Lines should be 80 characters wide, not 72
-(setq fill-column 80)
 
 ;; Show active region
 (transient-mark-mode 1)

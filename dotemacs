@@ -1,31 +1,25 @@
 (require 'cl)
 
-(load-file "~/.emacs.d/themes/tron-theme.el")
-(require 'tron-theme)
+(load-file "~/.emacs.d/conf/path.el")
 
-;; Gnereal Paths
-(add-to-list 'load-path "~/.emacs.d")
-(let ((default-directory "~/.emacs.d/"))
-  (setq load-path
-      (append
-        (let ((load-path (copy-sequence load-path))) ;; Shadow
-          (append
-            (copy-sequence (normal-top-level-add-to-load-path '(".")))
-            (normal-top-level-add-subdirs-to-load-path)))
-         load-path)))
+(require 'conf-theme)
+(require 'base-color)
 
 ;; Paquetes
 (require 'setup-package)
+
+;; El-get!  This installs a bunch of the modes I use
+(load-file "~/.emacs.d/emacs/modes/elget.el")
 
 ;; Load up the general config
 (require 'general)
 (require 'conf-init)
 (require 'shortcuts)
-(require 'base-color)
 
 ;; Python IDE
 (autoload 'python-mode "python-mode.el" "Python mode." t)
 (setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
+(add-hook 'python-mode-hook 'auto-complete-mode)
 (setq py-smart-indentation t)
 
 ;(package-initialize)
@@ -50,8 +44,6 @@
 (setq ac-delay 0.2)
 (setq ac-auto-show-menu 0.3)
 
-(add-hook 'python-mode-hook 'auto-complete-mode)
-
 ;;Flycheck
 (require 'conf-flycheck)
 
@@ -60,6 +52,7 @@
 
 ;; Auto Pair
 ;(require 'conf-autopair)
+(autopair-global-mode 0)
 (require 'conf-smartparens)
 
 ;; Install a custom mode line
@@ -69,26 +62,8 @@
 ;; Finalize things
 ;; (load-file "~/.emacs.d/emacs/finalize.el")
 
-;; Pump.io
-;(add-to-list 'load-path "~/.emacs.d/modes/pumpio-el/src")
-;(add-to-list 'load-path "~/.emacs.d/modes/emacs-oauth")
-;(require 'pumpio-control)
-
-
 ;; Colour theme and other gui related config
 (load-file "~/.emacs.d/conf/gui-config.el")
-
-;; El-get!  This installs a bunch of the modes I use
-(load-file "~/.emacs.d/emacs/modes/elget.el")
-
-;; Load colors and theme things
-;; (load-file "~/.emacs.d/emacs/colors.el")
-;; (load-file "~/.emacs.d/themes/dark-emacs-theme.el")
-;; (require 'dark-emacs-theme)
-;; (package-initialize)
-;; (load-theme 'zenburn t)
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
-;; (load-theme 'solarized-dark t)
 
 ;;Color shell text
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -132,6 +107,7 @@
 (load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
 (load-file "~/.emacs.d/emacs/modes/paredit.el")
 (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
+(require 'conf-tabbar)
 (require 'conf-ideskel)
 (require 'conf-popwin)
 (require 'conf-jedi)
