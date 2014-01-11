@@ -16,3 +16,48 @@
 [submodule "modes/powerline"]
 	path = modes/powerline
 	url = https://github.com/milkypostman/powerline
+[submodule "modes/autopair"]
+    path = modes/autopair
+    url = https://github.com/capitaomorte/autopair.git  
+[submodule "modes/django-mode"]
+    path = modes/django-mode
+    url = https://github.com/myfreeweb/django-mode.git
+[submodule "modes/emacs-dirtree"]
+	path = modes/emacs-dirtree
+	url = https://github.com/zk/emacs-dirtree.git
+[submodule "modes/emacs-for-python"]
+	path = modes/emacs-for-python
+	url = git://github.com/gabrielelanaro/emacs-for-python
+[submodule "modes/emacs-jedi"]
+	path = modes/emacs-jedi
+	url = https://github.com/tkf/emacs-jedi.git
+[submodule "modes/emacs-oauth"]
+	path = modes/emacs-oauth
+	url = https://github.com/psanford/emacs-oauth.git
+[submodule "modes/emacs-powerline"]
+	path = modes/emacs-powerline
+	url = git://github.com/jonathanchu/emacs-powerline.git
+[submodule "modes/ergoemacs-mode"]
+	path = modes/ergoemacs-mode
+	url = https://github.com/ergoemacs/ergoemacs-mode.git
+[submodule "modes/expand-region"]
+	path = modes/expand-region
+	url = https://github.com/magnars/expand-region.el.git
+[submodule "modes/flycheck"]
+	path = modes/flycheck
+	url = https://github.com/flycheck/flycheck.git
+[submodule "modes/multiple-cursors"]
+	path = modes/multiple-cursors
+	url = https://github.com/emacsmirror/multiple-cursors.git
+[submodule "modes/pony-mode"]
+	path = modes/pony-mode
+	url = https://github.com/davidmiller/pony-mode
+[submodule "modes/popwin"]
+	path = modes/popwin
+	url = https://github.com/m2ym/popwin-el.git
+[submodule "modes/project-explorer"]
+	path = modes/project-explorer
+	url = https://github.com/sabof/project-explorer.git
+[submodule "modes/pumpio"]
+	path = modes/pumpio
+	url = https://github.com/cnngimenez/pumpio-el.git
