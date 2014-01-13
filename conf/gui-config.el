@@ -4,10 +4,15 @@
 ;; Context Menu
 (load-file "~/.emacs.d/modes/context-menu.el")
 
-;; Tabs | this has impact in performance
-(require 'conf-tabbar)
-
 ;; Smooth Scroll
+
+;; Smoother scrolling (no multiline jumps.)
+(setq redisplay-dont-pause t
+  scroll-margin 1
+  scroll-step 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)
+
 
 (defun gcm-scroll-down ()
   (interactive)
@@ -20,9 +25,24 @@
 (global-set-key [next] 'gcm-scroll-down)
 (global-set-key [prior]  'gcm-scroll-up)
 
-(setq scroll-step 1)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+;(setq scroll-step 1)
+;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+
+                  
+;, Horizontal scroll 
+(put 'scroll-left 'disabled nil)
+(put 'scroll-right 'disabled nil)
+
+(if (boundp 'truncate-lines)
+    (setq-default truncate-lines t) ; always truncate
+  (progn
+    (hscroll-global-mode t)
+    (setq hscroll-margin 1)
+    (setq hscroll-step 1)
+    (setq auto-hscroll-mode 1)
+    (setq automatic-hscrolling t)
+   ))
 
 ;; Keep cursor away from edges when scrolling up/down
 (require 'smooth-scrolling)
@@ -33,21 +53,36 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(current-language-environment "UTF-8")
+ ;'(Linum-format "%7i ") 
+ '(column-number-mode t)
+ '(cua-enable-cua-keys nil)
+ '(cua-mode t nil (cua-base))
+ '(custom-safe-themes t)
+ '(ediff-custom-diff-program "diff")
+ '(ediff-diff-program "diff")
+ '(ediff-diff3-program "diff3")
+ '(fci-rule-character-color "#202")
+ '(fci-rule-color "#202")
+ '(indicate-buffer-boundaries (quote right))
+ '(js-indent-level 2)
+ '(js3-enter-indents-newline t)
+ '(js3-indent-level 2)
+ '(jshint-configuration-path "~/.jshintrc")
+ '(linum-delay nil)
+ '(linum-eager t)
+ ;'(visible-bell t)
+ '(sml-modeline-mode 1)
+ '(window-left-margin 0)  
  '(display-time-mode t)
- ;;'(custom-enabled-themes (quote (tango-dark)))
  '(flycheck-highlighting-mode (quote lines))
  '(show-paren-mode 1)
  '(size-indication-mode t)
- ;'(tool-bar-mode nil)
- ;'(column-number-mode t)
  '(inhibit-startup-screen t)
  '(iswitchb-mode t)
  '(savehist-mode t nil (savehist))
- '(truncate-lines t)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(windmove-wrap-around t)
 )
-
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -71,6 +106,7 @@
                   ;(format "%s@%s:%s"
                   ;        (or (file-remote-p default-directory 'user) user-login-name)
 
+;(setq frame-title-format '("%b %I %+%@%t%Z %m %n %e"))
 
 ;; window opacity utilities
 (load-file "~/.emacs.d/conf/nifty.el")
@@ -143,3 +179,23 @@ This command is convenient when reading novel, documentation."
 (eval-after-load "skewer-html" '(diminish 'skewer-html-mode))
 (eval-after-load "smartparens" '(diminish 'smartparens-mode))
 (eval-after-load "guide-key" '(diminish 'guide-key-mode))
+
+;; Windows Number
+(require 'window-number)
+(window-number-mode)
+
+;; allow "restricted" features
+(put 'set-goal-column 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
+(put 'narrow-to-defun  'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
+
+(put 'scroll-left 'disabled nil)
+
+(require 'squeeze-view) ;; squeeze view, give yourself a write-room/typewriter like writing page
+(require 'scroll-bell-fix)
+(require 'dropdown-list)    

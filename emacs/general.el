@@ -68,18 +68,15 @@
 (setq fill-column 79)
 
 (recentf-mode 1)
-(global-visual-line-mode 1)
 (setq pop-up-frames nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq max-specpdl-size 9000)
 
-; each line of text gets one line on the screen (i.e., text will run
-; off the left instead of wrapping around onto a new line)
-;(setq truncate-lines t)
-; truncate lines even in partial-width windows
-(setq truncate-partial-width-windows t)
-
+(setq font-lock-maximum-decoration t
+      color-theme-is-global t
+      truncate-partial-width-windows nil)
+      
 ; cursor
 (blink-cursor-mode t)
 
@@ -469,3 +466,6 @@ in X or in a terminal"
 ;; Also auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
+
+;; Don't break lines for me, please
+(setq-default truncate-lines t)

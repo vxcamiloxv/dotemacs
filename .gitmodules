@@ -61,3 +61,9 @@
 [submodule "modes/pumpio"]
 	path = modes/pumpio
 	url = https://github.com/cnngimenez/pumpio-el.git
+[submodule "themes/emacs-clues-theme"]
+	path = themes/emacs-clues-theme
+	url = https://github.com/emacsfodder/emacs-clues-theme.git
+[submodule "themes/emacs-purple-haze-theme"]
+	path = themes/emacs-purple-haze-theme
+	url = https://github.com/emacsfodder/emacs-purple-haze-theme.git

@@ -31,12 +31,13 @@
           '(lambda ()
              (define-key python-mode-map [(control ?c) ?i] 'python-auto-import)))
 
-(ac-ropemacs-initialize)
-(add-hook 'python-mode-hook
-          (lambda ()
-	    (add-to-list 'ac-sources 'ac-source-ropemacs)))
+;(ac-ropemacs-initialize)
+;(add-hook 'python-mode-hook
+;          (lambda ()
+;	    (add-to-list 'ac-sources 'ac-source-ropemacs)))
 
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+
 ;; Initialize Pymacs
 ;(load-file "~/.emacs.d/elpa/pymacs-0.25/pymacs.el")
 ;(require 'pymacs)

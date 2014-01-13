@@ -1,4 +1,5 @@
-(require 'cl)
+(require 'cl) 
+(require 'cl-lib)
 
 (load-file "~/.emacs.d/conf/path.el")
 
@@ -15,6 +16,7 @@
 (require 'general)
 (require 'conf-init)
 (require 'shortcuts)
+(require 'conf-fringe)
 
 ;; Python IDE
 (autoload 'python-mode "python-mode.el" "Python mode." t)
@@ -45,7 +47,7 @@
 (setq ac-auto-show-menu 0.3)
 
 ;;Flycheck
-(require 'conf-flycheck)
+;(require 'conf-flycheck)
 
 ;; Line Numeber
 (require 'conf-linum)
@@ -108,7 +110,7 @@
 (load-file "~/.emacs.d/emacs/modes/paredit.el")
 (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
 (require 'conf-tabbar)
-(require 'conf-ideskel)
+;(require 'conf-ideskel)
 (require 'conf-popwin)
 (require 'conf-jedi)
 (require 'conf-buffer-management)
@@ -121,9 +123,12 @@
 (require 'buffer-move)
 (require 'conf-python)
 (require 'conf-auto-indent)
-(require 'conf-hideshow)
+;(require 'conf-hideshow)
 (require 'conf-paredit)
 (require 'conf-perspective)
+(require 'conf-isearch)
+(require 'conf-hideshowvis)
+(require 'conf-highlight-symbol)
 
 ;; Test
 (require 'expand-region)
