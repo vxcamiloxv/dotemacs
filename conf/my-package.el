@@ -1,12 +1,12 @@
 ;; Install extensions if they're missing
-(defun init--install-packages ()
-  (packages-install
+(defvar distopico-packages
    '(magit
      paredit
      move-text
      god-mode
      gist
      htmlize
+     highlight-symbol
      visual-regexp
      flycheck
      flx
@@ -29,12 +29,8 @@
      clojure-mode
      groovy-mode
      cider
-     cider-tracing)))
+     cider-tracing)
+       "A list of packages to ensure are installed at launch."
+)
 
-(condition-case nil
-    (init--install-packages)
-  (error
-   (package-refresh-contents)
-   (init--install-packages)))
-
-(provide 'my-package)   
+(provide 'my-package)

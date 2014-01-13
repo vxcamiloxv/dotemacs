@@ -68,18 +68,40 @@
 (deftheme tron
   "Create 2012-01-01")
 
+(custom-theme-set-variables
+ 'tron
+
+ '(powerline-color1 "#00779a")
+ '(powerline-color2 "#00475a")
+ '(linum-format "%6d") ;; Default 7i
+ '(fringe-mode 10 nil (fringe))
+ )
+
 (custom-theme-set-faces
  'tron
  '(bold ((t (:foreground "#24c6e0" :weight bold))))
  '(bold-italic ((t (:inherit bold :slant italic))))
  '(cursor ((t (:background "#15abc3"))))
- '(default ((t (:background "#000000" :foreground "#15abc3"))))
- '(fringe ((t (:background "#000000" :foreground "#15abc3"))))
+ '(default ((t (:background "#00080A" :foreground "#15abc3"))))
+ ;'(fringe ((t (:background "#000000" :foreground "#15abc3"))))
  '(header-line ((t (:inherit mode-line))))
- '(linum ((t (:inherit default))))
+ ;'(linum ((t (:inherit default))))
  '(mouse ((t (:foreground "#e0c625"))))
  '(region ((t (:background "#e0c625" :foreground "#000000"))))
  '(show-paren-match-face ((t (:weight bold))))
+
+ ;; Line Numbers (linum-mode) Default height 100
+ '(linum ((t (:background "#00080A" :foreground "#005050" :height 70))))
+
+ ;; Cursor
+ ;'(cursor ((t (:foreground "#ffffff" :background "#013d4c"))))
+
+ ;; Margin Fringes
+ '(fringe ((t ( :background "#001214" :foreground "#006060" ))))
+
+ ;; Others
+ '(escape-glyph ;; Things like  and other control chars.
+   ((t (:foreground "#FF6600" :background "#011d2c"))))
 
  ;; column-marker
  '(column-marker-1 ((t (:background "#a3e8ef" :foreground "#000000"))))
@@ -144,9 +166,14 @@
  '(magit-item-mark ((t (:background "#808080"))))
 
  ;; mode-line
- '(mode-line ((t (:foreground "#e0c625" :background nil :box nil))))
- '(mode-line-buffer-id ((t (:weight bold))))
- '(mode-line-inactive ((t (:foreground "#15abc3" :background nil :box nil))))
+ ;'(mode-line ((t (:foreground "#e0c625" :background nil :box nil))))
+ ;'(mode-line-buffer-id ((t (:weight bold))))
+ ;'(mode-line-inactive ((t (:foreground "#15abc3" :background nil :box nil))))
+ '(mode-line ((t (:background "#0b2c2d" :box nil :foreground "#0cd6e4" :height 90))))
+ '(mode-line-inactive ((t (:weight light :box nil :background "#002329" :foreground "#000000" :inherit (mode-line)))))
+ '(mode-line-emphasis ((t (:weight bold))))
+ '(mode-line-highlight ((t (:box nil (t (:inherit (highlight)))))))
+ '(mode-line-buffer-id ((t (:weight bold :box nil))))
 
  ;; rainbow-delimiters
  '(rainbow-delimiters-depth-1-face ((t (:foreground "#a3e8ef"))))
@@ -208,6 +235,16 @@
  '(erc-default-face ((t (:inherit jabber-chat-text-local))))
  '(erc-input-face ((t (:inherit jabber-chat-text-foreign))))
  '(erc-nick-default-face ((t (:inherit jabber-chat-prompt-system)))))
+
+ ;; Minibuffer
+ '(minibuffer-prompt ((t (:weight bold :foreground "#00aab2"))))
+
+ '(minibuffer-message ((t (:foreground "#ffffff"))))
+
+ ;; Secondary region
+ '(secondary-selection ((((class color) (min-colors 88) (background dark)) (:background "#144053"))))
+
+
 
 (provide-theme 'tron)
 

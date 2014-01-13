@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 (unless (require 'el-get nil t)
   (url-retrieve
@@ -6,12 +6,17 @@
    (lambda (s)
      (let (el-get-master-branch)
        (goto-char (point-max))
-       (eval-print-last-sexp)))))
+       (eval-print-last-sexp))))
+       (load-library "el-get"))
+
 
 (require 'el-get)
 
 ;; local sources
-(setq el-get-sources
+(setq
+      el-get-byte-compile t
+      el-get-generate-autoloads t
+      el-get-sources
         '((:name yasnippet
               :website "https://github.com/capitaomorte/yasnippet.git"
               :description "YASnippet is a template system for Emacs."
@@ -74,11 +79,10 @@
 
 (setq my-packages
       (append
-       '("el-get" "org-mode" "yasnippet" "calfw" "ace-jump-mode"
-         "paredit" "visual-regexp" "web-mode" "smex"
-         "browse-kill-ring" "hy-mode" "rainbow-mode"
-         "smartparens") ; "dropdown-list")
+       '("el-get")
        (mapcar 'el-get-source-name el-get-sources)
        '("magit")))
 
 (el-get 'sync my-packages)
+
+(provide 'setup-elget)

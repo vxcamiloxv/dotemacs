@@ -1,4 +1,4 @@
-(require 'cl) 
+(require 'cl)
 (require 'cl-lib)
 
 (load-file "~/.emacs.d/conf/path.el")
@@ -6,11 +6,10 @@
 (require 'conf-theme)
 (require 'base-color)
 
-;; Paquetes
+;; Packages
 (require 'setup-package)
+(require 'setup-elget)
 
-;; El-get!  This installs a bunch of the modes I use
-(load-file "~/.emacs.d/emacs/modes/elget.el")
 
 ;; Load up the general config
 (require 'general)
@@ -110,7 +109,7 @@
 (load-file "~/.emacs.d/emacs/modes/paredit.el")
 (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
 (require 'conf-tabbar)
-;(require 'conf-ideskel)
+(require 'conf-ideskel)
 (require 'conf-popwin)
 (require 'conf-jedi)
 (require 'conf-buffer-management)

@@ -195,7 +195,7 @@ Return a list of one element based on major mode."
  'tabbar-separator nil
  :height 0.5)
 
-;(setq tabbar-background-color "#959A79") ;; the color of the tabbar background
+(setq tabbar-background-color "#001214") ;; the color of the tabbar background
 ;(custom-set-faces
 ; '(tabbar-default ((t (:inherit variable-pitch :background "#959A79" :foreground "black" :weight bold))))
 ; '(tabbar-button ((t (:inherit tabbar-default :foreground "dark red"))))
