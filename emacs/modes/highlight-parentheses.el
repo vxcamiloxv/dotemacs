@@ -34,15 +34,29 @@
 ;					  '(autopair-default-handle-action))
 ;					'((lambda (action pair pos-before)
 ;						(hl-paren-color-update)))))))
-						
+
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
   (lambda ()
     (highlight-parentheses-mode t)))
-(global-highlight-parentheses-mode t)		
+(global-highlight-parentheses-mode t)
 
 ;; show-paren-mode
 (setq show-paren-delay 0)
+(setq blink-matching-paren t)
+(setq electric-pair-mode 1)
 (set-face-background 'show-paren-match (face-background 'default))
 (set-face-foreground 'show-paren-match "#def")
-(set-face-attribute 'show-paren-match nil :weight 'extra-bold)				
+(set-face-attribute 'show-paren-match nil )
+
+(defadvice show-paren-function
+  (after show-matching-paren-offscreen activate)
+  "If the matching paren is offscreen, show the matching line in the
+    echo area. Has no effect if the character before point is not of
+    the syntax class ')'."
+  (interactive)
+  (let* ((cb (char-before (point)))
+         (matching-text (and cb
+                             (char-equal (char-syntax cb) ?\) )
+                             (blink-matching-open))))
+    (when matching-text (message matching-text))))

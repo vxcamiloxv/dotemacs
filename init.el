@@ -53,8 +53,8 @@
 
 ;; Auto Pair
 ;(require 'conf-autopair)
-(autopair-global-mode 0)
-(require 'conf-smartparens)
+;(autopair-global-mode 0)
+;(require 'conf-smartparens)
 
 ;; Install a custom mode line
 ;(require 'conf-powerline)
@@ -104,9 +104,8 @@
 (load-file "~/.emacs.d/emacs/modes/ediff.el")
 (load-file "~/.emacs.d/emacs/modes/ace-jump.el")
 (load-file "~/.emacs.d/emacs/modes/web-mode.el")
-(load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
-(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
-(load-file "~/.emacs.d/emacs/modes/paredit.el")
+;(load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
+;(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
 (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
 (require 'conf-tabbar)
 (require 'conf-ideskel)
@@ -123,7 +122,7 @@
 (require 'conf-python)
 (require 'conf-auto-indent)
 ;(require 'conf-hideshow)
-(require 'conf-paredit)
+;(require 'conf-paredit)
 (require 'conf-perspective)
 (require 'conf-isearch)
 (require 'conf-hideshowvis)

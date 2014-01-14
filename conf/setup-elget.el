@@ -28,6 +28,10 @@
                :description "Visual regexps"
                :type git
                :url "https://github.com/benma/visual-regexp.el.git")
+        (:name "jedi"
+               :description "Jedi.el - Python auto-completion for Emacs"
+               :type git
+               :url "https://github.com/tkf/emacs-jedi.git")
         (:name "dark-theme"
                :description "Dark theme"
                :type http
@@ -59,10 +63,10 @@
         (:name "git-modes"
                :type git
                :url "https://github.com/magit/git-modes.git")
-        ;; (:name "cyberpunk-theme"
-        ;;        :description "Cyberpunk theme"
-        ;;        :type git
-        ;;        :url "https://github.com/n3mo/cyberpunk-theme.el.git")
+        (:name "cyberpunk-theme"
+                :description "Cyberpunk theme"
+                :type git
+                :url "https://github.com/n3mo/cyberpunk-theme.el.git")
         ;; (:name asciidoc
         ;;        :type elpa
         ;;        :after (lambda ()

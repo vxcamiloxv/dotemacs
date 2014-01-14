@@ -67,3 +67,6 @@
 [submodule "themes/emacs-purple-haze-theme"]
 	path = themes/emacs-purple-haze-theme
 	url = https://github.com/emacsfodder/emacs-purple-haze-theme.git
+[submodule "modes/change-inner"]
+	path = modes/change-inner
+	url = https://github.com/magnars/change-inner.el.git
