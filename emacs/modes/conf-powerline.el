@@ -56,7 +56,6 @@
 (custom-set-faces
  '(powerline-active1 ((t (:foreground "#f9f9f9" :background "#123550" :box nil))))
  '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil))))
- '(powerline-inactive1 ((t (:foreground "#f9f9f9" :background "#112230" :box nil))))
 )
 ;#112230
 

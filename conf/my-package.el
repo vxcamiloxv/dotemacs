@@ -34,6 +34,8 @@
      dropdown-list
      window-numbering
      smart-tabs-mode
+     fill-column-indicator
+     browse-kill-ring
      )
        "A list of packages to ensure are installed at launch."
 )

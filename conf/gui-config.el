@@ -198,4 +198,11 @@ This command is convenient when reading novel, documentation."
 
 (require 'squeeze-view) ;; squeeze view, give yourself a write-room/typewriter like writing page
 (require 'scroll-bell-fix)
-(require 'dropdown-list)    
+(require 'dropdown-list)
+;; Fill column indicator
+(require 'fill-column-indicator)
+(setq fci-rule-color "#111122")
+
+;; Browse kill ring
+(require 'browse-kill-ring)
+(setq browse-kill-ring-quit-action 'save-and-restore)

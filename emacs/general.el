@@ -76,7 +76,7 @@
 (setq font-lock-maximum-decoration t
       color-theme-is-global t
       truncate-partial-width-windows nil)
-      
+
 ; cursor
 (blink-cursor-mode t)
 

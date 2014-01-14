@@ -81,6 +81,12 @@
 ;(load-file "~/.emacs.d/modes/sr-speedbar.el")
 ;(require 'sr-speedbar)
 
+;; Functions (load all files in defuns-dir)
+(setq defuns-dir (expand-file-name "defuns" user-emacs-directory))
+(dolist (file (directory-files defuns-dir t "\\w+"))
+  (when (file-regular-p file)
+    (load file)))
+
 ;; Aditionals Modes
 (load-file "~/.emacs.d/emacs/modes/column-marker.el")
 (load-file "~/.emacs.d/emacs/modes/css.el")

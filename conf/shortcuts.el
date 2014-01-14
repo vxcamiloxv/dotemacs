@@ -186,3 +186,8 @@
 (global-set-key (kbd "M-<down>") 'smart-down)
 (global-set-key (kbd "M-<left>") 'smart-backward)
 (global-set-key (kbd "M-<right>") 'smart-forward)
+
+;; Perform general cleanup.
+(global-set-key (kbd "C-c n") 'cleanup-buffer)
+(global-set-key (kbd "C-c C-n") 'cleanup-buffer)
+(global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
