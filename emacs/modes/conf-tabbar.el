@@ -174,33 +174,12 @@ Return a list of one element based on major mode."
 
 ;; Apariencia
 (setq tabbar-separator '(0.0))
-
-(set-face-attribute
- 'tabbar-default nil
- :background "black")
-(set-face-attribute
- 'tabbar-unselected nil
- :background "black"
- :foreground "white"
- :box '(:line-width 1 :color "black" :style released-button))
-(set-face-attribute
- 'tabbar-selected nil
- :background "cyan"
- :foreground "black"
- :box '(:line-width 1 :color "cyan" :style pressed-button))
-(set-face-attribute
- 'tabbar-button nil
- :box '(:line-width 1 :color "black" :style released-button))
-(set-face-attribute
- 'tabbar-separator nil
- :height 0.5)
-
 (setq tabbar-background-color "#001214") ;; the color of the tabbar background
-;(custom-set-faces
-; '(tabbar-default ((t (:inherit variable-pitch :background "#959A79" :foreground "black" :weight bold))))
-; '(tabbar-button ((t (:inherit tabbar-default :foreground "dark red"))))
-; '(tabbar-button-highlight ((t (:inherit tabbar-default))))
-; '(tabbar-highlight ((t (:underline t))))
-; '(tabbar-selected ((t (:inherit tabbar-default :background "#95CA59"))))
-; '(tabbar-separator ((t (:inherit tabbar-default :background "#95CA59"))))
-; '(tabbar-unselected ((t (:inherit tabbar-default)))))
+
+(set-face-attribute 'tabbar-default nil :background "black")
+(set-face-attribute 'tabbar-unselected nil :background "black" :foreground "white" :box '(:line-width 1 :color "cyan" ))
+(set-face-attribute 'tabbar-selected nil :background "cyan" :foreground "black" :box '(:line-width 1 :color "cyan" ))
+(set-face-attribute 'tabbar-button nil :box '(:line-width 1 :color "black" :style released-button));
+(set-face-attribute 'tabbar-highlight nil :underline nil)
+(set-face-attribute 'tabbar-separator nil :height 0.5)
+

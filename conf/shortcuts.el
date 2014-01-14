@@ -87,8 +87,9 @@
 ;;Django
 (global-set-key (kbd "C-x j") 'python-django-open-project)
 
-;; Toogle Tool-bar
+;; Toogle Bars
 (global-set-key (kbd "C-<f1>") 'tool-bar-mode)
+(global-set-key (kbd "C-<f2>") 'menu-bar-mode)
 
 ;; indentation
 (global-set-key (kbd "\C-ci") 'increase-left-margin)

@@ -25,9 +25,9 @@
 (global-set-key [next] 'gcm-scroll-down)
 (global-set-key [prior]  'gcm-scroll-up)
 
-;(setq scroll-step 1)
-;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq scroll-step 1)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
                   
 ;, Horizontal scroll 

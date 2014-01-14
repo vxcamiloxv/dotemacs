@@ -58,7 +58,7 @@
 
 ;; Install a custom mode line
 ;(require 'conf-powerline)
-(load-file "~/.emacs.d/emacs/mode-line.el")
+;(load-file "~/.emacs.d/emacs/mode-line.el")
 
 ;; Finalize things
 ;; (load-file "~/.emacs.d/emacs/finalize.el")
@@ -128,6 +128,7 @@
 (require 'conf-isearch)
 (require 'conf-hideshowvis)
 (require 'conf-highlight-symbol)
+(require 'conf-mode-line)
 
 ;; Test
 (require 'expand-region)
@@ -137,8 +138,3 @@
 (require 'smart-forward)
 (require 'change-inner)
 ;(require 'multifiles)
-
-;; Emacs IDE
-;(add-to-list 'load-path "~/.emacs.d/site-lisp/")
-;(require 'eide)
-;(eide-start)

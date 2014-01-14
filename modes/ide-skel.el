@@ -1575,7 +1575,7 @@ That is, a string used to represent it on the tab bar."
 (defun ide-skel-tabbar-buffer-list ()
   "Return the list of buffers to show in tabs.
 The current buffer is always included."
-  (ide-skel-tabbar-faces-adapt)
+  ;(ide-skel-tabbar-faces-adapt)
   (delq t
         (mapcar #'(lambda (b)
 		    (let ((buffer-name (buffer-name b)))
@@ -1801,25 +1801,26 @@ line."
   (add-hook 'tabbar-mwheel-mode-hook 'ide-skel-tabbar-mwhell-mode-hook)
   (add-hook 'tabbar-init-hook 'ide-skel-tabbar-init-hook t)
   (add-hook 'tabbar-quit-hook 'ide-skel-tabbar-quit-hook t)
-  (custom-set-faces
-   '(tabbar-default ((t (:inherit variable-pitch :background "gray82" :foreground "gray50" :height 0.8))))
-   '(tabbar-selected ((t (:inherit tabbar-default :background "white" :foreground "blue" :box (:line-width 1 :color "black")))))
-   '(tabbar-separator ((t (:inherit tabbar-default :height 0.2))))
-   '(tabbar-highlight ((t ())))
-   '(tabbar-button-highlight ((t (:inherit tabbar-button))))
-   '(tabbar-unselected ((t (:inherit tabbar-default :background "gray72" :foreground "black" :box (:line-width 1 :color "black"))))))
-  (ide-skel-tabbar-faces-adapt))
+  ;(custom-set-faces
+  ; '(tabbar-default ((t (:inherit variable-pitch :background "gray82" :foreground "gray50" :height 0.8))))
+  ; '(tabbar-selected ((t (:inherit tabbar-default :background "white" :foreground "blue" :box (:line-width 1 :color "black")))))
+  ; '(tabbar-separator ((t (:inherit tabbar-default :height 0.2))))
+  ; '(tabbar-highlight ((t ())))
+  ; '(tabbar-button-highlight ((t (:inherit tabbar-button))))
+  ; '(tabbar-unselected ((t (:inherit tabbar-default :background "gray72" :foreground "black" :box (:line-width 1 :color "black"))))))
+  ;(ide-skel-tabbar-faces-adapt)
+)
   
-(defun ide-skel-tabbar-faces-adapt ()
-  (ide-skel-shine-face-background 'tabbar-default +18)
-  (set-face-attribute 'tabbar-selected nil :background (face-background 'default))
-  (set-face-attribute 'tabbar-selected nil :foreground (face-foreground 'font-lock-function-name-face))
-  (set-face-attribute 'tabbar-selected nil :box (list :line-width 1 :color (face-foreground 'default)))
-  (ide-skel-shine-face-background 'tabbar-unselected +30)
-  (set-face-attribute 'tabbar-unselected nil :foreground (face-foreground 'default))
-  (set-face-attribute 'tabbar-unselected nil :box (list :line-width 1 :color (face-foreground 'default)))
-  (ide-skel-shine-face-background 'tabbar-button +18)
-  (ide-skel-shine-face-foreground 'tabbar-button +20))
+;(defun ide-skel-tabbar-faces-adapt ()
+;  (ide-skel-shine-face-background 'tabbar-default +18)
+;  (set-face-attribute 'tabbar-selected nil :background (face-background 'default))
+;  (set-face-attribute 'tabbar-selected nil :foreground (face-foreground 'font-lock-function-name-face))
+;  (set-face-attribute 'tabbar-selected nil :box (list :line-width 1 :color (face-foreground 'default)))
+;  (ide-skel-shine-face-background 'tabbar-unselected +30)
+;  (set-face-attribute 'tabbar-unselected nil :foreground (face-foreground 'default))
+;  (set-face-attribute 'tabbar-unselected nil :box (list :line-width 1 :color (face-foreground 'default)))
+;  (ide-skel-shine-face-background 'tabbar-button +18)
+;  (ide-skel-shine-face-foreground 'tabbar-button +20))
 
 (defun ide-skel-paradox-settings ()
   ;; hide scroll buttons
