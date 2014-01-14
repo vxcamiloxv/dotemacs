@@ -29,8 +29,8 @@
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
-                  
-;, Horizontal scroll 
+
+;, Horizontal scroll
 (put 'scroll-left 'disabled nil)
 (put 'scroll-right 'disabled nil)
 
@@ -53,7 +53,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(current-language-environment "UTF-8")
- ;'(Linum-format "%7i ") 
+ ;'(Linum-format "%7i ")
  '(column-number-mode t)
  '(cua-enable-cua-keys nil)
  '(cua-mode t nil (cua-base))
@@ -72,7 +72,7 @@
  '(linum-eager t)
  ;'(visible-bell t)
  '(sml-modeline-mode 1)
- '(window-left-margin 0)  
+ '(window-left-margin 0)
  '(display-time-mode t)
  '(flycheck-highlighting-mode (quote lines))
  '(show-paren-mode 1)
@@ -181,8 +181,8 @@ This command is convenient when reading novel, documentation."
 (eval-after-load "guide-key" '(diminish 'guide-key-mode))
 
 ;; Windows Number
-(require 'window-number)
-(window-number-mode)
+(require 'window-numbering)
+(window-numbering-mode)
 
 ;; allow "restricted" features
 (put 'set-goal-column 'disabled nil)

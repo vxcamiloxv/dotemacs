@@ -28,10 +28,38 @@
                :description "Visual regexps"
                :type git
                :url "https://github.com/benma/visual-regexp.el.git")
-        (:name "jedi"
-               :description "Jedi.el - Python auto-completion for Emacs"
+        (:name "powerline"
+               :description "Powerline"
                :type git
-               :url "https://github.com/tkf/emacs-jedi.git")
+               :url "https://github.com/milkypostman/powerline")
+        (:name "django-python"
+               :description "Django-Python"
+               :type git
+               :url "https://github.com/myfreeweb/django-mode.git")
+        (:name "emacs-for-python"
+               :description "emacs-for-python"
+               :type git
+               :url "git://github.com/gabrielelanaro/emacs-for-python")
+        (:name "expand-region"
+               :description "Expand region"
+               :type git
+               :url "https://github.com/magnars/expand-region.el.git")
+        (:name "flycheck"
+               :description "Flycheck"
+               :type git
+               :url "https://github.com/flycheck/flycheck.git")
+        (:name "multiple-cursors"
+               :description "Multiple Cursors"
+               :type git
+               :url "https://github.com/emacsmirror/multiple-cursors.git")
+        (:name "pony-mode"
+               :description "Pony Mode"
+               :type git
+               :url "https://github.com/davidmiller/pony-mode")
+        (:name "Project Explorer"
+               :description "Project Explorer"
+               :type git
+               :url "https://github.com/sabof/project-explorer.git")
         (:name "dark-theme"
                :description "Dark theme"
                :type http

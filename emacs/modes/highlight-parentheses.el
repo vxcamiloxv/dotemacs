@@ -44,9 +44,9 @@
 ;; show-paren-mode
 (setq show-paren-delay 0)
 (setq blink-matching-paren t)
-(setq electric-pair-mode 1)
-(set-face-background 'show-paren-match (face-background 'default))
-(set-face-foreground 'show-paren-match "#def")
+;(setq electric-pair-mode 1)
+(set-face-background 'show-paren-match "cyan")
+(set-face-foreground 'show-paren-match "#000000")
 (set-face-attribute 'show-paren-match nil )
 
 (defadvice show-paren-function

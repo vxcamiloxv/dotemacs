@@ -10,7 +10,6 @@
 (require 'setup-package)
 (require 'setup-elget)
 
-
 ;; Load up the general config
 (require 'general)
 (require 'conf-init)
@@ -54,10 +53,10 @@
 ;; Auto Pair
 ;(require 'conf-autopair)
 ;(autopair-global-mode 0)
-;(require 'conf-smartparens)
+(require 'conf-smartparens)
 
 ;; Install a custom mode line
-;(require 'conf-powerline)
+(require 'conf-powerline)
 ;(load-file "~/.emacs.d/emacs/mode-line.el")
 
 ;; Finalize things
@@ -122,12 +121,12 @@
 (require 'conf-python)
 (require 'conf-auto-indent)
 ;(require 'conf-hideshow)
-;(require 'conf-paredit)
+(require 'conf-paredit)
 (require 'conf-perspective)
 (require 'conf-isearch)
 (require 'conf-hideshowvis)
 (require 'conf-highlight-symbol)
-(require 'conf-mode-line)
+;(require 'conf-mode-line)
 
 ;; Test
 (require 'expand-region)

@@ -10,6 +10,7 @@
      visual-regexp
      flycheck
      flx
+     jedi
      flx-ido
      css-eldoc
      yasnippet
@@ -31,6 +32,8 @@
      cider
      cider-tracing
      dropdown-list
+     window-numbering
+     smart-tabs-mode
      )
        "A list of packages to ensure are installed at launch."
 )

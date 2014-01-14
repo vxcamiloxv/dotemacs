@@ -71,8 +71,8 @@
 (custom-theme-set-variables
  'tron
 
- '(powerline-color1 "#00779a")
- '(powerline-color2 "#00475a")
+ '(powerline-active1 "#00779a")
+ '(powerline-active2 "#00475a")
  '(linum-format "%6d") ;; Default 7i
  '(fringe-mode 10 nil (fringe))
  )
@@ -170,7 +170,7 @@
  ;'(mode-line-buffer-id ((t (:weight bold))))
  ;'(mode-line-inactive ((t (:foreground "#15abc3" :background nil :box nil))))
  '(mode-line ((t (:background "#0b2c2d" :box nil :foreground "#0cd6e4" :height 90))))
- '(mode-line-inactive ((t (:weight light :box nil :background "#002329" :foreground "#000000" :inherit (mode-line)))))
+ '(mode-line-inactive ((t (:weight light :box nil :background "#002329" :foreground "#ffffff" :inherit (mode-line)))))
  '(mode-line-emphasis ((t (:weight bold))))
  '(mode-line-highlight ((t (:box nil (t (:inherit (highlight)))))))
  '(mode-line-buffer-id ((t (:weight bold :box nil))))
