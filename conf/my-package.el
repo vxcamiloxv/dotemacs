@@ -29,7 +29,9 @@
      clojure-mode
      groovy-mode
      cider
-     cider-tracing)
+     cider-tracing
+     dropdown-list
+     )
        "A list of packages to ensure are installed at launch."
 )
 

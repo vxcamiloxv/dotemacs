@@ -104,7 +104,7 @@
 (load-file "~/.emacs.d/emacs/modes/ediff.el")
 (load-file "~/.emacs.d/emacs/modes/ace-jump.el")
 (load-file "~/.emacs.d/emacs/modes/web-mode.el")
-;(load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
+(load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
 ;(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
 (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
 (require 'conf-tabbar)
