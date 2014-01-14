@@ -17,11 +17,11 @@
 	path = modes/powerline
 	url = https://github.com/milkypostman/powerline
 [submodule "modes/autopair"]
-    path = modes/autopair
-    url = https://github.com/capitaomorte/autopair.git  
+    	path = modes/autopair
+    	url = https://github.com/capitaomorte/autopair.git  
 [submodule "modes/django-mode"]
-    path = modes/django-mode
-    url = https://github.com/myfreeweb/django-mode.git
+    	path = modes/django-mode
+    	url = https://github.com/myfreeweb/django-mode.git
 [submodule "modes/emacs-dirtree"]
 	path = modes/emacs-dirtree
 	url = https://github.com/zk/emacs-dirtree.git
