@@ -181,8 +181,8 @@ This command is convenient when reading novel, documentation."
 (eval-after-load "guide-key" '(diminish 'guide-key-mode))
 
 ;; Windows Number
-(require 'window-numbering)
-(window-numbering-mode)
+;(require 'window-numbering)
+;(window-numbering-mode)
 
 ;; allow "restricted" features
 (put 'set-goal-column 'disabled nil)

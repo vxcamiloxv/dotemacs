@@ -2,6 +2,8 @@
 
 (require 'powerline)
 
+(call-interactively 'display-time-mode)
+
 (defun powerline-distopico-theme ()
   "Setup the default mode-line."
   (interactive)
@@ -44,7 +46,6 @@
                      (powerline-raw " ")
                      (powerline-raw "%6p" nil 'r)
                      (powerline-hud face2 face1))))
-                     ;(powerline-raw "%-" face1)
          (concat (powerline-render lhs)
                  (powerline-fill face2 (powerline-width rhs))
                  (powerline-render rhs)))))))
@@ -58,6 +59,3 @@
  '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil))))
 )
 ;#112230
-
-(powerline-raw "%*" nil '0)
-(powerline-buffer-size nil '0)

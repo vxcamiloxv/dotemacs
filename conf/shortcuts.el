@@ -5,7 +5,6 @@
 ;; ---------
 
 ; (please move more here soon)
-(global-set-key (kbd "<backtab>") 'ibuffer)
 (global-set-key (kbd "C-c fd") 'find-dired)
 (global-set-key (kbd "C-c d") 'diff-buffer-with-file)
 (global-set-key (kbd "C-c R") 'revert-buffer)
@@ -13,7 +12,8 @@
 
 (global-set-key (kbd "C-<right>") 'next-buffer)
 (global-set-key (kbd "C-<left>") 'previous-buffer)
-(global-set-key (kbd "C-<tab>") 'list-buffers)
+(global-set-key (kbd "<backtab>") 'list-buffers)
+(global-set-key (kbd "C-<tab>") 'ibuffer)
 
 (global-set-key (kbd "M-t") 'dirtree-in-buffer)
 (global-set-key (kbd "M-d") 'dirtree)
