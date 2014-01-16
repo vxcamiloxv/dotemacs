@@ -52,7 +52,7 @@
 
 ;; Auto Pair
 ;(require 'conf-autopair)
-;(autopair-global-mode 0)
+(autopair-global-mode 0)
 (require 'conf-smartparens)
 
 ;; Install a custom mode line
