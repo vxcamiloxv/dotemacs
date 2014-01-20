@@ -115,7 +115,7 @@
           (if (eq window-system 'x) "xdvi" "dvi2tty * | cat -s"))
 
 ; tab auto-completion cycling is evil.
-;(setq pcomplete-cycle-completions nil)
+(setq pcomplete-cycle-completions nil)
 
 ;; Make sure that pressing middle mouse button pastes right at point,
 ;; not where the mouse cursor is.
@@ -461,7 +461,7 @@ in X or in a terminal"
 (setq echo-keystrokes 0.1)
 
 ;; Auto refresh buffers
-(global-auto-revert-mode 1)
+(global-auto-revert-mode t)
 
 ;; Also auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)

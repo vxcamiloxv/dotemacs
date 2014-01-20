@@ -91,6 +91,9 @@
 (global-set-key (kbd "C-<f1>") 'tool-bar-mode)
 (global-set-key (kbd "C-<f2>") 'menu-bar-mode)
 
+;; Toogle whitespace
+(global-set-key (kbd "C-<f3>") 'whitespace-mode)
+
 ;; indentation
 (global-set-key (kbd "\C-ci") 'increase-left-margin)
 (global-set-key (kbd "\C-cd") 'decrease-left-margin)

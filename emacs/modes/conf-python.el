@@ -4,8 +4,8 @@
 
 (add-hook 'python-mode-hook
   (lambda ()
-    (setq indent-tabs-mode nil)
-    (setq python-indent 2)
+    (setq indent-tabs-mode t)
+    (setq python-indent 4)
     (setq tab-width 4)))
 
 (add-hook 'python-mode-hook
@@ -51,4 +51,4 @@
 ;(pymacs-load "ropemacs" "rope-")
 ;(setq ropemacs-enable-autoimport t)
 
-(provide 'conf-python)             
+(provide 'conf-python)

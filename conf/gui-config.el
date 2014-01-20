@@ -149,12 +149,13 @@ This command is convenient when reading novel, documentation."
 ; Indentation
 ;-----------------------------------------------------------------
 (setq-default indent-tabs-mode nil)
-(setq default-tab-indent 4)
 (setq-default tab-width 4)
 (setq c-basic-offset 4)
 (setq sgml-basic-offset 4)
 (setq css-indent-offset 4)
 (setq nxml-child-indent 4)
+(setq py-indent-offset 4)
+(setq-default tab-stop-list (number-sequence 4 120 4))
 
 ;----------------
 ; MenuBar+
@@ -206,3 +207,6 @@ This command is convenient when reading novel, documentation."
 ;; Browse kill ring
 (require 'browse-kill-ring)
 (setq browse-kill-ring-quit-action 'save-and-restore)
+
+;; Whitespace style
+(setq whitespace-style '(trailing underline spaces tabs newline space-mark tab-mark newline-mark)))
