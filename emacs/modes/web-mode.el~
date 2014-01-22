@@ -51,6 +51,7 @@
 (set-face-attribute 'web-mode-current-element-highlight-face nil
                     :background "#000000"
                     :foreground "#FF8A4B")
+(set-face-attribute 'web-mode-css-rule-face nil :foreground "Pink3")
 
 ; zencoding
 (require 'emmet-mode)

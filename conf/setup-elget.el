@@ -39,7 +39,7 @@
         (:name "emacs-for-python"
                :description "emacs-for-python"
                :type git
-               :url "git://github.com/gabrielelanaro/emacs-for-python")
+               :url "https://github.com/gabrielelanaro/emacs-for-python.git")
         (:name "expand-region"
                :description "Expand region"
                :type git
@@ -75,7 +75,7 @@
         (:name "naquadah-theme"
                :description "Naquadah theme"
                :type git
-               :url "git://git.naquadah.org/naquadah-theme.git")
+               :url "https://github.com/suhailshergill/naquadah-theme.git")
         (:name "kivy-mode"
                :description "Kivy highlighting mode"
                :type http

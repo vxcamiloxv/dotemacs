@@ -5,6 +5,22 @@
          '(ruby-mode
          "\\(def\\|do\\|{\\)" "\\(end\\|end\\|}\\)" "#"
          (lambda (arg) (ruby-end-of-block)) nil))
+
+  (add-to-list 'hs-special-modes-alist
+        '(web-mode
+          "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
+          ""
+          "<!--" ;; won't work on its own; uses syntax table
+          (lambda (arg) (my-nxml-forward-element))
+          nil))
+
+  (defun my-nxml-forward-element ()
+    (let ((nxml-sexp-element-flag))
+      (setq nxml-sexp-element-flag (not (looking-at "<!--")))
+      (unless (looking-at outline-regexp)
+        (condition-case nil
+            (nxml-forward-balanced-item 1)
+          (error nil)))))
           
   (dolist (hook (list 'emacs-lisp-mode-hook
                       'lisp-mode-hook

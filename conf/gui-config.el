@@ -209,4 +209,4 @@ This command is convenient when reading novel, documentation."
 (setq browse-kill-ring-quit-action 'save-and-restore)
 
 ;; Whitespace style
-(setq whitespace-style '(trailing underline spaces tabs newline space-mark tab-mark newline-mark)))
+(setq whitespace-style '(trailing underline spaces tabs newline space-mark tab-mark newline-mark))

@@ -1,9 +1,9 @@
 [submodule "modes/auto-complete"]
 	path = modes/auto-complete
-	url = git://github.com/auto-complete/auto-complete.git
+	url = https://github.com/auto-complete/auto-complete.git
 [submodule "modes/yasnippet"]
 	path = modes/yasnippet
-	url = git://github.com/capitaomorte/yasnippet.git
+	url = https://github.com/capitaomorte/yasnippet.git
 [submodule "themes/emacs-tron-theme"]
 	path = themes/emacs-tron-theme
 	url = https://github.com/ivanmarcin/emacs-tron-theme.git
