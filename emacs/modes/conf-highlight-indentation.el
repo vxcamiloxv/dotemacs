@@ -12,5 +12,9 @@
 (global-set-key (kbd "C-<f4>") 'highlight-indentation-current-column-mode)
 (global-set-key (kbd "C-<f5>") 'highlight-indentation-mode)
 
-(set-face-background 'highlight-indentation-face "#e3e3d3")
-(set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+(require 'highlight-indentation)
+
+(set-face-background 'highlight-indentation-face "gray5")
+(set-face-background 'highlight-indentation-current-column-face "#2f4f4f")
+
+(provide 'conf-highlight-indentation)

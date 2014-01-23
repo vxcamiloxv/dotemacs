@@ -55,6 +55,7 @@
  '(current-language-environment "UTF-8")
  ;'(Linum-format "%7i ")
  '(column-number-mode t)
+ '(menu-bar-mode nil)
  '(cua-enable-cua-keys nil)
  '(cua-mode t nil (cua-base))
  '(custom-safe-themes t)
@@ -160,7 +161,7 @@ This command is convenient when reading novel, documentation."
 ;----------------
 ; MenuBar+
 ;-----------------
-(load-file "~/.emacs.d/modes/menu-bar+.el")
+(require 'menu-bar+)
 (eval-after-load "menu-bar" '(require 'menu-bar+))
 
 ;; Highlight escape sequences
