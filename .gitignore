@@ -24,6 +24,33 @@ history
 ac-comphist.dat
 project-explorer-cache
 
+### Emacs ###
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+#*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# flymake-mode
+*_flymake.*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# packages
+#/elpa/
+/elget/
+el-get/
+/el-get/
+
 ### Allow ###
 !.yas*
 !/emacs/
