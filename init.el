@@ -133,7 +133,7 @@
 (require 'conf-hideshowvis)
 (require 'conf-highlight-symbol)
 ;(require 'conf-mode-line)
-(require 'highlight-indentation)
+(require 'conf-highlight-indentation)
 
 ;; Test
 (require 'expand-region)

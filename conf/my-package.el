@@ -36,6 +36,7 @@
      smart-tabs-mode
      fill-column-indicator
      browse-kill-ring
+     highlight-indentation
      )
        "A list of packages to ensure are installed at launch."
 )
