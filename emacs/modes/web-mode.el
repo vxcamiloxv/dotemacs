@@ -1,5 +1,5 @@
 (require 'web-mode)
-(add-hook 'web-mode-hook 'autopair-mode)
+;(add-hook 'web-mode-hook 'autopair-mode)
 
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -38,7 +38,7 @@
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-heredoc-fontification t)
 
-  (local-set-key (kbd "RET") 'newline-and-indent)
+  ;(local-set-key (kbd "RET") 'newline-and-indent)
 
 
 ;; More tango-y colors
@@ -129,7 +129,7 @@
       (sp-select-next-thing)
       (setq rbeg (region-beginning))
       (setq rend (region-end))
- 
+
       (while (> NUM 1)
         ;; well, sp-select-next-thing is kind of wierd
         (re-search-forward "<[^!]")
@@ -144,5 +144,5 @@
     rlt
     )
   )
-  
+
 (provide 'web-mode)

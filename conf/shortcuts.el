@@ -20,7 +20,6 @@
 
 (global-set-key [f9] 'nav-toggle)
 
-(global-set-key (kbd "C-x d") 'python-django-open-project)
 
 ; These should be made more local when I figure out how
 
@@ -54,9 +53,8 @@
 
 (global-set-key  [f8] 'toggle-truncate-lines)
 (global-set-key (kbd "C-c l") 'goto-line)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "RET") 'newline-and-indent)
-(global-set-key (kbd "C-q ") 'kill-this-buffer)
+;(global-set-key (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "C-q") 'kill-this-buffer)
 
 ;; window positioning
 (global-set-key (kbd "s-=") 'enlarge-window)
@@ -70,8 +68,8 @@
 (global-set-key (kbd "<C-s-right>")  'buf-move-right)
 
 ;; window configuration
-(global-set-key (kbd "\C-cl") 'jump-to-register)
-(global-set-key (kbd "\C-cs") 'window-configuration-to-register)
+(global-set-key (kbd "C-x j") 'jump-to-register)
+(global-set-key (kbd "C-c s") 'window-configuration-to-register)
 
 (global-set-key (kbd "C-c x") 'execute-extended-command)
 (global-set-key [S-prior] 'beginning-of-buffer)
@@ -85,7 +83,7 @@
 (global-set-key (kbd "M-4") 'other-window) ; cursor to other pane
 
 ;;Django
-(global-set-key (kbd "C-x j") 'python-django-open-project)
+(global-set-key (kbd "C-x d") 'python-django-open-project)
 
 ;; Toogle Bars
 (global-set-key (kbd "C-<f1>") 'tool-bar-mode)
@@ -95,8 +93,8 @@
 (global-set-key (kbd "C-<f3>") 'whitespace-mode)
 
 ;; indentation
-(global-set-key (kbd "\C-ci") 'increase-left-margin)
-(global-set-key (kbd "\C-cd") 'decrease-left-margin)
+(global-set-key (kbd "C-c C->") 'increase-left-margin)
+(global-set-key (kbd "C-c C-<") 'decrease-left-margin)
 
 ;; misc
 (global-set-key (kbd "C-`") 'rename-buffer)
@@ -134,19 +132,19 @@
 ;; window opacity utilities
 
  ;; C-+ will increase opacity (== decrease transparency)
-(global-set-key (kbd "C-=")
+(global-set-key (kbd "C-<kp-add>")
                 '(lambda()
                  (interactive)
                  (sa-opacity-modify)))
 
  ;; C-- will decrease opaccity (== increase transparency
-(global-set-key (kbd "C--")
+(global-set-key (kbd "C-<kp-subtract>")
                 '(lambda()
                  (interactive)
                  (sa-opacity-modify t)))
 
  ;; C-0 will returns the state to normal
-(global-set-key (kbd "C-0")
+(global-set-key (kbd "C-=")
                 '(lambda()
                  (interactive)
                  (modify-frame-parameters nil `((alpha . 100)))))
@@ -204,6 +202,18 @@
 (global-set-key (kbd "C-<f6>") 'sp-select-next-thing)
 
 ;; Recent Files
-(global-set-key (kbd "C-x r") 'ido-recentf-open)
+(global-set-key (kbd "C-x r <down>") 'ido-recentf-open)
 (global-set-key (kbd "C-c f") 'helm-for-files)
-(global-set-key (kbd "C-c r") 'helm-recentf)
+(global-set-key (kbd "C-c r <down>") 'helm-recentf)
+
+;; Highlight
+(global-set-key (kbd "C-c C-o") 'highlight-symbol-occur)
+(global-set-key (kbd "C-c M-<right>") 'highlight-symbol-next-in-defun)
+(global-set-key (kbd "C-c M-<left>") 'highlight-symbol-prev-in-defun)
+
+;; Custo fuctions
+(global-set-key (kbd "C-c C-c s") 'my-sp-select-next-thing)
+
+;; Buffer
+(global-set-key (kbd "C-c o") 'switch-to-minibuffer)
+(global-set-key (kbd "<f5>") 'select-active-minibuffe)

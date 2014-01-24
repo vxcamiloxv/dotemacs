@@ -7,7 +7,6 @@
      god-mode
      gist
      htmlize
-     icicles
      highlight-symbol
      visual-regexp
      flycheck
