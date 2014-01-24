@@ -1,3 +1,6 @@
+### general ###
+.*
+
 # Logs and databases #
 ######################
 *.log

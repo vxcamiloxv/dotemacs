@@ -2,10 +2,12 @@
 (defvar distopico-packages
    '(magit
      paredit
+     icicles
      move-text
      god-mode
      gist
      htmlize
+     icicles
      highlight-symbol
      visual-regexp
      flycheck
