@@ -202,3 +202,8 @@
 
 ;; Smartparens
 (global-set-key (kbd "C-<f6>") 'sp-select-next-thing)
+
+;; Recent Files
+(global-set-key (kbd "C-x r") 'ido-recentf-open)
+(global-set-key (kbd "C-c f") 'helm-for-files)
+(global-set-key (kbd "C-c r") 'helm-recentf)
