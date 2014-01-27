@@ -3,6 +3,7 @@
 ;; ---------
 
 (require 'php-mode)
+(require 'php-extras)
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.php3\\'" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.php4\\'" . php-mode))

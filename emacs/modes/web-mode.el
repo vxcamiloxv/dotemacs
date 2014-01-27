@@ -54,9 +54,15 @@
 
 ; zencoding
 (require 'emmet-mode)
+(require 'ac-emmet)
 (setq emmet-indentation 2)
+
 (add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'web-mode-hook 'emmet-mode)
+
+(add-hook 'sgml-mode-hook 'ac-emmet-html-setup)
+(add-hook 'css-mode-hook 'ac-emmet-css-setup)
+
 (define-key emmet-mode-keymap (kbd "C-j") nil)
 (define-key emmet-mode-keymap (kbd "<C-return>") nil)
 (define-key emmet-mode-keymap (kbd "C-c i") 'emmet-expand-line)
@@ -67,6 +73,7 @@
 (js2r-add-keybindings-with-prefix "C-c C-m")
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+(add-hook 'js2-mode-hook 'ac-js2-mode)
 
 (add-hook 'css-mode-hook '(lambda ()
          (define-key css-mode-map (kbd "M-i") 'helm-css-scss)))
@@ -145,4 +152,7 @@
     )
   )
 
+
+ 
 (provide 'web-mode)
+

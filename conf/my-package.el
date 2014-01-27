@@ -38,6 +38,9 @@
      fill-column-indicator
      browse-kill-ring
      highlight-indentation
+     php-extras
+     ac-emmet
+     ac-js2
      )
        "A list of packages to ensure are installed at launch."
 )

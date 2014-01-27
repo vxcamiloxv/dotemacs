@@ -45,7 +45,7 @@
 (setq ac-auto-show-menu 0.3)
 
 ;;Flycheck
-;(require 'conf-flycheck)
+(require 'conf-flycheck)
 
 ;; Line Numeber
 (require 'conf-linum)

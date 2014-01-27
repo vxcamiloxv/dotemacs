@@ -77,9 +77,6 @@
       color-theme-is-global t
       truncate-partial-width-windows nil)
 
-; cursor
-(blink-cursor-mode t)
-
 ;;Delete trailing space
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -351,7 +348,7 @@ in X or in a terminal"
 
 (global-set-key [mouse-2] 'mouse-yank-at-click)
 
-(setq mouse-drag-copy-region t
+(setq mouse-drag-copy-region nil
       select-active-regions nil
       x-select-enable-primary t
       x-select-enable-clipboard t)

@@ -12,8 +12,9 @@
 
 (global-set-key (kbd "C-<right>") 'next-buffer)
 (global-set-key (kbd "C-<left>") 'previous-buffer)
-(global-set-key (kbd "<backtab>") 'list-buffers)
+(global-set-key (kbd "<backtab>") 'helm-buffers-list)
 (global-set-key (kbd "C-<tab>") 'ibuffer)
+(global-set-key (kbd "C-c b") 'list-buffers)
 
 (global-set-key (kbd "M-t") 'dirtree-in-buffer)
 (global-set-key (kbd "M-d") 'dirtree)
@@ -46,6 +47,7 @@
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region) ; cut.
 (global-set-key (kbd "C-c c") 'clipboard-kill-ring-save) ; copy.
 (global-set-key (kbd "C-v") 'clipboard-yank) ; paste.
+(global-set-key [mouse-2] 'clipboard-kill-ring-save) 
 
 (defalias 'redo 'undo-tree-redo)
 (global-set-key (kbd "C-z") 'undo)
@@ -104,9 +106,9 @@
 (global-set-key (kbd "<M-mouse-4>") 'text-scale-decrease)
 
 ;; terminal
-;(global-set-key
-; (kbd "C-c t")
-; (lambda () (interactive) (ansi-term "/bin/bash")))
+(global-set-key
+ (kbd "C-c t")
+ (lambda () (interactive) (ansi-term "/bin/bash")))
 (global-set-key (kbd "C-x t") (lambda () (interactive) (popwin-term:term))
 )
 

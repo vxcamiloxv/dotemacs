@@ -8,9 +8,9 @@
 
 ;; Smoother scrolling (no multiline jumps.)
 (setq scroll-margin 1
-  scroll-step 1
-  scroll-conservatively 100000
-  scroll-preserve-screen-position 1)
+      scroll-step 1
+      scroll-conservatively 10000000
+      scroll-preserve-screen-position 1)
 
 
 (defun gcm-scroll-down ()
@@ -25,8 +25,8 @@
 (global-set-key [prior]  'gcm-scroll-up)
 
 ;(setq scroll-step 1)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
 
 ;, Horizontal scroll
@@ -41,7 +41,7 @@
     (setq hscroll-step 1)
     (setq auto-hscroll-mode 1)
     (setq automatic-hscrolling t)
-   ))
+    ))
 
 ;; Keep cursor away from edges when scrolling up/down
 (require 'smooth-scrolling)
@@ -52,11 +52,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(current-language-environment "UTF-8")
- ;'(Linum-format "%7i ")
+                                        ;'(Linum-format "%7i ")
  '(column-number-mode t)
  '(menu-bar-mode nil)
  '(cua-enable-cua-keys nil)
  '(cua-mode t nil (cua-base))
+ '(cua-keep-region-after-copy t)
  '(custom-safe-themes t)
  '(ediff-custom-diff-program "diff")
  '(ediff-diff-program "diff")
@@ -78,11 +79,13 @@
  '(show-paren-mode 1)
  '(size-indication-mode t)
  '(inhibit-startup-screen t)
+ ;'(cursor-type '(bar . 1))
+ '(blink-cursor-mode t)
  '(iswitchb-mode t)
  '(savehist-mode t nil (savehist))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(windmove-wrap-around t)
-)
+ )
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -98,20 +101,20 @@
 
 ;; hostname and buffer-name in frame title
 (setq-default frame-title-format
-         '(:eval
+              '(:eval
                 (if (string-match-p "^\\*.+\\*$" (buffer-name)) "%b" ; buffer name
-                 (format "%s:%s"
-                         (or (file-remote-p default-directory 'host) system-name)
-                         (buffer-name)))))
-                  ;(format "%s@%s:%s"
-                  ;        (or (file-remote-p default-directory 'user) user-login-name)
+                  (format "%s:%s"
+                          (or (file-remote-p default-directory 'host) system-name)
+                          (buffer-name)))))
+  ;(format "%s@%s:%s"
+  ;      (or (file-remote-p default-directory 'user) user-login-name)
 
-;(setq frame-title-format '("%b %I %+%@%t%Z %m %n %e"))
+  ;(setq frame-title-format '("%b %I %+%@%t%Z %m %n %e"))
 
 ;; window opacity utilities
-(load-file "~/.emacs.d/conf/nifty.el")
 (require 'nifty)
 
+;(mouse-avoidance-mode 'animate)
 
 ;;; Code:
 (setq debug-on-error t
@@ -210,3 +213,21 @@ This command is convenient when reading novel, documentation."
 
 ;; Whitespace style
 (setq whitespace-style '(trailing underline spaces tabs newline space-mark tab-mark newline-mark))
+
+;; Cursor according to Mode
+(defun set-cursor-according-to-mode ()
+  "change cursor color and type according to some minor modes."
+
+  (cond
+   ((memq major-mode '(python-mode php-mode emacs-lisp-mode
+                        sh-mode makefile-gmake-mode perl-mode 
+                        c-mode c++-mode django-mode python-django
+                        nxhtml-mode web-mode avascript-mode js-mode 
+                        js2-mode javascript js2-refactor emmet-mode 
+                        css-mode-hook css-mode))
+   (setq cursor-type 'bar))
+   ((string-equal "*" (substring (buffer-name) 0 1))
+   (setq cursor-type 'box))
+))
+
+(add-hook 'post-command-hook 'set-cursor-according-to-mode)

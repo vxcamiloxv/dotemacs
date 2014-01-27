@@ -38,7 +38,7 @@
   (sp-local-pair "?" "php  ?"))
 
 (sp-with-modes '(html-mode web-mode django-mode)
-  (sp-local-pair "{" "%  %}"))
+  (sp-local-pair "%" "%"))
 
 (sp-local-tag '(php-mode web-mode) "<" "<_>" "</_>" :transform 'sp-match-sgml-tags)
 
