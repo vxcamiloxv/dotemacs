@@ -43,6 +43,11 @@
 (ac-config-default)
 (setq ac-delay 0.2)
 (setq ac-auto-show-menu 0.3)
+(setq-default ac-sources '(ac-source-yasnippet
+                           ac-source-filename
+                           ac-source-abbrev
+                           ac-source-dictionary
+                           ac-source-words-in-same-mode-buffers))
 
 ;;Flycheck
 (require 'conf-flycheck)
@@ -143,4 +148,9 @@
 ;(require 'eproject)
 (require 'smart-forward)
 (require 'change-inner)
+(require 'tabkey2)
 ;(require 'multifiles)
+
+;; fixme mode
+(require 'fixme-mode)
+(fixme-mode)

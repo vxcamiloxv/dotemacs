@@ -42,6 +42,8 @@
      ac-emmet
      ac-js2
      iy-go-to-char
+     tabkey2
+     fic-mode
      )
        "A list of packages to ensure are installed at launch."
 )
