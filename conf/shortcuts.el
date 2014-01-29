@@ -1,5 +1,3 @@
-(provide 'shortcuts)
-
 ;; ---------
 ;; Generic keybindings
 ;; ---------
@@ -16,8 +14,8 @@
 (global-set-key (kbd "C-<tab>") 'ibuffer)
 (global-set-key (kbd "C-c b") 'list-buffers)
 
-(global-set-key (kbd "M-t") 'dirtree-in-buffer)
-(global-set-key (kbd "M-d") 'dirtree)
+;(global-set-key (kbd "M-t") 'dirtree-in-buffer)
+;(global-set-key (kbd "M-d") 'dirtree)
 
 (global-set-key [f9] 'nav-toggle)
 
@@ -42,12 +40,12 @@
 (global-set-key (kbd "C-w") 'kill-ring-save)
 (global-set-key (kbd "M-w") 'kill-region)
 (global-set-key (kbd "C-f") 'isearch-forward)
-(global-set-key (kbd "C-S-f") 'isearch-backward)
+(global-set-key (kbd "C-s-r") 'isearch-backward)
 
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region) ; cut.
 (global-set-key (kbd "C-c c") 'clipboard-kill-ring-save) ; copy.
 (global-set-key (kbd "C-v") 'clipboard-yank) ; paste.
-(global-set-key [mouse-2] 'clipboard-kill-ring-save) 
+(global-set-key [mouse-2] 'clipboard-kill-ring-save)
 
 (defalias 'redo 'undo-tree-redo)
 (global-set-key (kbd "C-z") 'undo)
@@ -113,7 +111,7 @@
 )
 
 ;; Open shell with C-z
-(global-set-key (kbd "M-s") 'shell)
+(global-set-key (kbd "M-t") 'shell)
 
 ;; Browse URLs with C-x /
 (global-set-key (kbd "C-x /") 'browse-url)
@@ -205,13 +203,18 @@
 
 ;; Recent Files
 (global-set-key (kbd "C-x r <down>") 'ido-recentf-open)
-(global-set-key (kbd "C-c f") 'helm-for-files)
+(global-set-key (kbd "C-c C-f") 'helm-for-files)
 (global-set-key (kbd "C-c r <down>") 'helm-recentf)
 
 ;; Highlight
 (global-set-key (kbd "C-c C-o") 'highlight-symbol-occur)
 (global-set-key (kbd "C-c M-<right>") 'highlight-symbol-next-in-defun)
 (global-set-key (kbd "C-c M-<left>") 'highlight-symbol-prev-in-defun)
+(global-set-key (kbd "s-<f3>") 'highlight-symbol-at-point)
+(global-set-key (kbd "s-<f4>") 'highlight-symbol-prev)
+(global-set-key (kbd "s-<f5>") 'highlight-symbol-next)
+(global-set-key (kbd "s-<f6>") 'highlight-symbol-query-replace)
+(global-set-key (kbd "s-<f7>") 'unhighlight-regexp)
 
 ;; Custo fuctions
 (global-set-key (kbd "C-c C-c s") 'my-sp-select-next-thing)
@@ -219,3 +222,11 @@
 ;; Buffer
 (global-set-key (kbd "C-c o") 'switch-to-minibuffer)
 (global-set-key (kbd "<f5>") 'select-active-minibuffe)
+
+;; Go to char
+(global-set-key (kbd "C-c f") 'iy-go-to-char)
+(global-set-key (kbd "C-c F") 'iy-go-to-char-backward)
+(global-set-key (kbd "C-c ;") 'iy-go-to-or-up-to-continue)
+(global-set-key (kbd "C-c ,") 'iy-go-to-or-up-to-continue-backward)
+
+(provide 'shortcuts)

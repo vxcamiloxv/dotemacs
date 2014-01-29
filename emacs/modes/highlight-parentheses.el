@@ -18,12 +18,6 @@
        (naquadah-get-colors 'gradient-11)
        ))
 
-;; Make the parenthesis' matched by hl-paren-face bold.
-;;
-;; Not sure if I like this or not!  It looks nice but moves around
-;; the text a bit.
-; (set-face-attribute 'hl-paren-face nil :bold t)
-
 
 ;(add-hook 'highlight-parentheses-mode-hook
 ;          '(lambda ()
@@ -44,10 +38,10 @@
 ;; show-paren-mode
 (setq show-paren-delay 0)
 (setq blink-matching-paren t)
+(setq show-paren-style 'mixed) 
 ;(setq electric-pair-mode 1)
 (set-face-background 'show-paren-match "cyan")
 (set-face-foreground 'show-paren-match "#000000")
-(set-face-attribute 'show-paren-match nil )
 
 (defadvice show-paren-function
   (after show-matching-paren-offscreen activate)

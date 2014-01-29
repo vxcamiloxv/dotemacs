@@ -9,7 +9,9 @@
 ;; Smoother scrolling (no multiline jumps.)
 (setq scroll-margin 1
       scroll-step 1
-      scroll-conservatively 10000000
+	  scroll-conservatively 0
+	  scroll-up-aggressively 0.01
+	  scroll-down-aggressively 0.01
       scroll-preserve-screen-position 1)
 
 
@@ -52,7 +54,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(current-language-environment "UTF-8")
-                                        ;'(Linum-format "%7i ")
+ ;'(Linum-format "%7i ")
  '(column-number-mode t)
  '(menu-bar-mode nil)
  '(cua-enable-cua-keys nil)

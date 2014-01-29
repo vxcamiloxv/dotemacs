@@ -88,7 +88,7 @@
  ;'(linum ((t (:inherit default))))
  '(mouse ((t (:foreground "#e0c625"))))
  '(region ((t (:background "#e0c625" :foreground "#000000"))))
- '(show-paren-match-face ((t (:weight bold))))
+ ;'(show-paren-match-face ((t (:weight bold))))
 
  ;; Line Numbers (linum-mode) Default height 100
  '(linum ((t (:background "#00080A" :foreground "#005050" :height 70))))

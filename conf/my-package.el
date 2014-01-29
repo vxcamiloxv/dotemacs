@@ -41,6 +41,7 @@
      php-extras
      ac-emmet
      ac-js2
+     iy-go-to-char
      )
        "A list of packages to ensure are installed at launch."
 )

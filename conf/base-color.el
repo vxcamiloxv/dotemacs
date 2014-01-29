@@ -32,7 +32,7 @@
      (scarlet-red-3 . "#a40000")
      (background . "#262B2C")
      (black . "#0c191C")
-     (gradient-1 . "#729fcf")  ;; sky-blue-1
+     (gradient-1 . "#00ffff")  ;; Cyan
      (gradient-2 . "#8ae234")  ;; chameleon-1
      (gradient-3 . "#fce94f")  ;; butter-1
      (gradient-4 . "#ad7fa8")  ;; plum-1

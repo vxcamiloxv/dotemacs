@@ -57,8 +57,8 @@
 (custom-set-faces
     '(sp-show-pair-match-face ((t (
                     :inherit nil
-                    :background nil
-                    :foreground "#00ffff"))))
+                    :background "#00ffff"
+                    :foreground "#000000"))))
 
     '(sp-pair-overlay-face ((t (
                     :inherit nil
