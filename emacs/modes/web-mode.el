@@ -65,7 +65,7 @@
 
 (define-key emmet-mode-keymap (kbd "C-j") nil)
 (define-key emmet-mode-keymap (kbd "<C-return>") nil)
-(define-key emmet-mode-keymap (kbd "C-c i") 'emmet-expand-line)
+(define-key emmet-mode-keymap (kbd "C-c e") 'emmet-expand-line)
 
 ; js2-mode
 (require 'js2-mode)
