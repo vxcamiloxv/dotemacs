@@ -57,10 +57,10 @@
 (global-set-key (kbd "C-q") 'kill-this-buffer)
 
 ;; window positioning
-(global-set-key (kbd "s-=") 'enlarge-window)
-(global-set-key (kbd "s--") 'shrink-window)
+(global-set-key (kbd "s-?") 'enlarge-window)
+(global-set-key (kbd "s-=") 'shrink-window)
 (global-set-key (kbd "s-+") 'enlarge-window-horizontally)
-(global-set-key (kbd "s-_") 'shrink-window-horizontally)
+(global-set-key (kbd "s--") 'shrink-window-horizontally)
 
 (global-set-key (kbd "<C-s-up>")     'buf-move-up)
 (global-set-key (kbd "<C-s-down>")   'buf-move-down)
@@ -228,5 +228,9 @@
 (global-set-key (kbd "C-c F") 'iy-go-to-char-backward)
 (global-set-key (kbd "C-c ;") 'iy-go-to-or-up-to-continue)
 (global-set-key (kbd "C-c ,") 'iy-go-to-or-up-to-continue-backward)
+
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
+(autoload 'magit-status "magit")
 
 (provide 'shortcuts)
