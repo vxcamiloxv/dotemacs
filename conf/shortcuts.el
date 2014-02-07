@@ -216,9 +216,6 @@
 (global-set-key (kbd "s-<f6>") 'highlight-symbol-query-replace)
 (global-set-key (kbd "s-<f7>") 'unhighlight-regexp)
 
-;; Custo fuctions
-(global-set-key (kbd "C-c C-c s") 'my-sp-select-next-thing)
-
 ;; Buffer
 (global-set-key (kbd "C-c o") 'switch-to-minibuffer)
 (global-set-key (kbd "<f5>") 'select-active-minibuffe)
