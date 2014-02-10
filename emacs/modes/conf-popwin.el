@@ -1,7 +1,3 @@
-(provide 'conf-popwin)
-
-(add-to-list 'load-path "~/.emacs.d/modes/popwin-el")
-(add-to-list 'load-path "~/.emacs.d/modes/popwin-el/misc")
 (require 'popwin)
 (popwin-mode 1)
 
@@ -84,12 +80,12 @@
         ("*magit-edit-log*" :noselect t :height 0.2 :width 80)
         ("*magit-process*" :noselect t :height 0.2 :width 80)
         ("\\*Slime Inspector.*" :regexp t :height 30)
-        ("*Ido Completions*" :noselect t :height 30)
-        ;;("*eshell*" :height 20)
-        ("\\*ansi-term\\*.*" :regexp t :height 30)
-        ("*shell*" :height 30)
+        ("*Ido Completions*" :noselect t :height 0.3)
+        ;;("*eshell*" :height 0.3)
+        ("\\*ansi-term\\*.*" :regexp t :height 0.3)
+        ("*shell*" :height 0.3)
         (".*overtone.log" :regexp t :height 30)
-        ("*gists*" :height 30)
+        ("*gists*" :height 0.3)
         ("*sldb.*":regexp t :height 30)
         ("*Gofmt Errors*" :noselect t)
         ("\\*godoc*" :regexp t :height 30)
@@ -118,3 +114,6 @@
   (push '("*Help*" :height 0.3 :stick t) popwin:special-display-config)
   (push '("*quickrun*" :height 0.3 :stick t) popwin:special-display-config)
 )
+
+
+(provide 'conf-popwin)

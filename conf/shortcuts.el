@@ -11,7 +11,7 @@
 (global-set-key (kbd "C-<right>") 'next-buffer)
 (global-set-key (kbd "C-<left>") 'previous-buffer)
 (global-set-key (kbd "<backtab>") 'helm-buffers-list)
-(global-set-key (kbd "C-<tab>") 'ibuffer)
+(global-set-key (kbd "C-<tab>") 'ibuffer-other-window)
 (global-set-key (kbd "C-c b") 'list-buffers)
 
 ;(global-set-key (kbd "M-t") 'dirtree-in-buffer)

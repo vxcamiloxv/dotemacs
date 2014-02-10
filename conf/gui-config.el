@@ -9,7 +9,7 @@
 ;; Smoother scrolling (no multiline jumps.)
 (setq scroll-margin 1
       scroll-step 1
-	  scroll-conservatively 0
+	  scroll-conservatively 10000
 	  scroll-up-aggressively 0.01
 	  scroll-down-aggressively 0.01
       scroll-preserve-screen-position 1)
@@ -46,7 +46,7 @@
     ))
 
 ;; Keep cursor away from edges when scrolling up/down
-(require 'smooth-scrolling)
+;(require 'smooth-scrolling)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
