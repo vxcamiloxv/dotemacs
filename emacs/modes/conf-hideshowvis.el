@@ -27,6 +27,7 @@
                       'c-mode-hook
                       'java-mode-hook
                       'js-mode-hook
+		      'js2-mode-hook
                       'css-mode-hook
                       'c++-mode-hook))
     (add-hook hook 'hideshowvis-enable))

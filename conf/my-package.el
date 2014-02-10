@@ -41,6 +41,7 @@
      php-extras
      ac-emmet
      ac-js2
+     js2-mode
      iy-go-to-char
      tabkey2
      fic-mode

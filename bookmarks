@@ -1,0 +1,15 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("echo"
+ (filename . "~/cedula.php")
+ (front-context-string . "$value);\n       ")
+ (rear-context-string . "  $value = trim(")
+ (position . 1187))
+("apto"
+ (filename . "~/cedula.php")
+ (front-context-string . " new DOMDocument")
+ (rear-context-string . "pto';\n    $doc =")
+ (position . 749))
+)
