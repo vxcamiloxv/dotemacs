@@ -41,6 +41,7 @@
 (add-to-list 'ac-dictionary-directories  "~/.emacs.d/ac-dict")
 (autoload 'auto-complete-mode "auto-complete" t)
 (ac-config-default)
+(ac-linum-workaround)
 ;(setq ac-delay 0.2)
 ;(setq ac-auto-show-menu 0.3)
 (setq-default ac-sources '(ac-source-yasnippet
