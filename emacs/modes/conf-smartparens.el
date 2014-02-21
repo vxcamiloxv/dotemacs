@@ -13,7 +13,6 @@
 
 (sp-use-smartparens-bindings)
 
-
 ;;;;;;;;;;;;;;;;;;
 ;; pair management
 
@@ -29,28 +28,30 @@
   (sp-local-tag "s" "```scheme" "```")
   (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
 
-;;; tex-mode latex-mode
+;; tex-mode latex-mode
 (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
   (sp-local-tag "i" "\"<" "\">"))
 
+;;; html-mode
+(sp-with-modes '(web-mode html-mode sgml-mode)
+  (sp-local-pair "<" ">"))
+
 ;;; php-mode
-(sp-with-modes '(html-mode web-mode php-mode)
-  (sp-local-pair "?" "php  ?"))
+;(sp-with-modes '(html-mode web-mode php-mode)
+;  (sp-local-pair "?" "php  ?"))
 
 (sp-with-modes '(html-mode web-mode django-mode)
   (sp-local-pair "%" "%"))
 
-(sp-local-tag '(php-mode web-mode) "<" "<_>" "</_>" :transform 'sp-match-sgml-tags)
+(sp-with-modes '(php-mode web-mode) 
+	(sp-local-tag "<" "<_>" "</_>" :transform 'sp-match-sgml-tags))
 
-
-;; lisp modes
+;;; lisp modes
 (sp-with-modes sp--lisp-modes
-  (sp-local-pair "(" nil :bind "C-(")
-  (sp-local-pair "'" nil :actions nil))
+  (sp-local-pair "(" nil :bind "C-("))
 
 ;; Global
 (sp-pair "<#" "#>")
-(sp-pair "<" ">")
 
 ;; Color
 
