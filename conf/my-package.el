@@ -16,6 +16,8 @@
      css-eldoc
      yasnippet
      smartparens
+     projectile
+     es-windows
      ido-vertical-mode
      ido-at-point
      simple-httpd
