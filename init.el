@@ -141,6 +141,7 @@
 (require 'conf-highlight-symbol)
 ;(require 'conf-mode-line)
 (require 'conf-highlight-indentation)
+(require 'conf-json)
 
 ;; Test
 (require 'expand-region)

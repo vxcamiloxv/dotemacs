@@ -44,6 +44,7 @@
      ac-emmet
      ac-js2
      js2-mode
+     json-mode
      iy-go-to-char
      tabkey2
      fic-mode
