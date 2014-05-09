@@ -178,4 +178,4 @@
   (cdr
    (assoc
     name
-    (car naquadah-colors))))      
+    (car naquadah-colors))))        

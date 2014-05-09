@@ -82,7 +82,23 @@
 
 ;; Resaltado linea
 (global-hl-line-mode t)
-(set-face-background hl-line-face "gray13")
+
+;; Custom values CLI/GUI
+(defun custom-cli (frame)
+(select-frame frame)
+(if (window-system frame)
+    (progn  
+      (set-face-background hl-line-face "gray13") )
+  (progn  
+     (set-face-background hl-line-face "green") 
+     (set-cursor-color "cyan")
+     (set-background-color "Black")
+     (set-foreground-color "White")
+     (set-border-color "dark orange")
+     (set-mouse-color "Cyan") 
+    )))
+
+(add-hook 'after-make-frame-functions 'custom-cli)
 
 ;; Semantic | CEDET
 ;(semantic-mode 1)

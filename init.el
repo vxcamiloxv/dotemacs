@@ -3,8 +3,8 @@
 
 (load-file "~/.emacs.d/conf/path.el")
 
-(require 'conf-theme)
 (require 'base-color)
+(require 'conf-theme)
 
 ;; Packages
 (require 'setup-package)
