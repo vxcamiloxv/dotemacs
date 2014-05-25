@@ -20,8 +20,6 @@
 (global-set-key [f9] 'nav-toggle)
 
 
-; These should be made more local when I figure out how
-
 ;; Life-hack keybindings
 
 (global-set-key (kbd "C-c lc") 'calendar)
@@ -81,6 +79,8 @@
 (global-set-key (kbd "M-2") 'split-window-horizontally) ; split pane left/rigth
 (global-set-key (kbd "M-3") 'split-window-vertically) ; split pane top/bottom
 (global-set-key (kbd "M-4") 'other-window) ; cursor to other pane
+(global-set-key (kbd "M-5") 'toggle-window-split) ; toggle window position
+(global-set-key (kbd "M-6") 'window-toggle-split-direction) ; toggle window position
 
 ;;Django
 (global-set-key (kbd "C-x d") 'python-django-open-project)

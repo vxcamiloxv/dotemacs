@@ -29,10 +29,10 @@
 (push "*vc-change-log*" popwin:special-display-config)
 
 ;; Django
-(push '("^*Django:/.*$" :width 0.3 :position right) popwin:special-display-config)
+(push '("Django:" :regexp t :width 0.3 :position right) popwin:special-display-config)
 
 ;; undo-tree
-(push '(" *undo-tree*" :width 0.3 :position right) popwin:special-display-config)
+(push '("*undo-tree*" :width 0.3 :position right) popwin:special-display-config)
 
 ;;ibuffer
 (push "*Ibuffer*" popwin:special-display-config)
@@ -59,14 +59,14 @@
       popwin:special-display-config)
 
 ;; Flycheck
-(push '(flycheck-error-list-mode :stick t) popwin:special-display-config)   
-                   
+(push '(flycheck-error-list-mode :stick t) popwin:special-display-config)
+
 ;;Others
 (push '("collected.org" :position top :height 15) popwin:special-display-config)
 (push '("*grep*" :position bottom :height 20 :stick t) popwin:special-display-config)
 (push '("*imenu-tree*" :position left :width 50 :stick t) popwin:special-display-config)
- 
- 
+
+
 ;; popwin settings
 (setq popwin:special-display-config
       '(("*Help*" :height 30 :stick t)
@@ -101,7 +101,7 @@
         ("*jedi:doc*" :noselect t)
         )
 )
-          
+
 (when (require 'popwin nil t)
   (setq anything-samewindow nil)
   (setq display-buffer-function 'popwin:display-buffer)

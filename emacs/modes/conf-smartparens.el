@@ -40,10 +40,10 @@
 ;(sp-with-modes '(html-mode web-mode php-mode)
 ;  (sp-local-pair "?" "php  ?"))
 
-(sp-with-modes '(html-mode web-mode django-mode)
-  (sp-local-pair "%" "%"))
+;; (sp-with-modes '(html-mode web-mode django-mode)
+;;   (sp-local-pair "%" "%"))
 
-(sp-with-modes '(php-mode web-mode) 
+(sp-with-modes '(php-mode web-mode)
 	(sp-local-tag "<" "<_>" "</_>" :transform 'sp-match-sgml-tags))
 
 ;;; lisp modes

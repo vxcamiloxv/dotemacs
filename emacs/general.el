@@ -87,15 +87,15 @@
 (defun custom-cli (frame)
 (select-frame frame)
 (if (window-system frame)
-    (progn  
+    (progn
       (set-face-background hl-line-face "gray13") )
-  (progn  
-     (set-face-background hl-line-face "green") 
+  (progn
+     (set-face-background hl-line-face "green")
      (set-cursor-color "cyan")
      (set-background-color "Black")
      (set-foreground-color "White")
      (set-border-color "dark orange")
-     (set-mouse-color "Cyan") 
+     (set-mouse-color "Cyan")
     )))
 
 (add-hook 'after-make-frame-functions 'custom-cli)
@@ -163,10 +163,6 @@
 
 ;; Mouse scrolling
 (mwheel-install)
-
-;; ------
-;; Terminal / window specific stuff
-;; ------
 
 ;; Don't minimize my emacs! Honestly wtf
 (when window-system
@@ -369,10 +365,6 @@ in X or in a terminal"
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-;; I also like my scrollbars on the left, thanks!
-
-;;(set-scroll-bar-mode 'left)
-
 ;; ----------
 ;; Mail stuff
 ;; ----------
@@ -381,8 +373,8 @@ in X or in a terminal"
 
 ; Randomly choose mail signature
 (setq cwebber-mail-sigs
-      '("The bottom line."
-        "http://dustycloud.org/"
+      '("----------------------"
+        "http://distopico.info/"
         "𝓒𝓱𝓻𝓲𝓼𝓽𝓸𝓹𝓱𝓮𝓻 𝓐𝓵𝓵𝓪𝓷 𝓦𝓮𝓫𝓫𝓮𝓻"))
 
 (defun cwebber-random-mail-sig ()
@@ -410,7 +402,6 @@ in X or in a terminal"
 ; Turn off tool-bar-mode, which is slow
 (call-interactively 'tool-bar-mode)
 
-;; UTF-8 support
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
 (set-terminal-coding-system 'utf-8) ; pretty
@@ -428,7 +419,7 @@ in X or in a terminal"
 (setq auto-save-default nil)
 
 ;; Undo Redo
-(load-file "~/.emacs.d/modes/undo-tree.el")
+;;(load-file "~/.emacs.d/modes/undo-tree.el")
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 

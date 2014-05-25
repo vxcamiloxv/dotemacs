@@ -1,11 +1,10 @@
-(add-to-list 'load-path (in-modes-d "python.el"))
-
+;;(add-to-list 'load-path (in-modes-d "python.el"))
 (require 'python)
 
 (add-hook 'python-mode-hook
   (lambda ()
     (setq indent-tabs-mode nil)
-    (setq python-indent 4)
+    (setq python-indent-offset 4)
     (setq tab-width 4)))
 
 (add-hook 'python-mode-hook

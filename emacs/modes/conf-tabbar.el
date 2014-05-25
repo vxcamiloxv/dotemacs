@@ -7,8 +7,6 @@
   ;;(setq tabbar-ruler-popup-toolbar t) ; If you want a popup toolbar
   ;;(setq tabbar-ruler-popup-scrollbar t) ; If you want to only show the scroll bar when your mouse is moving.
 
-(global-set-key (kbd "C-c C-t") 'tabbar-ruler-move)
-
 (custom-set-variables
  '(tabbar-mode t nil (tabbar))
  '(ide-skel-tabbar-mwheel-mode nil (tabbar))
@@ -21,11 +19,6 @@
 ;(setq tabbar-cycle-scope (quote tabs))
 ;(setq table-time-before-update 0.1)
 ;(setq tabbar-use-images t)
-
-(global-set-key (kbd "S-x <right>") 'tabbar-forward-tab)
-(global-set-key (kbd "S-x <left>") 'tabbar-backward-tab)
-(global-set-key (kbd "C-x <right>") 'tabbar-forward-group)
-(global-set-key (kbd "C-x <left>") 'tabbar-backward-group)
 
  ;; Add a buffer modification state indicator in the tab label, and place a
  ;; space around the label to make it looks less crowd.
@@ -147,10 +140,6 @@ Return a list of one element based on major mode."
   (interactive)
   (setq tabbar-buffer-groups-function 'tabbar-buffer-groups-by-dir))
 
-(global-set-key (kbd "C-M-g") 'toggle-tabbar-mode)
-(global-set-key (kbd "M-g") 'tabbar-switch-to-grouping-by-dir)
-;(global-set-key (kbd "C-M-g") 'tabbar-switch-to-default-grouping)
-
 (defun switch-tabbar (num)
   (let* ((tabs (tabbar-tabs
                 (tabbar-current-tabset)
@@ -161,6 +150,7 @@ Return a list of one element based on major mode."
                tabs)))
     (if tab (switch-to-buffer (car tab)))))
 
+;; Shortcuts
 (global-set-key (kbd "C-1") (lambda () (interactive) (switch-tabbar 1)))
 (global-set-key (kbd "C-2") (lambda () (interactive) (switch-tabbar 2)))
 (global-set-key (kbd "C-3") (lambda () (interactive) (switch-tabbar 3)))
@@ -171,6 +161,17 @@ Return a list of one element based on major mode."
 (global-set-key (kbd "C-8") (lambda () (interactive) (switch-tabbar 8)))
 (global-set-key (kbd "C-9") (lambda () (interactive) (switch-tabbar 9)))
 (global-set-key (kbd "C-0") (lambda () (interactive) (switch-tabbar -1)))
+
+(global-set-key (kbd "C-x <up>") 'tabbar-forward-tab)
+(global-set-key (kbd "C-x <down>") 'tabbar-backward-tab)
+(global-set-key (kbd "C-x <right>") 'tabbar-forward-group)
+(global-set-key (kbd "C-x <left>") 'tabbar-backward-group)
+
+(global-set-key (kbd "C-M-g") 'toggle-tabbar-mode)
+(global-set-key (kbd "M-g") 'tabbar-switch-to-grouping-by-dir)
+;(global-set-key (kbd "C-M-g") 'tabbar-switch-to-default-grouping)
+
+(global-set-key (kbd "C-c C-t") 'tabbar-ruler-move)
 
 ;; Apariencia
 (setq tabbar-separator '(0.0))

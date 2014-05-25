@@ -63,7 +63,6 @@
 
 ;; Install a custom mode line
 (require 'conf-powerline)
-;(load-file "~/.emacs.d/emacs/mode-line.el")
 
 ;; Finalize things
 ;; (load-file "~/.emacs.d/emacs/finalize.el")
@@ -82,10 +81,6 @@
 (defun ep-dirtree ()
   (interactive)
     (dirtree-in-buffer eproject-root t))
-
-;; Sr SpeedBar
-;(load-file "~/.emacs.d/modes/sr-speedbar.el")
-;(require 'sr-speedbar)
 
 ;; Functions (load all files in defuns-dir)
 (setq defuns-dir (expand-file-name "defuns" user-emacs-directory))
@@ -115,7 +110,6 @@
 (load-file "~/.emacs.d/emacs/modes/ediff.el")
 (load-file "~/.emacs.d/emacs/modes/ace-jump.el")
 (load-file "~/.emacs.d/emacs/modes/web-mode.el")
-;(require 'conf-mwm)
 (load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
 ;(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
 (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")

@@ -1,6 +1,7 @@
 ;; Install extensions if they're missing
 (defvar distopico-packages
    '(magit
+     iedit
      paredit
      icicles
      move-text
