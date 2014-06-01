@@ -45,10 +45,10 @@
 ;(setq ac-delay 0.2)
 ;(setq ac-auto-show-menu 0.3)
 (setq-default ac-sources '(ac-source-yasnippet
-                           ac-source-filename
                            ac-source-abbrev
                            ac-source-dictionary
-                           ac-source-words-in-same-mode-buffers))
+                           ac-source-words-in-same-mode-buffers
+                           ac-source-files-in-current-dir))
 
 ;;Flycheck
 (require 'conf-flycheck)
@@ -100,7 +100,7 @@
 (load-file "~/.emacs.d/emacs/modes/mozrepl.el")
 (load-file "~/.emacs.d/emacs/modes/yasnippet.el")
 ;(load-file "~/.emacs.d/emacs/modes/org.el")
-(load-file "~/.emacs.d/emacs/modes/php.el")
+;(load-file "~/.emacs.d/emacs/modes/php.el")
 (load-file "~/.emacs.d/emacs/modes/tramp.el")
 (load-file "~/.emacs.d/emacs/modes/visual-regexp.el")
 (load-file "~/.emacs.d/emacs/modes/wordcount.el")

@@ -6,8 +6,7 @@
 
 ;; highlights matching pairs
 (show-smartparens-global-mode t)
-
-(add-hook 'hy-mode 'smartparens-mode)
+          
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keybinding management
 

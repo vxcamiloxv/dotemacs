@@ -1,6 +1,7 @@
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.inc\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.blade\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
@@ -13,12 +14,12 @@
 
 (setq web-mode-engines-alist
       '(("django" . "\\.html\\'")
-        ("php" . "\\.phtml\\'")
-        ("php" . "\\.inc\\'")
+        ;("php" . "\\.phtml\\'")
+        ;("php" . "\\.inc\\'")
         ("blade" . "\\.blade\\."))
       )
-
-(defun cwebber-web-mode-customizations ()
+          
+(defun web-mode-customizations ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
@@ -28,10 +29,12 @@
   (setq web-mode-script-padding 1)
   (setq web-mode-block-padding 0)
   (setq web-mode-comment-style 2)
+  
+  ;; Disabled smartparens in web-mode 
+  (setq smartparens-mode nil)
+)
 
-  )
-
-(add-hook 'web-mode-hook 'cwebber-web-mode-customizations)
+(add-hook 'web-mode-hook 'web-mode-customizations)
 
 (setq web-mode-enable-auto-pairing t)
 (setq web-mode-enable-block-face t)
