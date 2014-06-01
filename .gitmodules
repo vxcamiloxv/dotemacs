@@ -34,3 +34,15 @@
 [submodule "modes/popwin-el"]
 	path = modes/popwin-el
 	url = https://github.com/m2ym/popwin-el.git
+[submodule "modes/yasnippet-snippets"]
+	path = modes/yasnippet-snippets
+	url = https://github.com/AndreaCrotti/yasnippet-snippets.git
+[submodule "modes/yasmate"]
+	path = modes/yasmate
+	url = https://github.com/capitaomorte/yasmate.git
+[submodule "snippets/yasnippet-snippets"]
+	path = snippets/yasnippet-snippets
+	url = https://github.com/AndreaCrotti/yasnippet-snippets.git
+[submodule "snippets/yasmate"]
+	path = snippets/yasmate
+	url = https://github.com/capitaomorte/yasmate.git

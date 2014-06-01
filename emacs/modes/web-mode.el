@@ -13,10 +13,10 @@
 (add-to-list 'auto-mode-alist '("/\\(views\\|html\\|templates\\)/.*\\.php\\'" . web-mode))
 
 (setq web-mode-engines-alist
-      '(("django" . "\\.html\\'")
+      ' ;(("django" . "\\.html\\'")
         ;("php" . "\\.phtml\\'")
         ;("php" . "\\.inc\\'")
-        ("blade" . "\\.blade\\."))
+        (("blade" . "\\.blade\\."))
       )
           
 (defun web-mode-customizations ()
@@ -65,10 +65,10 @@
 (require 'ac-emmet)
 (setq emmet-indentation 2)
 
-(add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'web-mode-hook 'emmet-mode)
+(add-hook 'css-mode-hook  'emmet-mode) 
 
-(add-hook 'sgml-mode-hook 'ac-emmet-html-setup)
+(add-hook 'web-mode-hook 'ac-emmet-html-setup)
 (add-hook 'css-mode-hook 'ac-emmet-css-setup)
 
 (define-key emmet-mode-keymap (kbd "C-j") nil)
@@ -90,7 +90,6 @@
 (add-hook 'web-mode-hook 'auto-complete-mode)
 (add-to-list 'ac-modes 'web-mode)
 (add-to-list 'ac-modes 'css-mode)
-
 
 
 (provide 'web-mode)

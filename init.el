@@ -50,6 +50,8 @@
                            ac-source-words-in-same-mode-buffers
                            ac-source-files-in-current-dir))
 
+(require 'ac-python)
+
 ;;Flycheck
 (require 'conf-flycheck)
 
