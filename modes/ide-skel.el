@@ -232,7 +232,9 @@
 ;;   ide-skel-keep-condition-function
 
 (require 'cl)
-(require 'complete)
+
+;; Obsolete in emacs24
+;(require 'complete)
 (require 'tree-widget)
 (require 'tabbar)
 (require 'recentf)

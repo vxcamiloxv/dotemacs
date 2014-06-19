@@ -80,6 +80,10 @@
                :description "Highlight parentheses"
                :type git
                :url "https://github.com/nschum/highlight-parentheses.el.git")
+        (:name "hideshowvis"
+               :description "Hide Show Vis"
+               :type git
+               :url "https://github.com/emacsmirror/hideshowvis.git")               
         (:name "naquadah-theme"
                :description "Naquadah theme"
                :type git
@@ -121,7 +125,8 @@
       (append
        '("el-get")
        (mapcar 'el-get-source-name el-get-sources)
-       '("magit")))
+       ;'("magit")
+       ))
 
 (el-get 'sync my-packages)
 

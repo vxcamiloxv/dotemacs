@@ -7,7 +7,6 @@
 
   ;; optional, but useful - see Emacs Manual
   (icomplete-mode)
-  ;(partial-completion-mode)
 
   ;; for convenience
   (global-set-key [f6] 'ide-skel-proj-find-files-by-regexp)

@@ -7,7 +7,7 @@
   'interactive)
 
 (require 'hideshowvis)
-  (hideshowvis-symbols)
+(hideshowvis-symbols)
 
   (add-to-list 'hs-special-modes-alist
          '(ruby-mode

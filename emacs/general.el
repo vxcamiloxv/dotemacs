@@ -2,9 +2,9 @@
 ;; ------
 ;; Require misc stuff
 ;; ------
-(require 'nxml-mode)
-(require 'python)
-(require 'ruby-mode)
+;(require 'nxml-mode)
+;(require 'python)
+;(require 'ruby-mode)
 (require 'epa-file)
 (require 'ibuffer)
 (epa-file-enable)
@@ -13,12 +13,17 @@
 ;; Place backups in ~/.backups/ directory, like a civilized program.
 ;; ------
 (defvar backup-dir (expand-file-name "~/.backup/"))
-(if (file-directory-p backup-dir)
+;(defvar backup-dir (concat "~/.backup/"))
+
+;; Create directory if no exist
+(when (and (not (file-directory-p backup-dir)))
+                  (make-directory backup-dir t))
+                  
+;; Defined backup directory  
     (setq backup-directory-alist (list (cons ".*" backup-dir)))
     (setq auto-save-list-file-prefix backup-dir)
     (setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
 
-  (message "Directory does not exist: ~/.backup"))
 (setq backup-by-copying t    ; Don't delink hardlinks
       delete-old-versions t  ; Clean up the backups
       version-control t      ; Use version numbers on backups,
@@ -27,8 +32,9 @@
 
 ;; Make backups of files, even when they're in version control
 (setq vc-make-backup-files t)
-;; ---------
 
+;; Delete old backups
+(if (file-directory-p backup-dir)
 (message "Deleting old backup files...")
 (let ((week (* 60 60 24 7))
       (current (float-time (current-time))))
@@ -38,7 +44,10 @@
                   week))
       (message "%s" file)
       (delete-file file))))
+      )
 
+
+  
 ;; Save point position between sessions
 (require 'saveplace)
 (setq-default save-place t)
