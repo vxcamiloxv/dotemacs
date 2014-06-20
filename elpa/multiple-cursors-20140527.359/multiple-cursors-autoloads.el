@@ -4,8 +4,8 @@
 
 
 ;;;### (autoloads (mc/edit-beginnings-of-lines mc/edit-ends-of-lines
-;;;;;;  mc/edit-lines) "mc-edit-lines" "mc-edit-lines.el" (21385
-;;;;;;  58870 102345 999000))
+;;;;;;  mc/edit-lines) "mc-edit-lines" "mc-edit-lines.el" (21411
+;;;;;;  50398 651130 223000))
 ;;; Generated autoloads from mc-edit-lines.el
 
 (autoload 'mc/edit-lines "mc-edit-lines" "\
@@ -44,7 +44,7 @@ Add one cursor to the beginning of each line in the active region.
 ;;;;;;  mc/mark-previous-word-like-this mc/mark-previous-like-this
 ;;;;;;  mc/mark-next-symbol-like-this mc/mark-next-word-like-this
 ;;;;;;  mc/mark-next-like-this) "mc-mark-more" "mc-mark-more.el"
-;;;;;;  (21385 58870 192300 993000))
+;;;;;;  (21411 50398 744463 94000))
 ;;; Generated autoloads from mc-mark-more.el
 
 (autoload 'mc/mark-next-like-this "mc-mark-more" "\
@@ -172,7 +172,7 @@ If the region is active and spans multiple lines, it will behave
 as if `mc/mark-all-in-region'. With the prefix ARG, it will call
 `mc/edit-lines' instead.
 
-If the region is inactive or on a single line, it will behave like
+If the region is inactive or on a single line, it will behave like 
 `mc/mark-all-like-this-dwim'.
 
 \(fn ARG)" t nil)
@@ -204,8 +204,8 @@ Mark the tag we're in and its pair for renaming.
 
 ;;;***
 
-;;;### (autoloads (mc/mark-pop) "mc-mark-pop" "mc-mark-pop.el" (21385
-;;;;;;  58870 382205 981000))
+;;;### (autoloads (mc/mark-pop) "mc-mark-pop" "mc-mark-pop.el" (21411
+;;;;;;  50398 867795 815000))
 ;;; Generated autoloads from mc-mark-pop.el
 
 (autoload 'mc/mark-pop "mc-mark-pop" "\
@@ -217,8 +217,8 @@ to the popped mark.
 ;;;***
 
 ;;;### (autoloads (mc/sort-regions mc/reverse-regions mc/insert-numbers)
-;;;;;;  "mc-separate-operations" "mc-separate-operations.el" (21385
-;;;;;;  58870 315572 652000))
+;;;;;;  "mc-separate-operations" "mc-separate-operations.el" (21411
+;;;;;;  50398 821129 380000))
 ;;; Generated autoloads from mc-separate-operations.el
 
 (autoload 'mc/insert-numbers "mc-separate-operations" "\
@@ -239,7 +239,7 @@ Insert increasing numbers for each cursor, starting at 0 or ARG.
 ;;;***
 
 ;;;### (autoloads (set-rectangular-region-anchor) "rectangular-region-mode"
-;;;;;;  "rectangular-region-mode.el" (21385 58869 945757 675000))
+;;;;;;  "rectangular-region-mode.el" (21411 50398 501130 966000))
 ;;; Generated autoloads from rectangular-region-mode.el
 
 (autoload 'set-rectangular-region-anchor "rectangular-region-mode" "\
@@ -253,8 +253,8 @@ an exceedingly quick way of adding multiple cursors to multiple lines.
 ;;;***
 
 ;;;### (autoloads nil nil ("mc-cycle-cursors.el" "multiple-cursors-core.el"
-;;;;;;  "multiple-cursors-pkg.el" "multiple-cursors.el") (21385 58870
-;;;;;;  430729 730000))
+;;;;;;  "multiple-cursors-pkg.el" "multiple-cursors.el") (21411 50398
+;;;;;;  904436 980000))
 
 ;;;***
 

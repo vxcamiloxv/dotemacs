@@ -19,13 +19,14 @@ semanticdb
 auto-save-list
 recentf
 url/
+var/
 savehist
 saveplace
 eproject.lst
 ede-projects.el
 history
 ac-comphist.dat
-project-explorer-cache
+project-explorer-cache/
 
 ### Emacs ###
 *~
@@ -64,4 +65,3 @@ el-get/
 !.projectile
 !.gitmodules
 !.dir-locals.el
-

@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (ac-emmet-css-setup ac-emmet-html-setup) "ac-emmet"
-;;;;;;  "ac-emmet.el" (21385 58065 208376 352000))
+;;;;;;  "ac-emmet.el" (21411 50388 941178 347000))
 ;;; Generated autoloads from ac-emmet.el
 
 (defface ac-emmet-candidate-face '((t (:inherit ac-candidate-face))) "\
@@ -39,8 +39,8 @@ This affects only the current buffer.
 
 ;;;***
 
-;;;### (autoloads nil nil ("ac-emmet-pkg.el") (21385 58065 371644
-;;;;;;  891000))
+;;;### (autoloads nil nil ("ac-emmet-pkg.el") (21411 50389 18153
+;;;;;;  920000))
 
 ;;;***
 
