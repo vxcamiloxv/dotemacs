@@ -19,9 +19,6 @@
 [submodule "modes/emacs-dirtree"]
 	path = modes/emacs-dirtree
 	url = https://github.com/zk/emacs-dirtree.git
-[submodule "modes/popwin"]
-	path = modes/popwin
-	url = https://github.com/m2ym/popwin-el.git
 [submodule "themes/emacs-clues-theme"]
 	path = themes/emacs-clues-theme
 	url = https://github.com/emacsfodder/emacs-clues-theme.git

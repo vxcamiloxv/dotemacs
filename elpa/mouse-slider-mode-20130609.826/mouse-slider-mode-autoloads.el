@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (mouse-slider-mode) "mouse-slider-mode" "mouse-slider-mode.el"
-;;;;;;  (21193 37463 704736 229000))
+;;;;;;  (21385 57773 757525 648000))
 ;;; Generated autoloads from mouse-slider-mode.el
 
 (autoload 'mouse-slider-mode "mouse-slider-mode" "\
@@ -14,8 +14,8 @@ Scales numbers when they are right-click dragged over.
 
 ;;;***
 
-;;;### (autoloads nil nil ("mouse-slider-mode-pkg.el") (21193 37463
-;;;;;;  856309 458000))
+;;;### (autoloads nil nil ("mouse-slider-mode-pkg.el") (21385 57773
+;;;;;;  919952 951000))
 
 ;;;***
 

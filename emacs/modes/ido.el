@@ -80,10 +80,17 @@
 (recentf-mode 1)
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 
+;; Fix Warning
+(defvar ido-cur-item nil)
+(defvar ido-default-item nil)
+(defvar ido-cur-list nil)
+(defvar predicate nil)
+(defvar inherit-input-method nil)
+
 ;; Use ido everywhere
 (require 'ido-ubiquitous)
 (ido-ubiquitous-mode 1)
-
+            
 (require 'ido-vertical-mode)
 (ido-vertical-mode)
 

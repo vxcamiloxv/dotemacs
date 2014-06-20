@@ -1,5 +1,4 @@
-(load-file "~/.emacs.d/modes/simple-httpd/simple-httpd.el")
-(load-file "~/.emacs.d/modes/mouse-slider-mode/mouse-slider-mode.el")
+;(require 'simple-httpd)
 
 (require 'skewer-mode)
 (require 'skewer-repl)

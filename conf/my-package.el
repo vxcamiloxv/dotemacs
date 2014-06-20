@@ -25,6 +25,8 @@
      guide-key
      nodejs-repl
      restclient
+     ido-ubiquitous
+     mouse-slider-mode
      highlight-escape-sequences
      whitespace-cleanup-mode
      elisp-slime-nav
