@@ -13,7 +13,7 @@
 ;; Place backups in ~/.backups/ directory, like a civilized program.
 ;; ------
 (defvar backup-dir (expand-file-name "~/.backup/"))
-;(defvar backup-dir (concat "~/.backup/"))
+;(defvar backup-dir (concat "~/.backup/" "/"))
 
 ;; Create directory if no exist
 (when (and (not (file-directory-p backup-dir)))
@@ -22,8 +22,9 @@
 ;; Defined backup directory  
     (setq backup-directory-alist (list (cons ".*" backup-dir)))
     (setq auto-save-list-file-prefix backup-dir)
-    (setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
+    ;(setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
 
+        
 (setq backup-by-copying t    ; Don't delink hardlinks
       delete-old-versions t  ; Clean up the backups
       version-control t      ; Use version numbers on backups,
