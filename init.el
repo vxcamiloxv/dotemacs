@@ -1,14 +1,13 @@
-(require 'cl)
-(require 'cl-lib)
-
+;; Path
 (load-file "~/.emacs.d/conf/path.el")
-
-(require 'base-color)
-(require 'conf-theme)
 
 ;; Packages
 (require 'setup-package)
 (require 'setup-elget)
+
+;;Theme 
+(require 'base-color)
+(require 'conf-theme)
 
 ;; Load up the general config
 (require 'general)
@@ -16,6 +15,21 @@
 (require 'shortcuts)
 (require 'conf-fringe)
 
+;; Auto-complete
+(require 'auto-complete)
+(global-auto-complete-mode t)
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories  "~/.emacs.d/ac-dict")
+(autoload 'auto-complete-mode "auto-complete" t)
+(ac-config-default)
+(ac-linum-workaround)
+;(setq ac-delay 0.2)
+;(setq ac-auto-show-menu 0.3)
+(setq-default ac-sources '(ac-source-yasnippet
+                           ac-source-abbrev
+                           ac-source-dictionary
+                           ac-source-words-in-same-mode-buffers
+                           ac-source-files-in-current-dir))
 ;; Python IDE
 (autoload 'python-mode "python-mode.el" "Python mode." t)
 (setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
@@ -34,21 +48,7 @@
 (require 'python-pep8)
 (require 'python-pylint)
 
-;; Auto-complete
-(require 'auto-complete)
-(global-auto-complete-mode t)
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories  "~/.emacs.d/ac-dict")
-(autoload 'auto-complete-mode "auto-complete" t)
-(ac-config-default)
-(ac-linum-workaround)
-;(setq ac-delay 0.2)
-;(setq ac-auto-show-menu 0.3)
-(setq-default ac-sources '(ac-source-yasnippet
-                           ac-source-filename
-                           ac-source-abbrev
-                           ac-source-dictionary
-                           ac-source-words-in-same-mode-buffers))
+(require 'ac-python)
 
 ;;Flycheck
 (require 'conf-flycheck)
@@ -58,7 +58,7 @@
 
 ;; Auto Pair
 ;(require 'conf-autopair)
-(autopair-global-mode 0)
+;(autopair-global-mode 0)
 (require 'conf-smartparens)
 
 ;; Install a custom mode line
@@ -68,7 +68,7 @@
 ;; (load-file "~/.emacs.d/emacs/finalize.el")
 
 ;; Colour theme and other gui related config
-(load-file "~/.emacs.d/conf/gui-config.el")
+(require 'gui-config)
 
 ;;Color shell text
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -100,7 +100,7 @@
 (load-file "~/.emacs.d/emacs/modes/mozrepl.el")
 (load-file "~/.emacs.d/emacs/modes/yasnippet.el")
 ;(load-file "~/.emacs.d/emacs/modes/org.el")
-(load-file "~/.emacs.d/emacs/modes/php.el")
+;(load-file "~/.emacs.d/emacs/modes/php.el")
 (load-file "~/.emacs.d/emacs/modes/tramp.el")
 (load-file "~/.emacs.d/emacs/modes/visual-regexp.el")
 (load-file "~/.emacs.d/emacs/modes/wordcount.el")

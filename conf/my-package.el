@@ -1,27 +1,46 @@
 ;; Install extensions if they're missing
 (defvar distopico-packages
-   '(magit
+   '(s
+     cl
+     dash
+     cl-lib
+     es-lib
+     magit
      iedit
      paredit
      icicles
+     diminish
      move-text
+     python-pep8
+     python-pylint
+     column-marker
      god-mode
      gist
+     tabbar
      htmlize
      highlight-symbol
      visual-regexp
      flycheck
+     flycheck-color-mode-line
      flx
-     jedi
      flx-ido
+     jump-char
+     smex
+     jedi
+     direx
+     dired+
+     dired-details+
      css-eldoc
+     perspective
      yasnippet
      smartparens
      projectile
      es-windows
+     ido-ubiquitous
      ido-vertical-mode
      ido-at-point
      simple-httpd
+     smart-forward
      guide-key
      nodejs-repl
      restclient
@@ -34,7 +53,6 @@
      gitconfig-mode
      gitignore-mode
      clojure-mode
-     groovy-mode
      cider
      cider-tracing
      dropdown-list
@@ -43,10 +61,13 @@
      fill-column-indicator
      browse-kill-ring
      highlight-indentation
+     find-file-in-project
      php-extras
+     ac-python
      ac-emmet
      ac-js2
      js2-mode
+     js2-refactor
      json-mode
      iy-go-to-char
      tabkey2

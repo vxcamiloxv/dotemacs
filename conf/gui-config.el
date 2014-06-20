@@ -88,6 +88,10 @@
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(windmove-wrap-around t)
  )
+ 
+;; In emacs24
+(setq completion-styles '(partial-completion initials))
+(setq completion-pcm-complete-word-inserts-delimiters t)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -233,3 +237,5 @@ This command is convenient when reading novel, documentation."
 ))
 
 (add-hook 'post-command-hook 'set-cursor-according-to-mode)
+
+(provide 'gui-config)

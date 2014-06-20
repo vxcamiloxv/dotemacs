@@ -1,3 +1,17 @@
+;; Load path them
+(require 's)
+(require 'dash)
+
+(-each
+ (-map
+  (lambda (item)
+    (format "~/.emacs.d/themes/" item))
+  (-filter
+   (lambda (item) (s-contains? "theme" item))
+   (directory-files "~/.emacs.d/themes/")))
+ (lambda (item)
+   (add-to-list 'custom-theme-load-path item)))
+
 ;; Load colors and theme things
 ;; (load-file "~/.emacs.d/emacs/colors.el")
 ;; (load-file "~/.emacs.d/themes/dark-emacs-theme.el")
