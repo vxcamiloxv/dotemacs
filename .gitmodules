@@ -1,8 +1,8 @@
-[submodule "modes/auto-complete"]
-	path = modes/auto-complete
+[submodule "custom-packages/auto-complete"]
+	path = custom-packages/auto-complete
 	url = https://github.com/auto-complete/auto-complete.git
-[submodule "modes/yasnippet"]
-	path = modes/yasnippet
+[submodule "custom-packages/yasnippet"]
+	path = custom-packages/yasnippet
 	url = https://github.com/capitaomorte/yasnippet.git
 [submodule "themes/emacs-tron-theme"]
 	path = themes/emacs-tron-theme
@@ -13,11 +13,11 @@
 [submodule "themes/emacs-color-theme-solarized"]
 	path = themes/emacs-color-theme-solarized
 	url = https://github.com/sellout/emacs-color-theme-solarized.git
-[submodule "modes/autopair"]
-    	path = modes/autopair
-    	url = https://github.com/capitaomorte/autopair.git  
-[submodule "modes/emacs-dirtree"]
-	path = modes/emacs-dirtree
+[submodule "custom-packages/autopair"]
+    	path = custom-packages/autopair
+    	url = https://github.com/capitaomorte/autopair.git
+[submodule "custom-packages/emacs-dirtree"]
+	path = custom-packages/emacs-dirtree
 	url = https://github.com/zk/emacs-dirtree.git
 [submodule "themes/emacs-clues-theme"]
 	path = themes/emacs-clues-theme
@@ -25,17 +25,17 @@
 [submodule "themes/emacs-purple-haze-theme"]
 	path = themes/emacs-purple-haze-theme
 	url = https://github.com/emacsfodder/emacs-purple-haze-theme.git
-[submodule "modes/change-inner"]
-	path = modes/change-inner
+[submodule "custom-packages/change-inner"]
+	path = custom-packages/change-inner
 	url = https://github.com/magnars/change-inner.el.git
-[submodule "modes/popwin-el"]
-	path = modes/popwin-el
+[submodule "custom-packages/popwin-el"]
+	path = custom-packages/popwin-el
 	url = https://github.com/m2ym/popwin-el.git
-[submodule "modes/yasnippet-snippets"]
-	path = modes/yasnippet-snippets
+[submodule "custom-packages/yasnippet-snippets"]
+	path = custom-packages/yasnippet-snippets
 	url = https://github.com/AndreaCrotti/yasnippet-snippets.git
-[submodule "modes/yasmate"]
-	path = modes/yasmate
+[submodule "custom-packages/yasmate"]
+	path = custom-packages/yasmate
 	url = https://github.com/capitaomorte/yasmate.git
 [submodule "snippets/yasnippet-snippets"]
 	path = snippets/yasnippet-snippets
