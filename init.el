@@ -1,11 +1,18 @@
+;;; package --- Init Emacs
+;;;
+;;; Commentary:
+;;; Init and load my configuration for Emacs
+;;;
+;;; Code:
+
 ;; Path
-(load-file "~/.emacs.d/conf/path.el")
+(load-file "~/.emacs.d/config/path.el")
 
 ;; Packages
 (require 'setup-package)
 (require 'setup-elget)
 
-;;Theme 
+;;Theme
 (require 'base-color)
 (require 'conf-theme)
 
@@ -13,42 +20,8 @@
 (require 'general)
 (require 'conf-init)
 (require 'shortcuts)
+(require 'hooks)
 (require 'conf-fringe)
-
-;; Auto-complete
-(require 'auto-complete)
-(global-auto-complete-mode t)
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories  "~/.emacs.d/ac-dict")
-(autoload 'auto-complete-mode "auto-complete" t)
-(ac-config-default)
-(ac-linum-workaround)
-;(setq ac-delay 0.2)
-;(setq ac-auto-show-menu 0.3)
-(setq-default ac-sources '(ac-source-yasnippet
-                           ac-source-abbrev
-                           ac-source-dictionary
-                           ac-source-words-in-same-mode-buffers
-                           ac-source-files-in-current-dir))
-;; Python IDE
-(autoload 'python-mode "python-mode.el" "Python mode." t)
-(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
-(add-hook 'python-mode-hook 'auto-complete-mode)
-(setq py-smart-indentation t)
-
-;(package-initialize)
-;(require 'elpy)
-;(elpy-enable)
-
-;(load-file "~/.emacs.d/modes/emacs-for-python/epy-init.el")
-
-(require 'python-django)
-(require 'pony-mode)
-
-(require 'python-pep8)
-(require 'python-pylint)
-
-(require 'ac-python)
 
 ;;Flycheck
 (require 'conf-flycheck)
@@ -88,64 +61,65 @@
   (when (file-regular-p file)
     (load file)))
 
-;; Aditionals Modes
-(load-file "~/.emacs.d/emacs/modes/column-marker.el")
-(load-file "~/.emacs.d/emacs/modes/css.el")
-(load-file "~/.emacs.d/emacs/modes/erc.el")
-(load-file "~/.emacs.d/emacs/modes/eshell.el")
-;(load-file "~/.emacs.d/emacs/modes/flymake.el")
-;(load-file "~/.emacs.d/emacs/modes/identica.el")
-(load-file "~/.emacs.d/emacs/modes/longlines.el")
-(load-file "~/.emacs.d/emacs/modes/magit.el")
-(load-file "~/.emacs.d/emacs/modes/mozrepl.el")
-(load-file "~/.emacs.d/emacs/modes/yasnippet.el")
-;(load-file "~/.emacs.d/emacs/modes/org.el")
-;(load-file "~/.emacs.d/emacs/modes/php.el")
-(load-file "~/.emacs.d/emacs/modes/tramp.el")
-(load-file "~/.emacs.d/emacs/modes/visual-regexp.el")
-(load-file "~/.emacs.d/emacs/modes/wordcount.el")
-(load-file "~/.emacs.d/emacs/modes/ido.el")
-(load-file "~/.emacs.d/emacs/modes/smex.el")
-(load-file "~/.emacs.d/emacs/modes/uniquify.el")
-(load-file "~/.emacs.d/emacs/modes/ediff.el")
-(load-file "~/.emacs.d/emacs/modes/ace-jump.el")
-(load-file "~/.emacs.d/emacs/modes/web-mode.el")
-(load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
-;(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
-(load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
-(require 'conf-tabbar)
-(require 'conf-ideskel)
-(require 'conf-popwin)
-(require 'conf-jedi)
-(require 'conf-buffer-management)
-(require 'conf-file-management)
-;(require 'conf-helm)
-(require 'conf-skewer)
-(require 'conf-projectile)
-(require 'conf-ibuffer)
-(require 'conf-dired)
-(require 'buffer-move)
+;; Load Modes
 (require 'conf-python)
-(require 'conf-auto-indent)
-(require 'conf-hideshow)
-(require 'conf-paredit)
-(require 'conf-perspective)
-(require 'conf-isearch)
-(require 'conf-hideshowvis)
-(require 'conf-highlight-symbol)
-;(require 'conf-mode-line)
-(require 'conf-highlight-indentation)
-(require 'conf-json)
+;; (load-file "~/.emacs.d/emacs/modes/column-marker.el")
+;; (load-file "~/.emacs.d/emacs/modes/css.el")
+;; (load-file "~/.emacs.d/emacs/modes/erc.el")
+;; (load-file "~/.emacs.d/emacs/modes/eshell.el")
+;; ;(load-file "~/.emacs.d/emacs/modes/flymake.el")
+;; ;(load-file "~/.emacs.d/emacs/modes/identica.el")
+;; (load-file "~/.emacs.d/emacs/modes/longlines.el")
+;; (load-file "~/.emacs.d/emacs/modes/magit.el")
+;; (load-file "~/.emacs.d/emacs/modes/mozrepl.el")
+;; (load-file "~/.emacs.d/emacs/modes/yasnippet.el")
+;; ;(load-file "~/.emacs.d/emacs/modes/org.el")
+;; ;(load-file "~/.emacs.d/emacs/modes/php.el")
+;; (load-file "~/.emacs.d/emacs/modes/tramp.el")
+;; (load-file "~/.emacs.d/emacs/modes/visual-regexp.el")
+;; (load-file "~/.emacs.d/emacs/modes/wordcount.el")
+;; (load-file "~/.emacs.d/emacs/modes/ido.el")
+;; (load-file "~/.emacs.d/emacs/modes/smex.el")
+;; (load-file "~/.emacs.d/emacs/modes/uniquify.el")
+;; (load-file "~/.emacs.d/emacs/modes/ediff.el")
+;; (load-file "~/.emacs.d/emacs/modes/ace-jump.el")
+;; (load-file "~/.emacs.d/emacs/modes/web-mode.el")
+;; (load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
+;; ;(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
+;; (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
+;; (require 'conf-tabbar)
+;; (require 'conf-ideskel)
+;; (require 'conf-popwin)
+;; (require 'conf-jedi)
+;; (require 'conf-buffer-management)
+;; (require 'conf-file-management)
+;; ;(require 'conf-helm)
+;; (require 'conf-skewer)
+;; (require 'conf-projectile)
+;; (require 'conf-ibuffer)
+;; (require 'conf-dired)
+;; (require 'buffer-move)
+;; (require 'conf-python)
+;; (require 'conf-auto-indent)
+;; (require 'conf-hideshow)
+;; (require 'conf-paredit)
+;; (require 'conf-perspective)
+;; (require 'conf-isearch)
+;; (require 'conf-hideshowvis)
+;; (require 'conf-highlight-symbol)
+;; ;(require 'conf-mode-line)
+;; (require 'conf-highlight-indentation)
+;; (require 'conf-json)
 
 ;; Test
-(require 'expand-region)
-(require 'delsel)
-(require 'jump-char)
-;(require 'eproject)
-(require 'smart-forward)
-(require 'change-inner)
-(require 'tabkey2)
-;(require 'multifiles)
+;; (require 'expand-region)
+;; (require 'delsel)
+;; (require 'jump-char)
+;; ;(require 'eproject)
+;; (require 'smart-forward)
+;; (require 'change-inner)
+;; (require 'tabkey2)
+;; ;(require 'multifiles)
 
 ;; fixme mode
 (require 'fixme-mode)
