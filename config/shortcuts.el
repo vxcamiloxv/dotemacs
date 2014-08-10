@@ -1,8 +1,10 @@
-;; ---------
-;; Generic keybindings
-;; ---------
+;;; package --- Conf shortcuts
+;;;
+;;; Commentary:
+;;; My list of keybindings
+;;;
+;;; Code:
 
-; (please move more here soon)
 (global-set-key (kbd "C-c fd") 'find-dired)
 (global-set-key (kbd "C-c d") 'diff-buffer-with-file)
 (global-set-key (kbd "C-c R") 'revert-buffer)
@@ -21,7 +23,6 @@
 
 
 ;; Life-hack keybindings
-
 (global-set-key (kbd "C-c lc") 'calendar)
 (global-set-key (kbd "C-c lp") 'plan)
 
@@ -32,7 +33,7 @@
 ;;Errors
 (global-set-key (kbd "s-<f2>") 'flycheck-list-errors)
 
-;; Basicas
+;; Basics
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "M-v") 'browse-kill-ring)
 (global-set-key (kbd "C-w") 'kill-ring-save)
@@ -230,4 +231,13 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (autoload 'magit-status "magit")
 
+;; Helm
+(global-set-key (kbd "C-c h") 'helm-mini)
+(global-set-key (kbd "M-ñ") 'helm-semantic-or-imenu)
+(global-set-key (kbd "C-x y") 'helm-show-kill-ring)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-c C-e") 'emacs-d-find-file)
+
 (provide 'shortcuts)
+
+;;; shortcuts.el ends here
