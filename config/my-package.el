@@ -1,8 +1,15 @@
-;; Install extensions if they're missing
+;;; package --- My Packages
+;;;
+;;; Commentary:
+;;; List all packages dependencies
+;;;
+;;; Code:
+
 (defvar distopico-packages
    '(s
      cl
      dash
+     org
      cl-lib
      es-lib
      magit
@@ -77,3 +84,5 @@
 )
 
 (provide 'my-package)
+
+;;; my-package.el ends here

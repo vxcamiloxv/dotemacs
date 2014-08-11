@@ -476,7 +476,7 @@ This uses DARK VOODOO MAGIC but it works"
 (defun cwebber-org-add-appointment ()
   (interactive)
   (org-set-property
-   "APPOINTMENT" 
+   "APPOINTMENT"
    (concat "<" (org-read-date t) ">")))
 
 ;; ------------

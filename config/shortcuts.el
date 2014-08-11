@@ -16,8 +16,8 @@
 (global-set-key (kbd "C-<tab>") 'ibuffer-other-window)
 (global-set-key (kbd "C-c b") 'list-buffers)
 
-;(global-set-key (kbd "M-t") 'dirtree-in-buffer)
-;(global-set-key (kbd "M-d") 'dirtree)
+;;(global-set-key (kbd "M-t") 'dirtree-in-buffer)
+;;(global-set-key (kbd "M-d") 'dirtree)
 
 (global-set-key [f9] 'nav-toggle)
 
@@ -27,10 +27,10 @@
 (global-set-key (kbd "C-c lp") 'plan)
 
 ;; Horizontal scroll
-;; (global-set-key (kbd "<mouse-6>") 'scroll-right)
-;; (global-set-key (kbd "<mouse-7>") 'scroll-left)
+;;(global-set-key (kbd "<mouse-6>") 'scroll-right)
+;;(global-set-key (kbd "<mouse-7>") 'scroll-left)
 
-;;Errors
+;; Errors
 (global-set-key (kbd "s-<f2>") 'flycheck-list-errors)
 
 ;; Basics
@@ -52,7 +52,7 @@
 
 (global-set-key  [f8] 'toggle-truncate-lines)
 (global-set-key (kbd "C-c l") 'goto-line)
-;(global-set-key (kbd "RET") 'newline-and-indent)
+;;(global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'kill-this-buffer)
 
 ;; window positioning
@@ -83,7 +83,7 @@
 (global-set-key (kbd "M-5") 'toggle-window-split) ; toggle window position
 (global-set-key (kbd "M-6") 'window-toggle-split-direction) ; toggle window position
 
-;;Django
+;; Django
 (global-set-key (kbd "C-x d") 'python-django-open-project)
 
 ;; Toogle Bars
@@ -132,19 +132,19 @@
 
 ;; window opacity utilities
 
- ;; C-+ will increase opacity (== decrease transparency)
+;; C-+ will increase opacity (== decrease transparency)
 (global-set-key (kbd "C-<kp-add>")
                 '(lambda()
                  (interactive)
                  (sa-opacity-modify)))
 
- ;; C-- will decrease opaccity (== increase transparency
+;; C-- will decrease opaccity (== increase transparency
 (global-set-key (kbd "C-<kp-subtract>")
                 '(lambda()
                  (interactive)
                  (sa-opacity-modify t)))
 
- ;; C-0 will returns the state to normal
+;; C-0 will returns the state to normal
 (global-set-key (kbd "C-=")
                 '(lambda()
                  (interactive)
@@ -158,7 +158,7 @@
 (global-set-key (kbd "s-y") 'bury-buffer)
 
 ;; Revert without any fuss
-;(global-set-key (kbd "M-<escape>") (λ (revert-buffer t t)))
+;;(global-set-key (kbd "M-<escape>") (λ (revert-buffer t t)))
 
 
 ;; Copy file path to kill ring
@@ -171,7 +171,7 @@
 (global-set-key (kbd "s-2") 'popwin:display-buffer)
 (global-set-key (kbd "s-1") 'popwin:one-window)
 
-;;Skewer
+;; Skewer
 (global-set-key (kbd "M-<f12>") 'run-skewer)
 (global-set-key (kbd "M-<f11>") 'skewer-start)
 (global-set-key (kbd "M-<f10>") 'skewer-demo)
@@ -183,7 +183,7 @@
 (global-set-key (kbd "C-<f8>") 'project-explorer-open)
 (global-set-key (kbd "C-<f7>") 'direx:jump-to-directory)
 
-;; smart-forward
+;; Smart-forward
 (global-set-key (kbd "M-<up>") 'smart-up)
 (global-set-key (kbd "M-<down>") 'smart-down)
 (global-set-key (kbd "M-<left>") 'smart-backward)
@@ -194,7 +194,7 @@
 (global-set-key (kbd "C-c C-n") 'cleanup-buffer)
 (global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
 
-;;YaSnippet
+;; YaSnippet
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "M-q") 'yas-expand)
@@ -237,6 +237,12 @@
 (global-set-key (kbd "C-x y") 'helm-show-kill-ring)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-c C-e") 'emacs-d-find-file)
+
+;; Org
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
 
 (provide 'shortcuts)
 
