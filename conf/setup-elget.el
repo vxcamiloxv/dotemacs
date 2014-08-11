@@ -28,10 +28,6 @@
               :pkgname "capitaomorte/yasnippet"
               :features "yasnippet"
               :compile "yasnippet.el")
-        (:name "yasnippet-licenses"
-              :description "yasnippet licenses"
-              :type git
-              :url "https://github.com/jonatkinson/yasnippet-licenses.git")
         (:name "visual-regexp"
                :description "Visual regexps"
                :type git
