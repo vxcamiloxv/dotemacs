@@ -105,8 +105,10 @@
 	  (lambda ()
 	      (ac-ispell-ac-setup)))
 
+
 (add-hook 'markdown-mode #'flyspell-mode)
 (add-hook 'text-mode-hook #'flyspell-mode)
+(add-hook 'org-mode-hook 'turn-on-font-lock)
 (add-hook 'before-save-hook 'py-autopep8-before-save)
 (add-hook 'before-save-hook 'gofmt-before-save)
 (add-hook 'before-save-hook 'web-beautify-html-buffer t t)
