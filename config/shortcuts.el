@@ -239,9 +239,9 @@
 (global-set-key (kbd "C-c C-e") 'emacs-d-find-file)
 
 ;; Org
-(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-c \C-l" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-c \C-b" 'org-iswitchb)
 
 
 (provide 'shortcuts)
