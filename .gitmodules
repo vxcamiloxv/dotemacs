@@ -43,3 +43,6 @@
 [submodule "snippets/yasmate"]
 	path = snippets/yasmate
 	url = https://github.com/capitaomorte/yasmate.git
+[submodule "snippets/text-mode/licenses"]
+	path = snippets/text-mode/licenses
+	url = https://github.com/jonatkinson/yasnippet-licenses.git
