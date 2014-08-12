@@ -30,6 +30,8 @@
      direx
      dired+
      dired-details+
+     helm
+     helm-projectile
      css-eldoc
      perspective
      yasnippet
