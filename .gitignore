@@ -28,6 +28,7 @@ history
 bookmarks
 ac-comphist.dat
 project-explorer-cache/
+node_modules/
 
 ### Emacs ###
 *~

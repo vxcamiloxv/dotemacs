@@ -1,18 +1,18 @@
 ;; General Paths
 (if (< emacs-major-version 24)
 
-(progn 
+(progn
 	(let ((base "~/.emacs.d"))
 	  (add-to-list 'load-path base)
 	  (dolist (f (directory-files base))
 	    (let ((name (concat base "/" f)))
-	      (when (and (file-directory-p name) 
+	      (when (and (file-directory-p name)
 	                 (not (equal f ".."))
 	                 (not (equal f ".")))
 	        (add-to-list 'load-path name)))))
 	)
 
-(progn	
+(progn
 	(require 'cl)
 	(require 'cl-lib)
 
@@ -33,8 +33,12 @@
 	)
 )
 
+;; Add cutoms exec-path
+(setenv "PATH" (concat (getenv "PATH") "~/.emacs.d/"))
+(setq exec-path (append exec-path '("~/.emacs.d/")))
+
 ;; Custom themes added to load-path
 ;; (when (= emacs-major-version 24)
 ;;  (add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/")))
- 
+
 (provide 'path)

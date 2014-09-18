@@ -37,6 +37,9 @@
 [submodule "snippets/yasmate"]
 	path = snippets/yasmate
 	url = https://github.com/capitaomorte/yasmate.git
-[submodule "snippets/text-mode/licenses"]
-	path = snippets/text-mode/licenses
+[submodule "snippets/extend-snippets/text-mode"]
+	path = snippets/extend-snippets/text-mode
 	url = https://github.com/jonatkinson/yasnippet-licenses.git
+[submodule "snippets/extend-snippets/django-mode"]
+	path = snippets/extend-snippets/django-mode
+	url = https://github.com/jonatkinson/yasnippet-django.git

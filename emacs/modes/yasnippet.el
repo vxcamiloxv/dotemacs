@@ -1,12 +1,11 @@
 (require 'yasnippet)
 
 (setq yas-snippet-dirs
-      '("~/.emacs.d/snippets/yas-snippets"   ;; personal snippets
-        "~/.emacs.d/snippets/yasnippet-snippets"  ; third party snippets
-        "~/.emacs.d/snippets/yasmate/snippets" ;; the yasmate collection
-        "~/.emacs.d/snippets"
-        "~/.emacs.d/snippets/django"
-        "~/.emacs.d/snippets/text-mode"
+      '("~/.emacs.d/snippets/my-snippets"           ;; personal snippets
+        "~/.emacs.d/snippets/yasnippet-snippets"    ;; third party snippets
+        "~/.emacs.d/snippets/yasmate/snippets"      ;; the yasmate collection
+        "~/.emacs.d/snippets/extend-snippets"       ;; Extend basic snippets
+        "~/.emacs.d/snippets"                       ;; Basic folder
         ))
 
 ;; Also putting hippie-expand here.  Maybe should be its own file..

@@ -34,7 +34,6 @@
      helm-projectile
      css-eldoc
      perspective
-     yasnippet
      smartparens
      projectile
      es-windows

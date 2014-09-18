@@ -86,13 +86,17 @@
 (defvar ido-cur-list nil)
 (defvar predicate nil)
 (defvar inherit-input-method nil)
+(defvar ido-context-switch-command nil)
 
 ;; Use ido everywhere
 (require 'ido-ubiquitous)
 (ido-ubiquitous-mode 1)
             
 (require 'ido-vertical-mode)
-(ido-vertical-mode)
+(ido-vertical-mode 1)
+;(setq ido-vertical-define-keys 'C-n-C-p-up-down)
+(setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
+
 
 ;; Fix ido-ubiquitous for newer packages
 (defmacro ido-ubiquitous-use-new-completing-read (cmd package)

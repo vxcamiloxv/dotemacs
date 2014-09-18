@@ -5,7 +5,7 @@
 (require 'setup-package)
 (require 'setup-elget)
 
-;;Theme 
+;;Theme
 (require 'base-color)
 (require 'conf-theme)
 

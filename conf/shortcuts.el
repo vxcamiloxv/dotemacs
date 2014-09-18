@@ -194,9 +194,9 @@
 (global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
 
 ;;YaSnippet
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-(define-key yas-minor-mode-map (kbd "M-q") 'yas-expand)
+;(define-key yas-minor-mode-map (kbd "<tab>") nil)
+;(define-key yas-minor-mode-map (kbd "TAB") nil)
+;(define-key yas-minor-mode-map (kbd "M-q") 'yas-expand)
 
 ;; Smartparens
 (global-set-key (kbd "C-<f6>") 'sp-select-next-thing)

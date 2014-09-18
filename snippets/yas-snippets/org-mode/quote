@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: Quote Block
-# --
-#+BEGIN_QUOTE
-$0
-#+END_QUOTE
