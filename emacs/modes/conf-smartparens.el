@@ -20,6 +20,16 @@
 (setq sp-show-enclosing-pair-commands t)
 (setq sp-highlight-current-sexp t)
 
+
+(defun sp-point-after-word-p (id action context)
+  "Return t if point is after a word, nil otherwise.  This
+predicate is only tested on \"insert\" action."
+  (when (eq action 'insert)
+    (save-excursion
+      (backward-char 1)
+      (looking-back "\\sw\\|\\s_"))))
+
+
 ;;; markdown-mode
 (sp-with-modes '(markdown-mode gfm-mode rst-mode)
   (sp-local-pair "*" "*" :bind "C-*")
@@ -33,7 +43,8 @@
 
 ;;; html-mode
 (sp-with-modes '(web-mode html-mode sgml-mode)
-  (sp-local-pair "<" ">"))
+  (sp-local-pair "<" ">")
+)
 
 ;;; php-mode
 ;(sp-with-modes '(html-mode web-mode php-mode)
@@ -41,9 +52,6 @@
 
 ;; (sp-with-modes '(html-mode web-mode django-mode)
 ;;   (sp-local-pair "%" "%"))
-
-(sp-with-modes '(php-mode web-mode)
-	(sp-local-tag "<" "<_>" "</_>" :transform 'sp-match-sgml-tags))
 
 ;;; lisp modes
 (sp-with-modes sp--lisp-modes

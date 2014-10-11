@@ -6,11 +6,11 @@
 (eval-after-load "flycheck"
   '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
 
-(setq flycheck-check-syntax-automatically '(save))
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
 
 (custom-set-variables
- '(flycheck-highlighting-mode (quote columns))
- '(flycheck-indication-mode (quote right-fringe))
+ '(flycheck-highlighting-mode 'symbols)
+ '(flycheck-indication-mode 'right-fringe)
 )
 
 (set-face-attribute 'flycheck-error nil :underline '(:style wave :color "Black1"))

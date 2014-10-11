@@ -349,13 +349,6 @@
 
 ; (global-set-key (kbd "C-c r") 'rename-buffer-with-directory)
 
-(defun blender-style ()
-  (interactive)
-  (c-set-style "bsd")
-  (setq indent-tabs-mode nil)
-  (setq tab-width 4)
-  (setq c-basic-offset 4))
-
 ;; En1arg3 y0ur w1|\|dow!!!
 (defun undo-or-shrink-horizontally ()
   "Either undo or shrink horizontally, depending on whether we're
@@ -484,18 +477,16 @@ in X or in a terminal"
 ;; Don't break lines for me, please
 (setq-default truncate-lines t)
 
-;; Compiled  lips files
-(defun byte-compile-init-dir ()
-  "Byte-compile all your dotfiles."
-  (interactive)
-  (byte-recompile-directory user-emacs-directory 0))
-
-(defun remove-elc-on-save ()
-  "If you're saving an elisp file, likely the .elc is no longer valid."
-  (add-hook 'after-save-hook
-            (lambda ()
-              (if (file-exists-p (concat buffer-file-name "c"))
-                  (delete-file (concat buffer-file-name "c"))))
-            nil
-            t))
+;; Remove .elc in save
 (add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
+
+
+;; ignore byte-compile warnings
+(setq byte-compile-warnings '(not nresolved
+				free-vars
+				callargs
+				redefine
+				obsolete
+				noruntime
+				cl-functions
+				interactive-only))

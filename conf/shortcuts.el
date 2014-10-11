@@ -10,7 +10,6 @@
 
 (global-set-key (kbd "C-<right>") 'next-buffer)
 (global-set-key (kbd "C-<left>") 'previous-buffer)
-(global-set-key (kbd "<backtab>") 'helm-buffers-list)
 (global-set-key (kbd "C-<tab>") 'ibuffer-other-window)
 (global-set-key (kbd "C-c b") 'list-buffers)
 
@@ -30,7 +29,7 @@
 ;; (global-set-key (kbd "<mouse-7>") 'scroll-left)
 
 ;;Errors
-(global-set-key (kbd "s-<f2>") 'flycheck-list-errors)
+(global-set-key (kbd "s-<f1>") 'flycheck-list-errors)
 
 ;; Basicas
 (global-set-key (kbd "C-s") 'save-buffer)
@@ -51,7 +50,6 @@
 
 (global-set-key  [f8] 'toggle-truncate-lines)
 (global-set-key (kbd "C-c l") 'goto-line)
-;(global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'kill-this-buffer)
 
 ;; window positioning
@@ -203,18 +201,43 @@
 
 ;; Recent Files
 (global-set-key (kbd "C-x r <down>") 'ido-recentf-open)
-(global-set-key (kbd "C-c C-f") 'helm-for-files)
-(global-set-key (kbd "C-c r <down>") 'helm-recentf)
+(global-set-key (kbd "C-c h f") 'helm-for-files)
+(global-set-key (kbd "C-c h r") 'helm-recentf)
+
+;; Helm
+(global-set-key (kbd "<backtab>") 'helm-buffers-list)
+(global-set-key (kbd "C-c h b") 'helm-buffers-list)
+(global-set-key (kbd "C-c h m") 'helm-imenu)
+(global-set-key (kbd "C-c h i") 'helm-mini)
+(global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
+(global-set-key (kbd "C-c h k") 'helm-show-kill-ring)
+(global-set-key (kbd "C-c h x") 'helm-M-x)
+(global-set-key (kbd "C-c h p") 'helm-projectile)
+
+;; Ido
+(global-set-key (kbd "C-c C-i r") 'ido-recentf-open)
+(global-set-key (kbd "C-c C-i s") 'ido-goto-symbol)
+(global-set-key (kbd "C-c C-i b") 'ido-switch-buffer)
+
+;; Imenu
+(global-set-key (kbd "C-c m") 'imenu)
 
 ;; Highlight
 (global-set-key (kbd "C-c C-o") 'highlight-symbol-occur)
 (global-set-key (kbd "C-c M-<right>") 'highlight-symbol-next-in-defun)
 (global-set-key (kbd "C-c M-<left>") 'highlight-symbol-prev-in-defun)
+(global-set-key (kbd "s-<f2>") 'auto-highlight-symbol-mode)
 (global-set-key (kbd "s-<f3>") 'highlight-symbol-at-point)
 (global-set-key (kbd "s-<f4>") 'highlight-symbol-prev)
 (global-set-key (kbd "s-<f5>") 'highlight-symbol-next)
 (global-set-key (kbd "s-<f6>") 'highlight-symbol-query-replace)
 (global-set-key (kbd "s-<f7>") 'unhighlight-regexp)
+
+;; Move-dup
+(global-set-key (kbd "M-<up>") 'md/move-lines-up)
+(global-set-key (kbd "M-<down>") 'md/move-lines-down)
+(global-set-key (kbd "M-s-<up>") 'md/duplicate-up)
+(global-set-key (kbd "M-s-<down>") 'md/duplicate-down)
 
 ;; Buffer
 (global-set-key (kbd "C-c o") 'switch-to-minibuffer)

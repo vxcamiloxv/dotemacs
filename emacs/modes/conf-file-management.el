@@ -9,6 +9,16 @@
 (setq recentf-auto-cleanup 'never)
 (setq recentf-max-saved-items 1000)
 
+(setq recentf-exclude
+(append recentf-exclude
+    '(
+    "/.emacs.d/el-get/" "~$" "/.autosaves/"
+    "/.emacs.d/elpa/" "/.emacs.bmk$"
+    "\\.ido.last$" "session\\.[a-f0-9]*$"
+    "\\.recentf" "/.emacs.d/TAGS"
+    )
+))
+
 ; saveplace - save position in files (http://whattheemacsd.com/init.el-03.html)
 (require 'saveplace)
 (setq-default save-place t)

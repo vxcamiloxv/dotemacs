@@ -30,6 +30,15 @@
 ;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 ;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
+; Moving and duplicating lines or rectangles
+(global-move-dup-mode t)
+
+;; Enable CEDET
+;(semantic-mode t) ;; Disable or bug with menu-bar-mode
+;(global-semantic-idle-completions-mode)
+;(global-semantic-decoration-mode)
+;(global-semantic-highlight-func-mode)
+;(global-semantic-show-unmatched-syntax-mode)
 
 ;, Horizontal scroll
 (put 'scroll-left 'disabled nil)
@@ -39,9 +48,9 @@
     (setq-default truncate-lines t) ; always truncate
   (progn
     (hscroll-global-mode t)
-    (setq hscroll-margin 1)
-    (setq hscroll-step 1)
-    (setq auto-hscroll-mode 1)
+    (setq hscroll-margin t)
+    (setq hscroll-step t)
+    (setq auto-hscroll-mode t)
     (setq automatic-hscrolling t)
     ))
 
@@ -81,7 +90,7 @@
  '(show-paren-mode 1)
  '(size-indication-mode t)
  '(inhibit-startup-screen t)
- ;'(cursor-type '(bar . 1))
+ '(cursor-type 'bar)
  '(blink-cursor-mode t)
  '(iswitchb-mode t)
  '(savehist-mode t nil (savehist))
@@ -220,22 +229,5 @@ This command is convenient when reading novel, documentation."
 ;; Whitespace style
 (setq whitespace-style '(trailing underline spaces tabs newline space-mark tab-mark newline-mark))
 
-;; Cursor according to Mode
-(defun set-cursor-according-to-mode ()
-  "change cursor color and type according to some minor modes."
-
-  (cond
-   ((memq major-mode '(python-mode php-mode emacs-lisp-mode
-                        sh-mode makefile-gmake-mode perl-mode 
-                        c-mode c++-mode django-mode python-django
-                        nxhtml-mode web-mode avascript-mode js-mode 
-                        js2-mode javascript js2-refactor emmet-mode 
-                        css-mode-hook css-mode))
-   (setq cursor-type 'bar))
-   ((string-equal "*" (substring (buffer-name) 0 1))
-   (setq cursor-type 'box))
-))
-
-(add-hook 'post-command-hook 'set-cursor-according-to-mode)
 
 (provide 'gui-config)

@@ -1,8 +1,6 @@
 # -*- mode: snippet -*-
 # contributor: David Miller <david@deadpansincerity.com>
 # group: django
-# name : {% for %}
+# name : extends
 # --
-{% for ${1:item} in ${2:object} %}
-   $0
-{% endfor %}
+{% extends '${1:base.html}' %}$0

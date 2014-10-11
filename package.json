@@ -28,7 +28,10 @@
   "preferGlobal": "true",
   "devDependencies": {},
   "dependencies": {
-    "jshint": "^2.5.5"
+    "csslint": "^0.10.0",
+    "js-beautify": "^1.5.1",
+    "jshint": "^2.5.5",
+    "jsonlint": "^1.6.2"
   },
   "keywords": [
     "emacs.d"

@@ -1,7 +1,13 @@
-# This was cloned from a TextMate bundle for yasnippet.
+# -*- coding: utf-8; mode: snippet -*-
+# name: model
+# group: django
+# contributor: David Miller <david@deadpansinceity.com>
 # --
-class ${1:Modelname}(models.Model):
-    $0
+class ${1:ClassName}(models.Model):
+    """
+    $2
+    """
+    $3
 
     def __unicode__(self):
-        return self.{$2:unicode_value}
+        return self

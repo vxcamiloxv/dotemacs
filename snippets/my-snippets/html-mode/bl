@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
 # contributor: David Miller <david@deadpansincerity.com>
 # group: django
-# name : {% for %}
+# name : {% ... %}
 # --
-{% for ${1:item} in ${2:object} %}
+{% block ${1:name} %}
    $0
-{% endfor %}
+{% endblock %}

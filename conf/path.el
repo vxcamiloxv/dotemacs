@@ -1,8 +1,11 @@
 ;; General Paths
+(defvar dotfiles-dir "~/.emacs.d"
+	  "The root Emacs Lisp source folder")
+
 (if (< emacs-major-version 24)
 
 (progn
-	(let ((base "~/.emacs.d"))
+	(let ((base dotfiles-dir))
 	  (add-to-list 'load-path base)
 	  (dolist (f (directory-files base))
 	    (let ((name (concat base "/" f)))
@@ -15,9 +18,6 @@
 (progn
 	(require 'cl)
 	(require 'cl-lib)
-
-	(defvar dotfiles-dir "~/.emacs.d"
-	  "The root Emacs Lisp source folder")
 
 	(add-to-list 'load-path dotfiles-dir)
 
@@ -34,8 +34,19 @@
 )
 
 ;; Add cutoms exec-path
-(setenv "PATH" (concat (getenv "PATH") "~/.emacs.d/"))
-(setq exec-path (append exec-path '("~/.emacs.d/")))
+(defvar my-exec-paths 
+    '(
+       "~/.emacs.d/node_modules/.bin"
+       "~/.emacs.d/.python-environments/default/bin"
+     ) 
+    "A list of custom bin paths"
+)
+ 
+;; (setenv "PATH" (mapconcat 'identity my-exec-paths  ":") )
+(setenv "PATH" (concat (getenv "PATH") ":" (mapconcat 'identity my-exec-paths ":") ))
+
+(setq exec-path (append exec-path my-exec-paths))
+
 
 ;; Custom themes added to load-path
 ;; (when (= emacs-major-version 24)

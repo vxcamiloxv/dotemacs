@@ -17,44 +17,42 @@
 
 ;; Auto-complete
 (require 'auto-complete)
-(global-auto-complete-mode t)
+(global-auto-complete-mode)
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories  "~/.emacs.d/ac-dict")
-(autoload 'auto-complete-mode "auto-complete" t)
 (ac-config-default)
 (ac-linum-workaround)
 ;(setq ac-delay 0.2)
 ;(setq ac-auto-show-menu 0.3)
-(setq-default ac-sources '(ac-source-yasnippet
-                           ac-source-abbrev
-                           ac-source-dictionary
-                           ac-source-words-in-same-mode-buffers
-                           ac-source-files-in-current-dir))
-;; Python IDE
-(autoload 'python-mode "python-mode.el" "Python mode." t)
-(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
-(add-hook 'python-mode-hook 'auto-complete-mode)
-(setq py-smart-indentation t)
+(setq ac-use-fuzzy t)
 
-;(package-initialize)
-;(require 'elpy)
-;(elpy-enable)
+(defvar distopico-ac-default
+   '(ac-source-yasnippet
+     ac-source-features
+     ;ac-source-abbrev
+     ac-source-dictionary
+     ac-source-imenu
+     ;ac-source-gtags
+     ;ac-source-semantic
+     ac-source-words-in-same-mode-buffers
+     ac-source-words-in-buffer
+     ac-source-files-in-current-dir
+))
+(setq-default ac-sources distopico-ac-default)
 
-;(load-file "~/.emacs.d/modes/emacs-for-python/epy-init.el")
 
-(require 'python-django)
+;; Django test
+
+;(require 'python-django)
 (require 'pony-mode)
-
-(require 'python-pep8)
-(require 'python-pylint)
-
-(require 'ac-python)
+;(add-to-list 'auto-mode-alist '("\\.dtpl$" . pony-tpl-mode))
 
 ;;Flycheck
 (require 'conf-flycheck)
 
 ;; Line Numeber
 (require 'conf-linum)
+
 
 ;; Auto Pair
 ;(require 'conf-autopair)
@@ -93,8 +91,6 @@
 (load-file "~/.emacs.d/emacs/modes/css.el")
 (load-file "~/.emacs.d/emacs/modes/erc.el")
 (load-file "~/.emacs.d/emacs/modes/eshell.el")
-;(load-file "~/.emacs.d/emacs/modes/flymake.el")
-;(load-file "~/.emacs.d/emacs/modes/identica.el")
 (load-file "~/.emacs.d/emacs/modes/longlines.el")
 (load-file "~/.emacs.d/emacs/modes/magit.el")
 (load-file "~/.emacs.d/emacs/modes/mozrepl.el")
@@ -133,20 +129,17 @@
 (require 'conf-isearch)
 (require 'conf-hideshowvis)
 (require 'conf-highlight-symbol)
+(require 'conf-rainbow)
 ;(require 'conf-mode-line)
 (require 'conf-highlight-indentation)
+(require 'conf-guide-key)
 (require 'conf-json)
 
 ;; Test
 (require 'expand-region)
 (require 'delsel)
 (require 'jump-char)
-;(require 'eproject)
 (require 'smart-forward)
 (require 'change-inner)
 (require 'tabkey2)
-;(require 'multifiles)
 
-;; fixme mode
-(require 'fixme-mode)
-(fixme-mode)

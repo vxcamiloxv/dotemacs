@@ -11,9 +11,8 @@
      icicles
      diminish
      move-text
-     python-pep8
-     python-pylint
      column-marker
+     web-beautify
      god-mode
      gist
      tabbar
@@ -33,6 +32,9 @@
      helm
      helm-projectile
      css-eldoc
+     less-css-mode
+     markdown-mode
+     skewer-less
      perspective
      smartparens
      projectile
@@ -42,9 +44,11 @@
      ido-at-point
      simple-httpd
      smart-forward
-     guide-key
+     move-dup
      nodejs-repl
      restclient
+     rainbow-identifiers
+     rainbow-delimiters
      ido-ubiquitous
      mouse-slider-mode
      highlight-escape-sequences
@@ -53,9 +57,6 @@
      git-commit-mode
      gitconfig-mode
      gitignore-mode
-     clojure-mode
-     cider
-     cider-tracing
      dropdown-list
      window-numbering
      smart-tabs-mode
@@ -64,9 +65,12 @@
      highlight-indentation
      find-file-in-project
      php-extras
+     php-auto-yasnippets
+     pony-mode
      ac-python
      ac-emmet
      ac-js2
+     js3-mode
      js2-mode
      js2-refactor
      json-mode

@@ -1,7 +1,8 @@
-# This was cloned from a TextMate bundle for yasnippet.
-#name : if
-#key : if
+# -*- mode: snippet -*-
+# contributor: David Miller <david@deadpansincerity.com>
+# group: django
+# name : {% if %}
 # --
-{% if $1 %}
-	$0
+{% if ${1:condition} %}
+
 {% endif %}

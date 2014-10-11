@@ -1,8 +1,6 @@
 # -*- mode: snippet -*-
 # contributor: David Miller <david@deadpansincerity.com>
+# name : blank null
 # group: django
-# name : {% for %}
 # --
-{% for ${1:item} in ${2:object} %}
-   $0
-{% endfor %}
+blank=True, null=True$0

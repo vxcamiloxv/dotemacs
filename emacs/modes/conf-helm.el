@@ -1,13 +1,17 @@
 (provide 'conf-helm)
 
 (require 'helm)
-(require 'helm-config)
-(helm-mode )
-(setq helm-input-idle-delay 0)
-(global-set-key (kbd "C-c h") 'helm-mini)
-(global-set-key (kbd "M-ñ") 'helm-semantic-or-imenu)
-(global-set-key (kbd "C-x y") 'helm-show-kill-ring)
-(global-set-key (kbd "M-x") 'helm-M-x)
+;(require 'helm-config)
+(helm-mode t)
+
+(setq helm-boring-buffer-regexp-list '("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf" "\\*monky-cmd-process\\*" "\\*epc con" "\\*Compile-Log\\*" "\\*monky-process\\*" "\\*CEDET CScope\\*" "\\*Messages\\*" "\\*Flycheck error" "\\*Elpy" "\\*elpy-rpc" "\\*magit"))
+(setq helm-boring-file-regexp-list '("\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$" "\\._darcs$" "\\.la$" "\\.o$" "~$" "\\.pyc$"
+				     "\\.elc$" "TAGS" "\#*\#" "\\.exe$" "\\.zip$" "\\.tar." "\\.rar$" "\\.7z$" "\\.jar$"
+				     "\\.img$" "\\.iso$" "\\.xlsx$" "\\.epub$" "\\.docx$"))
+
+(setq helm-ff-skip-boring-files t)
+(setq helm-move-to-line-cycle-in-source t)
+(setq helm-truncate-lines t)
 
 (defun emacs-d-find-file ()
   (interactive)
@@ -23,4 +27,6 @@
   (lexical-let ((d dir-name))
     (let ((hook (lambda  () (interactive) (helm-projectile-find-file-in-dir d))))
       (global-set-key modifier hook))))
+
+
 

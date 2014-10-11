@@ -1,5 +1,3 @@
-;;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -26,6 +24,14 @@
           :description "Visual regexps"
           :type git
           :url "https://github.com/benma/visual-regexp.el.git")
+   (:name "popwin"
+          :description "Popwin Mode"
+          :type git
+          :url "https://github.com/m2ym/popwin-el.git")
+   (:name "guide-key"
+          :description "Guide key bindings"
+          :type git
+          :url "https://github.com/kai2nenobu/guide-key.git")
    (:name "powerline"
           :description "Powerline"
           :type git
@@ -34,10 +40,6 @@
           :description "Python Django"
           :type git
           :url "https://github.com/fgallina/python-django.el.git")
-   (:name "django-python"
-          :description "Django-Python"
-          :type git
-          :url "https://github.com/myfreeweb/django-mode.git")
    (:name "emacs-for-python"
           :description "emacs-for-python"
           :type git
@@ -54,10 +56,6 @@
           :description "Multiple Cursors"
           :type git
           :url "https://github.com/emacsmirror/multiple-cursors.git")
-   (:name "pony-mode"
-          :description "Pony Mode"
-          :type git
-          :url "https://github.com/davidmiller/pony-mode")
    (:name "Project Explorer"
           :description "Project Explorer"
           :type git

@@ -74,7 +74,7 @@ Return a list of one element based on major mode."
      ((memq major-mode '(python-mode php-mode emacs-lisp-mode sh-mode makefile-gmake-mode perl-mode c-mode c++-mode django-mode python-django))
       "Programming"
       )
-     ((memq major-mode '(nxhtml-mode web-mode avascript-mode js-mode js2-mode javascript js2-refactor emmet-mode css-mode-hook css-mode))
+     ((memq major-mode '(nxhtml-mode web-mode avascript-mode js3-mode js-mode js2-mode javascript js2-refactor emmet-mode less-css-mode css-mode))
       "Web"
       )
      ((eq major-mode 'dired-mode)

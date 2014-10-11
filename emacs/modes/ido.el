@@ -1,12 +1,13 @@
 (ido-mode 1)
 
+(setq ido-max-prospects 200)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-use-filename-at-point 'guess)
 
 (setq ido-create-new-buffer 'always)
 (setq ido-file-extensions-order
-      '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".cfg" ".cnf"))
+      '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".js" ".conf"))
 
 ; Ignore object files
 (setq ido-ignore-extensions t)
@@ -70,15 +71,8 @@
           (add-to-list 'symbol-names name)
           (add-to-list 'name-and-pos (cons name position))))))))
 
-(global-set-key (kbd "\C-ci") 'ido-goto-symbol)
-
-
-;;Aditional
-(setq ido-max-prospects 200)
-
+;;Recent open
 (require 'ido-recentf-open)
-(recentf-mode 1)
-(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 
 ;; Fix Warning
 (defvar ido-cur-item nil)
@@ -88,10 +82,10 @@
 (defvar inherit-input-method nil)
 (defvar ido-context-switch-command nil)
 
-;; Use ido everywhere
+;; Use ido ubiquitous
 (require 'ido-ubiquitous)
 (ido-ubiquitous-mode 1)
-            
+
 (require 'ido-vertical-mode)
 (ido-vertical-mode 1)
 ;(setq ido-vertical-define-keys 'C-n-C-p-up-down)

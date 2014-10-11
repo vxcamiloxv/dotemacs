@@ -1,13 +1,13 @@
 ;(autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
 ;(autoload 'hideshowvis-symbols "hideshowvis" "Highlight foldable regions")
 
+(require 'hideshowvis)
+(hideshowvis-symbols)
+
 (autoload 'hideshowvis-minor-mode
   "hideshowvis"
   "Will indicate regions foldable with hideshow in the fringe."
   'interactive)
-
-(require 'hideshowvis)
-(hideshowvis-symbols)
 
   (add-to-list 'hs-special-modes-alist
          '(ruby-mode
@@ -20,6 +20,7 @@
                       'perl-mode-hook
                       'php-mode-hook
                       'html-mode-hook
+                      'web-mode-hook
                       'sgml-mode-hook
                       'multi-web-mode-hook
                       'python-mode-hook
@@ -27,7 +28,8 @@
                       'c-mode-hook
                       'java-mode-hook
                       'js-mode-hook
-		      'js2-mode-hook
+        		      'js2-mode-hook
+                      'js3-mode-hook
                       'css-mode-hook
                       'c++-mode-hook))
     (add-hook hook 'hideshowvis-enable))
