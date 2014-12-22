@@ -92,12 +92,14 @@
  '(inhibit-startup-screen t)
  '(cursor-type 'bar)
  '(blink-cursor-mode t)
- '(iswitchb-mode t)
+ ;'(iswitchb-mode t)
  '(savehist-mode t nil (savehist))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(windmove-wrap-around t)
+ '(enable-local-variables :all)
+ ;'(safe-local-variable-values '(engine . swig))
  )
- 
+
 ;; In emacs24
 (setq completion-styles '(partial-completion initials))
 (setq completion-pcm-complete-word-inserts-delimiters t)
@@ -111,7 +113,6 @@
  '(flycheck-warning-face ((t (:inherit warning :foreground "yellow1"))))
  '(completions-common-part ((t (:foreground "forest green"))))
  '(completions-first-difference ((t (:bold t :weight bold :foreground "salmon"))))
- '(minibuffer-prompt ((t (:foreground "dark cyan" :weight bold))))
  )
 
 ;; hostname and buffer-name in frame title

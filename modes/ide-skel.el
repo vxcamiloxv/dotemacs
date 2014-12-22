@@ -287,7 +287,7 @@
 (defun ide-skel-shine-color (color percent)
   (when (equal color "unspecified-bg")
     (setq color (if (< percent 0) "white" "black")))
-  (apply 'format "#%02x%02x%02x" 
+  (apply 'format "#%02x%02x%02x"
          (mapcar (lambda (value)
                    (min 65535 (max 0 (* (+ (/ value 650) percent) 650))))
                  (color-values color))))
@@ -856,7 +856,7 @@ static char * bottom_view_xpm[] = {
   (point 1)          ; point
   (mark nil)         ; the mark
   (edges nil)        ; (window-edges)
-  (cursor-priority nil) 
+  (cursor-priority nil)
   (fixed-size nil)
   (divisions nil))   ; children (list of division)
 
@@ -971,7 +971,7 @@ static char * bottom_view_xpm[] = {
 
 (defvar ide-skel-highlight-face 'ide-skel-highlight-face)
 (defface ide-skel-highlight-face
-  (list 
+  (list
    (list '((background light))
          (append (list :inherit 'variable-pitch :background (ide-skel-shine-color (face-background 'default) -70) :foreground (face-background 'default))
                  (when (>= emacs-major-version 22) '(:box (:style released-button)))))
@@ -1582,7 +1582,7 @@ The current buffer is always included."
         (mapcar #'(lambda (b)
 		    (let ((buffer-name (buffer-name b)))
 		      (cond
-		       ((and (ide-skel-side-view-buffer-p b) 
+		       ((and (ide-skel-side-view-buffer-p b)
 			     (with-current-buffer b
 			       (or (not ide-skel-tabbar-tab-label)
 				   (not ide-skel-tabbar-enabled))))
@@ -1738,7 +1738,7 @@ line."
     (ide-skel-tabbar-mwheel-scroll-backward event)))
 
 (defun ide-skel-tabbar-mwhell-mode-hook ()
-  (setq tabbar-mwheel-mode-map 
+  (setq tabbar-mwheel-mode-map
 	(let ((km (make-sparse-keymap)))
 	  (if (get 'mouse-wheel 'event-symbol-elements)
 	      ;; Use one generic mouse wheel event
@@ -1780,7 +1780,7 @@ line."
    tabbar-buffer-list-function 'ide-skel-tabbar-buffer-list
    tabbar-current-tabset-function 'ide-skel-tabbar-buffer-tabs
    tabbar-select-tab-function 'ide-skel-tabbar-select-tab
-   tabbar-inhibit-functions (append '(ide-skel-tabbar-inhibit-function) 
+   tabbar-inhibit-functions (append '(ide-skel-tabbar-inhibit-function)
 				    (delq 'tabbar-default-inhibit-function tabbar-inhibit-functions))
    tabbar-home-function 'ide-skel-tabbar-home-function
    tabbar-home-help-function (lambda () "Window menu"))
@@ -1812,7 +1812,7 @@ line."
   ; '(tabbar-unselected ((t (:inherit tabbar-default :background "gray72" :foreground "black" :box (:line-width 1 :color "black"))))))
   ;(ide-skel-tabbar-faces-adapt)
 )
-  
+
 ;(defun ide-skel-tabbar-faces-adapt ()
 ;  (ide-skel-shine-face-background 'tabbar-default +18)
 ;  (set-face-attribute 'tabbar-selected nil :background (face-background 'default))
@@ -1835,7 +1835,7 @@ line."
 ;;; Views
 
 (defun ide-skel-window-list ()
-  (delq nil 
+  (delq nil
 	(mapcar (lambda (win)
 		  (unless (memq win ide-skel-ommited-windows)
 		    win))
@@ -1885,10 +1885,10 @@ line."
 
 (defun ide-skel-win--add-division (win-node division &optional at-end-p)
   (setf (win-node-divisions win-node)
-	(if at-end-p 
+	(if at-end-p
 	    (reverse (cons division (reverse (win-node-divisions win-node))))
 	  (cons division (win-node-divisions win-node)))))
-      
+
 (defun ide-skel-win--remove-division (win-node &optional from-end-p)
   (let (result)
     (if from-end-p
@@ -2035,7 +2035,7 @@ line."
   (let* ((delta (ide-skel-get-win-width-delta window))
 	 (weight percentage)
 	 (new-size (cond
-		    ((integerp weight) (if (< weight 0) 
+		    ((integerp weight) (if (< weight 0)
 					   (if horizontal-p
 					       (+ (window-width window) weight)
 					     (+ (window-height window) weight))
@@ -2047,7 +2047,7 @@ line."
 			 (round (+ delta (* (window-width window) weight)))
 		       (round (* (window-height window) weight)))))))
        (split-window window new-size horizontal-p)))
-       
+
 (defun ide-skel-win--process-win-node (win win-node &optional window-proc)
   (let ((win2 win))
     (set-window-buffer win (win-node-buffer win-node))
@@ -2075,7 +2075,7 @@ line."
       (when (< (win-node-cursor-priority win-node) sel-priority)
 	(setq sel-window win
 	      sel-priority (win-node-cursor-priority win-node))))))
-  
+
 (defun ide-skel-win--synthesis (window win-node &optional window-proc)
   (let ((window-size-fixed nil)
 	sel-window
@@ -2212,7 +2212,7 @@ show buffer BUFFER.  SIZE can be integer (character count) or float 0.0 - 1.0."
       (setq ide-skel-left-view-window-width (window-width left-view-window)))
     (when right-view-window
       (setq ide-skel-right-view-window-width (window-width right-view-window)))))
-      
+
 (add-hook 'window-size-change-functions 'ide-skel-window-size-changed)
 
 (setq special-display-regexps ide-skel-bottom-view-buffer-names-regexps)
@@ -2450,7 +2450,7 @@ show buffer BUFFER.  SIZE can be integer (character count) or float 0.0 - 1.0."
 				       (imenu-window (when imenu-buffer (get-buffer-window imenu-buffer))))
 				  (when imenu-window
 				    (set-window-dedicated-p imenu-window nil)
-				    (set-window-buffer imenu-window ide-skel-default-right-view-buffer) 
+				    (set-window-buffer imenu-window ide-skel-default-right-view-buffer)
 				    (set-window-dedicated-p imenu-window t))
 				  (remhash (current-buffer) ide-skel-context-properties)
 				  (when imenu-buffer
@@ -2637,7 +2637,7 @@ show buffer BUFFER.  SIZE can be integer (character count) or float 0.0 - 1.0."
 	  (ide-skel-side-window-switch-to-buffer
 	   (symbol-value (intern (format "ide-skel-current-%s-view-window" name)))
 	   selected-buffer))))))
-	
+
 (defun ide-skel-show-left-view-window (&optional run-hooks)
   (interactive)
   (let ((right-view-window (ide-skel-get-right-view-window)))
@@ -2658,7 +2658,7 @@ show buffer BUFFER.  SIZE can be integer (character count) or float 0.0 - 1.0."
 		    (equal ide-skel-tabset-name tabset-name))
 	      win))
 	  (copy-list (window-list nil 1)))))
-  
+
 (defun ide-skel-get-left-view-window ()
   (ide-skel-get-side-view-window 'left))
 
@@ -2812,7 +2812,7 @@ show buffer BUFFER.  SIZE can be integer (character count) or float 0.0 - 1.0."
     (let* ((object (get-text-property (posn-point (event-start event)) 'object-to-display)))
       (beginning-of-line)
       (ide-skel-select-buffer object))))
-    
+
 (defun ide-skel-buffers-view-insert-buffer-list (label buffer-list)
   (setq label (propertize label 'face 'bold))
   (insert (format "%s\n" label))
@@ -2929,7 +2929,7 @@ TAB-CHANGE event is send only if selected buffer changed."
 	   (ide-skel-buffers-view-fill)
 	   (ide-skel-side-window-switch-to-buffer ide-skel-current-left-view-window ide-skel-buffer-list-buffer))))
   nil)
-      
+
   ;; (message "SIDE: %S, event: %S, rest: %S" side event list)
 
 (add-hook 'change-major-mode-hook (lambda () (setq ide-skel-buffer-list-tick t)))
@@ -3124,7 +3124,7 @@ TAB-CHANGE event is send only if selected buffer changed."
 	  (setcdr (last parent-widget) (cons widget nil)))))))
 
 (defun ide-skel-imenu-create-tree (hash prefix element)
-  (when element 
+  (when element
     (if (and (consp (cdr element))
 	     (listp (cadr element)))
 	(let* ((menu-title (car element))
@@ -3363,7 +3363,7 @@ TAB-CHANGE event is send only if selected buffer changed."
 	    :help-echo name
 	    :keymap tree-widget-button-keymap
 	    :tag name))))
-	
+
 (defun ide-skel-info-refresh (&optional show-top)
   (interactive)
   (with-current-buffer ide-skel-info-buffer
@@ -3439,31 +3439,34 @@ TAB-CHANGE event is send only if selected buffer changed."
 
 (defun ide-skel-dir-get-buffer-create ()
   (let ((buffer (ide-skel-get-side-view-buffer-create " Ide Skel Dirs"
-						      'left "Dirs" "Filesystem browser"
-						      (lambda (editor-buffer) t))))
+                                                      'left "Dirs" "Filesystem browser"
+                                                      (lambda (editor-buffer) t))))
     (with-current-buffer buffer
       (setq ide-skel-tabbar-menu-function
-	    (lambda ()
-	      (append
-	       (list
-		(list 'ide-skel-dir-refresh "Refresh" t)
-		(when (and (buffer-file-name ide-skel-current-editor-buffer)
-			   (fboundp 'ide-skel-proj-get-project-create)
-			   (funcall 'ide-skel-project-p (car (funcall 'ide-skel-proj-get-project-create (buffer-file-name ide-skel-current-editor-buffer)))))
-		  (list 'ide-skel-dir-project "Show project tree" t))
-		(list 'ide-skel-dir-home "Home" t)
-		(list 'ide-skel-dir-filesystem-root "/" t)
-		)))
-	    ide-skel-dir-open-paths (make-hash-table :test 'equal)
-	    ide-skel-dir-root-dir (file-truename (substitute-in-file-name "~")))
+            (lambda ()
+              (append
+               (list
+                (list 'ide-skel-dir-refresh "Refresh" t)
+                (when (and (buffer-file-name ide-skel-current-editor-buffer)
+                           (fboundp 'ide-skel-proj-get-project-create)
+                           (funcall 'ide-skel-project-p (car (funcall 'ide-skel-proj-get-project-create (buffer-file-name ide-skel-current-editor-buffer)))))
+                  (list 'ide-skel-dir-project "Show project tree" t))
+                (list 'ide-skel-dir-home "Home" t)
+                (list 'ide-skel-dir-filesystem-root "/" t)
+                )))
+            ide-skel-dir-open-paths (make-hash-table :test 'equal)
+            ide-skel-dir-root-dir (file-truename (substitute-in-file-name "~")))
       (add-hook 'tree-widget-after-toggle-functions (lambda (widget)
-						      (let ((path (widget-get widget :path)))
-							(when path
-							  (if (widget-get widget :open)
-							      (puthash path t ide-skel-dir-open-paths)
-							    (remhash path ide-skel-dir-open-paths)))))
-		nil t))
+                                                      (let ((path (widget-get widget :path)))
+                                                        (when path
+                                                          (if (widget-get widget :open)
+                                                              (puthash path t ide-skel-dir-open-paths)
+                                                            (remhash path ide-skel-dir-open-paths)))))
+                nil t))
     buffer))
+
+;; Fix Filenames with a dot at the end are ignored from the fileview.
+(defvar ide-skel-dir-show-hidden t)
 
 (defun ide-skel-dir-tree-list (dir)
   "Return the content of the directory DIR.
@@ -3471,7 +3474,11 @@ Return the list of components found, with sub-directories at the
 beginning of the list."
   (let (files dirs)
     (dolist (entry (directory-files dir 'full))
-      (unless (string-equal (substring entry -1) ".")
+      (setq fname (file-name-nondirectory entry))
+      (unless (or (string-equal fname ".")
+                  (string-equal fname "..")
+                  (and (not ide-skel-dir-show-hidden)
+                       (string-equal (substring fname 0 1) ".")))
         (if (file-directory-p entry)
             (push entry dirs)
           (push entry files))))
@@ -3667,11 +3674,11 @@ Return a list of child widgets."
 
 (defun ide-skel-proj-get-root (proj-or-dir)
   (when proj-or-dir
-    (directory-file-name (file-truename (substitute-in-file-name 
+    (directory-file-name (file-truename (substitute-in-file-name
 					 (if (ide-skel-project-p proj-or-dir)
 					     (ide-skel-project-root-path proj-or-dir)
 					   proj-or-dir))))))
-	  
+
 (defun ide-skel-proj-find-files (dir file-predicate &optional dir-predicate)
   "Return list of all qualified file paths in tree dir with root
 DIR, for which FILE-PREDICATE returns non-nil.  We will go into
@@ -3687,7 +3694,7 @@ directory only if DIR-PREDICATE returns non-nil or DIR-PREDICATE *is* nil."
 		(when (or (null file-predicate)
 			  (funcall file-predicate path))
 		  (push path result-list))))
-	    (delete (concat (file-name-as-directory dir) ".") 
+	    (delete (concat (file-name-as-directory dir) ".")
 		    (delete (concat (file-name-as-directory dir) "..")
 			    (directory-files dir t nil t))))
     result-list))
@@ -4016,4 +4023,3 @@ text files) and their name (without dir) matches NAME-REGEXP."
 (tabbar-mode 1)
 
 (provide 'ide-skel)
-

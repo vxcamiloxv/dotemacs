@@ -186,7 +186,7 @@ Including indent-buffer, which should not be called automatically on save."
 (defun todo-highlight ()
     "TODO/FIXME Highlighting"
     (font-lock-add-keywords nil
-                 '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 
+                 '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
                     1 font-lock-warning-face t)))
 )
 
@@ -205,12 +205,11 @@ file corresponding to the current buffer file, then recompile the file."
   (interactive)
   (byte-recompile-directory user-emacs-directory 0))
 
-(defun remove-elc-on-save ()
-  "If you're saving an elisp file, likely the .elc is no longer valid."
-  (add-hook 'after-save-hook
-            (lambda ()
-              (if (file-exists-p (concat buffer-file-name "c"))
-                  (delete-file (concat buffer-file-name "c"))))
-            nil
-            t))
-
+;; (defun remove-elc-on-save ()
+;;   "If you're saving an elisp file, likely the .elc is no longer valid."
+;;   (add-hook 'after-save-hook
+;;             (lambda ()
+;;               (if (file-exists-p (concat buffer-file-name "c"))
+;;                   (delete-file (concat buffer-file-name "c"))))
+;;             nil
+;;             t))

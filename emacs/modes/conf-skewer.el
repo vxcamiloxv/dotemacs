@@ -1,9 +1,9 @@
-;(require 'simple-httpd)
+                                        ;(require 'simple-httpd)
 
-(require 'skewer-mode)
+;(require 'skewer-mode)
 (require 'skewer-repl)
-(require 'skewer-html)
-(require 'skewer-css)
+;; (require 'skewer-html)
+;; (require 'skewer-css)
 
 (defun skewer-start ()
   (interactive)

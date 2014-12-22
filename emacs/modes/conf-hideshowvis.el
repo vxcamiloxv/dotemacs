@@ -20,7 +20,7 @@
                       'perl-mode-hook
                       'php-mode-hook
                       'html-mode-hook
-                      'web-mode-hook
+                      ;'web-mode-hook
                       'sgml-mode-hook
                       'multi-web-mode-hook
                       'python-mode-hook

@@ -2,9 +2,6 @@
 ;; ------
 ;; Require misc stuff
 ;; ------
-;(require 'nxml-mode)
-;(require 'python)
-;(require 'ruby-mode)
 (require 'epa-file)
 (require 'ibuffer)
 (epa-file-enable)
@@ -18,13 +15,13 @@
 ;; Create directory if no exist
 (when (and (not (file-directory-p backup-dir)))
                   (make-directory backup-dir t))
-                  
-;; Defined backup directory  
+
+;; Defined backup directory
     (setq backup-directory-alist (list (cons ".*" backup-dir)))
     (setq auto-save-list-file-prefix backup-dir)
     ;(setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
 
-        
+
 (setq backup-by-copying t    ; Don't delink hardlinks
       delete-old-versions t  ; Clean up the backups
       version-control t      ; Use version numbers on backups,
@@ -47,12 +44,6 @@
       (delete-file file))))
       )
 
-
-  
-;; Save point position between sessions
-(require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
 ;; ---------
 ;; Make debian/ubuntu work nicely with cvs emacs
@@ -157,7 +148,7 @@
 (setq visual-line-fringe-indicators '(t t))
 
 ; Don't switch to another frame with iswitchb
-(setq iswitchb-default-method 'samewindow)
+;(setq iswitchb-default-method 'samewindow)
 
 ; Use diff -u
 
@@ -368,27 +359,6 @@ in X or in a terminal"
       x-select-enable-primary t
       x-select-enable-clipboard t)
 
-;; ----------
-;; Mail stuff
-;; ----------
-
-(setq mail-source-movemail-program "/usr/bin/movemail")
-
-; Randomly choose mail signature
-(setq cwebber-mail-sigs
-      '("----------------------"
-        "http://distopico.info/"
-        "𝓒𝓱𝓻𝓲𝓼𝓽𝓸𝓹𝓱𝓮𝓻 𝓐𝓵𝓵𝓪𝓷 𝓦𝓮𝓫𝓫𝓮𝓻"))
-
-(defun cwebber-random-mail-sig ()
-  (nth (random (length cwebber-mail-sigs))
-       cwebber-mail-sigs))
-
-;(setq mail-signature 'cwebber-random-mail-sig)
-;(setq message-signature 'cwebber-random-mail-sig)
-(setq mail-signature nil)
-(setq message-signature nil)
-
 ;; ---------
 ;; Load some custom stuff
 ;; ---------
@@ -397,10 +367,6 @@ in X or in a terminal"
   (interactive)
   (insert "…"))
 (global-set-key (kbd "C-c ;") 'insert-ellipsis)
-
-; Always compose mail with gnus.  *ALWAYS*.
-(setq read-mail-command 'gnus)
-(setq mail-user-agent 'gnus-user-agent)
 
 ; Turn off tool-bar-mode, which is slow
 (call-interactively 'tool-bar-mode)
@@ -478,7 +444,7 @@ in X or in a terminal"
 (setq-default truncate-lines t)
 
 ;; Remove .elc in save
-(add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
+;(add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
 
 
 ;; ignore byte-compile warnings

@@ -18,17 +18,6 @@
        (naquadah-get-colors 'gradient-11)
        ))
 
-
-;(add-hook 'highlight-parentheses-mode-hook
-;          '(lambda ()
-;             (setq autopair-handle-action-fns
-;                   (append
-;					(if autopair-handle-action-fns
-;						autopair-handle-action-fns
-;					  '(autopair-default-handle-action))
-;					'((lambda (action pair pos-before)
-;						(hl-paren-color-update)))))))
-
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
   (lambda ()
@@ -39,7 +28,6 @@
 (setq show-paren-delay 0)
 (setq blink-matching-paren t)
 (setq show-paren-style 'mixed) 
-;(setq electric-pair-mode 1)
 (set-face-background 'show-paren-match "cyan")
 (set-face-foreground 'show-paren-match "#000000")
 

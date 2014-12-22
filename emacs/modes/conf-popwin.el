@@ -43,7 +43,7 @@
 
 ;;Terminal
 (require 'popwin-term)
-(push '(term-mode :position :top :height 10 :stick t) popwin:special-display-config)
+(push '(term-mode :position :bottom :height 10 :stick t) popwin:special-display-config)
 
 ;; Backtrace
 (push '("*Backtrace*" :height 0.3 ) popwin:special-display-config)
@@ -81,15 +81,11 @@
         ("*magit-process*" :noselect t :height 0.2 :width 80)
         ("\\*Slime Inspector.*" :regexp t :height 30)
         ("*Ido Completions*" :noselect t :height 0.3)
-        ;;("*eshell*" :height 0.3)
-        ("\\*ansi-term\\*.*" :regexp t :height 0.3)
-        ("*shell*" :height 0.3)
         (".*overtone.log" :regexp t :height 30)
         ("*gists*" :height 0.3)
         ("*sldb.*":regexp t :height 30)
         ("*Gofmt Errors*" :noselect t)
         ("\\*godoc*" :regexp t :height 30)
-        ;("*Shell Command Output*" :noselect t)
         ("*nrepl-error*" :height 20 :stick t)
         ("*nrepl-doc*" :height 20 :stick t)
         ("*nrepl-src*" :height 20 :stick t)
@@ -99,8 +95,11 @@
         ("*pytest*" :noselect t)
         ("*Python*" :stick t)
         ("*jedi:doc*" :noselect t)
+        ("*shell*" :height 0.3)
+        ("\\*ansi-term\\*.*" :regexp t :height 0.3)
+        ("\\*terminal\\*.*" :regexp t :height 0.3)
         )
-)
+      )
 
 (when (require 'popwin nil t)
   (setq anything-samewindow nil)
@@ -113,7 +112,28 @@
   (push '("*compilation*" :height 0.4 :noselect t :stick t) popwin:special-display-config)
   (push '("*Help*" :height 0.3 :stick t) popwin:special-display-config)
   (push '("*quickrun*" :height 0.3 :stick t) popwin:special-display-config)
-)
+  )
 
+(defun live-display-ansi ()
+  (interactive)
+  (popwin:display-buffer "*ansi-term*"))
+  
+  (defun popwin-term:ansi-term ()
+  (interactive)
+  (popwin:display-buffer-1
+   (or (get-buffer "*ansi-term*")
+       (save-window-excursion
+         (interactive) 
+         (ansi-term "/bin/bash")))
+   :default-config-keywords '(:position :bottom :height 10 :stick t)))
 
+ 
+  (defun popwin-term:multi-term ()
+  (interactive)
+  (popwin:display-buffer-1
+   (or (get-buffer "*terminal*")
+       (save-window-excursion
+         (call-interactively 'multi-term)))
+   :default-config-keywords '(:position :bottom :height 10 :stick t)))
+   
 (provide 'conf-popwin)

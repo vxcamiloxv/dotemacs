@@ -19,7 +19,7 @@
     )
 ))
 
-; saveplace - save position in files (http://whattheemacsd.com/init.el-03.html)
+; saveplace - save position in files
 (require 'saveplace)
 (setq-default save-place t)
 (setq save-place-file (in-emacs-d ".places"))

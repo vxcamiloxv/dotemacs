@@ -102,11 +102,11 @@
 (global-set-key (kbd "<M-mouse-4>") 'text-scale-decrease)
 
 ;; terminal
-(global-set-key
- (kbd "C-c t")
- (lambda () (interactive) (ansi-term "/bin/bash")))
-(global-set-key (kbd "C-x t") (lambda () (interactive) (popwin-term:term))
-)
+(global-set-key (kbd "C-c t") 'popwin-term:ansi-term)
+
+(global-set-key (kbd "C-x t") 'popwin-term:multi-term)
+;(global-set-key (kbd "C-x t")
+;    (lambda () (interactive) (popwin-term:term)))
 
 ;; Open shell with C-z
 (global-set-key (kbd "M-t") 'shell)
@@ -252,5 +252,8 @@
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)
 (autoload 'magit-status "magit")
+
+;; Mail
+(global-set-key (kbd "C-x M-m") 'mu4e)
 
 (provide 'shortcuts)

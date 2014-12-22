@@ -16,9 +16,7 @@
 (require 'conf-fringe)
 
 ;; Auto-complete
-(require 'auto-complete)
-(global-auto-complete-mode)
-(require 'auto-complete-config)
+(global-auto-complete-mode t)
 (add-to-list 'ac-dictionary-directories  "~/.emacs.d/ac-dict")
 (ac-config-default)
 (ac-linum-workaround)
@@ -27,17 +25,17 @@
 (setq ac-use-fuzzy t)
 
 (defvar distopico-ac-default
-   '(ac-source-yasnippet
-     ac-source-features
-     ;ac-source-abbrev
-     ac-source-dictionary
-     ac-source-imenu
-     ;ac-source-gtags
-     ;ac-source-semantic
-     ac-source-words-in-same-mode-buffers
-     ac-source-words-in-buffer
-     ac-source-files-in-current-dir
-))
+  '(;ac-source-yasnippet
+    ac-source-features
+    ac-source-abbrev
+    ac-source-dictionary
+    ac-source-imenu
+    ;;ac-source-gtags
+    ;;ac-source-semantic
+    ac-source-words-in-same-mode-buffers
+    ac-source-words-in-buffer
+    ac-source-files-in-current-dir
+    ))
 (setq-default ac-sources distopico-ac-default)
 
 
@@ -57,7 +55,9 @@
 ;; Auto Pair
 ;(require 'conf-autopair)
 ;(autopair-global-mode 0)
-(require 'conf-smartparens)
+;(require 'conf-smartparens)
+(electric-pair-mode 1)
+(global-aggressive-indent-mode 1)
 
 ;; Install a custom mode line
 (require 'conf-powerline)
@@ -87,6 +87,7 @@
     (load file)))
 
 ;; Aditionals Modes
+(load-file "~/.emacs.d/emacs/modes/mu4e.el")
 (load-file "~/.emacs.d/emacs/modes/column-marker.el")
 (load-file "~/.emacs.d/emacs/modes/css.el")
 (load-file "~/.emacs.d/emacs/modes/erc.el")
@@ -124,8 +125,8 @@
 (require 'conf-python)
 (require 'conf-auto-indent)
 (require 'conf-hideshow)
-(require 'conf-paredit)
-(require 'conf-perspective)
+;(require 'conf-paredit)
+;(require 'conf-perspective)
 (require 'conf-isearch)
 (require 'conf-hideshowvis)
 (require 'conf-highlight-symbol)
@@ -143,3 +144,8 @@
 (require 'change-inner)
 (require 'tabkey2)
 
+;;TODO
+;; Warning (initialization): Your `load-path' seems to contain
+;; your `.emacs.d' directory: ~/.emacs.d/
+;; This is likely to cause problems...
+;; Consider using a subdirectory instead, e.g.: /home/distopico/.emacs.d/lisp
