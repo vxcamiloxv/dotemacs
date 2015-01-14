@@ -31,7 +31,8 @@
              (setq n (1+ n))
              (get-buffer bufname)))
     (switch-to-buffer (get-buffer-create bufname))
-    (emacs-lisp-mode)
+    (funcall initial-major-mode)
+    (insert initial-scratch-message)
     ))
 
 (defun split-window-right-and-move-there-dammit ()
@@ -88,6 +89,31 @@
              (set-window-start w1 s2)
              (set-window-start w2 s1)
              (setq i (1+ i)))))))
+
+(defun get-buffers-with-major-mode (mode)
+  "Returns list of buffers with major-mode MODE or derived from MODE."
+  (cl-loop
+   for buf in (buffer-list)
+   if (and (buffer-live-p buf)
+           (with-current-buffer buf
+             (derived-mode-p mode)))
+   collect buf))
+
+(defun transpose-windows (arg)
+  "Transpose the buffers shown in two windows."
+  (interactive "p")
+  (let ((selector (if (>= arg 0)
+                      'next-window
+                    'previous-window)))
+    (while (/= arg 0)
+      (let ((this-win (window-buffer))
+            (next-win (window-buffer (funcall selector))))
+        (set-window-buffer (selected-window) next-win)
+        (set-window-buffer (funcall selector) this-win)
+        (select-window (funcall selector)))
+      (setq arg (if (plusp arg)
+                    (1- arg)
+                  (1+ arg))))))
 
 (defun ido-imenu ()
   "Update the imenu index and then use ido to select a symbol to navigate to.
@@ -159,6 +185,7 @@ Including indent-buffer, which should not be called automatically on save."
 (defun shorter-file-name (file-name)
   (s-chop-prefix user-home-directory file-name))
 
+;;Recent open
 (defun recentf--file-cons (file-name)
   (cons (shorter-file-name file-name) file-name))
 
@@ -169,6 +196,14 @@ Including indent-buffer, which should not be called automatically on save."
          (files (mapcar 'car recent-files))
          (file (completing-read "Choose recent file: " files)))
     (find-file (cdr (assoc file recent-files)))))
+
+(defun ido-recentf-open ()
+  "Use `ido-completing-read' to \\[find-file] a recent file"
+  (interactive)
+  (recentf-cleanup)
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
 
 (defun select-active-minibuffer ()
   "Make the active minibuffer the selected window."

@@ -29,39 +29,46 @@
 (load-theme 'tron t)
 ;(load-theme 'tron-legacy t t)
 
-(defcustom default-gui-theme 'tron
+(defvar default-gui-theme 'tron
   "default gui theme")
 
-(defcustom default-cli-theme 'tron-legacy
+(defvar default-cli-theme 'nil
   "default cli theme")
 
 (defun toggle-cli-theme ()
 (interactive)
 (let ((is-gui (find default-gui-theme custom-enabled-themes)))
-    (dolist (theme custom-enabled-themes)
-      (disable-theme theme))
-    (load-theme (if is-gui default-cli-theme default-gui-theme))))
+  (dolist (theme custom-enabled-themes)
+    (disable-theme theme))
+  ;; load-theme
+  (if is-gui
+      (progn
+        (if (not (eq default-cli-theme 'nil))
+            (enable-theme default-cli-theme)))
+    (progn
+      (if (not (eq default-gui-theme 'nil))
+          (enable-theme default-gui-theme)))
+    )))
 
-(global-set-key (kbd "M-p") 'toggle-cli-theme)  
-                               
-(defun pick-color-theme (frame)
-(select-frame frame)
-(if (window-system frame)
-    (progn  
-      (disable-theme default-cli-theme) 
-      (enable-theme default-gui-theme)
-    )
-  (progn  
-    (disable-theme default-gui-theme) 
-    (disable-theme default-cli-theme)
-   )))
+(global-set-key (kbd "M-p") 'toggle-cli-theme)
 
-(add-hook 'after-make-frame-functions 'pick-color-theme)
-      
+(defun custom-theme-cli (frame)
+  (select-frame frame)
+  (if (window-system frame)
+      (progn
+        (disable-theme default-cli-theme)
+        (enable-theme default-gui-theme)
+        )
+    (progn
+      (disable-theme default-gui-theme)
+      (disable-theme default-cli-theme)
+      )))
+
+(add-hook 'after-make-frame-functions 'custom-theme-cli)
+
 ;; For when started with emacs or emacs -nw rather than emacs --daemon
 (if window-system
   	(disable-theme default-cli-theme)
 	(enable-theme default-gui-theme))
-    
 
 (provide 'conf-theme)

@@ -1,6 +1,7 @@
 (provide 'conf-powerline)
 
 (require 'powerline)
+(require 'conf-mu4e)
 
 ;;(call-interactively 'display-time-mode)
 
@@ -41,8 +42,12 @@
                                      (funcall separator-left face1 face2)
                                      (powerline-raw '(:eval (format " Proj[%s]"
                                                                     (projectile-project-name))) face2)
-                                     (powerline-vc face2 'r)))
-                          (rhs (list (powerline-raw global-mode-string face2 'r)
+                                     (powerline-vc face2 'r)
+                                     ))
+                          (rhs (list (powerline-raw distopico:mu4e-mode-line face2 'r)
+                                     (powerline-raw "•" face2 'r)
+                                     (powerline-raw global-mode-string face2 'r)
+                                     ;;(powerline-raw pomodoro-display-string face2 'r)
                                      (funcall separator-right face2 face1)
                                      (powerline-raw "%2l" face1 'l)
                                      (powerline-raw ":" face1 'l)
@@ -68,4 +73,3 @@
  '(powerline-active1 ((t (:foreground "#f9f9f9" :background "#123550" :box nil))))
  '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil))))
  )
-;;#112230

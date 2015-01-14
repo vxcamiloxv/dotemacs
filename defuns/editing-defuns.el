@@ -218,12 +218,22 @@ region-end is used."
   (back-to-indentation)
   (kill-line))
 
+(defun select-current-line ()
+  "Select the current line"
+  (interactive)
+  (end-of-line) ; move to end of line
+  (set-mark (line-beginning-position)))
+
 (defun camelize-buffer ()
   (interactive)
   (goto-char 0)
   (ignore-errors
     (replace-next-underscore-with-camel 0))
   (goto-char 0))
+
+(defun my/comment-or-uncomment-current-line ()
+  (interactive)
+  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
 
 ;; kill all comments in buffer
 (defun comment-kill-all ()

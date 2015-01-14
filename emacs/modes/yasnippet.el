@@ -75,4 +75,11 @@
 
 (define-key yas-minor-mode-map (kbd "M-ñ")     'yas-ido-expand)
 
+;; Fix org-mode
+(add-hook 'org-mode-hook
+                    (lambda ()
+                      (org-set-local 'yas/trigger-key [tab])
+                      (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+                            
+
 (yas-global-mode 1)

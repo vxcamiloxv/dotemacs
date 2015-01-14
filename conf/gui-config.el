@@ -1,19 +1,49 @@
-;; navigate thru windows using M-<arrow>
-(windmove-default-keybindings 'meta)
-
 ;; Context Menu
 (load-file "~/.emacs.d/modes/context-menu.el")
-
-;; Smooth Scroll
 
 ;; Smoother scrolling (no multiline jumps.)
 (setq scroll-margin 1
       scroll-step 1
-	  scroll-conservatively 10000
-	  scroll-up-aggressively 0.01
-	  scroll-down-aggressively 0.01
+      scroll-conservatively 10000
+      scroll-up-aggressively 0.01
+      scroll-down-aggressively 0.01
       scroll-preserve-screen-position 1)
 
+
+;; Initial buffer
+(setq initial-major-mode 'org-mode
+      initial-scratch-message (purecopy "\
+# Scratch!
+# --------
+# This buffer is for notes you don't want to save, etc.
+# If you want to create a file, visit that file with C-x C-f."))
+
+(with-current-buffer "*scratch*"
+  (if (not (eq major-mode initial-major-mode))
+      (funcall initial-major-mode)))
+
+;; If the *scratch* buffer is killed, recreate it automatically
+;; FROM: Morten Welind: http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
+(save-excursion
+  (set-buffer (get-buffer-create "*scratch*"))
+  (funcall initial-major-mode)
+  (make-local-variable 'kill-buffer-query-functions)
+  (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer))
+
+(defun kill-scratch-buffer ()
+  ;; The next line is just in case someone calls this manually
+  (set-buffer (get-buffer-create "*scratch*"))
+  ;; Kill the current (*scratch*) buffer
+  (remove-hook 'kill-buffer-query-functions 'kill-scratch-buffer)
+  (kill-buffer (current-buffer))
+  ;; Make a brand new *scratch* buffer
+  (set-buffer (get-buffer-create "*scratch*"))
+  (funcall initial-major-mode)
+  (insert initial-scratch-message)
+  (make-local-variable 'kill-buffer-query-functions)
+  (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer)
+  ;; Since we killed it, don't let caller do that.
+  nil)
 
 (defun gcm-scroll-down ()
   (interactive)
@@ -26,21 +56,22 @@
 (global-set-key [next] 'gcm-scroll-down)
 (global-set-key [prior]  'gcm-scroll-up)
 
-;(setq scroll-step 1)
-;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+;;(setq scroll-step 1)
+;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+;;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
-; Moving and duplicating lines or rectangles
+;; Moving and duplicating lines or rectangles
+(require 'move-dup)
 (global-move-dup-mode t)
 
 ;; Enable CEDET
-;(semantic-mode t) ;; Disable or bug with menu-bar-mode
-;(global-semantic-idle-completions-mode)
-;(global-semantic-decoration-mode)
-;(global-semantic-highlight-func-mode)
-;(global-semantic-show-unmatched-syntax-mode)
+;;(semantic-mode t) ;; Disable or bug with menu-bar-mode
+;;(global-semantic-idle-completions-mode)
+;;(global-semantic-decoration-mode)
+;;(global-semantic-highlight-func-mode)
+;;(global-semantic-show-unmatched-syntax-mode)
 
-;, Horizontal scroll
+;; Horizontal scroll
 (put 'scroll-left 'disabled nil)
 (put 'scroll-right 'disabled nil)
 
@@ -55,7 +86,7 @@
     ))
 
 ;; Keep cursor away from edges when scrolling up/down
-;(require 'smooth-scrolling)
+                                        ;(require 'smooth-scrolling)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -63,7 +94,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(current-language-environment "UTF-8")
- ;'(Linum-format "%7i ")
+ '(system-time-locale "C")
+ ;;'(Linum-format "%7i ")
  '(column-number-mode t)
  '(menu-bar-mode nil)
  '(cua-enable-cua-keys nil)
@@ -82,7 +114,7 @@
  '(jshint-configuration-path "~/.jshintrc")
  '(linum-delay nil)
  '(linum-eager t)
- ;'(visible-bell t)
+                                        ;'(visible-bell t)
  '(sml-modeline-mode 1)
  '(window-left-margin 0)
  '(display-time-mode t)
@@ -92,12 +124,13 @@
  '(inhibit-startup-screen t)
  '(cursor-type 'bar)
  '(blink-cursor-mode t)
- ;'(iswitchb-mode t)
+ ;;'(iswitchb-mode t)
  '(savehist-mode t nil (savehist))
+ '(savehist-file (in-emacs-d ".cache/history"))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(windmove-wrap-around t)
  '(enable-local-variables :all)
- ;'(safe-local-variable-values '(engine . swig))
+ ;;'(safe-local-variable-values '(engine . swig))
  )
 
 ;; In emacs24
@@ -122,15 +155,14 @@
                   (format "%s:%s"
                           (or (file-remote-p default-directory 'host) system-name)
                           (buffer-name)))))
-  ;(format "%s@%s:%s"
-  ;      (or (file-remote-p default-directory 'user) user-login-name)
+                                        ;(format "%s@%s:%s"
+                                        ;      (or (file-remote-p default-directory 'user) user-login-name)
 
-  ;(setq frame-title-format '("%b %I %+%@%t%Z %m %n %e"))
+                                        ;(setq frame-title-format '("%b %I %+%@%t%Z %m %n %e"))
 
 ;; window opacity utilities
 (require 'nifty)
-
-;(mouse-avoidance-mode 'animate)
+;;(mouse-avoidance-mode 'animate)
 
 ;;; Code:
 (setq debug-on-error t
@@ -163,10 +195,25 @@ This command is convenient when reading novel, documentation."
       (set-window-margins nil 0 (- (window-body-width) fill-column))
     (set-window-margins nil 0 0) ) )
 
+;; Ignore errors
+(defun ignore-error-wrapper (fn)
+  "Funtion return new function that ignore errors.
+   The function wraps a function with `ignore-errors' macro."
+  (lexical-let ((fn fn))
+    (lambda ()
+      (interactive)
+      (ignore-errors
+        (funcall fn)))))
 
-;-----------------------------------------------------------------
-; Indentation
-;-----------------------------------------------------------------
+;; Move bewteen windows
+(global-set-key (kbd "M-s <left>") (ignore-error-wrapper 'windmove-left))
+(global-set-key (kbd "M-s <right>") (ignore-error-wrapper 'windmove-right))
+(global-set-key (kbd "M-s <up>") (ignore-error-wrapper 'windmove-up))
+(global-set-key (kbd "M-s <down>") (ignore-error-wrapper 'windmove-down))
+
+;;-----------------------------------------------------------------
+;; Indentation
+;;-----------------------------------------------------------------
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq c-basic-offset 4)
@@ -176,9 +223,9 @@ This command is convenient when reading novel, documentation."
 (setq py-indent-offset 4)
 (setq-default tab-stop-list (number-sequence 4 120 4))
 
-;----------------
-; MenuBar+
-;-----------------
+;;----------------
+;; MenuBar+
+;;-----------------
 (require 'menu-bar+)
 (eval-after-load "menu-bar" '(require 'menu-bar+))
 
@@ -201,8 +248,8 @@ This command is convenient when reading novel, documentation."
 (eval-after-load "guide-key" '(diminish 'guide-key-mode))
 
 ;; Windows Number
-;(require 'window-numbering)
-;(window-numbering-mode)
+;;(require 'window-numbering)
+;;(window-numbering-mode)
 
 ;; allow "restricted" features
 (put 'set-goal-column 'disabled nil)

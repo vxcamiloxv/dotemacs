@@ -1,25 +1,19 @@
 ### general ###
 .*
 
-# Logs and databases #
-######################
+### Logs and databases
 *.log
 *.sql
 *.sqlite
 
-# Other files       #
-#####################
-projectile-bookmarks.eld
+### Other files
 session.*
 *.cache
 places
 .smex-items
-savefile/
 semanticdb
 auto-save-list
 recentf
-url/
-var/
 savehist
 saveplace
 eproject.lst
@@ -27,8 +21,15 @@ ede-projects.el
 history
 bookmarks
 ac-comphist.dat
-project-explorer-cache/
+projectile-bookmarks.eld
+projectile.cache
+
+### Other Dirs
+var/
+url/
+savefile/
 node_modules/
+project-explorer-cache/
 
 ### Emacs ###
 *~
@@ -39,6 +40,7 @@ node_modules/
 auto-save-list
 tramp
 .\#*
+.cache/
 
 # Org-mode
 .org-id-locations

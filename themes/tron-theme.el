@@ -68,6 +68,9 @@
 (deftheme tron
   "Create 2012-01-01")
 
+(require 'ezimage)
+
+
 (custom-theme-set-variables
  'tron
 
@@ -83,18 +86,18 @@
  '(bold-italic ((t (:inherit bold :slant italic))))
  '(cursor ((t (:background "#15abc3"))))
  '(default ((t (:background "#00080A" :foreground "#15abc3"))))
-                                        ;'(fringe ((t (:background "#000000" :foreground "#15abc3"))))
  '(header-line ((t (:inherit mode-line))))
-                                        ;'(linum ((t (:inherit default))))
  '(mouse ((t (:foreground "#e0c625"))))
  '(region ((t (:background "#e0c625" :foreground "#000000"))))
-                                        ;'(show-paren-match-face ((t (:weight bold))))
- '(highlight ((t (:background "#001214" ))))
- ;; Line Numbers (linum-mode) Default height 100
+ '(highlight ((t (:background "#001E21" ))))
+ '(hl-line ((t (:background "gray13" ))))
  '(linum ((t (:background "#00080A" :foreground "#005050" :height 70))))
+ ;;'(show-paren-match-face ((t (:weight bold))))
+ ;;'(fringe ((t (:background "#000000" :foreground "#15abc3"))))
+ ;;'(linum ((t (:inherit default))))
 
  ;; Cursorg
-                                        ;'(cursor ((t (:foreground "#ffffff" :background "#013d4c"))))
+ ;;'(cursor ((t (:foreground "#ffffff" :background "#013d4c"))))
 
  ;; Margin Fringes
  '(fringe ((t ( :background "#001214" :foreground "#006060" ))))
@@ -166,9 +169,9 @@
  '(magit-item-mark ((t (:background "#808080"))))
 
  ;; mode-line
-                                        ;'(mode-line ((t (:foreground "#e0c625" :background nil :box nil))))
-                                        ;'(mode-line-buffer-id ((t (:weight bold))))
-                                        ;'(mode-line-inactive ((t (:foreground "#15abc3" :background nil :box nil))))
+ ;;'(mode-line ((t (:foreground "#e0c625" :background nil :box nil))))
+ ;;'(mode-line-buffer-id ((t (:weight bold))))
+ ;;'(mode-line-inactive ((t (:foreground "#15abc3" :background nil :box nil))))
  '(mode-line ((t (:background "#0b2c2d" :box nil :foreground "#0cd6e4" :height 90))))
  '(mode-line-inactive ((t (:weight light :box nil :background "#002329" :foreground "#ffffff" :inherit (mode-line)))))
  '(mode-line-emphasis ((t (:weight bold))))
@@ -185,16 +188,6 @@
  '(rainbow-delimiters-depth-7-face ((t (:foreground "#51d7f0"))))
  '(rainbow-delimiters-depth-8-face ((t (:foreground "#be9194"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "#94949c"))))
-
- ;; rainbow-delimiters
- '(org-level-1 ((t (:inherit rainbow-delimiters-depth-1-face :weight bold))))
- '(org-level-2 ((t (:inherit rainbow-delimiters-depth-2-face :weight bold))))
- '(org-level-3 ((t (:inherit rainbow-delimiters-depth-3-face :weight bold))))
- '(org-level-4 ((t (:inherit rainbow-delimiters-depth-4-face :weight bold))))
- '(org-level-5 ((t (:inherit rainbow-delimiters-depth-5-face :weight bold))))
- '(org-level-6 ((t (:inherit rainbow-delimiters-depth-6-face :weight bold))))
- '(org-level-7 ((t (:inherit rainbow-delimiters-depth-7-face :weight bold))))
- '(org-level-8 ((t (:inherit rainbow-delimiters-depth-8-face :weight bold))))
 
  ;; rst
  '(rst-level-1-face ((t (:inherit rainbow-delimiters-depth-1-face :weight bold))))
@@ -243,10 +236,51 @@
  ;; Helm
  '(helm-selection ((t (:background "#15abc3" :foreground "#001214"))))
 
+ ;; Org
+ '(org-hide ((t (:foreground "#2e3436"))))
+ '(org-level-1 ((t (:inherit rainbow-delimiters-depth-1-face :weight bold :height 1.4))))
+ '(org-level-2 ((t (:inherit rainbow-delimiters-depth-2-face :weight bold :height 1.2))))
+ '(org-level-3 ((t (:inherit rainbow-delimiters-depth-3-face :weight bold :height 1.1))))
+ '(org-level-4 ((t (:inherit rainbow-delimiters-depth-4-face :weight bold :height 1.0))))
+ '(org-level-5 ((t (:inherit rainbow-delimiters-depth-5-face :weight bold))))
+ '(org-level-6 ((t (:inherit rainbow-delimiters-depth-6-face :weight bold))))
+ '(org-level-7 ((t (:inherit rainbow-delimiters-depth-7-face :weight bold))))
+ '(org-level-8 ((t (:inherit rainbow-delimiters-depth-8-face :weight bold))))
+ ;; '(org-level-1 ((t (:bold t :foreground "dodger blue" :height 1.5))))
+ ;; '(org-level-2 ((t (:bold t :foreground "#6ac214" :height 1.2))))
+ ;; '(org-level-3 ((t (:bold t :foreground "#edd400" :height 1.1))))
+ ;; '(org-level-4 ((t (:bold t :foreground "tomato" :height 1.0))))
+
+ '(org-date ((t (:underline t :foreground "Cyan"))))
+ '(org-footnote  ((t (:underline t ))))
+ '(org-link ((t (:foreground "skyblue2" :background "#2e3436"))))
+ ;; '(org-special-keyword ((t (:foreground "brown"))))
+ '(org-verbatim ((t (:foreground "#eeeeec" :underline t :slant italic))))
+ '(org-block ((t (:foreground "#bbbbbc"))))
+ '(org-tag ((t (:inherit default :foreground "skyblue2" :background "#2e3436"))))
+ '(org-quote ((t (:inherit org-block :slant italic))))
+ '(org-verse ((t (:inherit org-block :slant italic))))
+ '(org-todo ((t (:bold t :foreground "Red"))))
+ '(org-done ((t (:bold t :foreground "PaleGreen"))))
+
+ ;; Company-mode
+ '(company-tooltip ((t (:inherit default :background "#0b2c2d" :foreground "#0cd6e4"))))
+ '(company-scrollbar-bg ((t (:background "#001214"))))
+ '(company-scrollbar-fg ((t (:background "#00475a"))))
+ '(company-tooltip-selection ((t (:inherit font-lock-function-name-face :background "#0cd6e4" :foreground "#0b2c2d"))))
+ '(company-tooltip-mouse ((t (:inherit (company-tooltip-selection)))))
+ '(company-tooltip-common ((t (:inherit font-lock-constant-face :background "#0cd6e4" :foreground "#0b2c2d"))))
+ '(company-tooltip-common-selection ((t (:background "#001E21" :foreground "#ffffff"))))
+ '(company-tooltip-annotation ((t (:foreground "#f0dfff" :inherit (company-tooltip)))))
+
  ;; Secondary region
  '(secondary-selection ((((class color) (min-colors 88) (background dark)) (:background "#029cdc" :foreground "#011d2c"))))
  )
 
+;; Icons
+(defezimage img:tron-email
+  ((:type xpm :file "icons/unread-mail.xpm" :ascent center))
+  "Image used for unread mail.")
 
 (provide-theme 'tron)
 

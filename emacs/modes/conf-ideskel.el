@@ -2,8 +2,8 @@
 
   (require 'tabbar)
   (require 'ide-skel)
-  
-  (setq ide-skel-tabbar-enabled nil)         
+
+  (setq ide-skel-tabbar-enabled nil)
 
   ;; optional, but useful - see Emacs Manual
   (icomplete-mode)

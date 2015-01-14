@@ -1,16 +1,20 @@
 ;; Install extensions if they're missing
 (defvar distopico-packages
-  '(s
+  '(
+    ;; Basic
+    s
     cl
     dash
     cl-lib
     es-lib
-    magit
+    log4e
+    auto-package-update
+
+    ;; Ui
     iedit
     paredit
     icicles
     diminish
-    move-text
     column-marker
     god-mode
     gist
@@ -30,6 +34,7 @@
     dired+
     dired-details+
     helm
+    helm-swoop
     helm-projectile
     perspective
     smartparens
@@ -40,9 +45,6 @@
     ido-vertical-mode
     ido-at-point
     simple-httpd
-    smart-forward
-    move-dup
-    restclient
     rainbow-mode
     rainbow-identifiers
     rainbow-delimiters
@@ -61,13 +63,19 @@
     browse-kill-ring
     highlight-indentation
     find-file-in-project
+
     ;; Programing
+    emr
     nodejs-repl
+    php-mode
     php-extras
     php-auto-yasnippets
     pony-mode
     ac-python
+
     ;; Web
+    magit
+    restclient
     ac-js2
     ac-emmet
     js2-mode
@@ -77,13 +85,31 @@
     less-css-mode
     markdown-mode
     web-beautify
+    smart-forward
+    emacs-eclim
 
     ;; Utils
+    anzu
+    company
     iy-go-to-char
     tabkey2
+    quickrun
     fic-mode
     multi-term
+    expand-region
+    ace-jump-mode
+    ace-jump-zap
+    ace-isearch
+    multiple-cursors
     mu4e-maildirs-extension
+    auto-async-byte-compile
+
+    ;; Org
+    org-plus-contrib
+    org-projectile
+    org-pomodoro
+    org-toc
+    org-ac
 
     ;; Dubug
     skewer-mode

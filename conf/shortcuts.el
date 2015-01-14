@@ -2,29 +2,22 @@
 ;; Generic keybindings
 ;; ---------
 
-; (please move more here soon)
-(global-set-key (kbd "C-c fd") 'find-dired)
+(global-set-key (kbd "C-c g d") 'find-dired)
 (global-set-key (kbd "C-c d") 'diff-buffer-with-file)
 (global-set-key (kbd "C-c R") 'revert-buffer)
 (global-set-key (kbd "s-i") 'dired-omit-mode)
 
-(global-set-key (kbd "C-<right>") 'next-buffer)
-(global-set-key (kbd "C-<left>") 'previous-buffer)
-(global-set-key (kbd "C-<tab>") 'ibuffer-other-window)
-(global-set-key (kbd "C-c b") 'list-buffers)
+(global-set-key [C-M-next] 'next-buffer)
+(global-set-key [C-M-prior] 'previous-buffer)
+(global-set-key (kbd "C-c b") 'ibuffer-other-window)
+(global-set-key (kbd "M-s-t") 'toggle-truncate-lines)
 
-;(global-set-key (kbd "M-t") 'dirtree-in-buffer)
-;(global-set-key (kbd "M-d") 'dirtree)
+(global-set-key [f9] 'distopico:nav-toggle)
+(global-set-key [f8] 'distopico:neotree-toggle)
 
-(global-set-key [f9] 'nav-toggle)
+(global-set-key (kbd "C-c l c") 'calendar)
 
-
-;; Life-hack keybindings
-
-(global-set-key (kbd "C-c lc") 'calendar)
-(global-set-key (kbd "C-c lp") 'plan)
-
-;; Horizontal scroll
+;; Horizontal scrollb
 ;; (global-set-key (kbd "<mouse-6>") 'scroll-right)
 ;; (global-set-key (kbd "<mouse-7>") 'scroll-left)
 
@@ -34,23 +27,56 @@
 ;; Basicas
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "M-v") 'browse-kill-ring)
-(global-set-key (kbd "C-w") 'kill-ring-save)
-(global-set-key (kbd "M-w") 'kill-region)
-(global-set-key (kbd "C-f") 'isearch-forward)
-(global-set-key (kbd "C-s-r") 'isearch-backward)
-
-(global-set-key (kbd "C-S-x") 'clipboard-kill-region) ; cut.
-(global-set-key (kbd "C-c c") 'clipboard-kill-ring-save) ; copy.
-(global-set-key (kbd "C-v") 'clipboard-yank) ; paste.
+(global-set-key (kbd "M-w") 'kill-ring-save) ;; or clipboard-kill-ring-save?
+(global-set-key (kbd "C-w") 'kill-region) ;; or clipboard-kill-region?
+(global-set-key (kbd "C-v") 'clipboard-yank)
 (global-set-key [mouse-2] 'clipboard-kill-ring-save)
 
-(defalias 'redo 'undo-tree-redo)
-(global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-S-z") 'redo)
+(global-set-key (kbd "C-c v") 'copy-to-end-of-line)
+(global-set-key (kbd "C-c C") 'copy-whole-lines)
+(global-set-key (kbd "C-c c") 'copy-line)
 
-(global-set-key  [f8] 'toggle-truncate-lines)
-(global-set-key (kbd "C-c l") 'goto-line)
+(global-set-key (kbd "C-f") 'isearch-forward)
+(global-set-key (kbd "C-s-f") 'isearch-backward)
+(global-set-key (kbd "C-c f o") 'isearch-occur)
+
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-s-z") 'undo-tree-redo)
+
+(global-set-key (kbd "C-c g l") 'goto-line)
 (global-set-key (kbd "C-q") 'kill-this-buffer)
+
+;; Copy file path to kill ring
+(global-set-key (kbd "C-x M-w") 'copy-current-file-path)
+
+;; Query replace to anzu-replace
+(global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
+(global-set-key [remap query-replace] 'anzu-query-replace)
+(global-set-key (kbd "M-s-%") 'anzu-query-replace-at-cursor)
+
+;; Actions
+(global-set-key (kbd "C-c a <right>") 'select-current-line)
+(global-set-key (kbd "C-c a r") 'er/expand-region)
+(global-set-key (kbd "C-c a w") 'er/mark-word)
+(global-set-key (kbd "C-c a c") 'er/mark-comment)
+
+;; Ace
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(global-set-key (kbd "M-z") 'ace-jump-zap-up-to-char)
+(global-set-key (kbd "C-M-z") 'ace-jump-zap-to-char)
+
+;; JUMP
+;; "C-u C-c SPC" ==> ace-jump-char-mode
+;; "C-u C-u C-c SPC" ==> ace-jump-line-mode
+;; "C-<SPC>" ==> Set the mark at point, and activate it
+;; "C-<SPC> C-<SPC>" ==> Set the mark, pushing it onto the mark ring, without activating it.
+;; "C-x C-x" ==> then move point where the mark used to be
+;; "C-u C-<SPC>" ==> Move point to where the mark was, and restore the mark from the ring of former marks.
+
+;; Cleanup buffer.
+(global-set-key (kbd "C-c n") 'cleanup-buffer)
+(global-set-key (kbd "C-c C-n") 'cleanup-buffer)
+(global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
 
 ;; window positioning
 (global-set-key (kbd "s-?") 'enlarge-window)
@@ -58,10 +84,10 @@
 (global-set-key (kbd "s-+") 'enlarge-window-horizontally)
 (global-set-key (kbd "s--") 'shrink-window-horizontally)
 
-(global-set-key (kbd "<C-s-up>")     'buf-move-up)
-(global-set-key (kbd "<C-s-down>")   'buf-move-down)
-(global-set-key (kbd "<C-s-left>")   'buf-move-left)
-(global-set-key (kbd "<C-s-right>")  'buf-move-right)
+(global-set-key (kbd "<C-s-up>") 'buf-move-up)
+(global-set-key (kbd "<C-s-down>") 'buf-move-down)
+(global-set-key (kbd "<C-s-left>") 'buf-move-left)
+(global-set-key (kbd "<C-s-right>") 'buf-move-right)
 
 ;; window configuration
 (global-set-key (kbd "C-x j") 'jump-to-register)
@@ -80,8 +106,34 @@
 (global-set-key (kbd "M-5") 'toggle-window-split) ; toggle window position
 (global-set-key (kbd "M-6") 'window-toggle-split-direction) ; toggle window position
 
+;; zooming
+(global-set-key (kbd "<M-mouse-5>") 'text-scale-increase)
+(global-set-key (kbd "<M-mouse-4>") 'text-scale-decrease)
+(global-set-key (kbd "<C-M-mouse-1>") 'text-scale-adjust)
+
+;; Tabbar
+(global-set-key (kbd "C-1") (lambda () (interactive) (switch-tabbar 1)))
+(global-set-key (kbd "C-2") (lambda () (interactive) (switch-tabbar 2)))
+(global-set-key (kbd "C-3") (lambda () (interactive) (switch-tabbar 3)))
+(global-set-key (kbd "C-4") (lambda () (interactive) (switch-tabbar 4)))
+(global-set-key (kbd "C-5") (lambda () (interactive) (switch-tabbar 5)))
+(global-set-key (kbd "C-6") (lambda () (interactive) (switch-tabbar 6)))
+(global-set-key (kbd "C-7") (lambda () (interactive) (switch-tabbar 7)))
+(global-set-key (kbd "C-8") (lambda () (interactive) (switch-tabbar 8)))
+(global-set-key (kbd "C-9") (lambda () (interactive) (switch-tabbar 9)))
+(global-set-key (kbd "C-0") (lambda () (interactive) (switch-tabbar -1)))
+
+(global-set-key (kbd "C-<right>") 'tabbar-forward-tab)
+(global-set-key (kbd "C-<left>") 'tabbar-backward-tab)
+(global-set-key (kbd "C-x <right>") 'tabbar-forward-group)
+(global-set-key (kbd "C-x <left>") 'tabbar-backward-group)
+
+(global-set-key (kbd "C-M-g") 'toggle-tabbar-mode)
+(global-set-key (kbd "M-g") 'tabbar-switch-to-grouping-by-dir)
+(global-set-key (kbd "M-G") 'tabbar-switch-to-default-grouping)
+
 ;;Django
-(global-set-key (kbd "C-x d") 'python-django-open-project)
+(global-set-key (kbd "C-x p d") 'python-django-open-project)
 
 ;; Toogle Bars
 (global-set-key (kbd "C-<f1>") 'tool-bar-mode)
@@ -97,27 +149,21 @@
 ;; misc
 (global-set-key (kbd "C-`") 'rename-buffer)
 
-;; zooming
-(global-set-key (kbd "<M-mouse-5>") 'text-scale-increase)
-(global-set-key (kbd "<M-mouse-4>") 'text-scale-decrease)
-
 ;; terminal
 (global-set-key (kbd "C-c t") 'popwin-term:ansi-term)
 
 (global-set-key (kbd "C-x t") 'popwin-term:multi-term)
-;(global-set-key (kbd "C-x t")
-;    (lambda () (interactive) (popwin-term:term)))
+;;(global-set-key (kbd "C-x t")
+;;    (lambda () (interactive) (popwin-term:term)))
 
-;; Open shell with C-z
-(global-set-key (kbd "M-t") 'shell)
+;; Shell
+(global-set-key (kbd "M-s s") 'shell)
+(global-set-key (kbd "M-s e") 'eshell)
 
 ;; Browse URLs with C-x /
 (global-set-key (kbd "C-x /") 'browse-url)
 
 ;; commenting/uncommenting
-(defun my/comment-or-uncomment-current-line ()
-  (interactive)
-  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
 (global-set-key (kbd "C-x C-;") 'my/comment-or-uncomment-current-line)
 
 ;; Error jumping
@@ -129,23 +175,23 @@
 
 ;; window opacity utilities
 
- ;; C-+ will increase opacity (== decrease transparency)
+;; C-+ will increase opacity (== decrease transparency)
 (global-set-key (kbd "C-<kp-add>")
                 '(lambda()
-                 (interactive)
-                 (sa-opacity-modify)))
+                   (interactive)
+                   (sa-opacity-modify)))
 
- ;; C-- will decrease opaccity (== increase transparency
+;; C-- will decrease opaccity (== increase transparency
 (global-set-key (kbd "C-<kp-subtract>")
                 '(lambda()
-                 (interactive)
-                 (sa-opacity-modify t)))
+                   (interactive)
+                   (sa-opacity-modify t)))
 
- ;; C-0 will returns the state to normal
+;; C-0 will returns the state to normal
 (global-set-key (kbd "C-=")
                 '(lambda()
-                 (interactive)
-                 (modify-frame-parameters nil `((alpha . 100)))))
+                   (interactive)
+                   (modify-frame-parameters nil `((alpha . 100)))))
 
 
 ;; toggle two most recent buffers
@@ -155,18 +201,13 @@
 (global-set-key (kbd "s-y") 'bury-buffer)
 
 ;; Revert without any fuss
-;(global-set-key (kbd "M-<escape>") (λ (revert-buffer t t)))
+;;(global-set-key (kbd "M-<escape>") (λ (revert-buffer t t)))
 
-
-;; Copy file path to kill ring
-(global-set-key (kbd "C-x M-w") 'copy-current-file-path)
+;; Emcas refactor
+(define-key prog-mode-map (kbd "M-RET") 'emr-show-refactor-menu)
 
 ;; PopWin
 (global-set-key (kbd "C-<escape>") 'popwin:close-popup-window)
-(global-set-key (kbd "s-4") 'popwin:popup-buffer)
-(global-set-key (kbd "s-3") 'popwin:popup-last-buffer)
-(global-set-key (kbd "s-2") 'popwin:display-buffer)
-(global-set-key (kbd "s-1") 'popwin:one-window)
 
 ;;Skewer
 (global-set-key (kbd "M-<f12>") 'run-skewer)
@@ -181,20 +222,20 @@
 (global-set-key (kbd "C-<f7>") 'direx:jump-to-directory)
 
 ;; smart-forward
-(global-set-key (kbd "M-<up>") 'smart-up)
-(global-set-key (kbd "M-<down>") 'smart-down)
-(global-set-key (kbd "M-<left>") 'smart-backward)
-(global-set-key (kbd "M-<right>") 'smart-forward)
+(global-set-key (kbd "C-x M-<up>") 'smart-up)
+(global-set-key (kbd "C-x M-<down>") 'smart-down)
+(global-set-key (kbd "C-x M-<left>") 'smart-backward)
+(global-set-key (kbd "C-x M-<right>") 'smart-forward)
 
 ;; Perform general cleanup.
 (global-set-key (kbd "C-c n") 'cleanup-buffer)
 (global-set-key (kbd "C-c C-n") 'cleanup-buffer)
-(global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
+(global-set-key (kbd "C-c C-b") 'delete-blank-lines)
 
 ;;YaSnippet
-;(define-key yas-minor-mode-map (kbd "<tab>") nil)
-;(define-key yas-minor-mode-map (kbd "TAB") nil)
-;(define-key yas-minor-mode-map (kbd "M-q") 'yas-expand)
+;;(define-key yas-minor-mode-map (kbd "<tab>") nil)
+;;(define-key yas-minor-mode-map (kbd "TAB") nil)
+;;(define-key yas-minor-mode-map (kbd "M-q") 'yas-expand)
 
 ;; Smartparens
 (global-set-key (kbd "C-<f6>") 'sp-select-next-thing)
@@ -209,10 +250,13 @@
 (global-set-key (kbd "C-c h b") 'helm-buffers-list)
 (global-set-key (kbd "C-c h m") 'helm-imenu)
 (global-set-key (kbd "C-c h i") 'helm-mini)
-(global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
+(global-set-key (kbd "C-c h I") 'helm-swoop-from-isearch)
+(global-set-key (kbd "C-c h s") 'helm-swoop)
+(global-set-key (kbd "C-c h S") 'helm-semantic-or-imenu)
 (global-set-key (kbd "C-c h k") 'helm-show-kill-ring)
 (global-set-key (kbd "C-c h x") 'helm-M-x)
 (global-set-key (kbd "C-c h p") 'helm-projectile)
+(global-set-key (kbd "C-c h y") 'helm-show-kill-ring)
 
 ;; Ido
 (global-set-key (kbd "C-c C-i r") 'ido-recentf-open)
@@ -221,6 +265,7 @@
 
 ;; Imenu
 (global-set-key (kbd "C-c m") 'imenu)
+(global-set-key (kbd "C-c i") 'ido-imenu)
 
 ;; Highlight
 (global-set-key (kbd "C-c C-o") 'highlight-symbol-occur)
@@ -234,17 +279,17 @@
 (global-set-key (kbd "s-<f7>") 'unhighlight-regexp)
 
 ;; Move-dup
-(global-set-key (kbd "M-<up>") 'md/move-lines-up)
-(global-set-key (kbd "M-<down>") 'md/move-lines-down)
-(global-set-key (kbd "M-s-<up>") 'md/duplicate-up)
-(global-set-key (kbd "M-s-<down>") 'md/duplicate-down)
+(global-set-key (kbd "M-s-<up>") 'md/move-lines-up)
+(global-set-key (kbd "M-s-<down>") 'md/move-lines-down)
+(global-set-key (kbd "M-s-<left>") 'md/duplicate-up)
+(global-set-key (kbd "M-s-<right>") 'md/duplicate-down)
 
 ;; Buffer
-(global-set-key (kbd "C-c o") 'switch-to-minibuffer)
+(global-set-key (kbd "C-x o") 'switch-to-minibuffer)
 (global-set-key (kbd "<f5>") 'select-active-minibuffe)
 
 ;; Go to char
-(global-set-key (kbd "C-c f") 'iy-go-to-char)
+(global-set-key (kbd "C-c g g") 'iy-go-to-char)
 (global-set-key (kbd "C-c F") 'iy-go-to-char-backward)
 (global-set-key (kbd "C-c ;") 'iy-go-to-or-up-to-continue)
 (global-set-key (kbd "C-c ,") 'iy-go-to-or-up-to-continue-backward)
@@ -254,6 +299,34 @@
 (autoload 'magit-status "magit")
 
 ;; Mail
-(global-set-key (kbd "C-x M-m") 'mu4e)
+(global-set-key (kbd "C-x M-m") 'distopico:mu4e-open)
+
+;; Pomodoro
+(global-set-key (kbd "C-c M-p p") 'pomodoro)
+(global-set-key (kbd "C-c M-p k") 'pomodoro-stop)
+(global-set-key (kbd "C-c M-p c") 'pomodoro-out)
+
+;; Org
+(define-key global-map (kbd "C-c o")
+  (let ((map (make-sparse-keymap)))
+    (define-key map "f" 'find-org-file)
+    (define-key map "a" 'distopico:org-show-agenda)
+    (define-key map "v" 'org-agenda)
+    (define-key map "A" 'org-agenda-list)
+    (define-key map "c" 'org-capture)
+    (define-key map "C" 'org-clock-goto)
+    (define-key map "p" 'pomodoro-org)
+    (define-key map "P" 'org-projectile:project-todo-completing-read)
+    (define-key map "r" 'org-refile)
+    (define-key map "R" 'distopico:org-capture-refile-and-jump)
+    (define-key map "n" 'org-annotate-file)
+    (define-key map "d" 'distopico:open-diary)
+    (define-key map "l" 'org-store-link)
+    (define-key map "L" 'org-insert-link-global)
+    (define-key map "o" 'org-open-at-point-global)
+    (define-key map "b" 'distopico:org-tree-to-indirect-buffer-renamed)
+    (define-key map "q" 'bury-buffer)
+    map))
+
 
 (provide 'shortcuts)

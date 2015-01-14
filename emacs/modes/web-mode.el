@@ -191,7 +191,7 @@
                     ac-source-words-in-buffer
                     ac-source-files-in-current-dir
         ))
-        ("html" . ( ;ac-source-emmet-html-aliases 
+        ("html" . ( ;ac-source-emmet-html-aliases
                     ;ac-source-emmet-html-snippets
                     ;ac-source-yasnippet
                     ac-source-abbrev
@@ -202,7 +202,7 @@
                     ac-source-words-in-buffer
                     ac-source-files-in-current-dir
                   ))
-        ("css" . (  ac-source-css-property 
+        ("css" . (  ac-source-css-property
                     ;ac-source-emmet-css-snippets
                     ;ac-source-yasnippet
                     ac-source-abbrev

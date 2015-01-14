@@ -10,9 +10,6 @@
 [submodule "themes/emacs-color-theme-solarized"]
 	path = themes/emacs-color-theme-solarized
 	url = https://github.com/sellout/emacs-color-theme-solarized.git
-[submodule "modes/emacs-dirtree"]
-	path = modes/emacs-dirtree
-	url = https://github.com/zk/emacs-dirtree.git
 [submodule "themes/emacs-clues-theme"]
 	path = themes/emacs-clues-theme
 	url = https://github.com/emacsfodder/emacs-clues-theme.git
@@ -34,3 +31,6 @@
 [submodule "snippets/extend-snippets/django-mode"]
 	path = snippets/extend-snippets/django-mode
 	url = https://github.com/jonatkinson/yasnippet-django.git
+[submodule "themes/emacs-bubbleberry-theme"]
+	path = themes/emacs-bubbleberry-theme
+	url = https://github.com/jasonm23/emacs-bubbleberry-theme.git

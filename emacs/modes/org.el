@@ -442,21 +442,6 @@ This uses DARK VOODOO MAGIC but it works"
 ;; (add-to-list 'org-export-latex-emphasis-alist
 ;;              '("@" "\\alert{%s}" nil))
 
-; Make org the default scratch
-
-(setq initial-major-mode 'org-mode)
-(with-current-buffer "*scratch*"
-  (if (not (eq major-mode initial-major-mode))
-      (funcall initial-major-mode)))
-(setq initial-scratch-message
-      (purecopy "\
-# Scratch!
-# --------
-# This buffer is for notes you don't want to save, etc.
-# Visit that file with C-x C-f.
-"))
-
-
 (defun cwebber/org-tree-to-indirect-buffer-renamed (subname)
   "Like org-tree-to-indirect-buffer, with the option to give a \"subname\""
   (interactive "sNew buffer subname?: ")
@@ -476,7 +461,7 @@ This uses DARK VOODOO MAGIC but it works"
 (defun cwebber-org-add-appointment ()
   (interactive)
   (org-set-property
-   "APPOINTMENT" 
+   "APPOINTMENT"
    (concat "<" (org-read-date t) ">")))
 
 ;; ------------

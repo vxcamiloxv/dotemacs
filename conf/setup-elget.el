@@ -20,14 +20,18 @@
  el-get-generate-autoloads t
  el-get-sources
 
- '((:name "visual-regexp"
-          :description "Visual regexps"
-          :type git
-          :url "https://github.com/benma/visual-regexp.el.git")
-   (:name "popwin"
+ '((:name "popwin"
           :description "Popwin Mode"
           :type git
           :url "https://github.com/m2ym/popwin-el.git")
+   (:name "neotree"
+          :description "Neotree Mode"
+          :type git
+          :url "https://github.com/jaypei/emacs-neotree.git")
+   (:name "emacs-nav"
+          :description "Emacs Nav Mode"
+          :type git
+          :url "https://github.com/ancane/emacs-nav")
    (:name "guide-key"
           :description "Guide key bindings"
           :type git
@@ -44,18 +48,6 @@
           :description "emacs-for-python"
           :type git
           :url "https://github.com/gabrielelanaro/emacs-for-python.git")
-   (:name "expand-region"
-          :description "Expand region"
-          :type git
-          :url "https://github.com/magnars/expand-region.el.git")
-   (:name "flycheck"
-          :description "Flycheck"
-          :type git
-          :url "https://github.com/flycheck/flycheck.git")
-   (:name "multiple-cursors"
-          :description "Multiple Cursors"
-          :type git
-          :url "https://github.com/emacsmirror/multiple-cursors.git")
    (:name "Project Explorer"
           :description "Project Explorer"
           :type git

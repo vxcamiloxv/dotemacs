@@ -1,31 +1,45 @@
-(provide 'conf-file-management)
-; autosave settings
-(setq auto-save-list-file-prefix nil)
-(setq make-backup-files nil)
-
-; recentf - save history of recently visited files
+(require 'ido)
 (require 'recentf)
-(run-with-idle-timer (* 5 60) t 'recentf-save-list)
-(setq recentf-auto-cleanup 'never)
-(setq recentf-max-saved-items 1000)
-
-(setq recentf-exclude
-(append recentf-exclude
-    '(
-    "/.emacs.d/el-get/" "~$" "/.autosaves/"
-    "/.emacs.d/elpa/" "/.emacs.bmk$"
-    "\\.ido.last$" "session\\.[a-f0-9]*$"
-    "\\.recentf" "/.emacs.d/TAGS"
-    )
-))
-
-; saveplace - save position in files
 (require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file (in-emacs-d ".places"))
 
-; rename buffer and file
-(defun my/rename-current-buffer-file ()
+;; autosave settings
+(setq auto-save-list-file-prefix nil
+      make-backup-files nil)
+
+;; recentf - save history of recently visited files
+(recentf-mode t)
+(run-with-idle-timer (* 5 60) t 'recentf-save-list)
+(setq recentf-auto-cleanup 'never
+      recentf-max-saved-items 1000)
+
+(setq-default ;; recentf-save-file (in-emacs-d ".cache/recentf")
+ recentf-exclude (append recentf-exclude
+                         '(
+                           "\\.emacs.d/el-get/" "~$" "\\.autosaves/"
+                           "\\.emacs.d/elpa/" "/.emacs.bmk$"
+                           "\\.ido.last" "session\\.[a-f0-9]*$"
+                           "\\.recentf" "/.emacs.d/TAGS"
+                           "\\.cache/" "\\.mail/"
+                           )
+                         )
+ ido-ignore-files (append ido-ignore-files '("^\\." ".elc" ".ctags"))
+ ido-ignore-directories (append ido-ignore-directories '(".git" ".svn" ".hg"))
+ )
+
+;; saveplace - save position in files
+(setq-default save-place t)
+(setq save-place-file (in-emacs-d ".cache/places"))
+
+
+;; find-files-in-project
+(require 'find-file-in-project)
+
+;; Recognize zsh files
+(add-to-list 'auto-mode-alist '("\\.sh\\'" . shell-script-mode))
+
+;; Functions
+
+(defun distopico:rename-current-buffer-file ()
   "Renames current buffer and file it is visiting."
   (interactive)
   (let ((name (buffer-name))
@@ -42,10 +56,7 @@
           (message "File '%s' successfully renamed to '%s'"
                    name (file-name-nondirectory new-name)))))))
 
-(global-set-key (kbd "C-x C-r") 'my/rename-current-buffer-file)
+;; Customs keys TODO: if useful add in shortcust.el
+(global-set-key (kbd "C-x C-r") 'distopico:rename-current-buffer-file)
 
-; find-files-in-project
-(require 'find-file-in-project)
-
-; Recognize zsh files
-(add-to-list 'auto-mode-alist '("\\.sh\\'" . shell-script-mode))
+(provide 'conf-file-management)

@@ -1,9 +1,6 @@
-(add-to-list 'load-path "~/.emacs.d/modes/multiple-cursors")
 (require 'multiple-cursors)
-
-;; Expand region (increases selected region by semantic units)
 (require 'expand-region)
-(global-set-key (kbd "C-'") 'er/expand-region)
+(require 'ace-jump-mode)
 
 ;; Experimental multiple-cursors
 (global-set-key (kbd "C-c Q") 'mc/edit-lines)
@@ -38,14 +35,6 @@
 
 ;; Replace rectangle-text with inline-string-rectangle
 (global-set-key (kbd "C-x r t") 'inline-string-rectangle)
-
-;; Quickly jump in document with ace-jump-mode
-(define-key global-map (kbd "C-ø") 'ace-jump-mode)
-
-;; Perform general cleanup.
-(global-set-key (kbd "C-c n") 'cleanup-buffer)
-(global-set-key (kbd "C-c C-n") 'cleanup-buffer)
-(global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
 
 ;; M-i for back-to-indentation
 (global-set-key (kbd "M-i") 'back-to-indentation)

@@ -1,4 +1,4 @@
-(provide 'general)
+;;; Code:
 ;; ------
 ;; Require misc stuff
 ;; ------
@@ -6,20 +6,22 @@
 (require 'ibuffer)
 (epa-file-enable)
 
+;;Keep cache
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+
 ;; ------
 ;; Place backups in ~/.backups/ directory, like a civilized program.
 ;; ------
-(defvar backup-dir (expand-file-name "~/.backup/"))
-;(defvar backup-dir (concat "~/.backup/" "/"))
+(defvar backup-dir (in-emacs-d ".cache/backup/"))
 
 ;; Create directory if no exist
 (when (and (not (file-directory-p backup-dir)))
-                  (make-directory backup-dir t))
+  (make-directory backup-dir t))
 
 ;; Defined backup directory
-    (setq backup-directory-alist (list (cons ".*" backup-dir)))
-    (setq auto-save-list-file-prefix backup-dir)
-    ;(setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
+(setq backup-directory-alist (list (cons ".*" backup-dir)))
+(setq auto-save-list-file-prefix backup-dir)
+;;(setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
 
 
 (setq backup-by-copying t    ; Don't delink hardlinks
@@ -33,16 +35,16 @@
 
 ;; Delete old backups
 (if (file-directory-p backup-dir)
-(message "Deleting old backup files...")
-(let ((week (* 60 60 24 7))
-      (current (float-time (current-time))))
-  (dolist (file (directory-files backup-dir t))
-    (when (and (backup-file-name-p file)
-               (> (- current (float-time (fifth (file-attributes file))))
-                  week))
-      (message "%s" file)
-      (delete-file file))))
-      )
+    (message "Deleting old backup files...")
+  (let ((week (* 60 60 24 7))
+        (current (float-time (current-time))))
+    (dolist (file (directory-files backup-dir t))
+      (when (and (backup-file-name-p file)
+                 (> (- current (float-time (fifth (file-attributes file))))
+                    week))
+        (message "%s" file)
+        (delete-file file))))
+  )
 
 
 ;; ---------
@@ -66,10 +68,8 @@
 ;; General config BS
 ;; ------
 
-(setq fill-column 79)
-
-(recentf-mode 1)
-(setq pop-up-frames nil)
+(setq fill-column 79
+      pop-up-frames nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq max-specpdl-size 9000)
@@ -84,31 +84,14 @@
 ;; Resaltado linea
 (global-hl-line-mode t)
 
-;; Custom values CLI/GUI
-(defun custom-cli (frame)
-(select-frame frame)
-(if (window-system frame)
-    (progn
-      (set-face-background hl-line-face "gray13") )
-  (progn
-     (set-face-background hl-line-face "green")
-     (set-cursor-color "cyan")
-     (set-background-color "Black")
-     (set-foreground-color "White")
-     (set-border-color "dark orange")
-     (set-mouse-color "Cyan")
-    )))
-
-(add-hook 'after-make-frame-functions 'custom-cli)
-
 ;; Semantic | CEDET
-;(semantic-mode 1)
-;(global-semantic-idle-completions-mode t)
-;(global-semantic-decoration-mode t)
-;(global-semantic-highlight-func-mode t)
-;(global-semantic-show-unmatched-syntax-mode t)
+;;(semantic-mode 1)
+;;(global-semantic-idle-completions-mode t)
+;;(global-semantic-decoration-mode t)
+;;(global-semantic-highlight-func-mode t)
+;;(global-semantic-show-unmatched-syntax-mode t)
 
-; winner mode
+;; winner mode
 (winner-mode 1)
 
 ;;(set-window-dedicated-p (selected-window) t)
@@ -124,11 +107,10 @@
 
 (setq ispell-alternate-dictionary "/etc/dictionaries-common/words")
 
-(setq diary-file "~/org/diary")
 (setq tex-dvi-view-command
-          (if (eq window-system 'x) "xdvi" "dvi2tty * | cat -s"))
+      (if (eq window-system 'x) "xdvi" "dvi2tty * | cat -s"))
 
-; tab auto-completion cycling is evil.
+                                        ; tab auto-completion cycling is evil.
 (setq pcomplete-cycle-completions nil)
 
 ;; Make sure that pressing middle mouse button pastes right at point,
@@ -137,7 +119,7 @@
 
 ;; Don't show my password when I'm entering it, kthx.
 (add-hook 'comint-output-filter-functions
-           'comint-watch-for-password-prompt)
+          'comint-watch-for-password-prompt)
 
 
 (put 'downcase-region 'disabled nil)
@@ -147,10 +129,10 @@
 
 (setq visual-line-fringe-indicators '(t t))
 
-; Don't switch to another frame with iswitchb
-;(setq iswitchb-default-method 'samewindow)
+;; Don't switch to another frame with iswitchb
+;;(setq iswitchb-default-method 'samewindow)
 
-; Use diff -u
+;; Use diff -u
 
 (setq diff-switches "-u")
 
@@ -159,7 +141,7 @@
 ;; Initialize some things
 ;; ------
 
-; (display-time)
+;; (display-time)
 (server-start)
 
 ;; Mouse scrolling
@@ -184,47 +166,10 @@
 
 (defun warn-if-symlink ()
   (if (file-symlink-p buffer-file-name)
-      ;progn here to execute both as part of else statement together
+                                        ;progn here to execute both as part of else statement together
       (message "File is a symlink")))
 
 (add-hook 'find-file-hooks 'warn-if-symlink)
-
-
-;; creating a scratch buffer command
-(defun create-scratch-buffer nil
-  "create a scratch buffer"
-  (interactive)
-  (switch-to-buffer (get-buffer-create "*scratch*"))
-  (lisp-interaction-mode)
-  (insert ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
-;; If you want to create a file, visit that file with C-x C-f,
-;; then enter the text in that file's own buffer.
-
-"))
-
-
-;; If the *scratch* buffer is killed, recreate it automatically
-;; FROM: Morten Welind
-;;http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
-(save-excursion
-  (set-buffer (get-buffer-create "*scratch*"))
-  (lisp-interaction-mode)
-  (make-local-variable 'kill-buffer-query-functions)
-  (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer))
-
-(defun kill-scratch-buffer ()
-  ;; The next line is just in case someone calls this manually
-  (set-buffer (get-buffer-create "*scratch*"))
-  ;; Kill the current (*scratch*) buffer
-  (remove-hook 'kill-buffer-query-functions 'kill-scratch-buffer)
-  (kill-buffer (current-buffer))
-  ;; Make a brand new *scratch* buffer
-  (set-buffer (get-buffer-create "*scratch*"))
-  (lisp-interaction-mode)
-  (make-local-variable 'kill-buffer-query-functions)
-  (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer)
-  ;; Since we killed it, don't let caller do that.
-  nil)
 
 ;; Highlight previous (or current?) line
 (defun pg-uline (ulinechar)
@@ -270,7 +215,7 @@
       (setq cwebber/swapping-window (selected-window))
       (message "Buffer and window marked for swapping."))))
 
-(global-set-key (kbd "C-c p") 'cwebber/swap-buffers-in-windows)
+;; (global-set-key (kbd "C-c p") 'cwebber/swap-buffers-in-windows)
 
 
 ;; other stuff
@@ -314,7 +259,7 @@
   (interactive "^p")
   (let ((dir-name nil)
         (split-path (eshell-split-path
-                         (file-name-directory (buffer-file-name))))
+                     (file-name-directory (buffer-file-name))))
         (tramp-data (condition-case nil
                         (tramp-dissect-file-name (buffer-file-name))
                       (error nil))))
@@ -323,8 +268,8 @@
     (rename-buffer
      (concat (file-name-nondirectory (buffer-file-name))
              (if tramp-data
-               (concat
-                "(" (aref tramp-data 2) ":" dir-name ")")
+                 (concat
+                  "(" (aref tramp-data 2) ":" dir-name ")")
                (concat "(" dir-name ")"))))))
 
 
@@ -338,7 +283,7 @@
       (error "No ./bin/activate_this.py in that virtualenv (maybe update virtualenv?)"))))
 
 
-; (global-set-key (kbd "C-c r") 'rename-buffer-with-directory)
+                                        ; (global-set-key (kbd "C-c r") 'rename-buffer-with-directory)
 
 ;; En1arg3 y0ur w1|\|dow!!!
 (defun undo-or-shrink-horizontally ()
@@ -368,7 +313,7 @@ in X or in a terminal"
   (insert "…"))
 (global-set-key (kbd "C-c ;") 'insert-ellipsis)
 
-; Turn off tool-bar-mode, which is slow
+                                        ; Turn off tool-bar-mode, which is slow
 (call-interactively 'tool-bar-mode)
 
 ;; UTF-8 please
@@ -381,10 +326,10 @@ in X or in a terminal"
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 
-; lock files borking git-annex-assistant autocommits.  Disabling for now.
+                                        ; lock files borking git-annex-assistant autocommits.  Disabling for now.
 ;; We can re-enable both of these once .gitignore support comes to git-annex
 (setq create-lockfiles nil)
-; Similarly with auto-save files :(
+                                        ; Similarly with auto-save files :(
 (setq auto-save-default nil)
 
 ;; Undo Redo
@@ -393,11 +338,11 @@ in X or in a terminal"
 (global-undo-tree-mode 1)
 
 ;; Cua Copy/Paste
-;(cua-mode t)
-    ;(setq cua-auto-tabify-rectangles nil)
-    ;(transient-mark-mode 1)
-    ;(setq cua-keep-region-after-copy t)
-    ;(cua-selection-mode t)
+                                        ;(cua-mode t)
+                                        ;(setq cua-auto-tabify-rectangles nil)
+                                        ;(transient-mark-mode 1)
+                                        ;(setq cua-keep-region-after-copy t)
+                                        ;(cua-selection-mode t)
 
 
 ;; Shutdown Server
@@ -444,15 +389,17 @@ in X or in a terminal"
 (setq-default truncate-lines t)
 
 ;; Remove .elc in save
-;(add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
+                                        ;(add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
 
 
 ;; ignore byte-compile warnings
 (setq byte-compile-warnings '(not nresolved
-				free-vars
-				callargs
-				redefine
-				obsolete
-				noruntime
-				cl-functions
-				interactive-only))
+                                  free-vars
+                                  callargs
+                                  redefine
+                                  obsolete
+                                  noruntime
+                                  cl-functions
+                                  interactive-only))
+
+(provide 'general)

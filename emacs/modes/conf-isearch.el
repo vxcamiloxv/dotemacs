@@ -1,15 +1,22 @@
-(define-key isearch-mode-map [next]
- 'isearch-repeat-forward)
+;;; Code:
 
-(define-key isearch-mode-map [prior]
- 'isearch-repeat-backward)
- 
- (define-key isearch-mode-map "\C-o" 
-      '(lambda ()(interactive)(isearch-process-search-char ?\n)))
+(global-anzu-mode t)
+(diminish 'anzu-mode)
+(set-face-attribute 'anzu-mode-line nil
+                    :foreground "cyan" :weight 'bold)
 
-;; Position of the Cursor after Searching
-(add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
-(defun my-goto-match-beginning ()
+;; Custom shotcuts
+(define-key isearch-mode-map [next] 'isearch-repeat-forward)
+(define-key isearch-mode-map [prior] 'isearch-repeat-backward)
+(define-key isearch-mode-map "\C-o"
+  '(lambda ()(interactive)(isearch-process-search-char ?\n)))
+
+;; Hooks
+(add-hook 'isearch-mode-end-hook 'distopico:goto-match-beginning)
+
+;; Functions
+(defun distopico:goto-match-beginning ()
+  "Position of the Cursor after Searching"
   (when (and isearch-forward isearch-other-end)
     (goto-char isearch-other-end)))
 
@@ -17,11 +24,10 @@
   "Go to beginning of match."
   (when (and isearch-forward isearch-other-end)
     (goto-char isearch-other-end)))
-    
-;; I-search with initial contents.
-(defvar isearch-initial-string nil)
 
+(defvar isearch-initial-string nil)
 (defun isearch-set-initial-string ()
+  "I-search with initial contents."
   (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
   (setq isearch-string isearch-initial-string)
   (isearch-search-and-update))
@@ -36,8 +42,6 @@
           (isearch-forward regexp-p no-recursive-edit)
         (setq isearch-initial-string (buffer-substring begin end))
         (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
-        (isearch-forward regexp-p no-recursive-edit)))))    
-    
-(provide 'conf-isearch)    
-    
+        (isearch-forward regexp-p no-recursive-edit)))))
 
+(provide 'conf-isearch)

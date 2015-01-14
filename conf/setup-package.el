@@ -1,16 +1,18 @@
 (require 'package)
 (require 'my-package)
 
-(dolist (source '(("gnu" . "http://elpa.gnu.org/packages/")
+(dolist (source '(("gnu"       . "http://elpa.gnu.org/packages/")
                   ("marmalade" . "http://marmalade-repo.org/packages/")
-                  ("elpa" . "http://tromey.com/elpa/")
-                  ("melpa" . "http://melpa.org/packages/")
+                  ("elpa"      . "http://tromey.com/elpa/")
+                  ("melpa"     . "http://melpa.org/packages/")
+                  ("org"       . "http://orgmode.org/elpa/")
                   ))
-
   (add-to-list 'package-archives source t))
+
 (package-initialize)
 
 
+;; Auto install
 (defun distopico-packages-installed-p ()
   (loop for p in distopico-packages
         when (not (package-installed-p p)) do (return nil)
@@ -26,5 +28,7 @@
     (when (not (package-installed-p p))
       (package-install p))))
 
+;; Auto update
+(auto-package-update-maybe)
 
 (provide 'setup-package)
