@@ -1,3 +1,4 @@
+;;; Code:
 (require 'org)
 (require 'appt)
 (require 'diary-lib)
@@ -18,7 +19,6 @@
 (require 'notifications)
 (require 'midnight)
 ;;(require 'org-panel)
-;;; Code:
 
 
 ;; Vars
@@ -351,10 +351,7 @@
              (org-projectile:project-todo-entry "p" "* TODO %? %a" "Project Todo"))
 
 ;; Export
-(dolist (source '(md
-                  gfm
-                  ;;odt
-                  ))
+(dolist (source '(md gfm))
   (add-to-list 'org-export-backends source t))
 
 ;; Babel

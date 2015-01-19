@@ -123,5 +123,5 @@
 (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file 'yasnippet)
 
 ;; Hooks
-(add-hook 'ido-make-file-list-hook 'ido-sort-mtime)
-(add-hook 'ido-make-dir-list-hook 'ido-sort-mtime)
+;; (add-hook 'ido-make-file-list-hook 'ido-sort-mtime)
+;; (add-hook 'ido-make-dir-list-hook 'ido-sort-mtime)

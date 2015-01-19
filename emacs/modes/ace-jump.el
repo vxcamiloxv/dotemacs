@@ -1,1 +1,1 @@
-(global-ace-isearch-mode t)
+;;(global-ace-isearch-mode t)

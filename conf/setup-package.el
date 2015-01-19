@@ -1,5 +1,7 @@
+;;; Code:
 (require 'package)
 (require 'my-package)
+;;(require 'auto-package-update)
 
 (dolist (source '(("gnu"       . "http://elpa.gnu.org/packages/")
                   ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -29,6 +31,6 @@
       (package-install p))))
 
 ;; Auto update
-(auto-package-update-maybe)
+;;(auto-package-update-maybe)
 
 (provide 'setup-package)

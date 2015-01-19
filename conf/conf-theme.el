@@ -50,8 +50,6 @@
           (enable-theme default-gui-theme)))
     )))
 
-(global-set-key (kbd "M-p") 'toggle-cli-theme)
-
 (defun custom-theme-cli (frame)
   (select-frame frame)
   (if (window-system frame)
@@ -66,9 +64,9 @@
 
 (add-hook 'after-make-frame-functions 'custom-theme-cli)
 
-;; For when started with emacs or emacs -nw rather than emacs --daemon
-(if window-system
-  	(disable-theme default-cli-theme)
-	(enable-theme default-gui-theme))
+;; ;; For when started with emacs or emacs -nw rather than emacs --daemon
+;; (if window-system
+;;   	(disable-theme default-cli-theme)
+;; 	(enable-theme default-gui-theme))
 
 (provide 'conf-theme)

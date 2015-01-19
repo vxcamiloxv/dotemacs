@@ -30,9 +30,7 @@
              (setq smartparens-mode nil)
 
              ;; Enable todo
-             (todo-highlight)
-             )
-          )
+             (todo-highlight)))
 
 (setq-default web-mode-enable-auto-pairing t
               web-mode-enable-auto-opening t
@@ -65,8 +63,7 @@
    ((t (:foreground "#FF8A4B"))))
  '(web-mode-current-element-highlight-face
    ((t (:background "#000000"
-                    :foreground "#FF8A4B"))))
- )
+                    :foreground "#FF8A4B")))))
 
 
 ;; zencoding
@@ -83,6 +80,8 @@
 (add-hook 'web-mode-hook 'ac-emmet-html-setup)
 (add-hook 'css-mode-hook 'ac-emmet-css-setup)
 
+(setq ac-sources (append '(ac-source-emmet-css-snippets ) ac-sources))
+
 ;; js2-mode
 (require 'js2-mode)
 (require 'js2-refactor)
@@ -91,19 +90,19 @@
 (js2r-add-keybindings-with-prefix "C-c C-j")
 
 (setq-default js2-skip-preprocessor-directives t
-   js2-include-node-externs t
-   js2-include-browser-externs t
-   js2-highlight-level 3
-   ;;js2-move-point-on-right-click nil
-   ;; Let flycheck parse errors
-   ;js2-idle-timer-delay 0.1
-   js2-mode-show-parse-errors t
-   js2-mode-show-strict-warnings t
-   js2-strict-trailing-comma-warning t
-   js2-strict-missing-semi-warning nil
-   js2-strict-inconsistent-return-warning nil
-   ;;js2-global-externs '("jQuery" "$")
-)
+              js2-include-node-externs t
+              js2-include-browser-externs t
+              js2-highlight-level 3
+              ;;js2-move-point-on-right-click nil
+              ;; Let flycheck parse errors
+                                        ;js2-idle-timer-delay 0.1
+              js2-mode-show-parse-errors t
+              js2-mode-show-strict-warnings t
+              js2-strict-trailing-comma-warning t
+              js2-strict-missing-semi-warning nil
+              js2-strict-inconsistent-return-warning nil
+              ;;js2-global-externs '("jQuery" "$")
+              )
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'magic-mode-alist '(".+node" . js2-mode))
@@ -144,29 +143,6 @@
   (add-hook 'js2-mode-hook 'skewer-mode)
   (add-hook 'css-mode-hook 'skewer-css-mode)
   (add-hook 'html-mode-hook 'skewer-html-mode))
-
-;; css hook
-(add-hook 'css-mode-hook
-          '(lambda ()
-             (define-key css-mode-map (kbd "M-i") 'helm-css-scss)
-             ;;ac-source-css-property
-             (setq ac-sources (append '(ac-source-emmet-css-snippets ) ac-sources))
-             (rainbow-delimiters-mode t)
-                                        ;(rainbow-identifiers-mode t)
-             )
-          )
-
-(add-hook 'less-css-mode-hook
-          '(lambda ()
-             (require 'skewer-less)
-             (skewer-less-mode)
-             (define-key css-mode-map (kbd "M-i") 'helm-css-scss)
-             ;;ac-source-css-property
-             ;(setq ac-sources (append '(ac-source-emmet-css-snippets ac-source-css-property ) ac-sources))
-             (rainbow-delimiters-mode t)
-                                        ;(rainbow-identifiers-mode t)
-             )
-          )
 
 ;; Enabled ac-js2
 (add-hook 'js2-mode-hook 'ac-js2-mode)

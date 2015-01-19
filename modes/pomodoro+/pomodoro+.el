@@ -323,6 +323,38 @@ It takes care of updating the modeline as well a message buffer"
            )))
   (pomodoro-update-modeline))
 
+(defun pomodoro-toggle ()
+  "Toggle start or stop pomodoro."
+  (interactive)
+  (if (eq pomodoro-state 'none)
+      (pomodoro)
+    (if (y-or-n-p "Already a running pomodoro.  Would you like to stop it? ")
+        (progn
+          (pomodoro-stop))
+      (message "Keep up the work!"))))
+
+(defun pomodoro-action ()
+  "If pomodoro not has started, run one but if running ask for action."
+  (interactive)
+  (if (eq pomodoro-state 'none)
+      (pomodoro)
+    (progn
+      (message "[S] Stop  [O] Out  [R] Rewind  [P] Re-start [q] quit")
+      (let ((pomoaction (pcase (read-char)
+                          (?S "stop")
+                          (?O "out")
+                          (?R "rewind")
+                          (?P "restart")
+                          (?q "quit"))))
+        (if pomoaction
+            (pcase pomoaction
+              ("stop" (pomodoro-stop))
+              ("out" (pomodoro-out))
+              ("rewind" (pomodoro-rewind))
+              ("restart" (pomodoro))
+              ("quit" (message "Quit..")))
+          (message "Nothing to do.."))))))
+
 (defun pomodoro-org ()
   "Minor laucnh a new pomodoro or stop the current one for `org-mode`.
 Need add hook for work properly.
@@ -339,7 +371,7 @@ Example
             (remove-hook 'pomodoro-break-finished-hook 'org-clock-in-last)
             (remove-hook 'pomodoro-finished-hook 'org-clock-out)) 'append)"
   (interactive)
-  (if (equal pomodoro-state 'none)
+  (if (eq pomodoro-state 'none)
       (progn
         (cond
          ((eq major-mode 'org-mode)

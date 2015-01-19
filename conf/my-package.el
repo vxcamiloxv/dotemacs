@@ -8,7 +8,7 @@
     cl-lib
     es-lib
     log4e
-    auto-package-update
+    ;;auto-package-update
 
     ;; Ui
     iedit
@@ -36,6 +36,7 @@
     helm
     helm-swoop
     helm-projectile
+    helm-css-scss
     perspective
     smartparens
     aggressive-indent
@@ -107,6 +108,7 @@
     ;; Org
     org-plus-contrib
     org-projectile
+    org-present
     org-pomodoro
     org-toc
     org-ac

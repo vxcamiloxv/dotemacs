@@ -1,3 +1,4 @@
+;;; Code:
 ;; ---------
 ;; Generic keybindings
 ;; ---------
@@ -17,6 +18,7 @@
 
 (global-set-key (kbd "C-c l c") 'calendar)
 
+(global-set-key (kbd "C-x M-t") 'toggle-cli-theme)
 ;; Horizontal scrollb
 ;; (global-set-key (kbd "<mouse-6>") 'scroll-right)
 ;; (global-set-key (kbd "<mouse-7>") 'scroll-left)
@@ -302,9 +304,7 @@
 (global-set-key (kbd "C-x M-m") 'distopico:mu4e-open)
 
 ;; Pomodoro
-(global-set-key (kbd "C-c M-p p") 'pomodoro)
-(global-set-key (kbd "C-c M-p k") 'pomodoro-stop)
-(global-set-key (kbd "C-c M-p c") 'pomodoro-out)
+(global-set-key (kbd "M-p") 'pomodoro-action)
 
 ;; Org
 (define-key global-map (kbd "C-c o")

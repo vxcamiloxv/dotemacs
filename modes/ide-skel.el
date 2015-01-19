@@ -231,6 +231,7 @@
 ;;   ide-skel-tabbar-enabled
 ;;   ide-skel-keep-condition-function
 
+;;; Code:
 (require 'cl)
 
 ;; Obsolete in emacs24

@@ -79,7 +79,9 @@
 
 ;; Enable images
 (setq mu4e-view-show-images t
-      mu4e-view-image-max-width 800)
+      mu4e-view-image-max-width 200
+      mu4e-view-image-max-height 200)
+
 ;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
   (imagemagick-register-types))
