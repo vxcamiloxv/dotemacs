@@ -207,17 +207,36 @@
 (defun distopico:mu4e-close ()
   "Restores the previous window configuration and burry buffer"
   (interactive)
-  ;;  (kill-this-buffer)
   (bury-buffer)
   (jump-to-register :mu4e-fullscreen))
 
 (defun distopico:mu4e-kill-close ()
-  "Kill headers buffer and reload maildirs"
+  "Kill buffer and reload maildirs if headers"
   (interactive)
   (if (equal (buffer-name) "*mu4e-headers*")
       (progn
-        (kill-this-buffer)
-        (delete-other-windows)
+        (unless (eq major-mode 'mu4e-headers-mode)
+          (mu4e-error "Must be in mu4e-headers-mode (%S)" major-mode))
+        (mu4e-mark-handle-when-leaving)
+        (let ((curbuf (current-buffer)) (curwin (selected-window))
+              (headers-visible))
+          (walk-windows
+           (lambda (win)
+             (with-selected-window win
+               ;; if we the view window connected to this one, kill it
+               (when (and (not (one-window-p win)) (eq mu4e~headers-view-win win))
+                 (delete-window win)
+                 (setq mu4e~headers-view-win nil)))
+             ;; and kill any _other_ (non-selected) window that shows the current
+             ;; buffer
+             (when (and
+                    (eq curbuf (window-buffer win)) ;; does win show curbuf?
+                    (not (eq curwin win))	        ;; it's not the curwin?
+                    (not (one-window-p)))           ;; and not the last one?
+               (delete-window win))))
+          (kill-this-buffer)
+          (mu4e~main-view))
+        ;;(delete-other-windows)
         (distopico:mu4e-maildirs-force-update))
     (if (equal (buffer-name) "*mu4e-view*")
         (progn

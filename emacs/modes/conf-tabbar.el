@@ -87,7 +87,8 @@ Return a list of one element based on major mode."
      "Web"
      )
     ((memq major-mode
-           '(mu4e-view-mode mu4e-main-mode mu4e-headers-mode mu4e-view-raw-mode mu4e-compose-mode message-mode mail-mode))
+           '(mu4e-view-mode mu4e-main-mode mu4e-headers-mode mu4e-view-raw-mode mu4e-compose-mode message-mode mail-mode
+                            jabber-chat-mode jabber-roster-mode))
      "Activity"
      )
     ((memq major-mode '(org-mode org-agenda-mode))

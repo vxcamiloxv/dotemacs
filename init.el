@@ -123,6 +123,7 @@
 
 ;; Aditionals Modes
 (require 'conf-mu4e)
+(require 'conf-jabber)
 (load-file "~/.emacs.d/emacs/modes/column-marker.el")
 (load-file "~/.emacs.d/emacs/modes/css.el")
 (load-file "~/.emacs.d/emacs/modes/erc.el")
@@ -135,8 +136,6 @@
 (load-file "~/.emacs.d/emacs/modes/tramp.el")
 (load-file "~/.emacs.d/emacs/modes/visual-regexp.el")
 (load-file "~/.emacs.d/emacs/modes/wordcount.el")
-(load-file "~/.emacs.d/emacs/modes/ido.el")
-(load-file "~/.emacs.d/emacs/modes/smex.el")
 (load-file "~/.emacs.d/emacs/modes/uniquify.el")
 (load-file "~/.emacs.d/emacs/modes/ediff.el")
 (load-file "~/.emacs.d/emacs/modes/ace-jump.el")
@@ -144,6 +143,8 @@
 (load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
 ;;(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
 (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
+(require 'conf-ido)
+(require 'conf-smex)
 (require 'conf-pomodoro)
 (require 'conf-org)
 (require 'conf-present)
@@ -189,74 +190,3 @@
 ;; your `.emacs.d' directory: ~/.emacs.d/
 ;; This is likely to cause problems...
 ;; Consider using a subdirectory instead, e.g.: /home/distopico/.emacs.d/lisp
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(blink-cursor-mode t)
- '(column-number-mode t)
- '(cua-enable-cua-keys nil)
- '(cua-keep-region-after-copy t)
- '(cua-mode t nil (cua-base))
- '(current-language-environment "UTF-8")
- '(cursor-type (quote bar))
- '(custom-safe-themes t)
- '(display-time-mode t)
- '(ediff-custom-diff-program "diff")
- '(ediff-diff-program "diff")
- '(ediff-diff3-program "diff3")
- '(enable-local-variables :all)
- '(fci-rule-character-color "#202")
- '(fci-rule-color "#202")
- '(flycheck-highlighting-mode (quote lines))
- '(flycheck-indication-mode (quote right-fringe))
- '(global-auto-highlight-symbol-mode nil)
- '(ide-skel-tabbar-mwheel-mode nil t)
- '(indicate-buffer-boundaries (quote right))
- '(inhibit-startup-screen t)
- '(js-indent-level 2)
- '(js3-enter-indents-newline t)
- '(js3-indent-level 2)
- '(jshint-configuration-path "~/.jshintrc")
- '(linum-delay nil)
- '(linum-eager t)
- '(menu-bar-mode nil)
- '(org-agenda-files
-   (quote
-    ("/home/distopico/Documents/org/life.org" "/home/distopico/Documents/org/annotated.org" "/home/distopico/Documents/org/calendar.org" "/home/distopico/Documents/org/contacts.org" "/home/distopico/Documents/org/myday.org" "/home/distopico/Documents/org/organizer.org" "/home/distopico/Documents/org/todo.org")))
- '(rainbow-delimiters-mode nil t)
- '(rainbow-identifiers-mode nil t)
- '(savehist-file (in-emacs-d ".cache/history"))
- '(savehist-mode t nil (savehist))
- '(show-paren-mode 1)
- '(size-indication-mode t)
- '(sml-modeline-mode 1)
- '(system-time-locale "C" t)
- '(tabbar-button-highlight ((t (:inherit tabbar-button))))
- '(tabbar-highlight ((t nil)))
- '(tabbar-mode t nil (tabbar))
- '(tabbar-scroll-left-button (quote (("") "")))
- '(tabbar-scroll-right-button (quote (("") "")))
- '(tool-bar-mode nil)
- '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
- '(windmove-wrap-around t)
- '(window-left-margin 0))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(completions-common-part ((t (:foreground "forest green"))))
- '(completions-first-difference ((t (:bold t :weight bold :foreground "salmon"))))
- '(flycheck-error-face ((t (:inherit error :background "gray27" :foreground "IndianRed1" :underline (:color "red" :style wave)))))
- '(flycheck-warning-face ((t (:inherit warning :foreground "yellow1"))))
- '(hideshowvis-hidable-face ((t (:foreground "#2f4f4f"))))
- '(hs-face ((t (:background "#444" :box t))))
- '(hs-fringe-face ((t (:foreground "#afeeee" :box (:line-width 2 :color "grey75" :style released-button)))))
- '(js2-highlight-vars-face ((t (:background "royal blue" :foreground "white"))))
- '(powerline-active1 ((t (:foreground "#f9f9f9" :background "#123550" :box nil))))
- '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil))))
- '(web-mode-current-element-highlight-face ((t (:foreground "#FF8A4B"))))
- '(web-mode-html-tag-bracket-face ((t (:foreground "#FFE84B"))))
- '(web-mode-html-tag-face ((t (:foreground "#729fcf")))))

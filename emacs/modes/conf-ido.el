@@ -1,38 +1,34 @@
 ;;; Code:
 
 (require 'ido)
+(require 'ido-ubiquitous)
+(require 'ido-vertical-mode)
+
 (ido-mode t)
 (ido-everywhere t)
+(ido-ubiquitous-mode t)
+(ido-vertical-mode t)
 
-(setq ido-max-prospects 200
+(setq ido-default-buffer-method 'selected-window ; Always open in the same window
+      ido-create-new-buffer 'always
+      ido-max-prospects 200
       ido-enable-flex-matching t
       ido-enable-dot-prefix t
       ido-everywhere t
+      ido-ignore-extensions t ; Ignore object files
       ;; ido-use-virtual-buffers t
       ido-use-filename-at-point 'guess
+      ido-vertical-define-keys 'C-n-C-p-up-down-left-right ;C-n-C-p-up-down
       ido-save-directory-list-file (in-emacs-d ".cache/ido.last")
-      )
-
-(setq ido-create-new-buffer 'always)
-(setq ido-file-extensions-order
-      '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".js" ".conf"))
-
-; Ignore object files
-(setq ido-ignore-extensions t)
+      ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".js" ".conf") )
 
 ;; Maybe we can disable tramp stuff via this?
-;(setq ido-work-directory-list-ignore-regexps
+;;(setq ido-work-directory-list-ignore-regexps
 
-; Always open in the same window
-(setq ido-default-buffer-method 'selected-window)
-
-;;;;;;;;;;;;;;
-;; imenu & ido
-;;;;;;;;;;;;;;
-
-; Thanks emacswiki.org!
+;; Functions
 (defun ido-goto-symbol (&optional symbol-list)
-  "Refresh imenu and jump to a place in the buffer using Ido."
+  "Refresh imenu and jump to a place in the buffer using Ido.
+Thanks emacswiki.org!"
   (interactive)
   (unless (featurep 'imenu)
     (require 'imenu nil t))
@@ -80,39 +76,26 @@
           (add-to-list 'name-and-pos (cons name position))))))))
 
 (defun ido-sort-mtime ()
-  (setq ido-temp-list
-        (sort ido-temp-list
-              (lambda (a b)
-                (let ((ta (nth 5 (file-attributes (concat ido-current-directory a))))
-                      (tb (nth 5 (file-attributes (concat ido-current-directory b)))))
-                  (if (= (nth 0 ta) (nth 0 tb))
-                      (> (nth 1 ta) (nth 1 tb))
-                    (> (nth 0 ta) (nth 0 tb)))))))
+  "sort ido fi lelist by mtime instead of alphabetically."
+  (unless (and (featurep 'tramp)
+               (tramp-tramp-file-p ido-current-directory))
+    (setq ido-temp-list
+          (sort ido-temp-list
+                (lambda (a b)
+                  (cond
+                   ((not (file-exists-p a)) nil)
+                   ((not (file-exists-p b)) nil)
+                   (t (time-less-p
+                       (sixth (file-attributes (concat ido-current-directory b)))
+                       (sixth (file-attributes (concat ido-current-directory a))))))))))
   (ido-to-end  ;; move . files to end (again)
-   (delq nil (mapcar
-              (lambda (x) (if (string-equal (substring x 0 1) ".") x))
-              ido-temp-list))))
+   (--select (char-equal (string-to-char it) ?.) ido-temp-list))
+  (when ido-show-dot-for-dired
+    (setq ido-temp-list
+          (cons "." (--remove (equal it ".") ido-temp-list)))))
 
-;; Fix Warning
-(defvar ido-cur-item nil)
-(defvar ido-default-item nil)
-(defvar ido-cur-list nil)
-(defvar predicate nil)
-(defvar inherit-input-method nil)
-(defvar ido-context-switch-command nil)
-
-;; Use ido ubiquitous
-(require 'ido-ubiquitous)
-(ido-ubiquitous-mode t)
-
-(require 'ido-vertical-mode)
-(ido-vertical-mode t)
-;(setq ido-vertical-define-keys 'C-n-C-p-up-down)
-(setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
-
-
-;; Fix ido-ubiquitous for newer packages
 (defmacro ido-ubiquitous-use-new-completing-read (cmd package)
+  "Fix ido-ubiquitous for newer packages."
   `(eval-after-load ,package
      '(defadvice ,cmd (around ido-ubiquitous-new activate)
         (let ((ido-ubiquitous-enable-compatibility nil))
@@ -123,5 +106,7 @@
 (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file 'yasnippet)
 
 ;; Hooks
-;; (add-hook 'ido-make-file-list-hook 'ido-sort-mtime)
-;; (add-hook 'ido-make-dir-list-hook 'ido-sort-mtime)
+(add-hook 'ido-make-file-list-hook 'ido-sort-mtime)
+(add-hook 'ido-make-dir-list-hook 'ido-sort-mtime)
+
+(provide 'conf-ido)

@@ -102,7 +102,6 @@
     ace-jump-zap
     ace-isearch
     multiple-cursors
-    mu4e-maildirs-extension
     auto-async-byte-compile
 
     ;; Org
@@ -112,6 +111,10 @@
     org-pomodoro
     org-toc
     org-ac
+
+    ;; Activity
+    jabber
+    mu4e-maildirs-extension
 
     ;; Dubug
     skewer-mode
