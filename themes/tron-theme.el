@@ -7,6 +7,7 @@
 ;; Version: 12
 ;; Keywords: faces
 ;; URL: http://ryuslash.org/projects/tron-theme.html
+;; Modified by Distopico Vegan <distopico@riseup.net>
 
 ;; This file is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
@@ -223,6 +224,8 @@
  '(jabber-chat-text-foreign ((t (:inherit font-lock-function-name-face :weight normal))))
  '(jabber-activity-face ((t (:foreground "#00815b"))))
  '(jabber-activity-personal-face ((t (:foreground "OrangeRed"))))
+ '(jabber-roster-user-online ((t (:foreground "#05e4a5"))))
+ '(jabber-roster-user-away ((t (:foreground "#0086AB"))))
 
  ;; erc
  '(erc-default-face ((t (:inherit jabber-chat-text-local))))

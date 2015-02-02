@@ -1,9 +1,10 @@
-;; Tron Color Theme for Emacs.
+;;; tron-legacy-theme.el -- Tron Color Theme for Emacs.
 ;;
 ;; MIT License Copyright (c) 2012 Ivan Marcin <ivan at ivanmarcin dot com>
 ;;
 ;; All patches welcome
 
+;;; Commentary:
 ;; --------------
 ;; This porting makes tron no longer rely on color-theme package,
 ;; since Emacs has it's theme mechanism from Emacs 24.
@@ -18,10 +19,12 @@
 ;; load it manually by pressing
 ;; M-x load-theme, then choose tron, it should work
 ;; Or, simple use (load-theme 'tron t) to enable the theme from start.
-
+;;
+;; Modified By Distopico <distopico@riseup.net>
+;;
 ;;; tron-theme
 
-;;; Code
+;;; Code:
 (deftheme tron-legacy
   "Based on Color theme by Ivan Marcin,  created 2012-08-25")
 

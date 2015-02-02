@@ -1,3 +1,5 @@
+;;; Code:
+
 ;; Path
 (load-file "~/.emacs.d/conf/path.el")
 
@@ -78,11 +80,8 @@
 (dolist (source '(diary-mode css-mode less-css-mode))
   (add-to-list 'aggressive-indent-excluded-modes source t))
 
-;; Install a custom mode line
+;; Load custom mode line
 (require 'conf-powerline)
-
-;; Finalize things
-;; (load-file "~/.emacs.d/emacs/finalize.el")
 
 ;; Colour theme and other gui related config
 (require 'gui-config)
@@ -91,29 +90,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Tree Directory
-(require 'nav)
-(require 'neotree)
-(setq neo-theme 'arrow
-      neo-smart-open t
-      neo-cwd-line-style 'button
-      projectile-switch-project-action 'neotree-projectile-action)
-
-(defun distopico:neotree-toggle ()
-  "Fix split when emacs-nav is open"
-  (interactive)
-  (if (get-buffer "*nav*")
-      (progn
-        (kill-buffer "*nav*")
-        (neotree-toggle))
-    (neotree-toggle)
-    )
-  )
-(defun distopico:nav-toggle ()
-  "Close neotree and open nav"
-  (interactive)
-  (neotree-hide)
-  (nav-toggle)
-  )
+(require 'conf-nav)
 
 ;; Functions (load all files in defuns-dir)
 (setq defuns-dir (expand-file-name "defuns" user-emacs-directory))
@@ -121,12 +98,17 @@
   (when (file-regular-p file)
     (load file)))
 
+;; (setq auth-sources '(default
+;;                       "secrets:session"
+;;                       "secrets:Login"
+;;                       "~/.authinfo.gpg"))
+
 ;; Aditionals Modes
 (require 'conf-mu4e)
 (require 'conf-jabber)
+(require 'conf-erc)
 (load-file "~/.emacs.d/emacs/modes/column-marker.el")
 (load-file "~/.emacs.d/emacs/modes/css.el")
-(load-file "~/.emacs.d/emacs/modes/erc.el")
 (load-file "~/.emacs.d/emacs/modes/eshell.el")
 (load-file "~/.emacs.d/emacs/modes/longlines.el")
 (load-file "~/.emacs.d/emacs/modes/magit.el")
@@ -171,7 +153,6 @@
 (require 'conf-hideshowvis)
 (require 'conf-highlight-symbol)
 (require 'conf-rainbow)
-;;(require 'conf-mode-line)
 (require 'conf-highlight-indentation)
 (require 'conf-guide-key)
 (require 'conf-json)

@@ -1,10 +1,19 @@
-(provide 'conf-powerline)
+;;; Code:
 
 (require 'powerline)
 (require 'conf-mu4e)
 
 ;;(call-interactively 'display-time-mode)
+;; Basic
+(setq  powerline-default-separator 'wave)
 
+;; Faces
+(custom-set-faces
+ '(powerline-active1 ((t (:foreground "#f9f9f9" :background "#123550" :box nil))))
+ '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil))))
+ )
+
+;; Custom theme
 (defun powerline-distopico-theme ()
   "Setup the default mode-line."
   (interactive)
@@ -25,15 +34,16 @@
                                      ;;(powerline-buffer-size nil 'l)
                                      ;;(powerline-raw mode-line-mule-info nil 'l)
                                      ;;(powerline-buffer-id nil 'l)
-                                     (powerline-raw '(:eval (propertize "%b "
-                                                                        'help-echo (buffer-file-name))
-                                                            ) nil 'l)
+                                     (powerline-raw '(:eval
+                                                      (propertize
+                                                       "%b " 'help-echo
+                                                       (if (eq major-mode 'erc-mode)
+                                                           (powerline-raw mode-line-buffer-identification face2 'l)
+                                                         (buffer-file-name)))) nil 'l)
                                      (when (and (boundp 'which-func-mode) which-func-mode)
                                        (powerline-raw which-func-format nil 'l))
                                      (powerline-raw " ")
                                      (funcall separator-left mode-line face1)
-                                     (when (boundp 'erc-modified-channels-object)
-                                       (powerline-raw erc-modified-channels-object face1 'l))
                                      (powerline-major-mode face1 'l)
                                      (powerline-process face1)
                                      ;;(powerline-minor-modes face1 'l)
@@ -44,7 +54,12 @@
                                                                     (projectile-project-name))) face2)
                                      (powerline-vc face2 'r)
                                      ))
-                          (rhs (list (powerline-raw distopico:mu4e-mode-line face2 'r)
+                          (rhs (list (when (eq major-mode 'jabber-chat-mode)
+                                       (powerline-raw jabber-chat-header-line-format face2 'r))
+                                     (when (eq major-mode 'erc-mode)
+                                       (when (boundp 'erc-modified-channels-object)
+                                         (powerline-raw erc-modified-channels-object face2 'l)))
+                                     (powerline-raw distopico:mu4e-mode-line face2 'r)
                                      (powerline-raw "•" face2 'r)
                                      (powerline-raw global-mode-string face2 'r)
                                      ;;(powerline-raw pomodoro-display-string face2 'r)
@@ -65,11 +80,8 @@
                              (powerline-fill face2 (powerline-width rhs))
                              (powerline-render rhs)))))))
 
+;; Run
 (powerline-distopico-theme)
 
-(setq  powerline-default-separator 'wave)
 
-(custom-set-faces
- '(powerline-active1 ((t (:foreground "#f9f9f9" :background "#123550" :box nil))))
- '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil))))
- )
+(provide 'conf-powerline)

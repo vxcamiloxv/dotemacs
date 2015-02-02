@@ -73,7 +73,7 @@ Return a list of one element based on major mode."
     ;; "Common"
     ;; )
     ((member (buffer-name)
-             '("*Backtrace*" "*Compile-Log*" "*Messages*" "*Warnings*" "*Flycheck error messages*"))
+             '("*Backtrace*" "*Compile-Log*" "*Messages*" "*Warnings*" "*Flycheck error messages*" "*fsm-debug*"))
      "Debugger"
      )
     ((member (buffer-name)
@@ -86,9 +86,10 @@ Return a list of one element based on major mode."
     ((memq major-mode '(nxhtml-mode web-mode avascript-mode js3-mode js-mode js2-mode javascript js2-refactor json-mode emmet-mode less-css-mode css-mode restclient-mode))
      "Web"
      )
-    ((memq major-mode
-           '(mu4e-view-mode mu4e-main-mode mu4e-headers-mode mu4e-view-raw-mode mu4e-compose-mode message-mode mail-mode
-                            jabber-chat-mode jabber-roster-mode))
+    ((or (memq major-mode
+               '(mu4e-view-mode mu4e-main-mode mu4e-headers-mode mu4e-view-raw-mode mu4e-compose-mode message-mode mail-mode
+                                jabber-chat-mode jabber-roster-mode erc-mode))
+         (string-match "\\*irc.*\\*" (buffer-name (current-buffer))))
      "Activity"
      )
     ((memq major-mode '(org-mode org-agenda-mode))

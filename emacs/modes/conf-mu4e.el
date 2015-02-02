@@ -1,3 +1,5 @@
+;;; Code:
+
 (require 'mu4e)
 (require 'mu4e-contrib)
 
@@ -15,6 +17,10 @@
   "Inbox update interval"
   :type 'integer
   :group 'hardware)
+
+;; Control vars
+(defvar distopico:mu4e-mail-address-list)
+(defvar distopico:mu4e-account-alist)
 
 ;; General mu4e config
 (setq mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
@@ -77,8 +83,8 @@
 (add-to-list 'mu4e-view-actions
              '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 
-;; Enable images
-(setq mu4e-view-show-images t
+;; Enable or disabled images
+(setq mu4e-view-show-images nil
       mu4e-view-image-max-width 200
       mu4e-view-image-max-height 200)
 
@@ -108,63 +114,21 @@
 ;; Not start in queuing mode
 (setq smtpmail-queue-mail nil
       smtpmail-queue-dir   (concat mu4e-maildir "/Queue/cur")
-      )
+      smtpmail-smtp-user t)
+
+;; Config by mu4e Account
+(ignore-errors
+  (load (expand-file-name ".conf-private.gpg" "~/") t))
 
 ;; Default Account
 (setq user-mail-address "distopico@riseup.net"
-      user-full-name  "Distopico Vegan"
-      mu4e-sent-folder "/1-Distopico/Sent"
-      mu4e-drafts-folder "/1-Distopico/Drafts"
-      mu4e-trash-folder "/1-Distopico/Trash")
+  user-full-name  "Distopico Vegan"
+  mu4e-sent-folder "/1-Distopico/Sent"
+  mu4e-drafts-folder "/1-Distopico/Drafts"
+  mu4e-trash-folder "/1-Distopico/Trash")
 
-;; My email list
-(setq mu4e-user-mail-address-list
-      '("distopico@riseup.net"
-        "vxcamiloxv@openmailbox.org"
-        "accionvisual@riseup.net"
-        "radioliberacion@riseup.net"))
-
-;; (setq
-;;  user-mail-address "distopico@riseup.net"
-;;  user-full-name  "Distopico Vegan"
-;;  mu4e-compose-signature
-;;  (concat
-;;   "Distopico Vegan\n"
-;;   "-----------------\n"))
-
-;; Config by Account
-(defvar my-mu4e-account-alist
-  '(("1-Distopico"
-     (user-mail-address "distopico@riseup.net")
-     (user-full-name  "Distopico Vegan")
-     (mu4e-drafts-folder "/1-Distopico/Drafts")
-     (mu4e-sent-folder "/1-Distopico/Sent")
-     (mu4e-trash-folder "/1-Distopico/Trash")
-     (smtpmail-stream-type ssl)
-     (smtpmail-smtp-service 465)
-     (smtpmail-smtp-user "distopico@riseup.net")
-     (smtpmail-smtp-server "mail.riseup.net") )
-    ("2-vXcamiloXv"
-     (user-mail-address "vxcamiloxv@openmailbox.org")
-     (user-full-name  "Camilo QS")
-     (mu4e-sent-folder "/2-vXcamiloXv/Sent")
-     (mu4e-drafts-folder "/2-vXcamiloXv/Drafts")
-     (mu4e-trash-folder "/2-vXcamiloXv/Trash")
-     (smtpmail-stream-type ssl)
-     (smtpmail-smtp-service 465)
-     (smtpmail-smtp-user "vxcamiloxv@openmailbox.org")
-     (smtpmail-smtp-server "smtp.openmailbox.org") )
-    ("Camilo QS"
-     (user-mail-address "camiloqs@openaliasbox.org")
-     (user-full-name  "Camilo QS")
-     (mu4e-sent-folder "/2-vXcamiloXv/Sent")
-     (mu4e-drafts-folder "/2-vXcamiloXv/Drafts")
-     (mu4e-trash-folder "/2-vXcamiloXv/Trash")
-     (smtpmail-stream-type ssl)
-     (smtpmail-smtp-service 465)
-     (smtpmail-smtp-user "vxcamiloxv@openmailbox.org")
-     (smtpmail-smtp-server "smtp.openmailbox.org")
-     )))
+;; mu4e email list
+(setq mu4e-user-mail-address-list distopico:mu4e-mail-address-list)
 
 ;;------------------
 ;; Useful functions
@@ -180,10 +144,10 @@
                 (match-string 1 maildir))
             (completing-read (format "Compose with account: (%s) "
                                      (mapconcat #'(lambda (var) (car var))
-                                                my-mu4e-account-alist "/"))
-                             (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-                             nil t nil nil (caar my-mu4e-account-alist))))
-         (account-vars (cdr (assoc account my-mu4e-account-alist))))
+                                                distopico:mu4e-account-alist "/"))
+                             (mapcar #'(lambda (var) (car var)) distopico:mu4e-account-alist)
+                             nil t nil nil (caar distopico:mu4e-account-alist))))
+         (account-vars (cdr (assoc account distopico:mu4e-account-alist))))
     (if account-vars
         (mapc #'(lambda (var)
                   (set (car var) (cadr var)))
@@ -300,7 +264,7 @@ store your org-contacts."
                             (format fmt name))
                           '("flag:unread AND maildir:/%s/INBOX")
                           " "))))
-   my-mu4e-account-alist
+   distopico:mu4e-account-alist
    " OR "))
 (defun distopico:mu4e-new-mail-p ()
   "Predicate for if there is new mail or not in Boolean"

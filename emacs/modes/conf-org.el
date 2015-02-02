@@ -315,8 +315,8 @@
          :empty-lines 1)
         ("h" "Habit" entry
          (file+headline (concat org-directory "myday.org") "Habits")
-         "* TODO %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n:Captured_at: %U\n:END:"
-         :empty-lines 1 :clock-resume t)
+         "* TODO %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %h %H:%M .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n:Captured_at: %U\n:END:"
+         :empty-lines-after 2 :empty-lines-before 1 :clock-resume t)
         ("l" "Life Task" entry
          (file+headline (concat org-directory "life.org") "Life Tasks")
          "* TODO %?\n  %i\n  %a" :empty-lines 1)

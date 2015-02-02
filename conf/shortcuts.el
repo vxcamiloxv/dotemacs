@@ -306,6 +306,24 @@
 ;; Pomodoro
 (global-set-key (kbd "M-p") 'pomodoro-action)
 
+;; Erc
+(global-set-key (kbd "C-x M-e") 'distopico:erc-start-ask-or-switch)
+
+;; Jabebr
+(global-set-key (kbd "C-x M-j") 'distopico:jabber-display-roster)
+(define-key global-map (kbd "C-c j")
+  (let ((map (make-sparse-keymap)))
+    (define-key map "c" 'jabber-connect-all)
+    (define-key map "d" 'jabber-disconnect)
+    (define-key map "r" 'distopico:jabber-display-roster)
+    (define-key map "j" 'jabber-chat-with)
+    (define-key map "l" 'jabber-activity-switch-to)
+    (define-key map "a" 'jabber-send-away-presence)
+    (define-key map "o" 'jabber-send-default-presence)
+    (define-key map "x" 'jabber-send-xa-presence)
+    (define-key map "p" 'jabber-send-presence)
+    map))
+
 ;; Org
 (define-key global-map (kbd "C-c o")
   (let ((map (make-sparse-keymap)))
