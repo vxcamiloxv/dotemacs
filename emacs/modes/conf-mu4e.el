@@ -326,7 +326,12 @@ store your org-contacts."
             ;;                        (number-to-string mu4e-update-interval)))
             (distopico:mu4e-inbox-update)
             ))
+(add-hook 'mu4e-compose-mode-hook 'mml-secure-message-sign-pgpmime)
 ;;(add-hook 'mu4e-view-mode-hook 'distopico:mu4e-inbox-update)
+
+;; Sign/Encrypt
+(setq mm-sign-option 'guided
+      mm-encrypt-option 'guided)
 
 ;; Custom marks
 (setq

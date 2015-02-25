@@ -107,6 +107,7 @@
 (require 'conf-mu4e)
 (require 'conf-jabber)
 (require 'conf-erc)
+(require 'conf-gnusocial)
 (load-file "~/.emacs.d/emacs/modes/column-marker.el")
 (load-file "~/.emacs.d/emacs/modes/css.el")
 (load-file "~/.emacs.d/emacs/modes/eshell.el")

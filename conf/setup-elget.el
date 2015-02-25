@@ -1,3 +1,4 @@
+;;; Code:
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -85,8 +86,13 @@
           :type git
           :url "https://github.com/yjwen/org-reveal.git")
    (:name "git-modes"
+          :description "multi git modes"
           :type git
           :url "https://github.com/magit/git-modes.git")
+   (:name "gnu-social-mode"
+          :description "Emacs client for gnu-social"
+          :type git
+          :url "http://git.savannah.gnu.org/r/gnu-social-mode.git")
    (:name "cyberpunk-theme"
           :description "Cyberpunk theme"
           :type git

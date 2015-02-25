@@ -309,6 +309,14 @@
 ;; Erc
 (global-set-key (kbd "C-x M-e") 'distopico:erc-start-ask-or-switch)
 
+;; GnuSocial
+(global-set-key (kbd "C-x M-g") 'distopico:gnusocial-open)
+(define-key global-map (kbd "C-c g")
+  (let ((map (make-sparse-keymap)))
+    (define-key map "s" 'gnusocial-update-status-interactive)
+    (define-key map "a" 'gnu-social-direct-message-interactive)
+    map))
+
 ;; Jabebr
 (global-set-key (kbd "C-x M-j") 'distopico:jabber-display-roster)
 (define-key global-map (kbd "C-c j")
