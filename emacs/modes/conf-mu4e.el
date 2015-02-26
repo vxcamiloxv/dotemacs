@@ -122,13 +122,20 @@
 
 ;; Default Account
 (setq user-mail-address "distopico@riseup.net"
-  user-full-name  "Distopico Vegan"
-  mu4e-sent-folder "/1-Distopico/Sent"
-  mu4e-drafts-folder "/1-Distopico/Drafts"
-  mu4e-trash-folder "/1-Distopico/Trash")
+      user-full-name  "Distopico Vegan"
+      mu4e-sent-folder "/1-Distopico/Sent"
+      mu4e-drafts-folder "/1-Distopico/Drafts"
+      mu4e-trash-folder "/1-Distopico/Trash")
 
 ;; mu4e email list
 (setq mu4e-user-mail-address-list distopico:mu4e-mail-address-list)
+
+;; Sign/Encrypt
+(setq mml2015-encrypt-to-self t
+      mml2015-sign-with-sender t)
+;; (setq mm-sign-option 'guided
+;;       mm-encrypt-option 'guided
+;;       epg-user-id "")
 
 ;;------------------
 ;; Useful functions
@@ -329,19 +336,13 @@ store your org-contacts."
 (add-hook 'mu4e-compose-mode-hook 'mml-secure-message-sign-pgpmime)
 ;;(add-hook 'mu4e-view-mode-hook 'distopico:mu4e-inbox-update)
 
-;; Sign/Encrypt
-(setq mm-sign-option 'guided
-      mm-encrypt-option 'guided)
-
 ;; Custom marks
-(setq
- mu4e-headers-new-mark              '("N" . "✉")
- mu4e-headers-empty-parent-prefix '("-" . "○")
- mu4e-headers-first-child-prefix '("\\" . "┗━❯")
- mu4e-headers-has-child-prefix '("+" . "┗◉")
- mu4e-headers-duplicate-prefix      '("=" . "⚌")
- mu4e-headers-default-prefix  '("|" . "┃")
- )
+(setq mu4e-headers-new-mark              '("N" . "✉")
+      mu4e-headers-empty-parent-prefix '("-" . "○")
+      mu4e-headers-first-child-prefix '("\\" . "┗━❯")
+      mu4e-headers-has-child-prefix '("+" . "┗◉")
+      mu4e-headers-duplicate-prefix      '("=" . "⚌")
+      mu4e-headers-default-prefix  '("|" . "┃"))
 
 ;; Custom keymap
 (define-key mu4e-main-mode-map "r" 'distopico:mu4e-maildirs-force-update)

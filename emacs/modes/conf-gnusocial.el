@@ -12,6 +12,8 @@
 ;; Custom keys
 (define-key gnu-social-mode-map (kbd "C-q") 'distopico:gnusocial-close)
 (define-key gnu-social-mode-map (kbd "M-q") 'kill-this-buffer)
+(define-key gnu-social-mode-map (kbd "S") 'gnu-social-update-status-interactive)
+(define-key gnu-social-mode-map (kbd "D") 'gnu-social-direct-message-interactive)
 
 ;; Functions
 (defun distopico:gnusocial-open ()
