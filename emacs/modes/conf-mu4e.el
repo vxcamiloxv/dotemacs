@@ -169,17 +169,13 @@
   (mu4e))
 
 (defun distopico:mu4e-open ()
-  "Open mu4e in fullscreen and delete other windows"
   (interactive)
-  (window-configuration-to-register :mu4e-fullscreen)
-  (mu4e)
-  (delete-other-windows))
+  (open-buffer-delete-others "*mu4e-main*" :mu4e-fullscreen 'mu4e))
 
 (defun distopico:mu4e-close ()
   "Restores the previous window configuration and burry buffer"
   (interactive)
-  (bury-buffer)
-  (jump-to-register :mu4e-fullscreen))
+  (bury-buffer-restore-prev :mu4e-fullscreen))
 
 (defun distopico:mu4e-kill-close ()
   "Kill buffer and reload maildirs if headers"

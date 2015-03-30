@@ -88,6 +88,7 @@
     web-beautify
     smart-forward
     emacs-eclim
+    angular-snippets
 
     ;; Utils
     anzu
@@ -113,7 +114,6 @@
     org-ac
 
     ;; Activity
-    jabber
     mu4e-maildirs-extension
 
     ;; Dubug

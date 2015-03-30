@@ -1,6 +1,8 @@
+;;; Code:
 ;; Buffer-related defuns
 
 (require 'imenu)
+(require 's)
 
 (defvar buffer-local-mode nil)
 (make-variable-buffer-local 'buffer-local-mode)
@@ -178,10 +180,8 @@ Including indent-buffer, which should not be called automatically on save."
   (concat (cadr (reverse (split-string file-name "/"))) "/"
           (file-name-nondirectory file-name)))
 
-(require 's)
 
 (defvar user-home-directory (concat (expand-file-name "~") "/"))
-
 (defun shorter-file-name (file-name)
   (s-chop-prefix user-home-directory file-name))
 
@@ -200,10 +200,18 @@ Including indent-buffer, which should not be called automatically on save."
 (defun ido-recentf-open ()
   "Use `ido-completing-read' to \\[find-file] a recent file"
   (interactive)
-  (recentf-cleanup)
+  (timer-cleanup-recentf)
   (if (find-file (ido-completing-read "Find recent file: " recentf-list))
       (message "Opening file...")
     (message "Aborting")))
+
+(defvar cleanup-recentf-timer nil
+  "Timer for `recentf-cleanup' to reschedule itself, or nil.")
+(defun timer-cleanup-recentf ()
+  "Clean unecesary recent files."
+  (unless cleanup-recentf-timer
+    (recentf-cleanup)
+    (setq cleanup-recentf-timer (run-at-time t 10800 'recentf-cleanup))))
 
 (defun select-active-minibuffer ()
   "Make the active minibuffer the selected window."
@@ -239,6 +247,26 @@ file corresponding to the current buffer file, then recompile the file."
   "Byte-compile all your dotfiles."
   (interactive)
   (byte-recompile-directory user-emacs-directory 0))
+
+(defun open-buffer-delete-others(buffer-name name-register action &optional open-same-window)
+  "Open buffer in fullscreen and delete other windows.
+need buffer-name: name of buffer, name-register: the name to register current window
+action: the action execute, optional, open-same-window"
+  (window-configuration-to-register name-register)
+  (let ((name-buffer (get-buffer buffer-name)))
+    (if name-buffer
+        (if open-same-window
+            (switch-to-buffer name-buffer)
+          (switch-to-buffer-other-window name-buffer)
+          )
+      (funcall action)))
+  (delete-other-windows))
+
+(defun bury-buffer-restore-prev (name-register)
+  "Restores the previous window configuration and burry buffer"
+  (interactive)
+  (bury-buffer)
+  (jump-to-register name-register))
 
 ;; (defun remove-elc-on-save ()
 ;;   "If you're saving an elisp file, likely the .elc is no longer valid."

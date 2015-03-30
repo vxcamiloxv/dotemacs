@@ -1,4 +1,6 @@
+;;; Code:
 (require 'yasnippet)
+(require 'angular-snippets)
 
 (setq yas-snippet-dirs
       '("~/.emacs.d/snippets/my-snippets"           ;; personal snippets
@@ -80,6 +82,6 @@
                     (lambda ()
                       (org-set-local 'yas/trigger-key [tab])
                       (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
-                            
+
 
 (yas-global-mode 1)

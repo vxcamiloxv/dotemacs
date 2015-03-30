@@ -73,7 +73,7 @@ Return a list of one element based on major mode."
     ;; "Common"
     ;; )
     ((member (buffer-name)
-             '("*Backtrace*" "*Compile-Log*" "*Messages*" "*Warnings*" "*Flycheck error messages*" "*fsm-debug*"))
+             '("*Backtrace*" "*Compile-Log*" "*Messages*" "*Warnings*" "*Flycheck error messages*" "*fsm-debug*" "*Shell Command Output*"))
      "Debugger"
      )
     ((member (buffer-name)
@@ -86,11 +86,18 @@ Return a list of one element based on major mode."
     ((memq major-mode '(nxhtml-mode web-mode avascript-mode js3-mode js-mode js2-mode javascript js2-refactor json-mode emmet-mode less-css-mode css-mode restclient-mode))
      "Web"
      )
+    ((memq major-mode
+           '(mu4e-view-mode mu4e-main-mode mu4e-headers-mode mu4e-view-raw-mode mu4e-compose-mode message-mode mail-mode))
+     "Email"
+     )
     ((or (memq major-mode
-               '(mu4e-view-mode mu4e-main-mode mu4e-headers-mode mu4e-view-raw-mode mu4e-compose-mode message-mode mail-mode
-                                jabber-chat-mode jabber-roster-mode erc-mode))
+               '(erc-mode))
          (string-match "\\*irc.*\\*" (buffer-name (current-buffer))))
-     "Activity"
+     "Irc"
+     )
+    ((memq major-mode
+           '(jabber-chat-mode jabber-roster-mode))
+     "Jabber"
      )
     ((memq major-mode '(org-mode org-agenda-mode))
      "OrgMode"
@@ -103,7 +110,7 @@ Return a list of one element based on major mode."
       (memq major-mode '(lisp-interaction-mode dired-mode help-mode slime-mode slime-repl-mode sldb-mode
                                                slime-inspector-mode calendar-mode diary-mode
                                                diary-fancy-display-mode Custom-mode))
-      (member (buffer-name) '("*Completions*" "*Alerts*" "*Clock Task Select*" "*slime-source*" "*inferior-lisp*" "*ielm*"))
+      (member (buffer-name) '("*Completions*" "*Alerts*" "*Clock Task Select*" "*slime-source*" "*inferior-lisp*" "*ielm*" "*Org tags*"))
       (string-match "\\*helm.*\\*" (buffer-name (current-buffer)))
       (string-match ".*cider.*" (buffer-name (current-buffer))) )
      "Interaction")

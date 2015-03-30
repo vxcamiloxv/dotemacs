@@ -59,6 +59,8 @@
                                      (when (eq major-mode 'erc-mode)
                                        (when (boundp 'erc-modified-channels-object)
                                          (powerline-raw erc-modified-channels-object face2 'l)))
+                                     (when (eq major-mode 'gnu-social-mode)
+                                       (powerline-raw gnu-social-modeline-active face2 'l))
                                      (powerline-raw distopico:mu4e-mode-line face2 'r)
                                      (powerline-raw "•" face2 'r)
                                      (powerline-raw global-mode-string face2 'r)

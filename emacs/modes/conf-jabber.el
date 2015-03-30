@@ -4,6 +4,20 @@
 (require 'starttls)
 (require 'jabber)
 
+;; Costom vars
+(defcustom distopico:jabber-default-account "distopico@riseup.net"
+  "jabber default account"
+  :type 'string
+  :group 'jabber)
+(defcustom distopico:jabber-default-nickname "DistopicoVegan"
+  "jabber default Nickname"
+  :type 'string
+  :group 'jabber)
+(defcustom distopico:jabber-muc-list nil
+  "jabber muc list"
+  :type 'alist
+  :group 'jabber)
+
 ;; Control vars
 (defvar distopico:jabber-account-alist)
 (defvar distopico:jabber-invalid-certificate-servers)
@@ -17,16 +31,31 @@
       jabber-use-global-history nil
       jabber-show-offline-contacts nil
       ;; String
+      jabber-avatar-max-width 40
+      jabber-avatar-max-height 40
       jabber-default-show ""
       jabber-default-status "M-x mode!!"
-      ;;jabber-muc-default-nicknames "DistopicoVegan"
+      jabber-groupchat-buffer-format "*-jabber-room: %b-*"
+      jabber-chat-buffer-format "*-jabber: %n-*"
+      ;; jabber-muc-default-nicknames "DistopicoVegan"
       jabber-roster-line-format " %4c %s | %a %-23n \n %8u %S" ;; " %c %-25n %u %-8s  %S"
       jabber-history-dir (in-emacs-d ".cache/jabber-history")
       jabber-avatar-cache-directory (in-emacs-d ".cache/jabber-avatar-cache")
-      jabber-muc-autojoin '("vegan@conference.jabber.org")
       ;; Other
       jabber-alert-presence-hooks nil
-      jabber-alert-message-hooks '(jabber-message-echo jabber-message-scroll))
+      jabber-alert-message-hooks '(jabber-message-echo jabber-message-scroll)
+      jabber-alert-muc-hooks '(jabber-muc-scroll)
+      jabber-post-connect-hooks '(jabber-send-current-presence
+                                  jabber-muc-autojoin
+                                  jabber-whitespace-ping-start
+                                  jabber-keepalive-start
+                                  jabber-vcard-avatars-find-current)
+      ;; Custom
+      distopico:jabber-default-nickname "DistopicoVegan"
+      distopico:jabber-muc-list '("veganismo@salas.suchat.org"
+                                  "vegan@conference.jabber.org"
+                                  "radiolibrevigo@conference.amaya.tk"
+                                  "elbinario@salas.elbinario.net"))
 
 ;; Jabber Accounts
 (ignore-errors
@@ -55,21 +84,19 @@
 (define-key jabber-roster-mode-map (kbd "C-q") 'distopico:jabber-close)
 (define-key jabber-chat-mode-map (kbd "C-q") 'distopico:jabber-chat-burry)
 (define-key jabber-chat-mode-map (kbd "M-q") 'kill-this-buffer)
+(define-key jabber-chat-mode-map (kbd "M-u") 'jabber-muc-names)
 
 
 ;; Functions
 (defun distopico:jabber-display-roster ()
   "Open rosetr jabber in fullscreen and delete other windows"
   (interactive)
-  (window-configuration-to-register :jabber-fullscreen)
-  (jabber-switch-to-roster-buffer)
-  (delete-other-windows))
+  (open-buffer-delete-others "*-jabber-roster-*" :jabber-fullscreen 'jabber-switch-to-roster-buffer))
 
 (defun distopico:jabber-close ()
-  "Restores the previous window configuration and burry buffer"
+  "Restores the previous window configuration and burry jabber buffer"
   (interactive)
-  (bury-buffer)
-  (jump-to-register :jabber-fullscreen))
+  (bury-buffer-restore-prev :jabber-fullscreen))
 
 (defun distopico:jabber-chat-burry ()
   "Burry frame or delete frame if exit more than one."
@@ -79,32 +106,18 @@
           (bury-buffer)
         (delete-frame))))
 
-(defun distopico:jabber-resize-avatar (&optional jc)
-  "Resize jabber avatar in file directory."
-  (interactive)
-  (shell-command (concat
-                  (format "for file in %s/*; " jabber-avatar-cache-directory)
-                  "do size='$(identify -format %h $file)'; if [[ '$size' > '20' ]]; then convert $file -resize 20 $file; fi done 2>/dev/null"
-                  ) nil nil)
-  (message ""))
 
-(defun distopico:jabber-avatar-compute-size (avatar)
-  "Compute and set the width and height fields of AVATAR.
-Return AVATAR."
-  ;; image-size only works when there is a window system.
-  ;; But display-graphic-p doesn't exist on XEmacs...
-  (let ((size (and (fboundp 'display-graphic-p)
-                   (display-graphic-p)
-                   (let ((image (jabber-avatar-image avatar)))
-                     (and image
-                          (image-size image t))))))
-    (when size
-      (setf (avatar-width avatar) (/ (car size) 2))
-      (setf (avatar-height avatar) (/ (cdr size) 2)))
-    avatar))
+(defun distopico:jabber-auto-join (jc)
+  "I use multi-account and default auto-join not work for me because connect all accounts.
+And only need to connect one"
+  (let* ((state-data (fsm-get-state-data jc))
+         (jid (plist-get state-data :original-jid)))
+    (if (equal jid distopico:jabber-default-account)
+        (progn
+          (dolist (room distopico:jabber-muc-list)
+            (jabber-groupchat-join jc room distopico:jabber-default-nickname))))))
 
-;; Rewrite
-(advice-add 'jabber-avatar-compute-size :override #'distopico:jabber-avatar-compute-size)
+(add-hook 'jabber-post-connect-hooks 'distopico:jabber-auto-join 'append)
 
 ;; Hooks
 (add-hook 'jabber-chat-mode-hook
@@ -112,7 +125,6 @@ Return AVATAR."
             ;;(visual-line-mode t)
             ))
 
-(add-hook 'jabber-post-connect-hooks 'distopico:jabber-resize-avatar 'append)
 
 ;; Run
 (jabber-connect-all)

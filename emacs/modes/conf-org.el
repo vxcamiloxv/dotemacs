@@ -118,8 +118,8 @@
       org-agenda-insert-diary-extract-time t
       org-agenda-todo-list-sublevels t
       org-agenda-dim-blocked-tasks t
-      org-agenda-include-diary t
       ;; nil
+      org-agenda-include-diary nil
       org-agenda-sticky nil
       org-agenda-remove-tags nil
       ;; Other
@@ -799,6 +799,32 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
     (other-window 1)
     (if (not (equal subname ""))
         (rename-buffer (format "%s(%s)" orig-buffer-name subname)))))
+
+(defun distopico:org-inherited-no-file-tags ()
+  "preserves the logic of level one groupings."
+  (let ((tags (org-entry-get nil "ALLTAGS" 'selective))
+        (ltags (org-entry-get nil "TAGS")))
+    (mapc (lambda (tag)
+            (setq tags
+                  (replace-regexp-in-string (concat tag ":") "" tags)))
+          (append org-file-tags (when ltags (split-string ltags ":" t))))
+    (if (string= ":" tags) nil tags)))
+
+(defadvice org-archive-subtree (around distopico:org-archive-subtree-low-level activate)
+  "Preserve top level headings when archiving to a file."
+  (let ((tags (distopico:org-inherited-no-file-tags))
+        (org-archive-location
+         (if (save-excursion (org-back-to-heading)
+                             (> (org-outline-level) 1))
+             (concat (car (split-string org-archive-location "::"))
+                     "::* "
+                     (car (org-get-outline-path)))
+           org-archive-location)))
+    ad-do-it
+    (with-current-buffer (find-file-noselect (org-extract-archive-file))
+      (save-excursion
+        (while (org-up-heading-safe))
+        (org-set-tags-to tags)))))
 
 (defun distopico:org-ask-location ()
   "Ask targget location"

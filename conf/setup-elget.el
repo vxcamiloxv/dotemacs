@@ -93,6 +93,10 @@
           :description "Emacs client for gnu-social"
           :type git
           :url "http://git.savannah.gnu.org/r/gnu-social-mode.git")
+   (:name "jabber"
+          :description "Emacs jabber client"
+          :type git
+          :url "http://git.code.sf.net/p/emacs-jabber/git")
    (:name "cyberpunk-theme"
           :description "Cyberpunk theme"
           :type git
