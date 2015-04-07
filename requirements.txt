@@ -1,0 +1,11 @@
+argparse==1.2.1
+astroid==1.2.1
+epc==0.0.5
+flake8==2.2.3
+jedi==0.8.1-final0
+jediepcserver==0.0.0
+logilab-common==0.62.1
+mccabe==0.2.1
+pep8==1.5.7
+pyflakes==0.8.1
+sexpdata==0.0.3
