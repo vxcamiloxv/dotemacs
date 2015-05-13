@@ -15,7 +15,8 @@
       gnu-social-soft-wrap-status t
       gnu-social-status-format "\t %i %s: %h%t \n\t      - %@ | from %f%L%r \n"
       gnu-social-stripe-bg-color "#001214"
-      gnu-social-username-face "White")
+      gnu-social-reply-bg-color "#002125"
+      gnu-social-highlight-bg-color "cyan")
 
 ;; Custom keys
 (define-key gnu-social-mode-map (kbd "C-q") 'distopico:gnusocial-close)

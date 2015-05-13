@@ -276,6 +276,11 @@
  '(company-tooltip-common-selection ((t (:background "#001E21" :foreground "#ffffff"))))
  '(company-tooltip-annotation ((t (:foreground "#f0dfff" :inherit (company-tooltip)))))
 
+ ;; Gnu Social
+ '(gnu-social-reply-face ((t (:inherit nil :background "#002125" :foreground "cyan"))))
+ '(gnu-social-username-face ((t (:underline t :foreground "cyan" :weight bold))))
+ '(gnu-social-uri-face ((t (:underline t :weight bold))))
+
  ;; Secondary region
  '(secondary-selection ((((class color) (min-colors 88) (background dark)) (:background "#029cdc" :foreground "#011d2c"))))
  )
