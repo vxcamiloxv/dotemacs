@@ -339,11 +339,9 @@
               (in-mode . "mu4e-view-mode")) )))
 
 ;; Table of Contects
-;; (eval-after-load "org-toc-autoloads"
-;;   '(progn
-;;      (if (require 'org-toc nil t)
-;;          (add-hook 'org-mode-hook 'org-toc-enable)
-;;        (warn "org-toc not found"))))
+;;      (if (require 'toc-org nil t)
+;;          (add-hook 'org-mode-hook 'toc-org-enable)
+;;        (warn "toc-org not found"))
 
 ;; Org Projectile
 (setq org-projectile:projects-file  (expand-file-name "todo.org" org-directory))

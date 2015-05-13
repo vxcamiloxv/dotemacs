@@ -1,8 +1,7 @@
 (require 'python)
 (require 'python-environment)
-(require 'ac-python)
-
-(add-hook 'python-mode-hook 'auto-complete-mode)
+;; (require 'ac-python)
+;; (add-hook 'python-mode-hook 'auto-complete-mode)
 
 ;; Default python
 (setq python-indent-offset 4

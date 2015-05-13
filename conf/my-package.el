@@ -110,7 +110,7 @@
     org-projectile
     org-present
     org-pomodoro
-    org-toc
+    toc-org
     org-ac
 
     ;; Activity
