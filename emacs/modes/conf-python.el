@@ -1,4 +1,5 @@
 (require 'python)
+(require 'company)
 (require 'python-environment)
 ;; (require 'ac-python)
 ;; (add-hook 'python-mode-hook 'auto-complete-mode)
@@ -12,6 +13,7 @@
 
 (add-hook 'python-mode-hook
           (lambda ()
+            (add-to-list 'company-backends 'company-jedi)
             (setq indent-tabs-mode nil)
             (setq tab-width 4)
             (local-set-key (kbd "RET") 'newline-and-indent)
