@@ -1,105 +1,71 @@
 ;;; Code:
 
 (require 'popwin)
+(require 'popwin-term)
+(require 'popwin-browse-kill-ring)
 (popwin-mode t)
 (global-set-key (kbd "C-x p") popwin:keymap)
 
-;; M-x anything
-(setq anything-samewindow nil)
-(push '("*anything*" :height 0.5) popwin:special-display-config)
-
-;; M-x dired-jump-other-window
-(push '(dired-mode :position top) popwin:special-display-config)
-
-;; M-!
-(push "*Shell Command Output*" popwin:special-display-config)
-
-;; M-x compile
-(push '(compilation-mode :noselect t) popwin:special-display-config)
-
-;; slime
-(push "*slime-apropos*" popwin:special-display-config)
-(push "*slime-macroexpansion*" popwin:special-display-config)
-(push "*slime-description*" popwin:special-display-config)
-(push '("*slime-compilation*" :noselect t) popwin:special-display-config)
-(push "*slime-xref*" popwin:special-display-config)
-(push '(sldb-mode :stick t) popwin:special-display-config)
-(push 'slime-repl-mode popwin:special-display-config)
-(push 'slime-connection-list-mode popwin:special-display-config)
-
-;; vc
-(push "*vc-diff*" popwin:special-display-config)
-(push "*vc-change-log*" popwin:special-display-config)
-
-;; Django
-(push '("Django:" :regexp t :width 0.3 :position right) popwin:special-display-config)
-
-;; undo-tree
-(push '("*undo-tree*" :width 0.3 :position right) popwin:special-display-config)
-
-;;ibuffer
-(push "*Ibuffer*" popwin:special-display-config)
-
-;; Kill ring
-(require 'popwin-browse-kill-ring)
-(push "*Kill Ring*" popwin:special-display-config)
-
-;;Terminal
-(require 'popwin-term)
-(push '(term-mode :position :bottom :height 10 :stick t) popwin:special-display-config)
-
-;; Debug
-(push '("*Backtrace*" :height 0.3 ) popwin:special-display-config)
-(push '("*Messages*" :height 0.3 ) popwin:special-display-config)
-(push '("*Compile-Log*" :height 0.3 ) popwin:special-display-config)
-
-;; Direx
-(push '(direx:direx-mode :position left :width 35 :dedicated t)
-      popwin:special-display-config)
-
-;; Flycheck
-(push '(flycheck-error-list-mode :stick t) popwin:special-display-config)
-
-;;Others
-(push '("collected.org" :position top :height 15) popwin:special-display-config)
-(push '("*grep*" :position bottom :height 20 :stick t) popwin:special-display-config)
-(push '("*imenu-tree*" :position left :width 50 :stick t) popwin:special-display-config)
-(push '("helm" :regexp t :height 0.3) popwin:special-display-config)
-(push '("*magit-edit-log*" :height 0.3) popwin:special-display-config)
-;; (push '("*magit*" :regexp t :position bottom :noselect t :height 0.3 :stick nil) popwin:special-display-config)
-(push '("*Completions*" :height 0.4) popwin:special-display-config)
-(push '("*compilation*" :height 0.4 :noselect t :stick t) popwin:special-display-config)
-(push '("*quickrun*" :height 0.3 :stick t) popwin:special-display-config)
 
 ;; popwin settings
 (setq popwin:special-display-config
       '(("*Help*" :height 0.4 :stick t)
+        ;; Debug
+        ("*Warnings*" :position bottom :height 0.3 )
+        ("*Backtrace*" :position bottom :height 0.3 )
+        ("*Messages*" :position bottom :height 0.3 )
+        ("*Compile-Log*" :position bottom :height 0.3 )
+        ("*Shell Command Output*" :position bottom :height 0.3 )
+        (".*overtone.log" :regexp t :height 0.3)
+        ("collected.org" :position top :height 15)
+        (flycheck-error-list-mode :position bottom :height 0.3 :stick t)
+        (compilation-mode :position bottom :height 0.3 :noselect t)
+        ;; Utils
+        ("helm" :regexp t :height 0.3)
         ("*Occur*" :position bottom :height 0.3)
-        ("\\*Slime Description.*" :noselect t :regexp t :height 30)
+        ("\\*Slime Description.*" :noselect t :regexp t :height 0.3)
+        ("*undo-tree*" :width 0.3 :position right)
+        ("*grep*" :position bottom :height 0.2 :stick t)
+        ("*Completions*" :height 0.4)
+        ("*compilation*" :height 0.4 :noselect t :stick t)
+        ("*quickrun*" :height 0.3 :stick t)
+        ;; Magit/vc
         (magit-status-mode :position bottom :noselect t :height 0.3 :stick t)
         ("*magit-commit*" :position bottom :noselect t :height 0.3 :stick t)
+        ("\\*magit.*" :regexp t :position bottom :noselect t :height 0.3 :stick t)
         ("*magit-diff*" :position bottom :noselect t :height 0.3)
         ("*magit-edit-log*" :position bottom :noselect t :height 0.2)
         ("*magit-process*" :position bottom :noselect t :height 0.2)
-        ("\\*Slime Inspector.*" :regexp t :height 30)
+        ("*vc-diff*" :position bottom :noselect t :height 0.2)
+        ("*vc-change-log*" :position bottom :noselect t :height 0.2)
+        ;; Navigator
+        ("*Ibuffer*" :position bottom :height 0.2)
         ("*Ido Completions*" :noselect t :height 0.3)
-        (".*overtone.log" :regexp t :height 30)
+        ("*imenu-tree*" :position left :width 50 :stick t)
+        (direx:direx-mode :position left :width 35 :dedicated t)
+        (dired-mode :position top)
+
         ("*gists*" :height 0.3)
-        ("*sldb.*":regexp t :height 30)
+        ("*sldb.*":regexp t :height 0.3)
         ("*Gofmt Errors*" :noselect t)
-        ("\\*godoc*" :regexp t :height 30)
-        ("*nrepl-error*" :height 20 :stick t)
-        ("*nrepl-doc*" :height 20 :stick t)
-        ("*nrepl-src*" :height 20 :stick t)
-        ("*Kill Ring*" :height 30)
+        ("\\*godoc*" :regexp t :height 0.3)
+        ("*nrepl-error*" :height 0.2 :stick t)
+        ("*nrepl-doc*" :height 0.2 :stick t)
+        ("*nrepl-src*" :height 0.2 :stick t)
+        ("*Kill Ring*" :height 0.3)
         ("*project-status*" :noselect t)
-        ("*Compile-Log" :height 20 :stick t)
+        ("*Compile-Log" :height 0.2 :stick t)
         ("*pytest*" :noselect t)
+        ;; Programing
+        ("Django:" :regexp t :width 0.3 :position right)
         ("*Python*" :stick t)
         ("*jedi:doc*" :noselect t)
+        ;; Console
         ("*shell*" :height 0.3)
         ("\\*ansi-term.*\\*" :regexp t :height 0.3)
         ("\\*terminal.*\\*" :regexp t :height 0.3)
+        (term-mode :position :bottom :height 10 :stick t)
+        ;; Org/Organized
         (diary-fancy-display-mode :position left :width 50 :stick nil)
         (diary-mode :position bottom :height 15 :stick t)
         (calendar-mode :position bottom :height 15 :stick nil)
@@ -119,7 +85,7 @@
   (interactive)
   (popwin:display-buffer "*ansi-term*"))
 
-  (defun popwin-term:ansi-term ()
+(defun popwin-term:ansi-term ()
   (interactive)
   (popwin:display-buffer-1
    (or (get-buffer "*ansi-term*")
@@ -129,7 +95,7 @@
    :default-config-keywords '(:position :bottom :height 10 :stick t)))
 
 
-  (defun popwin-term:multi-term ()
+(defun popwin-term:multi-term ()
   (interactive)
   (popwin:display-buffer-1
    (or (get-buffer "*terminal*")
