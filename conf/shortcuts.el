@@ -153,7 +153,6 @@
 
 ;; terminal
 (global-set-key (kbd "C-c t") 'popwin-term:ansi-term)
-
 (global-set-key (kbd "C-x t") 'popwin-term:multi-term)
 ;;(global-set-key (kbd "C-x t")
 ;;    (lambda () (interactive) (popwin-term:term)))
@@ -210,6 +209,8 @@
 
 ;; PopWin
 (global-set-key (kbd "C-<escape>") 'popwin:close-popup-window)
+(global-set-key (kbd "<f12>") 'popwin:close-popup-window)
+(global-set-key (kbd "C-<f12>") 'popwin:popup-last-buffer)
 
 ;;Skewer
 (global-set-key (kbd "M-<f12>") 'run-skewer)
