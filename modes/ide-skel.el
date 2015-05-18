@@ -2711,7 +2711,7 @@ show buffer BUFFER.  SIZE can be integer (character count) or float 0.0 - 1.0."
       (when hide-left-view-window (ide-skel-show-left-view-window))
       (when hide-right-view-window (ide-skel-show-right-view-window)))
     result))
-(ad-activate 'delete-window)
+;;(ad-activate 'delete-window)
 
 (defadvice delete-other-windows (around delete-other-windows-around-advice (&optional window))
   (ide-skel-assert-not-in-side-view-window)
@@ -2730,7 +2730,7 @@ show buffer BUFFER.  SIZE can be integer (character count) or float 0.0 - 1.0."
 	(when hide-right-view-window
 	  (ide-skel-show-right-view-window))))
     result))
-(ad-activate 'delete-other-windows)
+;;(ad-activate 'delete-other-windows)
 
 (defun ide-skel-assert-not-in-side-view-window ()
   (when (and (called-interactively-p 'any) (ide-skel-side-view-window-p (selected-window)))
@@ -2738,33 +2738,33 @@ show buffer BUFFER.  SIZE can be integer (character count) or float 0.0 - 1.0."
 
 (defadvice kill-buffer (before kill-buffer-before-advice (buffer))
   (ide-skel-assert-not-in-side-view-window))
-(ad-activate 'kill-buffer)
+;;(ad-activate 'kill-buffer)
 
 (defadvice split-window-vertically (before split-window-vertically-before-advice (&optional size))
   (ide-skel-assert-not-in-side-view-window))
-(ad-activate 'split-window-vertically)
+;;(ad-activate 'split-window-vertically)
 
 (defadvice split-window-horizontally (before split-window-horizontally-before-advice (&optional size))
   (ide-skel-assert-not-in-side-view-window))
-(ad-activate 'split-window-horizontally)
+;;(ad-activate 'split-window-horizontally)
 
 (defadvice mouse-drag-vertical-line (around mouse-drag-vertical-line-around-advice (start-event))
   (let* ((editor-window (ide-skel-get-editor-window))
-	 (left-view-window (car ide-skel--current-side-windows))
-	 (right-view-window (cdr ide-skel--current-side-windows)))
+         (left-view-window (car ide-skel--current-side-windows))
+         (right-view-window (cdr ide-skel--current-side-windows)))
     (when left-view-window (with-selected-window left-view-window (setq window-size-fixed nil)))
     (when right-view-window (with-selected-window right-view-window (setq window-size-fixed nil)))
     (unwind-protect
-	(progn ad-do-it)
+        (progn ad-do-it)
       (when left-view-window (with-selected-window left-view-window (setq window-size-fixed 'width)))
       (when right-view-window (with-selected-window right-view-window (setq window-size-fixed 'width))))))
-(ad-activate 'mouse-drag-vertical-line)
+;;(ad-activate 'mouse-drag-vertical-line)
 
 (defadvice other-window (after other-window-after-advice (arg &optional all-frames))
   (if (memq (selected-window) (list ide-skel-current-left-view-window ide-skel-current-right-view-window))
       (other-window arg all-frames)
     ad-return-value))
-(ad-activate 'other-window)
+;;(ad-activate 'other-window)
 
 ;; Buffer list buffer (left side view)
 
