@@ -5,9 +5,6 @@
 
   (setq ide-skel-tabbar-enabled nil)
 
-  ;; optional, but useful - see Emacs Manual
-  (icomplete-mode)
-
   ;; for convenience
   (global-set-key [f6] 'ide-skel-proj-find-files-by-regexp)
   (global-set-key [f7] 'ide-skel-proj-grep-files-by-regexp)
