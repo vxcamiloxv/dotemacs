@@ -98,10 +98,12 @@
   (when (file-regular-p file)
     (load file)))
 
-;; (setq auth-sources '(default
-;;                       "secrets:session"
-;;                       "secrets:Login"
-;;                       "~/.authinfo.gpg"))
+
+;; Useful libs
+(require 'expand-region)
+(require 'jump-char)
+(require 'smart-forward)
+(require 'delsel)
 
 ;; Aditionals Modes
 (require 'conf-mu4e)
@@ -109,8 +111,13 @@
 (require 'conf-erc)
 (require 'conf-gnusocial)
 (require 'conf-magit)
+(require 'conf-web-mode)
+(require 'conf-javascript)
+(require 'conf-web-beautify)
+(require 'conf-emmet)
+(require 'conf-skewer)
+(require 'conf-css)
 (load-file "~/.emacs.d/emacs/modes/column-marker.el")
-(load-file "~/.emacs.d/emacs/modes/css.el")
 (load-file "~/.emacs.d/emacs/modes/eshell.el")
 (load-file "~/.emacs.d/emacs/modes/longlines.el")
 (load-file "~/.emacs.d/emacs/modes/mozrepl.el")
@@ -122,7 +129,6 @@
 (load-file "~/.emacs.d/emacs/modes/uniquify.el")
 (load-file "~/.emacs.d/emacs/modes/ediff.el")
 (load-file "~/.emacs.d/emacs/modes/ace-jump.el")
-(load-file "~/.emacs.d/emacs/modes/web-mode.el")
 (load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
 ;;(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
 (load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
@@ -133,7 +139,7 @@
 (require 'conf-present)
 (require 'conf-markdown)
 (require 'conf-tabbar)
-(require 'conf-ideskel)
+;;(require 'conf-ideskel)
 (require 'conf-popwin)
 (require 'conf-jedi)
 (require 'conf-hippie)
@@ -149,7 +155,6 @@
 (require 'conf-auto-indent)
 (require 'conf-hideshow)
 ;;(require 'conf-paredit)
-;;(require 'conf-perspective)
 (require 'conf-isearch)
 (require 'conf-hideshowvis)
 (require 'conf-highlight-symbol)
@@ -160,12 +165,7 @@
 (require 'conf-eclim)
 
 ;; Test
-(require 'expand-region)
-(require 'delsel)
-(require 'jump-char)
-(require 'smart-forward)
 (require 'change-inner)
-(require 'tabkey2)
 
 ;;TODO
 ;; Warning (initialization): Your `load-path' seems to contain
