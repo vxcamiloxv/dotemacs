@@ -1,4 +1,2 @@
-# My Emacs Config
-Version 0.1
-
-## Changelog
+# Distopico Emacs Config
+** Version 1.0.1 **
