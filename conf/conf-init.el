@@ -22,7 +22,7 @@
   )
 
 (if (< emacs-major-version 24)
-    (add-to-list 'load-path (in-emacs-d "compat23")))
+    (add-to-list 'load-path (in-emacs-d "legacy")))
 
 (require 'elisp-utils)
 (require 'setup-package)
