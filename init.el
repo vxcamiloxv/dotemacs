@@ -105,7 +105,10 @@
 (require 'smart-forward)
 (require 'delsel)
 
-;; Aditionals Modes
+;;(require 'conf-ideskel) I try to living without ideskel,
+;; this project is abandoned and have multiples bugs with emacs 24 and others libs
+
+;; Conf Modes
 (require 'conf-mu4e)
 (require 'conf-jabber)
 (require 'conf-erc)
@@ -139,7 +142,6 @@
 (require 'conf-present)
 (require 'conf-markdown)
 (require 'conf-tabbar)
-;;(require 'conf-ideskel)
 (require 'conf-popwin)
 (require 'conf-jedi)
 (require 'conf-hippie)
