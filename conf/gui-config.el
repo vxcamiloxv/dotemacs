@@ -277,5 +277,7 @@ This command is convenient when reading novel, documentation."
 ;; Whitespace style
 (setq whitespace-style '(trailing underline spaces tabs newline space-mark tab-mark newline-mark))
 
+;; icomplete useful
+(icomplete-mode)
 
 (provide 'gui-config)
