@@ -29,7 +29,6 @@
     flx-ido
     jump-char
     smex
-    jedi
     direx
     dired+
     dired-details+
@@ -72,13 +71,13 @@
     php-extras
     php-auto-yasnippets
     pony-mode
-    ac-python
+    jedi
 
     ;; Web
-    magit
     restclient
     ac-js2
-    ac-emmet
+    emmet-mode
+    ;; ac-emmet
     js2-mode
     js2-refactor
     json-mode
@@ -91,10 +90,9 @@
     angular-snippets
 
     ;; Utils
+    magit
     anzu
-    company
     iy-go-to-char
-    tabkey2
     quickrun
     fic-mode
     multi-term
@@ -105,13 +103,19 @@
     multiple-cursors
     auto-async-byte-compile
 
+    ;; Auto Complete
+    company
+    company-web
+    company-tern
+    company-restclient
+    company-jedi
+
     ;; Org
     org-plus-contrib
     org-projectile
     org-present
     org-pomodoro
     toc-org
-    org-ac
 
     ;; Activity
     mu4e-maildirs-extension
