@@ -1,9 +1,9 @@
 ;;; Code:
-
 (require 'js2-mode)
 (require 'js2-refactor)
 (require 'js2-imenu-extras)
 (require 'ac-js2)
+(require 'company-tern)
 
 (js2r-add-keybindings-with-prefix "C-c C-j")
 
@@ -18,9 +18,7 @@
               js2-mode-show-strict-warnings t
               js2-strict-trailing-comma-warning t
               js2-strict-missing-semi-warning nil
-              js2-strict-inconsistent-return-warning nil
-              ;;js2-global-externs '("jQuery" "$")
-              )
+              js2-strict-inconsistent-return-warning nil)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'magic-mode-alist '(".+node" . js2-mode))
@@ -33,16 +31,22 @@
 ;; js2-mode hook
 (add-hook 'js2-mode-hook
           '(lambda ()
-             (js2-imenu-extras-mode)
-             (js2-imenu-extras-setup)
+             (js2-imenu-extras-mode t)
+             (js2-imenu-extras-setup t)
              (rainbow-delimiters-mode t)
+             (tern-mode t)
              ;;(rainbow-identifiers-mode t)
              ;; Todo Highlighting
              (todo-highlight)
              ))
 
-;; Enabled ac-js2
+;; Enabled autocomplete
 (add-hook 'js2-mode-hook 'ac-js2-mode)
-(setq ac-js2-evaluate-calls t)
+;; (setq ac-js2-evaluate-calls t)
+;; (add-to-list 'company-backends 'company-tern)
+(eval-after-load 'tern
+  '(progn
+     (require 'tern-auto-complete)
+     (tern-ac-setup)))
 
 (provide 'conf-javascript)
