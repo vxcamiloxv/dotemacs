@@ -71,7 +71,6 @@
 
 (require 'ezimage)
 
-
 (custom-theme-set-variables
  'tron
 
@@ -275,6 +274,12 @@
  '(company-tooltip-common ((t (:inherit font-lock-constant-face :background "#0cd6e4" :foreground "#0b2c2d"))))
  '(company-tooltip-common-selection ((t (:background "#001E21" :foreground "#ffffff"))))
  '(company-tooltip-annotation ((t (:foreground "#f0dfff" :inherit (company-tooltip)))))
+
+ ;; Auto-complete
+ '(ac-candidate-face ((t (:inherit default :background "#0b2c2d" :foreground "#0cd6e4"))))
+ '(ac-completion-face ((t (:inherit default :background "#0b2c2d" :foreground "#0cd6e4"))))
+ '(ac-selection-face ((t (:inherit font-lock-function-name-face :background "#0cd6e4" :foreground "#0b2c2d"))))
+ '(ac-candidate-mouse-face ((t (:inherit (ac-selection-face)))))
 
  ;; Gnu Social
  '(gnu-social-reply-face ((t (:inherit nil :background "#002125" :foreground "cyan"))))
