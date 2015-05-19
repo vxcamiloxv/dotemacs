@@ -32,7 +32,7 @@
 (add-hook 'js2-mode-hook
           '(lambda ()
              (js2-imenu-extras-mode t)
-             (js2-imenu-extras-setup t)
+             (js2-imenu-extras-setup)
              (rainbow-delimiters-mode t)
              (tern-mode t)
              ;;(rainbow-identifiers-mode t)
