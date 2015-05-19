@@ -1,9 +1,9 @@
 ;;; Color theme setup, with cycling
 ;;; -----
 
-(add-to-list 'load-path "~/.emacs.d/elisp/color-theme-6.6.0/")
+(add-to-list 'load-path "~/.emacs.d/legacy/themes/color-theme-6.6.0/")
 (require 'color-theme)
-(load-file "~/.emacs.d/elisp/color-theme-6.6.0/themes/color-theme-library.el")
+(load-file "~/.emacs.d/legacy/themes/themes/color-theme-library.el")
 
 ;(setq color-theme-is-cumulative nil)
 
@@ -58,7 +58,7 @@ isn't."
        (org-done ((t (:foreground "SpringGreen3" :bold t))))
        (org-special-keyword ((t (:foreground "sienna"))))
        (org-column ((t (:background "gray85"))))
-;       (py-pseudo-keyword-face ((t (:foreground: 
+;       (py-pseudo-keyword-face ((t (:foreground:
        (erc-input-face ((t (:foreground "brown"))))
        (erc-notice-face ((t (:foreground "SlateBlue" :bold t))))
        (erc-current-nick-face ((t (:foreground "DarkTurquoise" :bold t))))
@@ -66,11 +66,11 @@ isn't."
        (planner-note-headline-face ((t (:bold t :foreground "azure3"))))))))
 
 
-(setq my-color-themes 
+(setq my-color-themes
       (list 'color-theme-snow-better
 	    'color-theme-ebony-gnome
 	    'color-theme-emacs-21-black))
-;; 	    'color-theme-taming-mr-arneson 'color-theme-gray30 
+;; 	    'color-theme-taming-mr-arneson 'color-theme-gray30
 ;; 	    'color-theme-hober 'color-theme-clarity
 ;; 	    'color-theme-arjen 'color-theme-dark-laptop
 ;; 	    'color-theme-subtle-hacker 'color-theme-deep-blue))
