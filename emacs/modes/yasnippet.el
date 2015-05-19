@@ -16,12 +16,6 @@
 (setq hippie-expand-try-functions-list
       (cons 'yas/hippie-try-expand hippie-expand-try-functions-list))
 
-; Fix orgmode issue with yas
-(add-hook 'org-mode-hook
-          (lambda ()
-            (org-set-local 'yas/trigger-key [tab])
-            (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
-
 
 ; change dropdown behavior
 (require 'dropdown-list)
@@ -75,7 +69,7 @@
         (insert key)
         (yas-expand)))))
 
-(define-key yas-minor-mode-map (kbd "M-ñ")     'yas-ido-expand)
+(define-key yas-minor-mode-map (kbd "M-ñ") 'yas-ido-expand)
 
 ;; Fix org-mode
 (add-hook 'org-mode-hook
@@ -84,4 +78,4 @@
                       (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
 
 
-(yas-global-mode 1)
+(yas-global-mode t)

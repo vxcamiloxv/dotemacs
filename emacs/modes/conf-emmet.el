@@ -9,9 +9,10 @@
 
 (add-hook 'web-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook  'emmet-mode)
+(add-hook 'less-mode-hook  'emmet-mode)
 
-;; (add-hook 'web-mode-hook 'ac-emmet-html-setup)
-;; (add-hook 'css-mode-hook 'ac-emmet-css-setup)
-;; (setq ac-sources (append '(ac-source-emmet-css-snippets ) ac-sources))
+(add-hook 'web-mode-hook 'ac-emmet-html-setup)
+(add-hook 'css-mode-hook 'ac-emmet-css-setup)
+(add-hook 'less-mode-hook 'ac-emmet-css-setup)
 
 (provide 'conf-emmet)

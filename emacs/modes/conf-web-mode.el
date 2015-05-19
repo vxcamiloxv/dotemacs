@@ -3,7 +3,6 @@
 (require 'company)
 (require 'company-web-html)
 (require 'company-web-jade)
-(require 'company-web-slim)
 
 ;; Baisc
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -22,13 +21,13 @@
 (add-to-list 'auto-mode-alist '("/\\(views\\|html\\|templates\\)/.*\\.php\\'" . web-mode))
 
 ;; Engines
-(setq web-mode-engines-alist '(
-                               ("php" . "\\.phtml\\'")
-                               ("blade" . "\\.blade\\'")
-                               ("django" . "\\.[sd]tpl\\'")
-                               ("django" . "\\.[sd]tml\\'")
-                               )
-      )
+(setq web-mode-engines-alist
+      '(
+        ("php" . "\\.phtml\\'")
+        ("blade" . "\\.blade\\'")
+        ("django" . "\\.[sd]tpl\\'")
+        ("django" . "\\.[sd]tml\\'")
+        ))
 
 ;; Settings
 (setq-default web-mode-enable-auto-pairing t
@@ -65,13 +64,14 @@
 
 
 ;; Company web backend
-(add-to-list 'company-backends 'company-yasnippet)
-(add-to-list 'company-backends 'company-web-html)
 (define-key web-mode-map (kbd "C-'") 'company-web-html)
+(add-to-list 'company-backends 'company-restclient)
 
 ;; Hooks
 (add-hook 'web-mode-hook
           '(lambda ()
+             ;; Company-mode
+             (set (make-local-variable 'company-backends) (append company-backends '((company-web-html company-web-jade company-yasnippet))))
              ;; Auto indent
              (local-set-key (kbd "RET") 'newline-and-indent)
 
@@ -97,40 +97,10 @@
 
 ;; Extend Autocomplete web-mode
 ;; not work default-ac
-;; (setq web-mode-ac-sources-alist
-;;       '(("php" . (  ;ac-source-php-auto-yasnippets
-;;                                         ;ac-source-yasnippet
-;;                   ac-source-abbrev
-;;                   ac-source-gtags
-;;                   ac-source-semantic
-;;                   ac-source-dictionary
-;;                   ac-source-words-in-same-mode-buffers
-;;                   ac-source-words-in-buffer
-;;                   ac-source-files-in-current-dir
-;;                   ))
-;;         ("html" . ( ;ac-source-emmet-html-aliases
-;;                                         ;ac-source-emmet-html-snippets
-;;                                         ;ac-source-yasnippet
-;;                    ac-source-abbrev
-;;                    ac-source-gtags
-;;                    ac-source-semantic
-;;                    ac-source-dictionary
-;;                    ac-source-words-in-same-mode-buffers
-;;                    ac-source-words-in-buffer
-;;                    ac-source-files-in-current-dir
-;;                    ))
-;;         ("css" . (  ac-source-css-property
-;;                                         ;ac-source-emmet-css-snippets
-;;                                         ;ac-source-yasnippet
-;;                     ac-source-abbrev
-;;                     ac-source-gtags
-;;                     ac-source-semantic
-;;                     ac-source-dictionary
-;;                     ac-source-words-in-same-mode-buffers
-;;                     ac-source-words-in-buffer
-;;                     ac-source-files-in-current-dir
-;;                     ))
-;;         )
-;;       )
+(setq web-mode-ac-sources-alist
+      '(("php" . (ac-source-php-auto-yasnippets))
+        ("html" . (ac-source-emmet-html-snippets))
+        ("css" . (ac-source-emmet-css-snippets))
+        ))
 
 (provide 'conf-web-mode)

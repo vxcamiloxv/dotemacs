@@ -17,7 +17,6 @@
 (require 'company)
 (require 'company-emacs-eclim)
 (company-emacs-eclim-setup)
-(global-company-mode t)
 
 
 (provide 'conf-eclim)
