@@ -10,6 +10,7 @@
 ;; popwin settings
 (setq popwin:special-display-config
       '(("*Help*" :height 0.4 :stick t)
+        ("\\*.*" :regexp t :position bottom :noselect t :height 0.3 :stick t)
         ;; Debug
         ("*Warnings*" :position bottom :height 0.3 )
         ("*Backtrace*" :position bottom :height 0.3 )
