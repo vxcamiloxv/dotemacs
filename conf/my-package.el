@@ -32,10 +32,6 @@
     direx
     dired+
     dired-details+
-    helm
-    helm-swoop
-    helm-projectile
-    helm-css-scss
     perspective
     smartparens
     aggressive-indent
@@ -64,6 +60,13 @@
     highlight-indentation
     find-file-in-project
 
+    ;; Helm
+    helm
+    helm-swoop
+    helm-projectile
+    helm-css-scss
+    helm-emmet
+
     ;; Programing
     emr
     nodejs-repl
@@ -72,12 +75,11 @@
     php-auto-yasnippets
     pony-mode
     jedi
+    anaconda-mode
 
     ;; Web
     restclient
-    ac-js2
     emmet-mode
-    ;; ac-emmet
     js2-mode
     js2-refactor
     json-mode
@@ -109,6 +111,12 @@
     company-tern
     company-restclient
     company-jedi
+    company-anaconda
+    auto-complete
+    ac-python
+    ac-emmet
+    ac-capf
+    ac-js2
 
     ;; Org
     org-plus-contrib
