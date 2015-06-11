@@ -8,6 +8,7 @@
     cl-lib
     es-lib
     log4e
+    paradox
     ;;auto-package-update
 
     ;; Ui
