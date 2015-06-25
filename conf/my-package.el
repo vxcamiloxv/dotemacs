@@ -100,6 +100,7 @@
     fic-mode
     multi-term
     expand-region
+    yasnippet
     ace-jump-mode
     ace-jump-zap
     ace-isearch
