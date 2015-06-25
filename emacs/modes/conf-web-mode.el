@@ -97,10 +97,10 @@
 
 ;; Extend Autocomplete web-mode
 ;; not work default-ac
-(setq web-mode-ac-sources-alist
-      '(("php" . (ac-source-php-auto-yasnippets))
-        ("html" . (ac-source-emmet-html-snippets))
-        ("css" . (ac-source-emmet-css-snippets))
-        ))
+;; (setq web-mode-ac-sources-alist
+;;       '(("php" . (ac-source-php-auto-yasnippets))
+;;         ("html" . (ac-source-emmet-html-snippets))
+;;         ("css" . (ac-source-emmet-css-snippets))
+;;         ))
 
 (provide 'conf-web-mode)
