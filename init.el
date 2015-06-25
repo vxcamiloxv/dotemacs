@@ -119,7 +119,7 @@
 (require 'conf-highlight-indentation)
 (require 'conf-guide-key)
 (require 'conf-json)
-(require 'conf-eclim)
+;;(require 'conf-eclim)
 
 ;; Test
 (require 'change-inner)
