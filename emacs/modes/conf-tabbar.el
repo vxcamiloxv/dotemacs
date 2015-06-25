@@ -95,9 +95,10 @@ Return a list of one element based on major mode."
          (string-match "\\*irc.*\\*" (buffer-name (current-buffer))))
      "Irc"
      )
-    ((memq major-mode
-           '(jabber-chat-mode jabber-roster-mode))
-     "Jabber"
+    ((or (memq major-mode
+               '(jabber-chat-mode jabber-roster-mode))
+         (string-match "\\*gnu-social.*\\*" (buffer-name (current-buffer))))
+     "Social"
      )
     ((memq major-mode '(org-mode org-agenda-mode))
      "OrgMode"
