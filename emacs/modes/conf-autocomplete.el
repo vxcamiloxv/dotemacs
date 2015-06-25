@@ -40,7 +40,7 @@
       ac-use-fuzzy t
       ac-use-comphist t)
 ;; Sources
-(setq-default ac-sources (append ac-sources '(ac-source-imenu ac-source-filename ac-source-files-in-current-dir ac-source-yasnippet)))
+(setq-default ac-sources (append ac-sources '(ac-source-imenu ac-source-yasnippet)))
 (ac-capf-setup)
 ;; (require 'org-ac)
 ;; (org-ac/config-default)
