@@ -8,18 +8,18 @@
 ;;(setq tabbar-ruler-popup-toolbar t) ; If you want a popup toolbar
 ;;(setq tabbar-ruler-popup-scrollbar t) ; If you want to only show the scroll bar when your mouse is moving.
 
-(custom-set-variables
- '(tabbar-mode t nil (tabbar))
- '(ide-skel-tabbar-mwheel-mode nil (tabbar))
- '(tabbar-scroll-left-button (quote (("") "")))
- '(tabbar-scroll-right-button (quote (("") "")))
- '(tabbar-button-highlight ((t (:inherit tabbar-button))))
- '(tabbar-highlight ((t nil)))
- )
+;; Enabled
+(tabbar-mode)
 
-;;(setq tabbar-cycle-scope (quote tabs))
-;;(setq table-time-before-update 0.1)
-;;(setq tabbar-use-images t)
+;; Config
+(setq tabbar-use-images t
+      ;; ide-skel-tabbar-mwheel-mode nil
+      tabbar-separator '(0.0)
+      tabbar-background-color "#001214"
+      tabbar-scroll-left-button '(("") "")
+      tabbar-scroll-right-button '(("") "")
+      tabbar-cycle-scope 'tabs)
+
 
 ;; Add a buffer modification state indicator in the tab label, and place a
 ;; space around the label to make it looks less crowd.
@@ -92,7 +92,8 @@ Return a list of one element based on major mode."
      )
     ((or (memq major-mode
                '(erc-mode))
-         (string-match "\\*irc.*\\*" (buffer-name (current-buffer))))
+         (string-match "\\*irc.*\\*" (buffer-name (current-buffer)))
+         (string-match "\\irc.*\\*" (buffer-name (current-buffer))))
      "Irc"
      )
     ((or (memq major-mode
@@ -120,8 +121,8 @@ Return a list of one element based on major mode."
                                        magit-log-edit-mode magit-branch-manager-mode magit-wazzup-mode
                                        magit-reflog-mode gitignore-mode git-commit-mode
                                        git-rebase-mode gitattributes-mode gitconfig-mode))
-         (equal "*magit-process*" (buffer-name (current-buffer)))
-         (string-match "\\*Magit.*\\*" (buffer-name (current-buffer))))
+         (member (buffer-name) '("*magit-process*" "COMMIT_EDITMSG"))
+         (string-match "\\magit.*\\*" (buffer-name (current-buffer))))
      "Magit")
     (t
      ;; Return `mode-name' if not blank, `major-mode' otherwise.
@@ -183,15 +184,11 @@ Return a list of one element based on major mode."
 
 ;;(global-set-key (kbd "C-c C-t") 'tabbar-ruler-move)
 
-;; Apariencia
-(setq tabbar-separator '(0.0))
-(setq tabbar-background-color "#001214") ;; the color of the tabbar background
-
-(set-face-attribute 'tabbar-default nil :background "black")
-(set-face-attribute 'tabbar-unselected nil :background "black" :foreground "white" :box '(:line-width 1 :color "cyan" ))
-(set-face-attribute 'tabbar-selected nil :background "cyan" :foreground "black" :box '(:line-width 1 :color "cyan" ))
-(set-face-attribute 'tabbar-button nil :box '(:line-width 1 :color "black" :style released-button));
-(set-face-attribute 'tabbar-highlight nil :underline nil)
-(set-face-attribute 'tabbar-separator nil :height 0.5)
+;; (set-face-attribute 'tabbar-default nil :background "black")
+;; (set-face-attribute 'tabbar-unselected nil :background "black" :foreground "white" :box '(:line-width 1 :color "cyan" ))
+;; (set-face-attribute 'tabbar-selected nil :background "cyan" :foreground "black" :box '(:line-width 1 :color "cyan" ))
+;; (set-face-attribute 'tabbar-button nil :box '(:line-width 1 :color "black" :style released-button));
+;; (set-face-attribute 'tabbar-highlight nil :underline nil)
+;; (set-face-attribute 'tabbar-separator nil :height 0.5)
 
 (provide 'conf-tabbar)
