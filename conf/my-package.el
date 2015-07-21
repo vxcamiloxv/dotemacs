@@ -50,9 +50,6 @@
     highlight-escape-sequences
     whitespace-cleanup-mode
     elisp-slime-nav
-    git-commit-mode
-    gitconfig-mode
-    gitignore-mode
     dropdown-list
     window-numbering
     smart-tabs-mode
@@ -101,9 +98,9 @@
     multi-term
     expand-region
     yasnippet
-    ace-jump-mode
-    ace-jump-zap
-    ace-isearch
+    avy
+    avy-zap
+    ace-window
     multiple-cursors
     auto-async-byte-compile
 
