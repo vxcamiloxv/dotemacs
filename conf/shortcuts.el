@@ -23,7 +23,7 @@
 ;; (global-set-key (kbd "<mouse-6>") 'scroll-right)
 ;; (global-set-key (kbd "<mouse-7>") 'scroll-left)
 
-;;Errors
+;; Errors
 (global-set-key (kbd "s-<f1>") 'flycheck-list-errors)
 
 ;; Basicas
@@ -62,18 +62,14 @@
 (global-set-key (kbd "C-c a w") 'er/mark-word)
 (global-set-key (kbd "C-c a c") 'er/mark-comment)
 
-;; Ace
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-(global-set-key (kbd "M-z") 'ace-jump-zap-up-to-char)
-(global-set-key (kbd "C-M-z") 'ace-jump-zap-to-char)
-
-;; JUMP
-;; "C-u C-c SPC" ==> ace-jump-char-mode
-;; "C-u C-u C-c SPC" ==> ace-jump-line-mode
-;; "C-<SPC>" ==> Set the mark at point, and activate it
-;; "C-<SPC> C-<SPC>" ==> Set the mark, pushing it onto the mark ring, without activating it.
-;; "C-x C-x" ==> then move point where the mark used to be
-;; "C-u C-<SPC>" ==> Move point to where the mark was, and restore the mark from the ring of former marks.
+;; Avy
+(global-set-key (kbd "C-: c") 'avy-goto-char)
+(global-set-key (kbd "C-: v") 'avy-goto-char-2)
+(global-set-key (kbd "C-: l") 'avy-goto-line)
+(global-set-key (kbd "C-: w") 'avy-goto-word-1)
+(global-set-key (kbd "C-: e") 'avy-goto-word-0)
+(global-set-key (kbd "M-z") 'avy-zap-to-char)
+(global-set-key (kbd "M-Z") 'avy-zap-up-char)
 
 ;; Cleanup buffer.
 (global-set-key (kbd "C-c n") 'cleanup-buffer)
@@ -100,13 +96,14 @@
 (global-set-key [S-next] 'end-of-buffer)
 
 ;; easy keys to split window. Key based on ErgoEmacs keybinding
-(global-set-key (kbd "M-0") 'delete-window) ; close current pane
-(global-set-key (kbd "M-1") 'delete-other-windows) ; expand current pane
+(global-set-key (kbd "M-1") 'ace-window)
 (global-set-key (kbd "M-2") 'split-window-horizontally) ; split pane left/rigth
 (global-set-key (kbd "M-3") 'split-window-vertically) ; split pane top/bottom
 (global-set-key (kbd "M-4") 'other-window) ; cursor to other pane
 (global-set-key (kbd "M-5") 'toggle-window-split) ; toggle window position
 (global-set-key (kbd "M-6") 'window-toggle-split-direction) ; toggle window position
+(global-set-key (kbd "M-9") 'delete-window) ; close current pane
+(global-set-key (kbd "M-0") 'delete-other-windows) ; expand current pane
 
 ;; zooming
 (global-set-key (kbd "<M-mouse-5>") 'text-scale-increase)
@@ -134,7 +131,7 @@
 (global-set-key (kbd "M-g") 'tabbar-switch-to-grouping-by-dir)
 (global-set-key (kbd "M-G") 'tabbar-switch-to-default-grouping)
 
-;;Django
+;; Django
 (global-set-key (kbd "C-x p d") 'python-django-open-project)
 
 ;; Toogle Bars
