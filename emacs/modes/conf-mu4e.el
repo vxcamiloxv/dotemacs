@@ -24,18 +24,19 @@
 
 ;; General mu4e config
 (setq mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
-      mu4e-update-interval 300
+      mu4e-confirm-quit nil
+      mu4e-compose-keep-self-cc nil
       mu4e-view-prefer-html t
       ;;mu4e-html2text-command "html2text"
-      mu4e-html2text-command 'mu4e-shr2text
+      mu4e-compose-complete-addresse t
       mu4e-compose-dont-reply-to-self t
-      mu4e-compose-keep-self-cc nil
-      mu4e-confirm-quit nil
       mu4e-hide-index-messages t
       mu4e-headers-auto-update t
       mu4e-use-fancy-chars t
       mu4e-split-view 'horizontal
+      mu4e-update-interval 300
       mu4e-headers-visible-lines 20
+      mu4e-html2text-command 'mu4e-shr2text
       mu4e-headers-leave-behavior 'ask
       mu4e~main-buffer-name "*mu4e-main*")
 
@@ -95,8 +96,9 @@
 ;;Org config
 (require 'org-mu4e)
 (defalias 'org-mail 'org-mu4e-compose-org-mode)
-(setq org-mu4e-convert-to-html t)
-(setq mu4e-org-contacts-file  "~/Documents/org/contacts.org")
+(setq org-mu4e-convert-to-html t
+      org-mu4e-link-query-in-headers-mode t
+      mu4e-org-contacts-file  "~/Documents/org/contacts.org")
 (add-to-list 'mu4e-headers-actions
              '("org-contact-add" . distopico:mu4e-action-add-org-contact) t)
 (add-to-list 'mu4e-view-actions
