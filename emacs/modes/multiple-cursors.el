@@ -1,6 +1,5 @@
 (require 'multiple-cursors)
 (require 'expand-region)
-(require 'ace-jump-mode)
 
 ;; Experimental multiple-cursors
 (global-set-key (kbd "C-c Q") 'mc/edit-lines)
