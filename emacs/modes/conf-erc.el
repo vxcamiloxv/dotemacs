@@ -3,31 +3,50 @@
 
 (require 'erc)
 (require 'erc-log)
+(require 'erc-notify)
 (require 'erc-services)
 
 
 ;; Features
 (erc-log-mode t)
+(erc-track-mode t)
 (erc-scrolltobottom-mode t)
 (erc-autojoin-mode t)
 (erc-services-mode t)
+(erc-truncate-mode +1)
 
 ;; Basic
 (setq erc-header-line-uses-tabbar-p t
+      erc-server-auto-reconnect t
       ;; nil
       erc-prompt-for-nickserv-password nil
       ;; String
-      erc-nick "DistopicoVegan"
-      erc-user-full-name user-full-name
+      ;; erc-max-buffer-size 100000
       erc-join-buffer 'bury
-      erc-modules  '(autoaway autojoin button completion fill irccontrols
-                              keep-place list log match menu move-to-prompt
-                              netsplit networks noncommands readonly ring
-                              stamp track scrolltobottom)
-      erc-keywords '("DistopicoVegan")
+      erc-user-full-name user-full-name
+      erc-track-position-in-mode-line 'after-modes
+      erc-current-nick-highlight-type 'nick-or-keyword
+      erc-track-priority-faces-only 'all
+      erc-modules '(autojoin
+                    button completion fill irccontrols services
+                    truncate keep-place list log match menu move-to-prompt
+                    netsplit networks noncommands readonly ring
+                    stamp track scrolltobottom notifications)
+
+      erc-track-faces-priority-list '(erc-error-face
+                                      erc-current-nick-face
+                                      erc-keyword-face
+                                      erc-nick-msg-face
+                                      erc-direct-msg-face
+                                      erc-dangerous-host-face
+                                      erc-notice-face
+                                      erc-prompt-face)
+
+      erc-nick "DistopicoVegan"
+      erc-keywords '("\\DistopicoVegan[-a-z]*\\b")
       erc-mode-line-format "%a %t %o"
-      erc-track-exclude-types
-      '("JOIN" "NICK" "PART" "QUIT" "MODE")
+      erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                                "324" "329" "332" "333" "353" "477")
       erc-log-channels-directory (in-emacs-d ".cache/erc/logs/")
       erc-autojoin-channels-alist
       '((".*\\.freenode.net" "#emacs" "#gnu" "#emacs-es"
@@ -62,6 +81,7 @@
   "List of defaults irc server to connect."
   (when (not (get-buffer "irc.freenode.net:6667"))
     (erc :server "irc.freenode.net" :port 6667 :password "")
+    (erc :server "irc.radiognu.org" :port 6667 :password "")
     (erc-tls :server "irc.indymedia.org" :port 6697 :password "")
     ))
 
@@ -118,6 +138,8 @@
     	     (cond
     	      ((string-match "freenode\\.net" SERVER)
     	       (erc-message "PRIVMSG" (concat "NickServ identify " (distopico:get-erc-nickserv-passwords "irc.freenode.net" NICK)) )))))
+
+(add-hook 'erc-insert-post-hook 'erc-truncate-buffer)
 
 ;; Connect and run
 (distopico:erc-list-server)
