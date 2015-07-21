@@ -32,6 +32,7 @@
         ("*quickrun*" :height 0.3 :stick t)
         ;; Magit/vc
         (magit-status-mode :position bottom :noselect t :height 0.3 :stick t)
+        ("COMMIT_EDITMSG" :position bottom :noselect t :height 0.3 :stick t)
         ("*magit-commit*" :position bottom :noselect t :height 0.3 :stick t)
         ("\\*magit.*" :regexp t :position bottom :noselect t :height 0.3 :stick t)
         ("*magit-diff*" :position bottom :noselect t :height 0.3)
