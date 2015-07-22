@@ -123,6 +123,7 @@
     org-present
     org-pomodoro
     toc-org
+    ox-rst
 
     ;; Activity
     mu4e-maildirs-extension

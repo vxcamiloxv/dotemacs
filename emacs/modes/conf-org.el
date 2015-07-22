@@ -16,6 +16,7 @@
 (require 'org-protocol)
 (require 'org-projectile)
 (require 'org-annotate-file)
+(require 'ox-rst)
 (require 'notifications)
 (require 'midnight)
 ;;(require 'org-panel)
@@ -349,7 +350,7 @@
              (org-projectile:project-todo-entry "p" "* TODO %? %a" "Project Todo"))
 
 ;; Export
-(dolist (source '(md gfm))
+(dolist (source '(md gfm rst))
   (add-to-list 'org-export-backends source t))
 
 ;; Babel
