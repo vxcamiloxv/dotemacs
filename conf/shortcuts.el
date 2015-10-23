@@ -128,8 +128,8 @@
 (global-set-key (kbd "C-x <left>") 'tabbar-backward-group)
 
 (global-set-key (kbd "C-M-g") 'toggle-tabbar-mode)
-(global-set-key (kbd "M-g") 'tabbar-switch-to-grouping-by-dir)
-(global-set-key (kbd "M-G") 'tabbar-switch-to-default-grouping)
+(global-set-key (kbd "C-c M-t d") 'tabbar-switch-to-grouping-by-dir)
+(global-set-key (kbd "C-c M-t g") 'tabbar-switch-to-default-grouping)
 
 ;; Django
 (global-set-key (kbd "C-x p d") 'python-django-open-project)
@@ -192,7 +192,7 @@
                    (modify-frame-parameters nil `((alpha . 100)))))
 
 
-;; toggle two most recent buffers
+;; Toggle two most recent buffers
 (fset 'quick-switch-buffer [?\C-x ?b return])
 (global-set-key (kbd "s-q") 'quick-switch-buffer)
 

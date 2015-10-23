@@ -20,41 +20,41 @@
       tabbar-scroll-right-button '(("") "")
       tabbar-cycle-scope 'tabs)
 
+;; Control vars
+(defvar distopico:tbbr-md "all")
 
-;; Add a buffer modification state indicator in the tab label, and place a
-;; space around the label to make it looks less crowd.
+;; Functions
+
 (defadvice tabbar-buffer-tab-label (after fixup_tab_label_space_and_flag activate)
+  "Add a buffer modification state indicator in the tab label, and place a
+space around the label to make it looks less crowd."
   (setq ad-return-value
         (if (and (buffer-modified-p (tabbar-tab-value tab))
                  (buffer-file-name (tabbar-tab-value tab)))
             (concat " + " (concat ad-return-value " "))
           (concat " " (concat ad-return-value " ")))))
 
-;; Called each time the modification state of the buffer changed.
-(defun ztl-modification-state-change ()
+(defun distopico:modification-state-change ()
+  "Called each time the modification state of the buffer changed."
   (tabbar-set-template tabbar-current-tabset nil)
   (tabbar-display-update))
 
-;; First-change-hook is called BEFORE the change is made.
-(defun ztl-on-buffer-modification ()
+(defun distopico:on-buffer-modification ()
+  "First-change-hook is called BEFORE the change is made."
   (set-buffer-modified-p t)
-  (ztl-modification-state-change))
-(add-hook 'after-save-hook 'ztl-modification-state-change)
+  (distopico:modification-state-change))
 
-;; This doesn't work for revert, I don't know.
-;;(add-hook 'after-revert-hook 'ztl-modification-state-change)
-(add-hook 'first-change-hook 'ztl-on-buffer-modification)
-
+;; Tabbar grouping
 (defun tabbar-buffer-groups ()
   "Return the list of group names the current buffer belongs to.
 Return a list of one element based on major mode."
   (list
    (cond
-    ((or (get-buffer-process (current-buffer))
+    ((or (member (buffer-name)
+                 '("*HTTP Response*"))
+         ;; (get-buffer-process (current-buffer))
          ;; Check if the major mode derives from `comint-mode' or
          ;; `compilation-mode'.
-         (member (buffer-name)
-                 '("*HTTP Response*"))
          (tabbar-buffer-mode-derived-p
           major-mode '(comint-mode compilation-mode)))
      "Process"
@@ -92,6 +92,9 @@ Return a list of one element based on major mode."
      )
     ((or (memq major-mode
                '(erc-mode))
+         (tabbar-buffer-mode-derived-p major-mode '(erc-mode))
+         (member (buffer-name)
+                 '("irc.freenode.net:6667"))
          (string-match "\\*irc.*\\*" (buffer-name (current-buffer)))
          (string-match "\\irc.*\\*" (buffer-name (current-buffer))))
      "Irc"
@@ -134,7 +137,6 @@ Return a list of one element based on major mode."
        (symbol-name major-mode))
      ))))
 
-;; tabbar grouping method
 (defun tabbar-buffer-groups-by-dir ()
   "Put all files in the same directory into the same tab bar"
   (with-current-buffer (current-buffer)
@@ -149,21 +151,6 @@ Return a list of one element based on major mode."
         (list "Misc"))
        (t (list dir))))))
 
-;; Show ALL Tabs
-(setq tbbr-md "all")
-(defun toggle-tabbar-mode ()
-  "Toggles tabbar modes - all buffers vs. defined in the `tabbar-buffer-groups'."
-  (interactive)
-  (if (string= tbbr-md "groups")
-      (progn ;; then
-        (setq tabbar-buffer-groups-function
-              (lambda ()
-                (list "All")))
-        (setq tbbr-md "all"))
-    (progn ;; else
-      (setq tabbar-buffer-groups-function 'tabbar-buffer-groups)
-      (setq tbbr-md "groups"))))
-
 (defun tabbar-switch-to-default-grouping ()
   (interactive)
   (setq tabbar-buffer-groups-function 'tabbar-buffer-groups))
@@ -172,7 +159,42 @@ Return a list of one element based on major mode."
   (interactive)
   (setq tabbar-buffer-groups-function 'tabbar-buffer-groups-by-dir))
 
+;; Toggle group
+(defun toggle-tabbar-mode ()
+  "Toggles tabbar modes - all buffers vs. defined in the `tabbar-buffer-groups'."
+  (interactive)
+  (if (string= distopico:tbbr-md "groups")
+      (progn ;; then
+        (setq tabbar-buffer-groups-function
+              (lambda ()
+                (list "All")))
+        (setq distopico:tbbr-md "all"))
+    (progn ;; else
+      (if (string= distopico:tbbr-md "all")
+          (progn ;; then
+            (setq tabbar-buffer-groups-function 'tabbar-buffer-groups-by-dir)
+            (setq distopico:tbbr-md "dir"))
+        (progn ;; else
+          (setq tabbar-buffer-groups-function 'tabbar-buffer-groups)
+          (setq distopico:tbbr-md "groups"))))))
+
+
+;; Rewrite add tab, short by name
+;; (defun tabbar-add-tab (tabset object &optional append_ignored)
+;;   "Add to TABSET a tab with value OBJECT if there isn't one there yet.
+;;  If the tab is added, it is added at the beginning of the tab list,
+;;  unless the optional argument APPEND is non-nil, in which case it is
+;;  added at the end."
+;;   (let ((tabs (tabbar-tabs tabset)))
+;;     (if (tabbar-get-tab object tabset)
+;;         tabs
+;;       (let ((tab (tabbar-make-tab object tabset)))
+;;         (tabbar-set-template tabset nil)
+;;         (set tabset (sort (cons tab tabs)
+;;                           (lambda (a b) (string< (buffer-name (car a)) (buffer-name (car b))))))))))
+
 (defun switch-tabbar (num)
+  "Switch tabbar by postiion"
   (let* ((tabs (tabbar-tabs
                 (tabbar-current-tabset)
                 ;;(tabbar-get-tabset "All Buffers")
@@ -182,13 +204,12 @@ Return a list of one element based on major mode."
                tabs)))
     (if tab (switch-to-buffer (car tab)))))
 
+;; Hooks
+(add-hook 'after-save-hook 'distopico:modification-state-change)
+(add-hook 'first-change-hook 'distopico:on-buffer-modification)
+;;(add-hook 'after-revert-hook 'distopico:modification-state-change) ;; This doesn't work for revert, I don't know.
+
 ;;(global-set-key (kbd "C-c C-t") 'tabbar-ruler-move)
 
-;; (set-face-attribute 'tabbar-default nil :background "black")
-;; (set-face-attribute 'tabbar-unselected nil :background "black" :foreground "white" :box '(:line-width 1 :color "cyan" ))
-;; (set-face-attribute 'tabbar-selected nil :background "cyan" :foreground "black" :box '(:line-width 1 :color "cyan" ))
-;; (set-face-attribute 'tabbar-button nil :box '(:line-width 1 :color "black" :style released-button));
-;; (set-face-attribute 'tabbar-highlight nil :underline nil)
-;; (set-face-attribute 'tabbar-separator nil :height 0.5)
 
 (provide 'conf-tabbar)

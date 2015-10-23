@@ -97,6 +97,10 @@
           :description "Emacs jabber client"
           :type git
           :url "http://git.code.sf.net/p/emacs-jabber/git")
+   (:name "jabber-otr"
+          :description "jabber.el OTR Plugin"
+          :type git
+          :url "https://github.com/legoscia/emacs-jabber-otr.git")
    (:name "cyberpunk-theme"
           :description "Cyberpunk theme"
           :type git

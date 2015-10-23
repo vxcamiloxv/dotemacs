@@ -3,6 +3,9 @@
 ;; Path
 (load-file "~/.emacs.d/conf/path.el")
 
+;; Fix erro with gnupg
+(when (file-executable-p "/usr/bin/gpg1") (setq epg-gpg-program "/usr/bin/gpg1"))
+
 ;; Packages
 (require 'setup-package)
 (require 'setup-elget)
@@ -64,10 +67,6 @@
 ;; this project is abandoned and have multiples bugs with emacs 24 and others libs
 
 ;; Conf Modes
-(require 'conf-mu4e)
-(require 'conf-jabber)
-(require 'conf-erc)
-(require 'conf-gnusocial)
 (load-file "~/.emacs.d/emacs/modes/column-marker.el")
 (load-file "~/.emacs.d/emacs/modes/eshell.el")
 (load-file "~/.emacs.d/emacs/modes/longlines.el")
@@ -120,6 +119,10 @@
 (require 'conf-highlight-indentation)
 (require 'conf-guide-key)
 (require 'conf-json)
+(require 'conf-mu4e)
+(require 'conf-jabber)
+(require 'conf-gnusocial)
+(require 'conf-erc)
 ;;(require 'conf-eclim)
 
 ;; Test

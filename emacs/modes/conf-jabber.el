@@ -3,6 +3,7 @@
 (require 'tls)
 (require 'starttls)
 (require 'jabber)
+(require 'jabber-otr)
 
 ;; Costom vars
 (defcustom distopico:jabber-default-account "distopico@riseup.net"

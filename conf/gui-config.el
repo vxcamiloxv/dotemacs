@@ -206,10 +206,10 @@ This command is convenient when reading novel, documentation."
         (funcall fn)))))
 
 ;; Move bewteen windows
-(global-set-key (kbd "M-s <left>") (ignore-error-wrapper 'windmove-left))
-(global-set-key (kbd "M-s <right>") (ignore-error-wrapper 'windmove-right))
-(global-set-key (kbd "M-s <up>") (ignore-error-wrapper 'windmove-up))
-(global-set-key (kbd "M-s <down>") (ignore-error-wrapper 'windmove-down))
+(global-set-key (kbd "M-<left>") (ignore-error-wrapper 'windmove-left))
+(global-set-key (kbd "M-<right>") (ignore-error-wrapper 'windmove-right))
+(global-set-key (kbd "M-<up>") (ignore-error-wrapper 'windmove-up))
+(global-set-key (kbd "M-<down>") (ignore-error-wrapper 'windmove-down))
 
 ;;-----------------------------------------------------------------
 ;; Indentation

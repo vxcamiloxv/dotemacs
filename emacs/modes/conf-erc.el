@@ -22,6 +22,8 @@
       erc-prompt-for-nickserv-password nil
       ;; String
       ;; erc-max-buffer-size 100000
+      erc-input-line-position -2
+      erc-auto-query 'buffer
       erc-join-buffer 'bury
       erc-user-full-name user-full-name
       erc-track-position-in-mode-line 'after-modes
@@ -33,14 +35,17 @@
                     netsplit networks noncommands readonly ring
                     stamp track scrolltobottom notifications)
 
-      erc-track-faces-priority-list '(erc-error-face
-                                      erc-current-nick-face
-                                      erc-keyword-face
-                                      erc-nick-msg-face
+      erc-track-faces-priority-list '(erc-current-nick-face
                                       erc-direct-msg-face
-                                      erc-dangerous-host-face
-                                      erc-notice-face
-                                      erc-prompt-face)
+                                      erc-keyword-face)
+      ;; erc-track-faces-priority-list '(erc-error-face
+      ;;                                 erc-current-nick-face
+      ;;                                 erc-keyword-face
+      ;;                                 erc-nick-msg-face
+      ;;                                 erc-direct-msg-face
+      ;;                                 erc-dangerous-host-face
+      ;;                                 erc-notice-face
+      ;;                                 erc-prompt-face)
 
       erc-nick "DistopicoVegan"
       erc-keywords '("\\DistopicoVegan[-a-z]*\\b")
@@ -49,7 +54,7 @@
                                 "324" "329" "332" "333" "353" "477")
       erc-log-channels-directory (in-emacs-d ".cache/erc/logs/")
       erc-autojoin-channels-alist
-      '((".*\\.freenode.net" "#emacs" "#gnu" "#emacs-es"
+      '((".*\\.freenode.net" "#emacs" "#gnu" "#emacs-es" "##vegan"
          "#social" "#isso" "#libre.fm" "#parabola" "#trisquel-es" "#trisquel"
          "#lorea" "#mediagoblin" "#org-mode" "#pump.io" "#radioliberacion")
         (".*\\.indymedia.org" "#riseup")))
@@ -76,6 +81,10 @@
            (if (functionp secret)
                (funcall secret)
              secret))))))
+
+(defun distopico:erc-connect ()
+  (interactive)
+  (distopico:erc-list-server))
 
 (defun distopico:erc-list-server ()
   "List of defaults irc server to connect."
@@ -142,7 +151,7 @@
 (add-hook 'erc-insert-post-hook 'erc-truncate-buffer)
 
 ;; Connect and run
-(distopico:erc-list-server)
+(distopico:erc-connect)
 
 
 (provide 'conf-erc)

@@ -36,11 +36,12 @@ project-explorer-cache/
 \#*\#
 /.emacs.desktop
 /.emacs.desktop.lock
-#*.elc
+*.elc
 auto-save-list
 tramp
 .\#*
 .cache/
+jabber-otr/
 
 # Org-mode
 .org-id-locations
