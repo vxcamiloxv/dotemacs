@@ -164,8 +164,8 @@
 (require 'nifty)
 ;;(mouse-avoidance-mode 'animate)
 
-;;; Code:
-(setq debug-on-error t
+;;; Disabled or enabled debug:
+(setq debug-on-error nil
       debug-on-signal nil
       debug-on-quit nil)
 
