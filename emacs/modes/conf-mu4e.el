@@ -65,12 +65,14 @@
         ("date:today..now AND NOT maildir:/Spam"                  "Today's messages"          ?t)
         ("date:7d..now AND NOT maildir:/Spam"                     "Last 7 days"               ?w)
         ("mime:image/* AND NOT maildir:/Spam"                     "Messages with images"      ?p)
-        ("flag:unread AND NOT flag:trashed AND maildir:/Spam"     "Unread spam"               ?s)
-        ))
+        ("flag:unread AND NOT flag:trashed AND maildir:/Spam"     "Unread spam"               ?s)))
 
 ;; Enable account structure
 (require 'mu4e-maildirs-extension)
 (mu4e-maildirs-extension)
+
+;; Fix hl unread messages with mu4e 0.9.15
+(setq mu4e-maildirs-extension-propertize-func 'distopico:mu4e-maildirs-extension-propertize-func)
 
 ;; Config Mesagges
 (setq message-kill-buffer-on-exit t
@@ -143,6 +145,21 @@
 ;; Useful functions
 ;;------------------
 
+;; hl unread messages
+(defun distopico:mu4e-maildirs-extension-propertize-func (m)
+  "Propertize the maildir text using M plist."
+  (let ((unread (or (plist-get m :unread) 0))
+        (total (or (plist-get m :total) 0)))
+    (setq msg-face (cond
+                    ((> unread 0) 'mu4e-maildirs-extension-maildir-hl-face)
+                    (t            'mu4e-maildirs-extension-maildir-face)))
+    (format "\t%s%s %s (%s/%s)"
+            (propertize (plist-get m :indent) 'face msg-face)
+            (propertize (plist-get m :prefix) 'face msg-face)
+            (propertize (plist-get m :name) 'face msg-face)
+            (propertize (number-to-string unread) 'face msg-face)
+            (propertize (number-to-string total) 'face msg-face))))
+
 ;; Set Account
 (defun distopico:mu4e-set-account ()
   "Set the account for composing a message."
@@ -172,7 +189,9 @@
 
 (defun distopico:mu4e-open ()
   (interactive)
-  (open-buffer-delete-others "*mu4e-main*" :mu4e-fullscreen 'mu4e))
+  (if (not (get-buffer mu4e~main-buffer-name))
+      (open-buffer-delete-others mu4e~main-buffer-name :mu4e-fullscreen 'mu4e)
+    (switch-to-buffer mu4e~main-buffer-name)))
 
 (defun distopico:mu4e-close ()
   "Restores the previous window configuration and burry buffer"
@@ -298,8 +317,7 @@ store your org-contacts."
            'local-map  (make-mode-line-mouse-map 'mouse-1 #'distopico:mu4e-open)
            'help-echo (format "mu4e :: %s unread messages" unread))))
   (force-mode-line-update)
-  (sit-for 0)
-  )
+  (sit-for 0))
 (define-minor-mode distopico:mu4e-mode-line
   "Minor mode Toggle inbox status display in mode line"
   :global t :group 'hardware
@@ -318,9 +336,9 @@ store your org-contacts."
   (interactive)
   (mu4e-message "Updating index & cache...")
   (mu4e-update-index)
-  (mu4e-maildirs-extension-index-updated-handler)
-  (distopico:mu4e-inbox-update)
-  )
+  (mu4e-maildirs-extension-force-update '(16))
+  ;;(mu4e-maildirs-extension-index-updated-handler)
+  (distopico:mu4e-inbox-update))
 ;;-------------------
 
 ;; Hooks
