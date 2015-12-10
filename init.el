@@ -4,7 +4,7 @@
 (load-file "~/.emacs.d/conf/path.el")
 
 ;; Fix erro with gnupg
-(when (file-executable-p "/usr/bin/gpg1") (setq epg-gpg-program "/usr/bin/gpg1"))
+;; (when (file-executable-p "/usr/bin/gpg1") (setq epg-gpg-program "/usr/bin/gpg1"))
 
 ;; Packages
 (require 'setup-package)
