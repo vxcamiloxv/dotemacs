@@ -117,49 +117,6 @@
                     (1- arg)
                   (1+ arg))))))
 
-(defun ido-imenu ()
-  "Update the imenu index and then use ido to select a symbol to navigate to.
-Symbols matching the text at point are put first in the completion list."
-  (interactive)
-  (imenu--make-index-alist)
-  (let ((name-and-pos '())
-        (symbol-names '()))
-    (flet ((addsymbols (symbol-list)
-                       (when (listp symbol-list)
-                         (dolist (symbol symbol-list)
-                           (let ((name nil) (position nil))
-                             (cond
-                              ((and (listp symbol) (imenu--subalist-p symbol))
-                               (addsymbols symbol))
-
-                              ((listp symbol)
-                               (setq name (car symbol))
-                               (setq position (cdr symbol)))
-
-                              ((stringp symbol)
-                               (setq name symbol)
-                               (setq position (get-text-property 1 'org-imenu-marker symbol))))
-
-                             (unless (or (null position) (null name))
-                               (add-to-list 'symbol-names name)
-                               (add-to-list 'name-and-pos (cons name position))))))))
-      (addsymbols imenu--index-alist))
-    ;; If there are matching symbols at point, put them at the beginning of `symbol-names'.
-    (let ((symbol-at-point (thing-at-point 'symbol)))
-      (when symbol-at-point
-        (let* ((regexp (concat (regexp-quote symbol-at-point) "$"))
-               (matching-symbols (delq nil (mapcar (lambda (symbol)
-                                                     (if (string-match regexp symbol) symbol))
-                                                   symbol-names))))
-          (when matching-symbols
-            (sort matching-symbols (lambda (a b) (> (length a) (length b))))
-            (mapc (lambda (symbol) (setq symbol-names (cons symbol (delete symbol symbol-names))))
-                  matching-symbols)))))
-    (let* ((selected-symbol (ido-completing-read "Symbol? " symbol-names))
-           (position (cdr (assoc selected-symbol name-and-pos))))
-      (push-mark (point))
-      (goto-char position))))
-
 (defun untabify-buffer ()
   (interactive)
   (untabify (point-min) (point-max)))
@@ -200,7 +157,7 @@ Including indent-buffer, which should not be called automatically on save."
 (defun ido-recentf-open ()
   "Use `ido-completing-read' to \\[find-file] a recent file"
   (interactive)
-  (timer-cleanup-recentf)
+  ;;(timer-cleanup-recentf)
   (if (find-file (ido-completing-read "Find recent file: " recentf-list))
       (message "Opening file...")
     (message "Aborting")))
@@ -252,15 +209,17 @@ file corresponding to the current buffer file, then recompile the file."
   "Open buffer in fullscreen and delete other windows.
 need buffer-name: name of buffer, name-register: the name to register current window
 action: the action execute, optional, open-same-window"
-  (window-configuration-to-register name-register)
-  (let ((name-buffer (get-buffer buffer-name)))
-    (if name-buffer
-        (if open-same-window
-            (switch-to-buffer name-buffer)
-          (switch-to-buffer-other-window name-buffer)
-          )
-      (funcall action)))
-  (delete-other-windows))
+  (if (not (equal (buffer-name) buffer-name))
+      (progn
+        (window-configuration-to-register name-register)
+        (let ((name-buffer (get-buffer buffer-name)))
+          (if name-buffer
+              (if open-same-window
+                  (switch-to-buffer name-buffer)
+                (switch-to-buffer-other-window name-buffer)
+                )
+            (funcall action)))
+        (delete-other-windows))))
 
 (defun bury-buffer-restore-prev (name-register)
   "Restores the previous window configuration and burry buffer"
