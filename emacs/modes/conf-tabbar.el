@@ -57,8 +57,7 @@ Return a list of one element based on major mode."
          ;; `compilation-mode'.
          (tabbar-buffer-mode-derived-p
           major-mode '(comint-mode compilation-mode)))
-     "Process"
-     )
+     "Process")
     ((or
       (memq major-mode
             '(apropos-mode Info-mode Man-mode markdown-mode))
@@ -67,29 +66,24 @@ Return a list of one element based on major mode."
       (member (buffer-name)
               '("*scratch*" "*Help*"))
       )
-     "Common"
-     )
+     "Common")
     ;;((string-equal "*" (substring (buffer-name) 0 1))
     ;; "Common"
     ;; )
     ((member (buffer-name)
              '("*Backtrace*" "*Compile-Log*" "*Messages*" "*Warnings*" "*Flycheck error messages*" "*fsm-debug*" "*Shell Command Output*"))
-     "Debugger"
-     )
+     "Debugger")
     ((member (buffer-name)
              '("xyz" "day" "m3" "abi" "for" "nws" "eng" "f_g" "tim" "tmp"))
-     "Main"
-     )
+     "Main")
     ((memq major-mode '(python-mode php-mode emacs-lisp-mode sh-mode makefile-gmake-mode perl-mode c-mode c++-mode django-mode python-django javascript-mode js3-mode js-mode js2-mode js2-refactor))
      "Programming"
      )
     ((memq major-mode '(nxhtml-mode web-mode json-mode emmet-mode less-css-mode css-mode restclient-mode))
-     "Web"
-     )
+     "Web")
     ((memq major-mode
            '(mu4e-view-mode mu4e-main-mode mu4e-headers-mode mu4e-view-raw-mode mu4e-compose-mode message-mode mail-mode))
-     "Email"
-     )
+     "Email")
     ((or (memq major-mode
                '(erc-mode))
          (tabbar-buffer-mode-derived-p major-mode '(erc-mode))
@@ -97,16 +91,19 @@ Return a list of one element based on major mode."
                  '("irc.freenode.net:6667"))
          (string-match "\\*irc.*\\*" (buffer-name (current-buffer)))
          (string-match "\\irc.*\\*" (buffer-name (current-buffer))))
-     "Irc"
-     )
+     "Irc")
     ((or (memq major-mode
-               '(jabber-chat-mode jabber-roster-mode))
+               '(gnu-social-mode))
          (string-match "\\*gnu-social.*\\*" (buffer-name (current-buffer))))
-     "Social"
-     )
+     "Social")
+    ((memq major-mode
+           '(jabber-chat-mode jabber-roster-mode))
+     "Im")
+    ((memq major-mode
+           '(elfeed-search-mode elfeed-show-mode))
+     "News")
     ((memq major-mode '(org-mode org-agenda-mode))
-     "OrgMode"
-     )
+     "OrgMode")
     ;; ((or (memq major-mode '(shell-mode term-mode eshell-mode multi-term-mode))
     ;;      (equal "*ansi-term*" (buffer-name (current-buffer)))
     ;;      (string-match "\\*terminal.*\\*" (buffer-name (current-buffer))))
