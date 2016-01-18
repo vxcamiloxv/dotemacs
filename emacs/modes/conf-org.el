@@ -368,12 +368,10 @@
 (setq org-tags-exclude-from-inheritance '("crypt")
       org-crypt-disable-auto-save t)
 
-;; Org mime messages to html
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize)))
 
 ;; General Hooks
+(add-hook 'org-mode-hook 'distopico:org-init-hook)
+
 (with-eval-after-load 'org-capture
   (add-hook 'org-capture-mode-hook #'flyspell-mode 'append)
   (add-hook 'org-capture-before-finalize-hook #'org-align-all-tags 'append)
@@ -405,13 +403,6 @@
           (lambda ()
             (distopico:org-toggle-next-tag)
             (distopico:org-insert-trigger)) 'append)
-
-(add-hook 'org-mode-hook
-          (defun distopico:org-mode-hook ()
-            ;;(turn-on-visual-line-mode)
-            (distopico:org-saveplace)
-            (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
-            (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local)))
 
 ;;(add-hook 'org-clock-in-prepare-hook 'distopico:org-mode-add-default-effort) I need?
 
@@ -447,24 +438,32 @@
 ;; Functions
 ;; ------------
 
+(defun distopico:org-init-hook ()
+  ;; Org mime messages to html
+  (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize)
+  ;;(turn-on-visual-line-mode)
+  (distopico:org-saveplace)
+  (distopico:org-before-save-hook)
+  (save-buffer)
+  (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
+  (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local))
+
 (defun distopico:org-after-save-hook ()
   "Hook for after save in org-mode"
   (when (eq major-mode 'org-mode)
     (distopico:org-update-appt)
     (distopico:org-remove-done-trigger)
     (distopico:org:remove-empty-propert-drawers)
-    (message (concat "Wrote " (buffer-file-name)))
-    ))
+    (message (concat "Wrote " (buffer-file-name)))))
 
-(defun  distopico:org-before-save-hook ()
+(defun distopico:org-before-save-hook ()
   "Hook for before save in org-mode"
   (when (eq major-mode 'org-mode)
     (and buffer-file-name
          (file-exists-p buffer-file-name)
          (org-remove-redundant-tags))
     (org-align-all-tags)
-    (org-update-all-dblocks)
-    ))
+    (org-update-all-dblocks)))
 
 (org-no-warnings (defvar date))
 (defun org-lunar-phases ()
@@ -633,7 +632,7 @@ Works for outline headings and for plain lists alike."
     (goto-char (point-min))
     (while (re-search-forward ":PROPERTIES:" nil t)
       (save-excursion
-        (org-remove-empty-drawer-at "PROPERTIES" (match-beginning 0))))))
+        (org-remove-empty-drawer-at (match-beginning 0))))))
 
 (defun distopico:org-toggle-next-tag ()
   "Org possibly toggle next tag based on todo kewyord"
