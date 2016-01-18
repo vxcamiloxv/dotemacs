@@ -18,6 +18,7 @@
 ;; Basic
 (setq erc-header-line-uses-tabbar-p t
       erc-server-auto-reconnect t
+      erc-track-exclude-server-buffer t
       ;; nil
       erc-prompt-for-nickserv-password nil
       ;; String
@@ -50,6 +51,7 @@
       erc-nick "DistopicoVegan"
       erc-keywords '("\\DistopicoVegan[-a-z]*\\b")
       erc-mode-line-format "%a %t %o"
+      erc-hide-list '("MODE")
       erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                 "324" "329" "332" "333" "353" "477")
       erc-log-channels-directory (in-emacs-d ".cache/erc/logs/")
@@ -65,6 +67,13 @@
 (define-key erc-mode-map (kbd "M-q") 'kill-this-buffer)
 
 ;; Functions
+(defun erc-ignore-unimportant (msg)
+  "less noise in erc-mode"
+  (if (or (string-match "*** localhost has changed mode for &bitlbee to" msg)
+          (string-match "Account already online" msg)
+          (string-match "Unknown error while loading configuration" msg))
+      (setq erc-insert-this nil)))
+
 (defun distopico:get-erc-nickserv-passwords (host user)
   "Read irc nickserv password."
   (let ((found
@@ -149,6 +158,7 @@
     	       (erc-message "PRIVMSG" (concat "NickServ identify " (distopico:get-erc-nickserv-passwords "irc.freenode.net" NICK)) )))))
 
 (add-hook 'erc-insert-post-hook 'erc-truncate-buffer)
+(add-hook 'erc-insert-pre-hook 'erc-ignore-unimportant)
 
 ;; Connect and run
 (distopico:erc-connect)
