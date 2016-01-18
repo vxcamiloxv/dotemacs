@@ -10,12 +10,26 @@
 ;; Faces
 (custom-set-faces
  '(powerline-active1 ((t (:foreground "#f9f9f9" :background "#123550" :box nil))))
- '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil))))
- )
+ '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil)))))
 
-;; Custom theme
-(defun powerline-distopico-theme ()
-  "Setup the default mode-line."
+
+(defun distopico:cycle-powerline-separators (&optional reverse)
+  "Set Powerline separators in turn.  If REVERSE is not nil, go backwards."
+  (interactive)
+  (let* ((fn (if reverse 'reverse 'identity))
+         (separators (funcall fn '("arrow" "arrow-fade" "slant"
+                                   "chamfer" "wave" "brace" "roundstub" "zigzag"
+                                   "butt" "rounded" "contour" "curve")))
+         (found nil))
+    (while (not found)
+      (progn (setq separators (append (cdr separators) (list (car separators))))
+             (when (string= (car separators) powerline-default-separator)
+               (progn (setq powerline-default-separator (cadr separators))
+                      (setq found t)
+                      (redraw-display)))))))
+
+(defun distopico:powerline-theme ()
+  "Setup custom theme mode-line."
   (interactive)
   (setq-default mode-line-format
                 '("%e"
@@ -55,7 +69,7 @@
                                      (powerline-vc face2 'r)
                                      ))
                           (rhs (list (when (eq major-mode 'jabber-chat-mode)
-                                       (powerline-raw jabber-chat-header-line-format face2 'r))
+                                       (powerline-raw distopico:jabber-mode-line-format face2 'r))
                                      (when (boundp 'erc-modified-channels-object)
                                        (powerline-raw erc-modified-channels-object face2 'l))
                                      (when (eq major-mode 'erc-mode)
@@ -74,7 +88,8 @@
                                                           (format "• O: %S | V: %S | M: %S " ops voices members))) face2 'l))
                                      (when (eq major-mode 'gnu-social-mode)
                                        (powerline-raw gnu-social-modeline-active face2 'l))
-                                     (powerline-raw distopico:mu4e-mode-line face2 'r)
+                                     (powerline-raw distopico:mu4e-mode-line-format face2 'r)
+                                     (powerline-raw distopico:elfeed-mode-line-format face2 'r)
                                      (powerline-raw "•" face2 'r)
                                      (powerline-raw global-mode-string face2 'r)
                                      ;;(powerline-raw pomodoro-display-string face2 'r)
@@ -95,7 +110,7 @@
                              (powerline-render rhs)))))))
 
 ;; Run
-(powerline-distopico-theme)
+(distopico:powerline-theme)
 
 
 (provide 'conf-powerline)
