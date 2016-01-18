@@ -57,6 +57,7 @@
     browse-kill-ring
     highlight-indentation
     find-file-in-project
+    powerline
 
     ;; Helm
     helm
@@ -86,7 +87,6 @@
     markdown-mode
     web-beautify
     smart-forward
-    emacs-eclim
     angular-snippets
 
     ;; Utils
@@ -94,6 +94,7 @@
     anzu
     iy-go-to-char
     quickrun
+    minimap
     fic-mode
     multi-term
     expand-region
@@ -103,6 +104,7 @@
     ace-window
     multiple-cursors
     auto-async-byte-compile
+    sync-recentf
 
     ;; Auto Complete
     company
@@ -111,10 +113,6 @@
     company-restclient
     company-jedi
     company-anaconda
-    auto-complete
-    ac-python
-    ac-emmet
-    ac-capf
     ac-js2
 
     ;; Org
@@ -126,6 +124,8 @@
     ox-rst
 
     ;; Activity
+    elfeed
+    elfeed-org
     mu4e-maildirs-extension
 
     ;; Dubug

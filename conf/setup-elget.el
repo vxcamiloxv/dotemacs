@@ -37,10 +37,6 @@
           :description "Guide key bindings"
           :type git
           :url "https://github.com/kai2nenobu/guide-key.git")
-   (:name "powerline"
-          :description "Powerline"
-          :type git
-          :url "https://github.com/milkypostman/powerline")
    (:name "python-django"
           :description "Python Django"
           :type git
