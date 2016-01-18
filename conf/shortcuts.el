@@ -154,6 +154,7 @@
 ;;(global-set-key (kbd "C-x t")
 ;;    (lambda () (interactive) (popwin-term:term)))
 
+
 ;; Shell
 (global-set-key (kbd "M-s s") 'shell)
 (global-set-key (kbd "M-s e") 'eshell)
@@ -300,6 +301,9 @@
 
 ;; Mail
 (global-set-key (kbd "C-x M-m") 'distopico:mu4e-open)
+
+;; News
+(global-set-key (kbd "C-x M-n") 'distopico:elfeed-open)
 
 ;; Pomodoro
 (global-set-key (kbd "M-p") 'pomodoro-action)
