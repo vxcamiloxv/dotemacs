@@ -1,5 +1,6 @@
 (require 'ido)
 (require 'recentf)
+(require 'sync-recentf)
 (require 'saveplace)
 
 ;; autosave settings
@@ -9,8 +10,9 @@
 ;; recentf - save history of recently visited files
 (recentf-mode t)
 (run-with-idle-timer (* 5 60) t 'recentf-save-list)
-(setq recentf-auto-cleanup 'never
-      recentf-max-saved-items 1000)
+(setq recentf-auto-cleanup 300
+      recentf-max-menu-items 200
+      recentf-max-saved-items 200)
 
 (setq-default ;; recentf-save-file (in-emacs-d ".cache/recentf")
  recentf-exclude (append recentf-exclude
@@ -20,11 +22,9 @@
                            "\\.ido.last" "session\\.[a-f0-9]*$"
                            "\\.recentf" "/.emacs.d/TAGS"
                            "\\.cache/" "\\.mail/"
-                           )
-                         )
+                           ))
  ido-ignore-files (append ido-ignore-files '("^\\." ".elc" ".ctags"))
- ido-ignore-directories (append ido-ignore-directories '(".git" ".svn" ".hg"))
- )
+ ido-ignore-directories (append ido-ignore-directories '(".git" ".svn" ".hg")))
 
 ;; saveplace - save position in files
 (setq-default save-place t)

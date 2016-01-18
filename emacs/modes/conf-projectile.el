@@ -1,10 +1,8 @@
-(provide 'conf-projectile)
-
+;;; Code:
 (require 'projectile)
 (require 'project-explorer)
 
 (projectile-global-mode)
-(setq projectile-indexing-method 'git)
 (setq projectile-enable-caching t)
 (setq projectile-remember-window-configs t)
 ;(setq projectile-keymap-prefix (kbd "C-c C-p"))
@@ -33,3 +31,5 @@
 (require 'direx)
 (eval-after-load "python"
   '(define-key python-mode-map (kbd "C-<f6>") 'jedi-direx:pop-to-buffer))
+
+(provide 'conf-projectile)
