@@ -7,18 +7,16 @@
 (setq mu4e-maildir "~/.mail")
 
 ;; Custom vars
-(defvar distopico:mu4e-new-mail nil
-  "Boolean to represent if there is new mail.")
-(defvar distopico:mu4e-mode-line nil
-  "String to display in the mode line.")
-(defvar distopico:mu4e-update-timer nil
-  "Interval timer object.")
 (defcustom distopico:mu4e-inbox-update-interval 60
   "Inbox update interval"
   :type 'integer
   :group 'hardware)
-
-;; Control vars
+(defvar distopico:mu4e-new-mail nil
+  "Boolean to represent if there is new mail.")
+(defvar distopico:mu4e-mode-line-format nil
+  "String to display in the mode line.")
+(defvar distopico:mu4e-update-timer nil
+  "Interval timer object.")
 (defvar distopico:mu4e-mail-address-list)
 (defvar distopico:mu4e-account-alist)
 
@@ -189,9 +187,7 @@
 
 (defun distopico:mu4e-open ()
   (interactive)
-  (if (not (get-buffer mu4e~main-buffer-name))
-      (open-buffer-delete-others mu4e~main-buffer-name :mu4e-fullscreen 'mu4e)
-    (switch-to-buffer mu4e~main-buffer-name)))
+  (open-buffer-delete-others mu4e~main-buffer-name :mu4e-fullscreen 'mu4e))
 
 (defun distopico:mu4e-close ()
   "Restores the previous window configuration and burry buffer"
@@ -303,7 +299,7 @@ store your org-contacts."
 (defun distopico:mu4e-inbox-update ()
   "Print tooltip help and icon for unread messages"
   (interactive)
-  (setq distopico:mu4e-mode-line
+  (setq distopico:mu4e-mode-line-format
         (let ((unread
                (replace-regexp-in-string
                 "[ \t\n\r]" ""
@@ -312,7 +308,7 @@ store your org-contacts."
                          (distopico:mu4e-unread-mail-query)
                          " 2>/dev/null | wc -l )")) )))
           (propertize
-           (if (string= "0" unread) "" (format "[%s]" unread) )
+           (if (string= "0" unread) "" (format "[✉ %s]" unread) )
            'display img:tron-email
            'local-map  (make-mode-line-mouse-map 'mouse-1 #'distopico:mu4e-open)
            'help-echo (format "mu4e :: %s unread messages" unread))))
@@ -321,10 +317,10 @@ store your org-contacts."
 (define-minor-mode distopico:mu4e-mode-line
   "Minor mode Toggle inbox status display in mode line"
   :global t :group 'hardware
-  (setq distopico:mu4e-mode-line "")
+  (setq distopico:mu4e-mode-line-format "")
   (and distopico:mu4e-update-timer (cancel-timer distopico:mu4e-update-timer))
 
-  (if (not distopico:mu4e-mode-line)
+  (if (not distopico:mu4e-mode-line-format)
       (message "Disabled mu4e mode line..")
     (setq distopico:mu4e-update-timer
           (run-at-time nil distopico:mu4e-inbox-update-interval 'distopico:mu4e-inbox-update))
@@ -339,18 +335,22 @@ store your org-contacts."
   (mu4e-maildirs-extension-force-update '(16))
   ;;(mu4e-maildirs-extension-index-updated-handler)
   (distopico:mu4e-inbox-update))
+
+(defun distopico:mu4e-index-updated-hook ()
+  ;; (shell-command (concat "~/.emacs.d/scripts/notify_mail.sh "
+  ;;                        (number-to-string mu4e-update-interval)))
+  (distopico:mu4e-inbox-update))
+
+(defun distopico:mu4e-view-mode-hook ()
+  (tabbar-local-mode 1))
+
 ;;-------------------
 
 ;; Hooks
 (add-hook 'mu4e-compose-pre-hook 'distopico:mu4e-set-account)
-(add-hook 'mu4e-index-updated-hook
-          (defun new-mail-notify ()
-            ;; (shell-command (concat "~/.emacs.d/scripts/notify_mail.sh "
-            ;;                        (number-to-string mu4e-update-interval)))
-            (distopico:mu4e-inbox-update)
-            ))
+(add-hook 'mu4e-index-updated-hook 'distopico:mu4e-index-updated-hook)
+(add-hook 'mu4e-view-mode-hook 'distopico:mu4e-view-mode-hook)
 (add-hook 'mu4e-compose-mode-hook 'mml-secure-message-sign-pgpmime)
-;;(add-hook 'mu4e-view-mode-hook 'distopico:mu4e-inbox-update)
 
 ;; Custom marks
 (setq mu4e-headers-new-mark              '("N" . "✉")
