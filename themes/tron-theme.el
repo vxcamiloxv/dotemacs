@@ -248,11 +248,11 @@
  '(helm-selection ((t (:background "#15abc3" :foreground "#001214"))))
 
  ;; Org
- '(org-hide ((t (:foreground "#2e3436"))))
- '(org-level-1 ((t (:inherit rainbow-delimiters-depth-1-face :weight bold :height 1.4))))
- '(org-level-2 ((t (:inherit rainbow-delimiters-depth-2-face :weight bold :height 1.2))))
- '(org-level-3 ((t (:inherit rainbow-delimiters-depth-3-face :weight bold :height 1.1))))
- '(org-level-4 ((t (:inherit rainbow-delimiters-depth-4-face :weight bold :height 1.0))))
+ '(org-hide ((t (:foreground "#00080A"))))
+ '(org-level-1 ((t (:inherit rainbow-delimiters-depth-1-face :weight bold))))
+ '(org-level-2 ((t (:inherit rainbow-delimiters-depth-2-face :weight bold))))
+ '(org-level-3 ((t (:inherit rainbow-delimiters-depth-3-face :weight bold))))
+ '(org-level-4 ((t (:inherit rainbow-delimiters-depth-4-face :weight bold))))
  '(org-level-5 ((t (:inherit rainbow-delimiters-depth-5-face :weight bold))))
  '(org-level-6 ((t (:inherit rainbow-delimiters-depth-6-face :weight bold))))
  '(org-level-7 ((t (:inherit rainbow-delimiters-depth-7-face :weight bold))))
@@ -264,11 +264,11 @@
 
  '(org-date ((t (:underline t :foreground "Cyan"))))
  '(org-footnote  ((t (:underline t ))))
- '(org-link ((t (:foreground "skyblue2" :background "#2e3436"))))
+ '(org-link ((t (:foreground "#0cd6e4" :background "#001214"))))
  ;; '(org-special-keyword ((t (:foreground "brown"))))
  '(org-verbatim ((t (:foreground "#eeeeec" :underline t :slant italic))))
  '(org-block ((t (:foreground "#bbbbbc"))))
- '(org-tag ((t (:inherit default :foreground "skyblue2" :background "#2e3436"))))
+ '(org-tag ((t (:bold t :foreground "skyblue2"))))
  '(org-quote ((t (:inherit org-block :slant italic))))
  '(org-verse ((t (:inherit org-block :slant italic))))
  '(org-todo ((t (:bold t :foreground "Red"))))
@@ -301,8 +301,11 @@
 
 ;; Icons
 (defezimage img:tron-email
-  ((:type xpm :file "icons/unread-mail.xpm" :ascent center))
+  ((:type xpm :file "icons/mail-unread.xpm" :ascent center))
   "Image used for unread mail.")
+(defezimage img:tron-feed
+  ((:type xpm :file "icons/feed-unread.xpm" :ascent center))
+  "Image used for unread feeds.")
 
 (provide-theme 'tron)
 
