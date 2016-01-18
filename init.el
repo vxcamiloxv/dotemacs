@@ -1,6 +1,13 @@
 ;;; Code:
 
 ;; Path
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (load-file "~/.emacs.d/conf/path.el")
 
 ;; Fix erro with gnupg
@@ -120,10 +127,10 @@
 (require 'conf-guide-key)
 (require 'conf-json)
 (require 'conf-mu4e)
+(require 'conf-elfeed)
 (require 'conf-jabber)
 (require 'conf-gnusocial)
 (require 'conf-erc)
-;;(require 'conf-eclim)
 
 ;; Test
 (require 'change-inner)
