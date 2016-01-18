@@ -4,7 +4,6 @@
 (require 'python-environment)
 (require 'pony-mode)
 (require 'company)
-(require 'ac-python)
 ;;(require 'python-django)
 
 ;; Default python

@@ -43,10 +43,6 @@
 ;; Enabled autocomplete
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 ;; (setq ac-js2-evaluate-calls t)
-;; (add-to-list 'company-backends 'company-tern)
-(eval-after-load 'tern
-  '(progn
-     (require 'tern-auto-complete)
-     (tern-ac-setup)))
+(add-to-list 'company-backends 'company-tern)
 
 (provide 'conf-javascript)
