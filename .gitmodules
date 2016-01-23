@@ -1,6 +1,3 @@
-[submodule "modes/yasnippet"]
-	path = modes/yasnippet
-	url = https://github.com/capitaomorte/yasnippet.git
 [submodule "themes/emacs-tron-theme"]
 	path = themes/emacs-tron-theme
 	url = https://github.com/ivanmarcin/emacs-tron-theme.git
@@ -16,8 +13,8 @@
 [submodule "themes/emacs-purple-haze-theme"]
 	path = themes/emacs-purple-haze-theme
 	url = https://github.com/emacsfodder/emacs-purple-haze-theme.git
-[submodule "modes/change-inner"]
-	path = modes/change-inner
+[submodule "site-elisp/change-inner"]
+	path = site-elisp/change-inner
 	url = https://github.com/magnars/change-inner.el.git
 [submodule "snippets/yasnippet-snippets"]
 	path = snippets/yasnippet-snippets

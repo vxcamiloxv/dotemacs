@@ -1,142 +1,114 @@
 ;;; Code:
 
-;; Path
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+;; Initialized package
 (package-initialize)
 
-(load-file "~/.emacs.d/conf/path.el")
+(message "      ______                          ")
+(message "     / ____/___ ___  ____ ___________ ")
+(message "    / __/ / __ `__ \/ __ `/ ___/ ___/ ")
+(message "   / /___/ / / / / / /_/ / /__(__  )  ")
+(message "  /_____/_/ /_/ /_/\__,_/\___/____/   ")
+(message "                                      ")
 
-;; Fix erro with gnupg
-;; (when (file-executable-p "/usr/bin/gpg1") (setq epg-gpg-program "/usr/bin/gpg1"))
+;; Core
+(add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
+
+;; Path
+(require 'setup-path)
+(distopico:startup-load-path)
 
 ;; Packages
 (require 'setup-package)
 (require 'setup-elget)
 
+;; Utils libs
+(require 'init-defuns)
+
 ;;Theme
-(require 'base-color)
-(require 'conf-theme)
+(require 'setup-color)
+(require 'setup-theme)
 
 ;; Load up the general config
-(require 'conf-init)
-(require 'general)
-(require 'shortcuts)
-(require 'conf-fringe)
+(require 'setup-general)
+(require 'setup-theme)
+(require 'setup-gui)
+(require 'setup-keybindings)
 
-;; Autocomplete
-(require 'conf-autocomplete)
-
-;;Flycheck
-(require 'conf-flycheck)
-
-;; Line Numeber
-(require 'conf-linum)
-
-;; Auto Pair
-;;(require 'conf-autopair)
-;;(autopair-global-mode 0)
-;;(require 'conf-smartparens)
-(electric-pair-mode 1)
-(global-aggressive-indent-mode 1)
-(dolist (source '(diary-mode css-mode less-css-mode))
-  (add-to-list 'aggressive-indent-excluded-modes source t))
-
-;; Load custom mode line
-(require 'conf-powerline)
-
-;; Colour theme and other gui related config
-(require 'gui-config)
-
-;;Color shell text
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-;; Tree Directory
-(require 'conf-nav)
-
-;; Functions (load all files in defuns-dir)
-(setq defuns-dir (expand-file-name "defuns" user-emacs-directory))
-(dolist (file (directory-files defuns-dir t "\\w+"))
-  (when (file-regular-p file)
-    (load file)))
-
-
-;; Useful libs
+;; Basic dependencies
+(require 'delsel)
+(require 'column-marker)
 (require 'expand-region)
 (require 'jump-char)
 (require 'smart-forward)
-(require 'delsel)
-
-;;(require 'conf-ideskel) I try to living without ideskel,
-;; this project is abandoned and have multiples bugs with emacs 24 and others libs
-
-;; Conf Modes
-(load-file "~/.emacs.d/emacs/modes/column-marker.el")
-(load-file "~/.emacs.d/emacs/modes/eshell.el")
-(load-file "~/.emacs.d/emacs/modes/longlines.el")
-(load-file "~/.emacs.d/emacs/modes/mozrepl.el")
-(load-file "~/.emacs.d/emacs/modes/yasnippet.el")
-;;(load-file "~/.emacs.d/emacs/modes/php.el")
-(load-file "~/.emacs.d/emacs/modes/tramp.el")
-(load-file "~/.emacs.d/emacs/modes/visual-regexp.el")
-(load-file "~/.emacs.d/emacs/modes/wordcount.el")
-(load-file "~/.emacs.d/emacs/modes/uniquify.el")
-(load-file "~/.emacs.d/emacs/modes/ediff.el")
-(load-file "~/.emacs.d/emacs/modes/highlight-parentheses.el")
-;;(load-file "~/.emacs.d/emacs/modes/highlight-sexps.el")
-(load-file "~/.emacs.d/emacs/modes/multiple-cursors.el")
-(require 'conf-avy)
-(require 'conf-magit)
-(require 'conf-web-mode)
-(require 'conf-javascript)
-(require 'conf-web-beautify)
-(require 'conf-emmet)
-(require 'conf-skewer)
-(require 'conf-css)
-(require 'conf-ido)
-(require 'conf-smex)
-(require 'conf-pomodoro)
-(require 'conf-org)
-(require 'conf-present)
-(require 'conf-markdown)
-(require 'conf-rst)
-(require 'conf-tabbar)
-(require 'conf-popwin)
-(require 'conf-jedi)
-(require 'conf-hippie)
-(require 'conf-buffer-management)
-(require 'conf-file-management)
-;;(require 'conf-helm)
-(require 'conf-dev-utils)
-(require 'conf-projectile)
-(require 'conf-ibuffer)
-(require 'conf-dired)
+(require 'change-inner)
 (require 'buffer-move)
-(require 'conf-python)
-(require 'conf-auto-indent)
-(require 'conf-hideshow)
-;;(require 'conf-paredit)
-(require 'conf-isearch)
-(require 'conf-hideshowvis)
-(require 'conf-highlight-symbol)
-(require 'conf-rainbow)
-(require 'conf-highlight-indentation)
-(require 'conf-guide-key)
-(require 'conf-json)
+
+;; Color shell text
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; Config Modes
+;; ----------------
+
+;; Social
 (require 'conf-mu4e)
 (require 'conf-elfeed)
 (require 'conf-jabber)
 (require 'conf-gnusocial)
 (require 'conf-erc)
 
-;; Test
-(require 'change-inner)
+;; Basic Helpers
+(require 'conf-smex)
+(require 'conf-fringe)
+(require 'conf-linum)
+(require 'conf-guide-key)
+(require 'conf-powerline)
+(require 'conf-management-buffer)
+(require 'conf-management-file)
 
-;;TODO
-;; Warning (initialization): Your `load-path' seems to contain
-;; your `.emacs.d' directory: ~/.emacs.d/
-;; This is likely to cause problems...
-;; Consider using a subdirectory instead, e.g.: /home/distopico/.emacs.d/lisp
+;; Navigation
+(require 'conf-ido)
+(require 'conf-nav)
+(require 'conf-tabbar)
+(require 'conf-ibuffer)
+(require 'conf-isearch)
+(require 'conf-dired)
+(require 'conf-popwin)
+(require 'conf-projectile)
+
+;; Write and organize
+(require 'conf-pomodoro)
+(require 'conf-org)
+(require 'conf-present)
+(require 'conf-markdown)
+(require 'conf-rst)
+
+;; Utils
+(require 'conf-eshell)
+(require 'conf-text)
+(require 'conf-tramp)
+(require 'conf-ediff)
+(require 'conf-avy)
+
+;; Coding helpers
+(require 'conf-multiple-cursors)
+(require 'conf-highlight-code)
+(require 'conf-hideshow)
+(require 'conf-rainbow)
+(require 'conf-hippie)
+(require 'conf-pair-indent)
+(require 'conf-autocomplete)
+(require 'conf-flycheck)
+
+;; Development
+(require 'conf-yasnippet)
+(require 'conf-magit)
+(require 'conf-css)
+(require 'conf-web-mode)
+(require 'conf-javascript)
+(require 'conf-python)
+(require 'conf-emmet)
+(require 'conf-json)
+(require 'conf-dev-utils)
+
+;; Final
+(run-hooks 'distopico:after-init-load-hook)

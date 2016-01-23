@@ -85,7 +85,7 @@
  '(bold ((t (:foreground "#24c6e0" :weight bold))))
  '(bold-italic ((t (:inherit bold :slant italic))))
  '(cursor ((t (:background "#15abc3"))))
- '(default ((t (:background "#00080A" :foreground "#15abc3"))))
+ '(default ((t (:background "#00080A" :foreground "#15abc3" :family "Hack"))))
  '(header-line ((t (:inherit mode-line))))
  '(mouse ((t (:foreground "#e0c625"))))
  '(region ((t (:background "#e0c625" :foreground "#000000"))))
