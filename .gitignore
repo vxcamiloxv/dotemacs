@@ -42,6 +42,7 @@ tramp
 .\#*
 .cache/
 jabber-otr/
+loaddefs.el
 
 # Org-mode
 .org-id-locations
