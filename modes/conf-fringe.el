@@ -1,8 +1,7 @@
-(setq indicate-buffer-boundaries 'right)
-(setq visual-line-fringe-indicators '(left-curly-arrow nil))
- 
-(setq left-fringe-width 8)
-(setq left-fringe-width 8)
+;;; Code:
+(setq indicate-buffer-boundaries 'right
+      visual-line-fringe-indicators '(left-curly-arrow nil)
+      left-fringe-width 8)
 
 ;;; Empty lines
 

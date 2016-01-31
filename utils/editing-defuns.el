@@ -1,4 +1,6 @@
 ;;; editing-defuns.el --- Basic text editing defuns -*- lexical-binding: t; -*-
+;;; Code:
+(require 's)
 
 (defun open-line-below ()
   (interactive)
@@ -255,8 +257,6 @@ From: http://www.emacswiki.org/emacs/CommentingCode"
     (comment-kill (save-excursion
                     (goto-char (point-max))
                     (line-number-at-pos)))))
-
-(require 's)
 
 (defun incs (s &optional num)
   (let* ((inc (or num 1))

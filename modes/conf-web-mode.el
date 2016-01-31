@@ -73,11 +73,7 @@
 ;; Functions
 (defun distopico:web-mode-hook ()
   ;; Company-mode
-  (set (make-local-variable 'company-backends) (append company-backends '((company-web-html company-web-jade company-yasnippet company-restclient))))
-  ;; Auto indent
-  (local-set-key (kbd "RET") 'newline-and-indent)
-  ;; Enable todo
-  (todo-highlight))
+  (set (make-local-variable 'company-backends) (append company-backends '((company-web-html company-web-jade company-yasnippet company-restclient)))))
 
 (defun distopico:web-mode-before-auto-complete-hooks ()
   (let ((web-mode-cur-language

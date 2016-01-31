@@ -8,8 +8,6 @@
 (make-variable-buffer-local 'buffer-local-mode)
 
 ;; Toggle two most recent buffers
-(fset 'quick-switch-buffer [?\C-x ?b return])
-
 (defun mode-keymap (mode-sym)
   (symbol-value (intern (concat (symbol-name mode-sym) "-map"))))
 
@@ -195,12 +193,12 @@ Including indent-buffer, which should not be called automatically on save."
   (when (active-minibuffer-window)
     (select-window (active-minibuffer-window))))
 
-(defun todo-highlight ()
-    "TODO/FIXME Highlighting"
-    (font-lock-add-keywords nil
-                 '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
-                    1 font-lock-warning-face t)))
-)
+(defun switch-to-previous-buffer ()
+  "Switch to previously open buffer.
+Repeated invocations toggle between the two most recently open buffers
+from: http://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/"
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 ;; code from https://gist.github.com/anonymous/1061884
 (defun auto-byte-recompile ()
@@ -208,7 +206,7 @@ Including indent-buffer, which should not be called automatically on save."
 file corresponding to the current buffer file, then recompile the file."
   (interactive)
   (when (and (eq major-mode 'emacs-lisp-mode)
-	   (file-exists-p (byte-compile-dest-file buffer-file-name)))
+             (file-exists-p (byte-compile-dest-file buffer-file-name)))
     (byte-compile-file buffer-file-name)))
 
 ;; Compiled  lips files
@@ -228,8 +226,7 @@ action: the action execute, optional, open-same-window"
           (if name-buffer
               (if open-same-window
                   (switch-to-buffer name-buffer)
-                (switch-to-buffer-other-window name-buffer)
-                )
+                (switch-to-buffer-other-window name-buffer))
             (funcall action)))
         (delete-other-windows))))
 
@@ -239,13 +236,12 @@ action: the action execute, optional, open-same-window"
   (bury-buffer)
   (jump-to-register name-register))
 
-;; (defun remove-elc-on-save ()
-;;   "If you're saving an elisp file, likely the .elc is no longer valid."
-;;   (add-hook 'after-save-hook
-;;             (lambda ()
-;;               (if (file-exists-p (concat buffer-file-name "c"))
-;;                   (delete-file (concat buffer-file-name "c"))))
-;;             nil
-;;             t))
+(defun byte-compile-when-save()
+  "When save, recompile it if already have compile file"
+  (make-local-variable 'after-save-hook)
+  (add-hook 'after-save-hook
+            (lambda ()
+              (if (file-exists-p (concat buffer-file-name "c"))
+                  (byte-compile-file buffer-file-name)))))
 
 (provide 'buffer-defuns)

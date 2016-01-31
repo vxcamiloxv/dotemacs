@@ -35,8 +35,8 @@
                 (name . "\*.*\*"))))))
 
 (add-hook 'ibuffer-mode-hook
-  (lambda ()
-    (ibuffer-switch-to-saved-filter-groups "default")))
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 

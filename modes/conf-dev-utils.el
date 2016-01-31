@@ -1,6 +1,4 @@
 ;;; Code:
-
-(require 'emr)
 (require 'skewer-mode)
 (require 'skewer-repl)
 (require 'mouse-slider-mode)
@@ -8,9 +6,6 @@
 ;;(require 'skewer-mode)
 ;; (require 'skewer-html)
 ;; (require 'skewer-css)
-
-;; Emacs refactor
-(add-hook 'prog-mode-hook 'emr-initialize)
 
 ;; Skewer-mode
 (add-hook 'js2-mode-hook 'skewer-mode)

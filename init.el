@@ -90,6 +90,7 @@
 (require 'conf-avy)
 
 ;; Coding helpers
+(require 'conf-prog)
 (require 'conf-multiple-cursors)
 (require 'conf-highlight-code)
 (require 'conf-hideshow)
