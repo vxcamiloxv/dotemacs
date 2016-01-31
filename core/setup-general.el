@@ -367,9 +367,8 @@ in X or in a terminal"
 ;; Don't break lines for me, please
 (setq-default truncate-lines t)
 
-;; Remove .elc in save
-                                        ;(add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
-
+;; Auto copile file
+(add-hook 'emacs-lisp-mode-hook 'byte-compile-when-save)
 
 ;; ignore byte-compile warnings
 (setq byte-compile-warnings '(not nresolved
