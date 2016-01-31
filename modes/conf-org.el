@@ -273,8 +273,8 @@
 ;; Templates
 (setq org-capture-templates
       '(("f" "Todo" entry
-         (file+headline (concat org-directory "todo.org") "Todo")
-         "** TODO %?\n %i\n %a" :empty-lines-after 2 :empty-lines-before 1 :clock-resume t)
+         (file+function (concat org-directory "todo.org") distopico:org-ask-location)
+         "** TODO %?\n %A \n %i \n" :empty-lines-after 2 :empty-lines-before 1 :clock-resume t)
         ("t" "Tasks" entry
          (file+headline (concat org-directory "todo.org") "Various Tasks")
          "** TODO %^{Task}%?\n SCHEDULED: %^t\n" :empty-lines-after 2 :empty-lines-before 1)
@@ -309,7 +309,10 @@
          "** %?\n<%<%Y-%m-%d %a %T>>" :empty-lines 1)
         ("e" "Event" entry
          (file+headline (concat org-directory "calendar.org")  "Events")
-         "* %^{Event}%?\n %A\n %T\n %i\n" :empty-lines 1)
+         "* %^{Event}%? %^g\n %^T\n %i\n %^{APPT_WARNTIME}p\n" :empty-lines 1)
+        ("E" "Event Link" entry
+         (file+headline (concat org-directory "calendar.org")  "Events")
+         "* %^{Event}%? %^g\n %A\n %^T\n %i\n:PROPERTIES:\n:APPT_WARNTIME: %^{prompt}\n:END:\n" :empty-lines 1)
         ("M" "Messages" entry
          (file+headline org-default-notes-file "Messages")
          "* NEXT Respond to %:fromaddress on %:subject\nSCHEDULED: %t\n%U\n%a\n\n")
@@ -414,6 +417,9 @@
 (define-key org-agenda-mode-map "N" 'distopico:org-agenda-new)
 (define-key org-agenda-mode-map "Y" 'org-agenda-todo-yesterday)
 (define-key org-agenda-mode-map "I" 'org-pomodoro)
+(define-key org-agenda-mode-map (kbd "M-q") 'org-agenda-quit)
+(define-key org-agenda-mode-map (kbd "C-q") 'bury-buffer)
+(define-key org-agenda-mode-map "q" 'bury-buffer)
 
 (add-to-list 'org-speed-commands-user '("n" distopico:org-show-next-heading-tidily))
 (add-to-list 'org-speed-commands-user '("p" distopico:org-show-previous-heading-tidily))
@@ -426,8 +432,10 @@
   (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize)
   ;;(turn-on-visual-line-mode)
   (distopico:org-saveplace)
-  (distopico:org-before-save-hook)
-  (save-buffer)
+  ;; (distopico:org-before-save-hook)
+  ;; (and buffer-file-name
+  ;;      (file-exists-p buffer-file-name)
+  ;;      (save-buffer))
   (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
   (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local))
 
@@ -477,38 +485,6 @@ From https://github.com/thisirs/dotemacs/blob/master/init-org.el"
            (dolist (tag local)
              (if (member tag inherited) (org-toggle-tag tag 'off)))))
        t nil))))
-
-(defun find-org-file (arg)
-  "Select and open org file from `org-directory' or one if its subdirectories.
-When called without prefix argument filters out files in archive
-directory, with single prefix argument looks only in archive
-directory, with double prefix argument all files are available.
-From https://github.com/vderyagin/dotemacs/blob/master/conf/org-configuration.el"
-  (interactive "p")
-  (let ((files
-         (delete ""
-                 (split-string
-                  (shell-command-to-string
-                   (let ((default-directory
-
-                           (if (= 4 arg)
-                               (expand-file-name "archive" org-directory)
-                             org-directory)))
-                     (find-cmd
-                      (when (= 1 arg)
-                        '(prune (name "archive")))
-                      '(type "f")
-                      '(iname "*.org" "*.gpg")
-                      '(print0))))
-                  "\0")))
-        relative-path
-        absolute-path)
-    (unless files (error "No files to choose from"))
-    (setq relative-path (ido-completing-read
-                         "Open org file: "
-                         (mapcar (lambda (abs) (file-relative-name abs org-directory)) files))
-          absolute-path (expand-file-name relative-path org-directory))
-    (find-file absolute-path)))
 
 (defun distopico:org-saveplace ()
   "Fix a problem with saveplace.el putting you back in a folded position"
@@ -651,7 +627,8 @@ Works for outline headings and for plain lists alike."
         (if open-same-window
             (switch-to-buffer agenda-buffer)
           (switch-to-buffer-other-window agenda-buffer))
-      (org-agenda))))
+      (org-agenda-list))
+    (tabbar-local-mode 1)))
 
 (defun distopico:org-agenda-done (&optional arg)
   "Mark current TODO as done.
