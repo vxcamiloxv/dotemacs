@@ -70,8 +70,10 @@ Return a list of one element based on major mode."
     ;;((string-equal "*" (substring (buffer-name) 0 1))
     ;; "Common"
     ;; )
-    ((member (buffer-name)
-             '("*Backtrace*" "*Compile-Log*" "*Messages*" "*Warnings*" "*Flycheck error messages*" "*fsm-debug*" "*Shell Command Output*"))
+    ((or (member (buffer-name)
+                 '("*Backtrace*" "*Compile-Log*" "*Messages*" "*Warnings*" "*Flycheck error messages*"
+                   "*fsm-debug*" "*Shell Command Output*"))
+         (string-match "\\*.*log.*\\*" (buffer-name (current-buffer))))
      "Debugger")
     ((member (buffer-name)
              '("xyz" "day" "m3" "abi" "for" "nws" "eng" "f_g" "tim" "tmp"))
@@ -121,8 +123,8 @@ Return a list of one element based on major mode."
                                        magit-log-edit-mode magit-branch-manager-mode magit-wazzup-mode
                                        magit-reflog-mode gitignore-mode git-commit-mode
                                        git-rebase-mode gitattributes-mode gitconfig-mode))
-         (member (buffer-name) '("*magit-process*" "COMMIT_EDITMSG"))
-         (string-match "\\magit.*\\*" (buffer-name (current-buffer))))
+         (member (buffer-name) '("COMMIT_EDITMSG"))
+         (string-match "\\*magit.*" (buffer-name (current-buffer))))
      "Magit")
     (t
      ;; Return `mode-name' if not blank, `major-mode' otherwise.
