@@ -6,6 +6,7 @@
 (setq projectile-enable-caching t
       projectile-cache-file (in-emacs-d ".cache/projectile.cache")
       projectile-known-projects-file (in-emacs-d ".cache/projectile-bookmarks.eld")
+      projectile-file-exists-remote-cache-expire (* 10 60)
       projectile-remember-window-configs t)
 
 ;; Project Explorer
