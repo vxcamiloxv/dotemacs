@@ -7,7 +7,7 @@
 (setq mu4e-maildir "~/.mail")
 
 ;; Custom vars
-(defcustom distopico:mu4e-inbox-update-interval 60
+(defcustom distopico:mu4e-inbox-update-modeline-interval 60
   "Inbox update interval"
   :type 'integer
   :group 'hardware)
@@ -68,6 +68,7 @@
 ;; Enable account structure
 (require 'mu4e-maildirs-extension)
 (mu4e-maildirs-extension)
+(setq mu4e-maildirs-extension-use-bookmarks t)
 
 ;; Custom marks
 (setq mu4e-headers-new-mark              '("N" . "✉")
@@ -300,30 +301,30 @@ store your org-contacts."
                           " "))))
    distopico:mu4e-account-alist
    " OR "))
+
 (defun distopico:mu4e-new-mail-p ()
   "Predicate for if there is new mail or not in Boolean"
-  (interactive)
   (not (eq 0 (string-to-number
-              (replace-regexp-in-string
-               "[ \t\n\r]" ""
-               (shell-command-to-string
-                (concat "echo -n $( mu find "
-                        (distopico:mu4e-unread-mail-query)
-                        " 2>/dev/null | wc -l )")))))))
+              (distopico:mu4e-get-unread-command)))))
+
+(defun distopico:mu4e-get-unread-command ()
+  (replace-regexp-in-string
+   "[ \t\n\r]" ""
+   (shell-command-to-string
+    (concat "echo -n $( " mu4e-mu-binary " find "
+            (distopico:mu4e-unread-mail-query)
+            " 2>/dev/null | wc -l )")) ))
+
 (defun distopico:mu4e-inbox-update ()
   "Print tooltip help and icon for unread messages"
   (interactive)
   (setq distopico:mu4e-mode-line-format
-        (let ((unread
-               (replace-regexp-in-string
-                "[ \t\n\r]" ""
-                (shell-command-to-string
-                 (concat "echo -n $( mu find "
-                         (distopico:mu4e-unread-mail-query)
-                         " 2>/dev/null | wc -l )")) )))
-          (let ((unread-string (if (string= "0" unread) "" (format "[✉ %s]" unread) )))
-            (if (window-system)
-                (setq unread-string "--"))
+        (let ((unread (distopico:mu4e-get-unread-command)))
+          (let ((unread-string
+                 (if (string= "0" unread) ""
+                   (if (window-system) "--"
+                     (format "[✉ %s]" unread)))))
+
             (propertize
              unread-string
              'display img:tron-email
@@ -364,7 +365,7 @@ store your org-contacts."
   (if (not distopico:mu4e-mode-line-format)
       (message "Disabled mu4e mode line..")
     (setq distopico:mu4e-update-timer
-          (run-at-time nil distopico:mu4e-inbox-update-interval 'distopico:mu4e-inbox-update))
+          (run-at-time nil distopico:mu4e-inbox-update-modeline-interval #'distopico:mu4e-inbox-update))
     (distopico:mu4e-inbox-update)))
 
 ;;-------------------
