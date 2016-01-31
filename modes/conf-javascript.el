@@ -29,18 +29,6 @@
 (custom-set-faces
  '(js2-highlight-vars-face ((t (:background "royal blue" :foreground "white")))))
 
-;; js2-mode hook
-(add-hook 'js2-mode-hook
-          '(lambda ()
-             (js2-imenu-extras-mode t)
-             (js2-imenu-extras-setup)
-             (rainbow-delimiters-mode t)
-             (tern-mode t)
-             (ac-js2-mode t)
-             ;;(rainbow-identifiers-mode t)
-             ;; Todo Highlighting
-             (todo-highlight)))
-
 ;; Beautify with js
 (eval-after-load 'js2-mode
   '(define-key js2-mode-map (kbd "C-c C-b f") 'web-beautify-js))
@@ -49,7 +37,15 @@
 ;; (setq ac-js2-evaluate-calls t)
 (add-to-list 'company-backends 'company-tern)
 
+;; Functions
+(defun distopico:js2-mode-hook ()
+  (js2-imenu-extras-mode t)
+  (js2-imenu-extras-setup)
+  (rainbow-delimiters-mode t)
+  (tern-mode t)
+  (ac-js2-mode t))
 
-
+;; Hooks
+(add-hook 'js2-mode-hook 'distopico:js2-mode-hook)
 
 (provide 'conf-javascript)
