@@ -1,5 +1,7 @@
 ;; Context Menu
 (require 'context-menu)
+(require 'zoom-window)
+(require 'windresize)
 
 ;; Smoother scrolling (no multiline jumps.)
 (setq scroll-margin 1
@@ -57,10 +59,6 @@
 ;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 ;;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
-;; Moving and duplicating lines or rectangles
-(require 'move-dup)
-(global-move-dup-mode t)
-
 ;; Enable CEDET
 ;;(semantic-mode t) ;; Disable or bug with menu-bar-mode
 ;;(global-semantic-idle-completions-mode)
@@ -94,9 +92,6 @@
  ;;'(Linum-format "%7i ")
  '(column-number-mode t)
  '(menu-bar-mode nil)
- '(cua-enable-cua-keys nil)
- '(cua-mode t nil (cua-base))
- '(cua-keep-region-after-copy t)
  '(custom-safe-themes t)
  '(ediff-custom-diff-program "diff")
  '(ediff-diff-program "diff")
@@ -110,7 +105,7 @@
  '(jshint-configuration-path "~/.jshintrc")
  '(linum-delay nil)
  '(linum-eager t)
-                                        ;'(visible-bell t)
+ ;;'(visible-bell t)
  '(sml-modeline-mode 1)
  '(window-left-margin 0)
  '(display-time-mode t)
@@ -167,6 +162,10 @@
 
 
 ;; Copy/Cut/Paste Line
+(defadvice kill-ring-save (after keep-transient-mark-active ())
+  "Override the deactivation of the mark."
+  (setq deactivate-mark nil))
+(ad-activate 'kill-ring-save)
 
 (defun copy-line-or-region ()
   "Copy current line, or current text selection."
@@ -183,6 +182,10 @@
     (kill-region (line-beginning-position) (line-beginning-position 2)) ) )
 
 ;; Adjust Margin
+(defadvice indent-rigidly (after deactivate-mark-nil activate)
+  (if (called-interactively-p)
+      (setq deactivate-mark nil)))
+
 (defun toggle-margin-right ()
   "Toggle the right margin between `fill-column' or window width.
 This command is convenient when reading novel, documentation."
@@ -236,9 +239,8 @@ This command is convenient when reading novel, documentation."
 (eval-after-load "skewer-html" '(diminish 'skewer-html-mode))
 (eval-after-load "smartparens" '(diminish 'smartparens-mode))
 
-;; Windows Number
-;;(require 'window-numbering)
-;;(window-numbering-mode)
+;; Windows
+(setq zoom-window-mode-line-color (face-background 'mode-line))
 
 ;; allow "restricted" features
 (put 'set-goal-column 'disabled nil)
