@@ -1,3 +1,4 @@
+;;; Code:
 ;; Install extensions if they're missing
 (defvar distopico-packages
   '(
@@ -16,7 +17,24 @@
     misc-cmds
     buffer-move
 
+    ;; Ido
+    ido-sort-mtime
+    ido-ubiquitous
+    ido-vertical-mode
+    ido-select-window
+    ido-exit-target
+    ido-complete-space-or-hyphen
+    ido-occur
+    flx-ido
+
+    ;; Window
+    zoom-window
+    windresizet
+    ace-window
+
     ;; Ui
+    hlinum
+    linum-off
     iedit
     paredit
     icicles
@@ -30,7 +48,6 @@
     flycheck
     flycheck-color-mode-line
     flx
-    flx-ido
     jump-char
     smex
     direx
@@ -41,21 +58,15 @@
     smartparens
     aggressive-indent
     projectile
-    es-windows
-    ido-ubiquitous
-    ido-vertical-mode
-    ido-at-point
     simple-httpd
     rainbow-mode
     rainbow-identifiers
     rainbow-delimiters
-    ido-ubiquitous
     mouse-slider-mode
     highlight-escape-sequences
     whitespace-cleanup-mode
     elisp-slime-nav
     dropdown-list
-    window-numbering
     smart-tabs-mode
     fill-column-indicator
     browse-kill-ring
@@ -78,6 +89,7 @@
     php-auto-yasnippets
     pony-mode
     jedi
+    move-dup
     anaconda-mode
 
     ;; Web
@@ -105,7 +117,6 @@
     yasnippet
     avy
     avy-zap
-    ace-window
     multiple-cursors
     auto-async-byte-compile
     sync-recentf
