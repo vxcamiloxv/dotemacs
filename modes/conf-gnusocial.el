@@ -42,7 +42,7 @@
 (defun distopico:gnusocial-init-load-hook ()
   (gnu-social)
   (when (eq major-mode 'gnu-social-mode)
-    (switch-to-buffer "*scratch*")))
+    (switch-to-previous-buffer)))
 
 (add-hook 'gnu-social-new-dents-hook 'distopico:gnusocial-new-dents-hook)
 (add-hook 'distopico:after-init-load-hook 'distopico:gnusocial-init-load-hook)
