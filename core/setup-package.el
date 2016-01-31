@@ -12,10 +12,9 @@
 (require 'package)
 (require 'my-package)
 
-(dolist (source '(("gnu"       . "http://elpa.gnu.org/packages/")
-                  ("marmalade" . "http://marmalade-repo.org/packages/")
-                  ("elpa"      . "http://tromey.com/elpa/")
-                  ("melpa"     . "http://melpa.org/packages/")
+(dolist (source '(("gnu"       . "https://elpa.gnu.org/packages/")
+                  ("marmalade" . "https://marmalade-repo.org/packages/")
+                  ("melpa"     . "https://melpa.org/packages/")
                   ("org"       . "http://orgmode.org/elpa/")))
   (add-to-list 'package-archives source t))
 
