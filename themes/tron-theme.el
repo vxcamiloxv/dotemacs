@@ -92,6 +92,7 @@
  '(highlight ((t (:background "#001E21" ))))
  '(hl-line ((t (:background "gray13" ))))
  '(linum ((t (:background "#00080A" :foreground "#005050" :height 70))))
+ '(linum-highlight-face ((t (:background "#00080A" :foreground "cyan" :height 70))))
  ;;'(show-paren-match-face ((t (:weight bold))))
  ;;'(fringe ((t (:background "#000000" :foreground "#15abc3"))))
  ;;'(linum ((t (:inherit default))))
