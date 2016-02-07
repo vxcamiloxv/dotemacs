@@ -3,14 +3,35 @@
 (require 'mu4e)
 (require 'mu4e-contrib)
 
-;; Default MailDir
-(setq mu4e-maildir "~/.mail")
-
 ;; Custom vars
 (defcustom distopico:mu4e-inbox-update-modeline-interval 60
   "Inbox update interval"
   :type 'integer
   :group 'hardware)
+
+(defcustom distopico:message-attachment-reminder
+  "Are you sure you want to send this message without any attachment? "
+  "The default question asked when trying to send a message
+containing `distopico:message-attachment-intent-re' without an
+actual attachment.")
+
+(defcustom distopico:message-attachment-intent-re
+  (regexp-opt '("I attach"
+                "I have attached"
+                "I've attached"
+                "I have included"
+                "I've included"
+                "see the attached"
+                "see the attachment"
+                "attached file"
+                "archivo incluido"
+                "adjunto archivo"
+                "ver adjunto"
+                "adjunto va"
+                "archivo adjunto"))
+  "A regex which - if found in the message, and if there is no
+attachment - should launch the no-attachment warning.")
+
 (defvar distopico:mu4e-new-mail nil
   "Boolean to represent if there is new mail.")
 (defvar distopico:mu4e-mode-line-format nil
@@ -21,7 +42,8 @@
 (defvar distopico:mu4e-account-alist)
 
 ;; General mu4e config
-(setq mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
+(setq mu4e-maildir "~/.mail"
+      mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
       mu4e-confirm-quit nil
       mu4e-compose-keep-self-cc nil
       mu4e-view-prefer-html t
@@ -342,6 +364,27 @@ store your org-contacts."
   ;;(mu4e-maildirs-extension-index-updated-handler)
   (distopico:mu4e-inbox-update))
 
+(defun mbork/message-attachment-present-p ()
+  "Return t if an attachment is found in the current message."
+  (save-excursion
+    (save-restriction
+      (widen)
+      (goto-char (point-min))
+      (when (search-forward "<#part" nil t) t))))
+
+(defun distopico:message-warn-if-no-attachments ()
+  "Ask the user if s?he wants to send the message even though
+there are no attachments.
+from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
+  (when (and (save-excursion
+               (save-restriction
+                 (widen)
+                 (goto-char (point-min))
+                 (re-search-forward distopico:message-attachment-intent-re nil t)))
+             (not (distopico:message-attachment-present-p)))
+    (unless (y-or-n-p distopico:message-attachment-reminder)
+      (keyboard-quit))))
+
 (defun distopico:mu4e-index-updated-hook ()
   ;; (shell-command (concat "~/.emacs.d/scripts/notify_mail.sh "
   ;;                        (number-to-string mu4e-update-interval)))
@@ -370,10 +413,11 @@ store your org-contacts."
 
 ;;-------------------
 ;; Hooks
-(add-hook 'mu4e-compose-pre-hook 'distopico:mu4e-set-account)
-(add-hook 'mu4e-index-updated-hook 'distopico:mu4e-index-updated-hook)
-(add-hook 'mu4e-view-mode-hook 'distopico:mu4e-view-mode-hook)
-(add-hook 'mu4e-compose-mode-hook 'mml-secure-message-sign-pgpmime)
-(add-hook 'distopico:after-init-load-hook 'distopico:mu4e-init-load-hook)
+(add-hook 'mu4e-compose-pre-hook #'distopico:mu4e-set-account)
+(add-hook 'mu4e-index-updated-hook #'distopico:mu4e-index-updated-hook)
+(add-hook 'mu4e-view-mode-hook #'distopico:mu4e-view-mode-hook)
+(add-hook 'mu4e-compose-mode-hook #'mml-secure-message-sign-pgpmime)
+(add-hook 'message-send-hook #'distopico:message-warn-if-no-attachments)
+(add-hook 'distopico:after-init-load-hook #'distopico:mu4e-init-load-hook)
 
 (provide 'conf-mu4e)
