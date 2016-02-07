@@ -34,12 +34,16 @@
 ;; Settings
 (setq-default web-mode-enable-auto-pairing t
               web-mode-enable-auto-opening t
+              web-mode-enable-auto-closing t
               web-mode-enable-auto-indentation t
+              web-mode-enable-auto-quoting t
+              web-mode-enable-auto-expanding t
               web-mode-enable-block-face t
               web-mode-enable-part-face t
               web-mode-enable-comment-keywords t
               web-mode-enable-css-colorization t
               web-mode-enable-current-element-highlight t
+              web-mode-enable-current-column-highlight t
               web-mode-enable-heredoc-fontification t
               web-mode-enable-engine-detection t
 
