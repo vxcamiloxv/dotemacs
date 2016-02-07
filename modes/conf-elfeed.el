@@ -220,7 +220,10 @@
   "Run hook after load init.el file"
   (elfeed-org)
   (distopico:elfeed-mode-line t)
-  (distopico:elfeed-run))
+  (distopico:elfeed-run)
+  ;; Update elfeed only when idle emacs and in specific hour time
+  (run-at-time distopico:elfeed-update-at-time nil #'elfeed-update)
+  (run-with-idle-timer distopico:elfeed-update-interval t #'elfeed-update))
 
 (defun distopico:elfeed-show-mode-hook ()
   (tabbar-local-mode 1))
@@ -252,9 +255,5 @@
 (add-hook 'elfeed-show-mode-hook 'distopico:elfeed-show-mode-hook)
 (add-hook 'elfeed-new-entry-hook 'distopico:elfeed-new-entry-hook)
 (add-hook 'distopico:after-init-load-hook 'distopico:elfeed-init-load-hook)
-
-;; Update elfeed only when idle emacs and in specific hour time
-(run-at-time distopico:elfeed-update-at-time nil #'elfeed-update)
-(run-with-idle-timer distopico:elfeed-update-interval t #'elfeed-update)
 
 (provide 'conf-elfeed)
