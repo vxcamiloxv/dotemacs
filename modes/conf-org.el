@@ -397,7 +397,7 @@
 (remove-hook 'midnight-hook 'clean-buffer-list)
 (add-hook 'midnight-hook (lambda()
                            (distopico:org-update-appt)
-                           (org-agenda-list)) 'append)
+                           (distopico:org-show-agenda)) 'append)
 
 ;; or (run-at-time "24:01" nil 'distopico:org-update-appt)
 
