@@ -78,7 +78,7 @@ Return a list of one element based on major mode."
     ((member (buffer-name)
              '("xyz" "day" "m3" "abi" "for" "nws" "eng" "f_g" "tim" "tmp"))
      "Main")
-    ((memq major-mode '(python-mode php-mode emacs-lisp-mode sh-mode makefile-gmake-mode perl-mode c-mode c++-mode django-mode python-django javascript-mode js3-mode js-mode js2-mode js2-refactor))
+    ((memq major-mode '(python-mode php-mode emacs-lisp-mode sh-mode makefile-gmake-mode perl-mode c-mode c++-mode django-mode python-django javascript-mode js3-mode js-mode js2-mode js2-refactor java-mode))
      "Programming"
      )
     ((memq major-mode '(nxhtml-mode web-mode json-mode emmet-mode less-css-mode css-mode restclient-mode))
