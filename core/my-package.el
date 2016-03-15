@@ -13,7 +13,9 @@
 
     ;; Helpers
     which-key
+    change-inner
     goto-last-change
+    region-bindings-mode
     misc-cmds
     buffer-move
 
@@ -29,8 +31,9 @@
 
     ;; Window
     zoom-window
-    windresizet
+    windresize
     ace-window
+    es-windows
 
     ;; Ui
     hlinum
@@ -113,6 +116,7 @@
     minimap
     fic-mode
     multi-term
+    tramp-term
     expand-region
     yasnippet
     avy
