@@ -1,6 +1,4 @@
-
 ;;; Code:
-
 (require 'elfeed)
 (require 'elfeed-org)
 
@@ -41,6 +39,9 @@
 ;; Tweaks
 (setq elfeed-show-entry-switch #'distopico:elfeed-switch-pane
       elfeed-show-entry-delete #'distopico:elfeed-delete-pane)
+
+;; Prevent 'Queue timeout exceeded'
+(setf url-queue-timeout 30)
 
 ;; Change titles
 (defadvice elfeed-search-update (before nullprogram activate)
@@ -218,9 +219,8 @@
 
 (defun distopico:elfeed-init-load-hook ()
   "Run hook after load init.el file"
-  (elfeed-org)
-  (distopico:elfeed-mode-line t)
   (distopico:elfeed-run)
+  (distopico:elfeed-mode-line t)
   ;; Update elfeed only when idle emacs and in specific hour time
   (run-at-time distopico:elfeed-update-at-time nil #'elfeed-update)
   (run-with-idle-timer distopico:elfeed-update-interval t #'elfeed-update))
@@ -232,6 +232,7 @@
 (defun distopico:elfeed-run ()
   "Run elfeed without enter in buffer"
   (interactive)
+  (elfeed-org)
   (let ((elfeed-search-buffer (get-buffer-create "*elfeed-search*")))
     (with-current-buffer elfeed-search-buffer
       (unless (eq major-mode 'elfeed-search-mode)
