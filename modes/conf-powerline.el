@@ -106,8 +106,10 @@
                                        (powerline-raw '(:eval
                                                         (format "%s " (gnu-social-mode-line-buffer-identification))
                                                         ) face2 'l))
-                                     (powerline-raw distopico:mu4e-mode-line-format face2 'r)
-                                     (powerline-raw distopico:elfeed-mode-line-format face2 'r)
+                                     (when (and (boundp 'distopico:mu4e-mode-line-format) distopico:mu4e-mode-line-format)
+                                       (powerline-raw distopico:mu4e-mode-line-format face2 'r))
+                                     (when (and (boundp 'distopico:elfeed-mode-line-format) distopico:elfeed-mode-line-format)
+                                       (powerline-raw distopico:elfeed-mode-line-format face2 'r))
                                      (powerline-raw "•" face2 'r)
                                      (powerline-raw global-mode-string face2 'r)
                                      (funcall separator-right face2 face1)
