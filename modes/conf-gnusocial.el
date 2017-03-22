@@ -6,7 +6,7 @@
       gnu-social-server "quitter.se"
       gnu-social-port 443
       ;;gnu-social-display-max-dents 20
-      gnu-social-new-dents-count 2
+      gnu-social-new-dents-count 1
       gnu-social-enable-highlighting t
       gnu-social-enable-striping t
       ;; gnu-social-image-stack t
@@ -36,7 +36,7 @@
   (bury-buffer-restore-prev :gnusocial-fullscreen))
 
 (defun distopico:gnusocial-new-dents-hook ()
-  ;;(gnu-social-icon-mode t)
+  (gnu-social-icon-mode t)
   (gnu-social-scroll-mode t))
 
 (defun distopico:gnusocial-init-load-hook ()

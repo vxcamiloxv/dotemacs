@@ -13,13 +13,13 @@
 ;; Core
 (add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
 
-;; Path
-(require 'setup-path)
-(distopico:startup-load-path)
-
 ;; Packages
 (require 'setup-package)
 (require 'setup-elget)
+
+;; Path
+(require 'setup-path)
+(distopico:startup-load-path)
 
 ;; Utils libs
 (require 'init-defuns)
@@ -53,9 +53,9 @@
 (when (require 'mu4e nil 'noerror)
   (require 'conf-mu4e))
 (require 'conf-elfeed)
-(require 'conf-jabber)
-(require 'conf-gnusocial)
-(require 'conf-erc)
+;; (require 'conf-jabber)
+;; (require 'conf-gnusocial)
+;; (require 'conf-erc)
 
 ;; Basic Helpers
 (require 'conf-smex)
@@ -79,6 +79,7 @@
 ;; Write and organize
 (require 'conf-pomodoro)
 (require 'conf-org)
+;; (require 'conf-jira)
 (require 'conf-present)
 (require 'conf-markdown)
 (require 'conf-rst)
@@ -100,6 +101,7 @@
 (require 'conf-pair-indent)
 (require 'conf-autocomplete)
 (require 'conf-flycheck)
+(require 'conf-editorconfig)
 
 ;; Development
 (require 'conf-yasnippet)
@@ -107,10 +109,12 @@
 (require 'conf-css)
 (require 'conf-web-mode)
 (require 'conf-javascript)
+(require 'conf-java)
 (require 'conf-python)
 (require 'conf-emmet)
 (require 'conf-json)
 (require 'conf-dev-utils)
 
 ;; Final
+;;(run-at-time "10 seg" nil #'run-hooks 'distopico:after-init-load-hook)
 (run-hooks 'distopico:after-init-load-hook)

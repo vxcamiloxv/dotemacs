@@ -99,7 +99,7 @@
   "List of defaults irc server to connect."
   (when (not (get-buffer "irc.freenode.net:6667"))
     (erc :server "irc.freenode.net" :port 6667 :password "")
-    (erc :server "irc.radiognu.org" :port 6667 :password "")
+    ;;(erc :server "irc.radiognu.org" :port 6667 :password "")
     (erc-tls :server "irc.indymedia.org" :port 6697 :password "")
     ))
 
