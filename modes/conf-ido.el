@@ -1,3 +1,4 @@
+
 ;;; Code:
 
 (require 'ido)
@@ -5,15 +6,17 @@
 (require 'ido-ubiquitous)
 (require 'ido-vertical-mode)
 (require 'ido-select-window)
-(require 'ido-exit-target)
+(require 'ido-at-point)
+;;(require 'ido-exit-target)
 (require 'ido-complete-space-or-hyphen)
 ;; (require 'crm-custom)
 
-(ido-mode)
-(ido-everywhere)
-(ido-ubiquitous-mode)
-(ido-vertical-mode)
-(ido-sort-mtime-mode)
+(ido-mode t)
+(ido-everywhere t)
+(ido-ubiquitous-mode t)
+(ido-vertical-mode t)
+(ido-sort-mtime-mode t)
+(ido-at-point-mode t)
 ;; (crm-custom-mode)
 
 (setq ido-default-buffer-method 'selected-window ; Always open in the same window
@@ -26,13 +29,13 @@
       ;; ido-use-virtual-buffers t
       ido-use-filename-at-point 'guess
       ido-vertical-define-keys 'C-n-C-p-up-down-left-right ;C-n-C-p-up-down
-      ido-exit-target-keymap-prefix (kbd "M-RET")
+      ;;ido-exit-target-keymap-prefix (kbd "M-RET")
       ido-save-directory-list-file (in-emacs-d ".cache/ido.last")
       ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".js" ".conf") )
 
 ;; Functions
 (defun ido-goto-symbol (&optional symbol-list)
-  "Refresh imenu and jump to a place in the buffer using Ido."
+  "Refresh imenu and jump to a place in the buffer using Ido optional `SYMBOL-LIST'."
   (interactive)
   (unless (featurep 'imenu)
     (require 'imenu nil t))
@@ -93,6 +96,7 @@
                     (buffer-list)))))))
 
 (defun ido-for-this-mode ()
+  "Show ido by mode."
   (interactive)
   (let ((the-mode major-mode))
     (switch-to-buffer
@@ -108,15 +112,15 @@
                       (buffer-list))))))))
 
 
-(defmacro ido-ubiquitous-use-new-completing-read (cmd package)
-  "Fix ido-ubiquitous for newer packages."
-  `(eval-after-load ,package
-     '(defadvice ,cmd (around ido-ubiquitous-new activate)
-        (let ((ido-ubiquitous-enable-compatibility nil))
-          ad-do-it))))
+;; (defmacro ido-ubiquitous-use-new-completing-read (cmd package)
+;;   "Fix ido-ubiquitous for newer packages."
+;;   `(eval-after-load ,package
+;;      '(defadvice ,cmd (around ido-ubiquitous-new activate)
+;;         (let ((ido-ubiquitous-enable-compatibility nil))
+;;           ad-do-it))))
 
-(ido-ubiquitous-use-new-completing-read webjump 'webjump)
-(ido-ubiquitous-use-new-completing-read yas/expand 'yasnippet)
-(ido-ubiquitous-use-new-completing-read yas/visit-snippet-file 'yasnippet)
+;; (ido-ubiquitous-use-new-completing-read webjump 'webjump)
+;; (ido-ubiquitous-use-new-completing-read yas/expand 'yasnippet)
+;; (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file 'yasnippet)
 
 (provide 'conf-ido)
