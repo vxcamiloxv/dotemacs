@@ -173,9 +173,12 @@
  '(tabbar-default ((t (:inherit variable-pitch :height 0.8 :background "#001214"))))
  '(tabbar-unselected ((t (:inherit tabbar-default :background "#001214" :foreground "white" :box (:line-width 1 :color "cyan" ) ))))
  '(tabbar-selected ((t (:inherit tabbar-default :background "cyan" :foreground "#001214" :box (:line-width 1 :color "cyan" ) ))))
+ '(tabbar-modified ((t (:inherit tabbar-default :background "#001214" :foreground "green" :box (:line-width 1 :color "cyan" ) ))))
+ '(tabbar-selected-modified ((t (:inherit tabbar-default :background "cyan" :foreground "#001214" :box (:line-width 1 :color "cyan" ) ))))
  '(tabbar-highlight ((t (:underline nil :box (:line-width 1 :color "#0cd6e4") ))))
  '(tabbar-button ((t (:inherit tabbar-default :box (:line-width 1 :color "#001214" :style none) ))))
  '(tabbar-button-highlight ((t (:inherit tabbar-button))))
+
  '(tabbar-separator ((t (:inherit tabbar-default :height 0.5))))
 
  ;; mode-line
