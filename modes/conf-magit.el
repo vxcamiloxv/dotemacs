@@ -8,5 +8,11 @@
 
 ;; Return to magit status
 (remove-hook 'server-switch-hook 'magit-commit-diff)
+(add-to-list 'with-editor-cancel-query-functions 'distopico:close-emacs-giteditor)
+(add-to-list 'with-editor-finish-query-functions 'distopico:close-emacs-giteditor)
+
+(defun distopico:close-emacs-giteditor(&optional force)
+  (if (equal "emacs-giteditor" (frame-parameter nil 'name))
+      (delete-frame)))
 
 (provide 'conf-magit)
