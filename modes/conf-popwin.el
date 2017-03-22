@@ -80,13 +80,6 @@
         )
       )
 
-;; Fix neotree
-(when neo-persist-show
-  (add-hook 'popwin:before-popup-hook
-            (lambda () (setq neo-persist-show nil)))
-  (add-hook 'popwin:after-popup-hook
-            (lambda () (setq neo-persist-show t))))
-
 (defun live-display-ansi ()
   (interactive)
   (popwin:display-buffer "*ansi-term*"))
