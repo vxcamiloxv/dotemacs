@@ -1,21 +1,23 @@
 ;;; Code:
+(require 'exec-path-from-shell)
 
 (defvar core-dir (concat user-emacs-directory "core")
-  "All essencial settings")
+  "All essencial settings.")
 (defvar mode-dir (concat user-emacs-directory "modes")
-  "My config for emacs modes")
+  "My config for Emacs modes.")
 (defvar site-elisp-dir  (concat user-emacs-directory "site-elisp")
-  "Extenal emacs libs/modes")
+  "Extenal Emacs libs/modes.")
 (defvar utils-dir (concat user-emacs-directory "utils")
-  "Useful functions to live in emacs")
+  "Useful functions to live in Emacs.")
 (defvar theme-dir (concat user-emacs-directory "themes")
-  "My favorites templates")
+  "My favorites templates.")
 (defvar distopico:load-path `(,core-dir ,mode-dir ,site-elisp-dir ,utils-dir ,theme-dir)
-  "Directories relative to `user-emacs-directory', to be include in `load-path'")
+  "Directories relative to `user-emacs-directory', to be include in `load-path'.")
 (defvar distopico:exec-paths
   '("~/.emacs.d/node_modules/.bin"
     "~/.emacs.d/.python-environments/default/bin")
-  "A list of custom bin paths")
+  "A list of custom bin paths.")
+(setq exec-path-from-shell-variables '("SSH_AGENT_PID" "SSH_AUTH_SOCK"))
 
 ;; General Paths
 (defun in-emacs-d (path)
@@ -54,7 +56,7 @@
     (distopico:path-join user-emacs-directory filename)))
 
 (defun distopico:get-path-subdirs (path-dir)
-  "Returns a list of subdirectories"
+  "Return a list of `PATH-DIR' subdirectories."
   (mapcar (lambda (x) (distopico:path-join path-dir x))
           (cl-remove-if
            (lambda (x)
@@ -96,8 +98,8 @@
     (add-to-list appent-to abs-dir)))
 
 (defun distopico:startup-get-all-user-lisp-dirs ()
-  "Returns a list of absolute paths for all
-lisp directories containing code under the control of the user."
+  "Return a list of absolute paths for all Lisp directories \
+containing code under the control of the user."
   (let ((user-lisp-dirs ()))
     (dolist (path-dir distopico:load-path)
       (add-to-list 'user-lisp-dirs (expand-file-name path-dir))
@@ -107,7 +109,7 @@ lisp directories containing code under the control of the user."
 
 ;;;###autoload
 (defun distopico:startup-byte-recompile ()
-  "Compile all packages in `distopico:load-path'"
+  "Compile all packages in `distopico:load-path'."
   (interactive)
   (dolist (abs-dir (distopico:startup-get-all-user-lisp-dirs))
     (message abs-dir)
@@ -117,12 +119,15 @@ lisp directories containing code under the control of the user."
 
 ;;;###autoload
 (defun distopico:startup-load-path ()
+  "Set enviroment variables in Emacs on startup."
+  (interactive)
   (dolist (path-dir distopico:load-path)
     (distopico:load-path-subdir path-dir))
   ;; (dolist (abs-dir (arv/startup-get-all-user-lisp-dirs))
   ;;   (add-to-list 'load-path abs-dir))
   ;; Add cutoms exec-path
   ;; (setenv "PATH" (mapconcat 'identity my-exec-paths  ":") )
+  (exec-path-from-shell-initialize)
   (setenv "PATH" (concat (getenv "PATH") ":" (mapconcat 'identity distopico:exec-paths ":") ))
   (setq exec-path (append exec-path distopico:exec-paths)))
 
