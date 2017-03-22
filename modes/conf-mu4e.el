@@ -4,13 +4,13 @@
 
 ;; Custom vars
 (defcustom distopico:mu4e-inbox-update-modeline-interval 60
-  "Inbox update interval"
+  "Inbox update interval."
   :type 'integer
   :group 'hardware)
 
 (defcustom distopico:message-attachment-reminder
   "Are you sure you want to send this message without any attachment? "
-  "The default question asked when trying to send a message
+  "The default question asked when trying to send a message \
 containing `distopico:message-attachment-intent-re' without an
 actual attachment.")
 
@@ -28,7 +28,7 @@ actual attachment.")
                 "ver adjunto"
                 "adjunto va"
                 "archivo adjunto"))
-  "A regex which - if found in the message, and if there is no
+  "A regex which - if found in the message, and if there is no \
 attachment - should launch the no-attachment warning.")
 
 (defvar distopico:mu4e-new-mail nil
@@ -65,8 +65,8 @@ attachment - should launch the no-attachment warning.")
 
 ;; Bookmarks and shortcuts
 (setq mu4e-maildir-shortcuts
-      '( ("/1-Distopico/INBOX"        . ?D)
-         ("/2-vXcamiloXv/INBOX"       . ?C)
+      '( ("/1-Distopico/INBOX"        . ?d)
+         ("/2-vXcamiloXv/INBOX"       . ?c)
          ;; ("/Sent"               . ?s)
          ;; ("/Trash"              . ?t)
          ;; ("/Drafts"             . ?d)
@@ -109,15 +109,13 @@ attachment - should launch the no-attachment warning.")
       message-citation-line-format "On %Y-%m-%d, %f wrote:\n" ;;message-citation-line-format "%N @ %Y-%m-%d %H:%M %Z:\n" "On %Y-%m-%d, %f wrote:" "On %Y-%m-%d %a at %H:%M %Z, %f wrote:\n"
       )
 
-;; Actions
-(setq mu4e-msg2pdf "/usr/bin/msg2pdf")
-(add-to-list 'mu4e-view-actions
-             '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-
 ;; Enable or disabled images
 (setq mu4e-view-show-images nil
       mu4e-view-image-max-width 200
       mu4e-view-image-max-height 200)
+(setq mu4e-msg2pdf "/usr/bin/msg2pdf")
+
+(add-hook 'message-mode-hook (lambda () (local-set-key "\C-c\M-o" 'org-mime-htmlize)))
 
 ;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
@@ -129,11 +127,15 @@ attachment - should launch the no-attachment warning.")
 (setq org-mu4e-convert-to-html t
       org-mu4e-link-query-in-headers-mode t
       mu4e-org-contacts-file  "~/Documents/org/contacts.org")
-(add-to-list 'mu4e-headers-actions
-             '("org-contact-add" . distopico:mu4e-action-add-org-contact) t)
+
+;; Actions
 (add-to-list 'mu4e-view-actions
-             '("org-contact-add" . distopico:mu4e-action-add-org-contact) t)
-(add-hook 'message-mode-hook (lambda () (local-set-key "\C-c\M-o" 'org-mime-htmlize)))
+             '("View in browser" . mu4e-action-view-in-browser) t)
+(add-to-list 'mu4e-view-actions
+             '("add contact org" . distopico:mu4e-action-add-org-contact) t)
+
+(add-to-list 'mu4e-headers-actions
+             '("add contact org" . distopico:mu4e-action-add-org-contact) t)
 
 ;; Default dir attachment
 (setq mu4e-attachment-dir  "~/Downloads")
@@ -173,7 +175,9 @@ attachment - should launch the no-attachment warning.")
 (define-key mu4e-main-mode-map "r" 'distopico:mu4e-maildirs-force-update)
 (define-key mu4e-main-mode-map (kbd "C-q") 'distopico:mu4e-close)
 (define-key mu4e-headers-mode-map (kbd "C-q") 'distopico:mu4e-kill-close)
+(define-key mu4e-headers-mode-map (kbd "C-c o c") 'org-mu4e-store-and-capture)
 (define-key mu4e-view-mode-map (kbd "C-q") 'distopico:mu4e-kill-close)
+(define-key mu4e-view-mode-map (kbd "C-c o c") 'org-mu4e-store-and-capture)
 
 ;;------------------
 ;; Useful functions
@@ -222,16 +226,17 @@ attachment - should launch the no-attachment warning.")
   (mu4e))
 
 (defun distopico:mu4e-open ()
+  "Open mu4e and remove other windows, save the state."
   (interactive)
   (open-buffer-delete-others mu4e~main-buffer-name :mu4e-fullscreen 'mu4e))
 
 (defun distopico:mu4e-close ()
-  "Restores the previous window configuration and burry buffer"
+  "Restore the previous window configuration and burry buffer."
   (interactive)
   (bury-buffer-restore-prev :mu4e-fullscreen))
 
 (defun distopico:mu4e-kill-close ()
-  "Kill buffer and reload maildirs if headers"
+  "Kill buffer and reload maildirs if headers."
   (interactive)
   (if (equal (buffer-name) "*mu4e-headers*")
       (progn
@@ -278,14 +283,14 @@ attachment - should launch the no-attachment warning.")
 
 ;; Custom add contact
 (defun distopico:mu4e-action-add-org-contact (msg)
-  "Add an org-contact entry based on the From: address of the
-current message (in headers or view). You need to set
+  "Add an org-contact entry based on the From: address of the \
+current message `MSG' (in headers or view), You need to set
 `mu4e-org-contacts-file' to the full path to the file where you
 store your org-contacts."
   (unless (require 'org-capture nil 'noerror)
-    (mu4e-error "org-capture is not available."))
+    (mu4e-error "The org-capture is not available"))
   (unless mu4e-org-contacts-file
-    (mu4e-error "`mu4e-org-contacts-file' is not defined."))
+    (mu4e-error "`mu4e-org-contacts-file' is not defined"))
   (let* ((sender (car-safe (mu4e-message-field msg :from)))
          (name (car-safe sender)) (email (cdr-safe sender))
          (blurb
@@ -311,7 +316,7 @@ store your org-contacts."
 
 ;; Minor mode mu4e-mode-line
 (defun distopico:mu4e-unread-mail-query ()
-  "The query to look for unread messages in all account INBOXes"
+  "The query to look for unread messages in all account INBOXes."
   (mapconcat
    (lambda (acct)
      (let ((name (car acct)))
@@ -324,11 +329,12 @@ store your org-contacts."
    " OR "))
 
 (defun distopico:mu4e-new-mail-p ()
-  "Predicate for if there is new mail or not in Boolean"
+  "Predicate for if there is new mail or not in Boolean."
   (not (eq 0 (string-to-number
               (distopico:mu4e-get-unread-command)))))
 
 (defun distopico:mu4e-get-unread-command ()
+  "Get unread messages fro mu4e binary."
   (replace-regexp-in-string
    "[ \t\n\r]" ""
    (shell-command-to-string
@@ -337,7 +343,7 @@ store your org-contacts."
             " 2>/dev/null | wc -l )")) ))
 
 (defun distopico:mu4e-inbox-update ()
-  "Print tooltip help and icon for unread messages"
+  "Print tooltip help and icon for unread messages."
   (interactive)
   (setq distopico:mu4e-mode-line-format
         (let ((unread (distopico:mu4e-get-unread-command)))
@@ -372,7 +378,7 @@ store your org-contacts."
       (when (search-forward "<#part" nil t) t))))
 
 (defun distopico:message-warn-if-no-attachments ()
-  "Ask the user if s?he wants to send the message even though
+  "Ask the user if s?he wants to send the message even though \
 there are no attachments.
 from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
   (when (and (save-excursion
@@ -385,15 +391,16 @@ from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
       (keyboard-quit))))
 
 (defun distopico:mu4e-index-updated-hook ()
-  ;; (shell-command (concat "~/.emacs.d/scripts/notify_mail.sh "
-  ;;                        (number-to-string mu4e-update-interval)))
+  "Hooen when come some new message."
+  (start-process "mu4e-update" nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
   (distopico:mu4e-inbox-update))
 
 (defun distopico:mu4e-view-mode-hook ()
+  "Enable/disable some mode in `mu4e-view-mode'."
   (tabbar-local-mode 1))
 
 (defun distopico:mu4e-init-load-hook ()
-  "Run mu4e in startup"
+  "Run mu4e in startup."
   (mu4e t)
   (distopico:mu4e-mode-line t))
 

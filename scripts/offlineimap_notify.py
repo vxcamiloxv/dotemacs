@@ -125,7 +125,9 @@ def add_notifications(ui_cls):
         account = repository.getaccount()
         if (repository.getname() == self.local_repo_names[account] and
             'S' not in src.getmessageflags(uid)):
-            self.new_messages[account][src].append(uid)
+            ## TODO: FIXME
+            pass
+            ##self.new_messages[account][destfolder].append(uid)
 
     return ui_cls
 
@@ -217,14 +219,8 @@ def notify(ui, account):
         format_args = {'account': account_name,
                        'folder': folder.getname().decode(encoding)}
         for uid in uids:
-            try:
-                message = parser.parsestr(folder.getmessage(uid),
-                                          headersonly=not need_body)
-            except (AttributeError, KeyError, TypeError, ValueError) as exc:
-                message = parser.parsestr("",
-                                          headersonly=not need_body)
-                ui.error(exc, msg='Error to get message')
-
+            message = parser.parsestr(folder.getmessage(uid),
+                                      headersonly=not need_body)
             format_args['h'] = HeaderDecoder(message, failstr=conf['failstr'])
             if need_body:
                 for part in message.walk():

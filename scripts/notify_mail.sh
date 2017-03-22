@@ -7,11 +7,11 @@ ACTION="mu find flag:unread --after=$NBACK"
 NMAIL=$($ACTION 2>/dev/null | wc -l)
 
 # Notify config
-appname=mu4e
-icon=mail-unread
-category=email
+appname="mu4e"
+icon=$HOME/.icons/emacs/mail-unread.svg
+category="email"
 urgency=normal
-timeout=-1
+timeout=5000
 
 if [ $NMAIL -eq 1 ]
 then
