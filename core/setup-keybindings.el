@@ -140,7 +140,7 @@
 (global-set-key (kbd "C-c w <down>") (ignore-error-wrapper 'windmove-down))
 
 ;; commenting/uncommenting
-(global-set-key (kbd "C-;") 'comment-or-uncomment-current-line)
+;; (global-set-key (kbd "M-;") 'comment-or-uncomment-current-line)
 (global-set-key (kbd "M-;") 'comment-dwim-line)
 
 ;; Tabbar
@@ -337,6 +337,11 @@
     (define-key map "o" 'org-open-at-point-global)
     (define-key map "b" 'distopico:org-tree-to-indirect-buffer-renamed)
     (define-key map "q" 'bury-buffer)
+    (define-key map "jp" 'org-jira-get-projects)
+    (define-key map "ji" 'org-jira-get-issues)
+    (define-key map "jh" 'org-jira-get-issues-headonly)
+    (define-key map "jc" 'org-jira-create-issue)
+    (define-key map "jj" 'org-jira-todo-to-jira)
     map))
 
 
