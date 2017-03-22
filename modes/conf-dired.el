@@ -1,11 +1,15 @@
 ;;; Code:
-
 (require 'dired+)
+(require 'dired-x)
+(require 'image-dired+)
 (require 'dired-details+)
 (require 'direx-project)
-(require 'dired-x)
+(require 'dired-subtree)
+(require 'dired-hacks-utils)
+(require 'dired-ranger)
+(require 'dired-narrow)
+(require 'dired-sort)
 (require 'single-dired)
-(require 'fsdired)
 
 ;; Autoload
 (autoload 'dired-async-mode "dired-async.el" nil t)
@@ -14,29 +18,33 @@
 (dired-async-mode t)
 
 ;; Config
-(setq-default dired-omit-files-p t
-              dired-omit-files "^\\.?#\\|^\\.[^\\.]+"
-              dired-listing-switches "-al"
-              diredp-font-lock-keywords-1
-              (append
-               diredp-font-lock-keywords-1
-               (list
-                (list dired-re-exe
-                      `(".+"
-                        (dired-move-to-filename)
-                        nil
-                        (0 diredp-executable-file-name t)))))
-              image-dired-dir (expand-file-name "~/.thumbnails/emacs"))
+(setq dired-omit-files-p t
+      dired-omit-mode t
+      dired-omit-files "^\\..*[a-zA-Z]"
+      dired-listing-switches "-al"
+      dired-dwim-target t ;; Move files between split panes
+      dired-details-hidden-string " "
+      diredp-font-lock-keywords-1
+      (append
+       diredp-font-lock-keywords-1
+       (list
+        (list dired-re-exe
+              `(".+"
+                (dired-move-to-filename)
+                nil
+                (0 diredp-executable-file-name t)))))
+      image-dired-track-movement nil
+      image-dired-dir (expand-file-name "~/.thumbnails/emacs")
+      image-dired-db-file (in-emacs-d ".cache/image-dired/image-dired_db")
+      image-dired-temp-image-file (in-emacs-d ".cache/image-dired/image-dired_temp")
+      image-dired-gallery-dir (in-emacs-d ".cache/image-dired/image-dired_gallery"))
 
-;; Direx
-(setq direx:leaf-icon " " direx:open-icon "▾ " direx:closed-icon "▸ ")
-
-;; shorter dired output
-(setq-default dired-details-hidden-string "--- ")
+;; Enable details
 (dired-details-install)
 
-;; Move files between split panes
-(setq dired-dwim-target t)
+;; Dired image+
+(eval-after-load 'image-dired+ '(image-diredx-async-mode 1))
+(eval-after-load 'image-dired+ '(image-diredx-adjust-mode 1))
 
 ;; Faces
 (defface diredp-executable-file-name
@@ -45,24 +53,34 @@
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-executable-file-name 'diredp-executable-file-name)
 
+;; Custom keymap
+(define-key dired-mode-map (kbd "C-<right>") 'dired-subtree-insert)
+(define-key dired-mode-map (kbd "C-<left>") 'dired-subtree-remove)
+(define-key dired-mode-map [mouse-3] 'dired-maybe-insert-subdir)
+(define-key dired-mode-map (kbd "C-{") 'dired-narrow-window)
+(define-key dired-mode-map
+  (vector 'remap 'end-of-buffer) 'distopico:dired-jump-to-bottom)
+(define-key dired-mode-map
+  (vector 'remap 'beginning-of-buffer) 'distopico:dired-back-to-top)
+
+(define-key image-dired-thumbnail-mode-map "\C-n" 'image-diredx-next-line)
+(define-key image-dired-thumbnail-mode-map "\C-p" 'image-diredx-previous-line)
+(define-key image-dired-thumbnail-mode-map "g" 'revert-buffer)
+(define-key image-dired-thumbnail-mode-map "x" 'image-diredx-flagged-delete)
+
 ;; Functions
 (defun dired-narrow-window ()
-  "make the current dired mode window 30 chars wide"
+  "Make the current dired mode window 30 chars wide."
   (interactive)
   (adjust-window-trailing-edge (selected-window) (- 30 (window-width)) t))
 
 (defun distopico:dired-mode-hook ()
+  "Enable modes in dired."
   (visual-line-mode 0) ;; unwrap lines.
   (linum-mode 0) ;; turn off line numbers.
   (hl-line-mode) ;; hl-line - highlight current-line
   (auto-revert-mode) ;; auto-refresh dired
   (font-lock-mode 1) ;; Switch-on font-lock
-  (define-key dired-mode-map [mouse-3] 'dired-maybe-insert-subdir)
-  (define-key dired-mode-map (kbd "C-{") 'dired-narrow-window)
-  (define-key dired-mode-map
-    (vector 'remap 'end-of-buffer) 'distopico:dired-jump-to-bottom)
-  (define-key dired-mode-map
-    (vector 'remap 'beginning-of-buffer) 'distopico:dired-back-to-top)
 
   ;; Use the same buffer for visited directories
   (toggle-diredp-find-file-reuse-dir 1)
@@ -79,12 +97,13 @@
 (add-hook 'dired-mode-hook 'distopico:dired-mode-hook)
 
 (defun distopico:dired-back-to-top ()
-  "make end-of-buffer and beginning-of-buffer behave properly"
+  "Make `end-of-buffer' and `beginning-of-buffer' behave properly."
   (interactive)
   (beginning-of-buffer)
   (next-line 2))
 
 (defun distopico:dired-jump-to-bottom ()
+  "Jump to button of buffer."
   (interactive)
   (end-of-buffer)
   (next-line -1))
@@ -106,8 +125,7 @@
 (defadvice dired-insert-directory
     (before my-dired-insert-directory
             (dir switches &optional file-list wildcard hdr))
-  "and hack the dired-insert-directory function to add the
---group-directories-first option:"
+  "And hack the dired-insert-directory function to add the group-directories-first option."
   (setq switches (concat switches " --group-directories-first")))
 (ad-activate 'dired-insert-directory)
 

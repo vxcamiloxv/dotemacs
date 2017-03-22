@@ -78,6 +78,9 @@ Return a list of one element based on major mode."
     ((member (buffer-name)
              '("xyz" "day" "m3" "abi" "for" "nws" "eng" "f_g" "tim" "tmp"))
      "Main")
+    ((memq major-mode
+           '(dired-mode direx:direx-mode))
+     "Dired")
     ((memq major-mode '(python-mode php-mode emacs-lisp-mode sh-mode makefile-gmake-mode perl-mode c-mode c++-mode django-mode python-django javascript-mode js3-mode js-mode js2-mode js2-refactor java-mode))
      "Programming"
      )
@@ -111,7 +114,7 @@ Return a list of one element based on major mode."
     ;;      (string-match "\\*terminal.*\\*" (buffer-name (current-buffer))))
     ;;  "Shell")
     ((or
-      (memq major-mode '(lisp-interaction-mode dired-mode help-mode slime-mode slime-repl-mode sldb-mode
+      (memq major-mode '(lisp-interaction-mode help-mode slime-mode slime-repl-mode sldb-mode
                                                slime-inspector-mode calendar-mode diary-mode
                                                diary-fancy-display-mode Custom-mode))
       (member (buffer-name) '("*Completions*" "*Alerts*" "*Clock Task Select*" "*slime-source*" "*inferior-lisp*" "*ielm*" "*Org tags*"))
