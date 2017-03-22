@@ -9,6 +9,8 @@
       projectile-file-exists-remote-cache-expire (* 10 60)
       projectile-remember-window-configs t)
 
+(add-to-list 'projectile-globally-ignored-directories "node_modules")
+
 ;; Project Explorer
 (setq pe/width 20
       pe/cache-directory (in-emacs-d ".cache/project-explorer-cache/")
