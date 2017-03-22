@@ -4,20 +4,20 @@
 
 ;; Control vars
 (defcustom distopico:elfeed-update-interval 300
-  "Feeds update interval"
+  "Feeds update interval."
   :group 'elfeed
   :type 'integer)
 
 (defcustom distopico:elfeed-update-at-time "9:30"
-  "Feeds update interval"
+  "Feeds update in specific hour."
   :group 'elfeed)
 
 (defcustom distopico:elfeed-update-modeline-interval 60
-  "Feeds update interval"
+  "Feeds update interval of modeline."
   :group 'elfeed
   :type 'integer)
 
-(defcustom distopico:elfeed-entry-pane-position 'bottom
+(defcustom distopico:elfeed-entry-pane-position 'right
   "Position of the popup entry pane."
   :group 'elfeed
   :type '(choice (const left) (const right) (const top) (const bottom)))
@@ -44,9 +44,9 @@
 (setf url-queue-timeout 30)
 
 ;; Change titles
-(defadvice elfeed-search-update (before nullprogram activate)
-  (let ((feed (elfeed-db-get-feed "https://feeds.feedburner.com/DebianHackers")))
-    (setf (elfeed-feed-title feed) "DebianHackers")))
+;; (defadvice elfeed-search-update (before nullprogram activate)
+;;   (let ((feed (elfeed-db-get-feed "https://feeds.feedburner.com/DebianHackers")))
+;;     (setf (elfeed-feed-title feed) "DebianHackers")))
 
 ;; Custom key map
 (define-key elfeed-search-mode-map (kbd "C-q") 'distopico:elfeed-close)
@@ -66,6 +66,7 @@
 
 ;; Functions
 (defun distopico:elfeed-open ()
+  "Custom function to open elfeed and delete others windows."
   (interactive)
   (let ((elfeed-search-buffer "*elfeed-search*"))
     (open-buffer-delete-others elfeed-search-buffer :elfeed-fullscreen 'elfeed t)
@@ -75,16 +76,18 @@
       (distopico:elfeed-unread-update))))
 
 (defun distopico:elfeed-close ()
-  "Restores the previous window configuration and burry buffer"
+  "Restore the previous window configuration and burry buffer."
   (interactive)
   (bury-buffer-restore-prev :elfeed-fullscreen)
   (distopico:elfeed-unread-update))
 
 (defun distopico:elfeed-week ()
+  "List unread entries of last week."
   (interactive)
   (elfeed-search-set-filter "@1-week-ago +unread"))
 
 (defun distopico:elfeed-bookmarks ()
+  "Return entrues with tag `bookmark'."
   (interactive)
   (elfeed-search-set-filter "+bookmark"))
 
@@ -120,7 +123,7 @@
                        :dedicated t))
 
 (defun distopico:elfeed-delete-pane (&optional nodelete)
-  "Delete the *elfeed-entry* split pane."
+  "Delete the *elfeed-entry* split pane, optional `NODELETE'."
   (interactive)
   (let* ((buff (get-buffer "*elfeed-entry*"))
          (window (get-buffer-window buff)))
@@ -129,6 +132,7 @@
         (delete-window window))))
 
 (defun distopico:elfeed-total-unread ()
+  "Return total of `unread' entries."
   (let ((counts 0))
     (with-elfeed-db-visit (e _)
       (let ((tags (elfeed-entry-tags e)))
@@ -139,6 +143,7 @@
     counts))
 
 (defun distopico:elfeed-tag-entries (&optional unread)
+  "Get tag of entries, optional return `UNREAD' also."
   (let ((counts (make-hash-table)))
     (with-elfeed-db-visit (e _)
       (let ((tags (elfeed-entry-tags e)))
@@ -155,7 +160,7 @@
              collect (cons tag count))))
 
 (defun distopico:elfeed-unread-update ()
-  "Print tooltip help and icon for unread feeds"
+  "Print tooltip help and icon for unread feeds."
   (interactive)
   (setq distopico:elfeed-mode-line-format
         (let ((unread
@@ -174,6 +179,7 @@
   (sit-for 0))
 
 (defun distopico:elfeed-group-filter (&optional unread)
+  "Filter by group, optional show `UNREAD'."
   (let ((default-filter
           (concat "@6-months-ago"
                   (if unread
@@ -199,26 +205,29 @@
       (elfeed-search-update :force))))
 
 (defun distopico:elfeed-group-filter-unread ()
+  "Show only unread feeds."
   (interactive)
   (distopico:elfeed-group-filter t))
 
 (defun distopico:elfeed-group-filter-all ()
+  "Show all feeds."
   (interactive)
   (distopico:elfeed-group-filter))
 
 (defun distopico:elfeed-org-update ()
-  "Force to update feed in `org-mode' to elfeed list"
+  "Force to update feed in `org-mode' to elfeed list."
   (interactive)
   (rmh-elfeed-org-process rmh-elfeed-org-files rmh-elfeed-org-tree-id)
   (elfeed-update))
 
 (defun distopico:elfeed-new-entry-hook ()
-  "Run hook after new feed entry"
+  "Run hook after new feed entry."
   ;; TODO: notify new entry
-  (distopico:elfeed-unread-update))
+  ;;(distopico:elfeed-unread-update)
+  )
 
 (defun distopico:elfeed-init-load-hook ()
-  "Run hook after load init.el file"
+  "Run hook after load init.el file."
   (distopico:elfeed-run)
   (distopico:elfeed-mode-line t)
   ;; Update elfeed only when idle emacs and in specific hour time
@@ -226,18 +235,24 @@
   (run-with-idle-timer distopico:elfeed-update-interval t #'elfeed-update))
 
 (defun distopico:elfeed-show-mode-hook ()
-  (tabbar-local-mode 1))
+  "Hook when enter in show mode."
+  (tabbar-local-mode 1)
+  (visual-line-mode))
 
 ;;;###autoload
 (defun distopico:elfeed-run ()
-  "Run elfeed without enter in buffer"
+  "Run elfeed without enter in buffer."
   (interactive)
   (elfeed-org)
-  (let ((elfeed-search-buffer (get-buffer-create "*elfeed-search*")))
-    (with-current-buffer elfeed-search-buffer
-      (unless (eq major-mode 'elfeed-search-mode)
-        (elfeed-search-mode))
-      (elfeed-search-update))))
+  (elfeed)
+  (elfeed-update)
+  ;; (distopico:elfeed-org-update)
+  ;; (let ((elfeed-search-buffer (get-buffer-create "*elfeed-search*")))
+  ;;  (with-current-buffer elfeed-search-buffer
+  ;;  (unless (eq major-mode 'elfeed-search-mode)
+  ;;  (elfeed-search-mode))
+  ;; (elfeed-search-update)))
+  )
 
 ;; Custom modes
 (define-minor-mode distopico:elfeed-mode-line
