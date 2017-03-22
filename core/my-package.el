@@ -10,6 +10,7 @@
     es-lib
     log4e
     paradox
+    exec-path-from-shell
 
     ;; Helpers
     which-key
@@ -27,6 +28,7 @@
     ido-exit-target
     ido-complete-space-or-hyphen
     ido-occur
+    ido-at-point
     flx-ido
 
     ;; Window
@@ -34,6 +36,17 @@
     windresize
     ace-window
     es-windows
+
+    ;; Dired
+    direx
+    dired+
+    dired-details+
+    image-dired+
+    dired-hacks-utils
+    dired-subtree
+    dired-ranger
+    dired-narrow
+    dired-sort
 
     ;; Ui
     hlinum
@@ -53,10 +66,6 @@
     flx
     jump-char
     smex
-    direx
-    dired+
-    dired-details+
-    dired-sort
     perspective
     smartparens
     aggressive-indent
@@ -85,6 +94,7 @@
     helm-emmet
 
     ;; Programing
+    ag
     emr
     nodejs-repl
     php-mode
@@ -92,14 +102,22 @@
     php-auto-yasnippets
     pony-mode
     jedi
+    lua-mode
     move-dup
     anaconda-mode
+    jdee
+    android-mode
+    gradle-mode
+    groovy-mode
 
     ;; Web
+    web-mode
     restclient
     emmet-mode
     js2-mode
     js2-refactor
+    xref-js2
+    js-doc
     json-mode
     css-eldoc
     less-css-mode
@@ -111,6 +129,7 @@
     ;; Utils
     magit
     anzu
+    editorconfig
     iy-go-to-char
     quickrun
     minimap
@@ -132,6 +151,8 @@
     company-restclient
     company-jedi
     company-anaconda
+    company-statistics
+    company-quickhelp
     ac-js2
 
     ;; Org
@@ -146,6 +167,9 @@
     elfeed
     elfeed-org
     mu4e-maildirs-extension
+
+    ;; Gtags
+    etags-select
 
     ;; Dubug
     skewer-mode

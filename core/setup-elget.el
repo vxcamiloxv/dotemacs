@@ -66,10 +66,11 @@
           :description "Kivy highlighting mode"
           :type http
           :url "https://raw.github.com/kivy/kivy/master/kivy/tools/highlight/kivy-mode.el")
-   (:name "web-mode"
-          :description "emacs major mode for html templates"
+   (:name "org-jira"
+          :description "use Jira in Emacs org-mode"
           :type git
-          :url "https://github.com/fxbois/web-mode.git")
+          :branch "restapi"
+          :url "git@github.com:vxcamiloxv/org-jira.git");;"https://github.com/baohaojun/org-jira.git"
    (:name "org-reveal"
           :description "reveal.js stuff for orgmode"
           :type git
@@ -81,7 +82,7 @@
    (:name "gnu-social-mode"
           :description "Emacs client for gnu-social"
           :type git
-          :url "http://git.savannah.gnu.org/r/gnu-social-mode.git")
+          :url "https://github.com/bashrc/gnu-social-mode.git");; "http://git.savannah.gnu.org/r/gnu-social-mode.git"
    (:name "jabber"
           :description "Emacs jabber client"
           :type git
