@@ -45,8 +45,6 @@
 (setq org-note-abort nil ;; Keep change when finalized
       org-log-done 'time
       org-log-into-drawer t
-      org-startup-indented t
-      org-hide-leading-stars t
       org-completion-use-ido t
       org-auto-align-tags t
       org-support-shift-select t
@@ -58,6 +56,8 @@
       org-special-ctrl-k t
       org-special-ctrl-a/e t
       ;; nil
+      org-startup-indented nil
+      org-hide-leading-stars nil
       org-reverse-note-order nil
       org-M-RET-may-split-line nil
       org-refile-use-outline-path nil
@@ -96,8 +96,8 @@
 ;; Agenda
 (setq org-agenda-files (file-expand-wildcards (concat org-directory "*.org"))) ;; I'm not sure if it's good idea include all files
 
-(setq org-agenda-window-setup 'current-window
-      ;; org-agenda-restore-windows-after-quit t
+(setq org-agenda-window-setup 'only-window
+      org-agenda-restore-windows-after-quit t
       org-agenda-skip-deadline-prewarning-if-scheduled t
       org-agenda-skip-timestamp-if-done t
       org-agenda-skip-deadline-if-done t
@@ -230,7 +230,7 @@
 ;; Custom faces
 (setq org-todo-keyword-faces
       '(("TODO" . (:foreground "#df3800" :weight bold))
-        ("STARTED" . (:foreground "#566ea2" :weight bold))
+        ("STARTED" . (:foreground "PaleGreen" :weight bold)) ;; #566ea2
         ("NEXT" . (:foreground "DeepPink2" :weight bold))
         ("HOLD" . (:foreground "#b68800" :weight bold))
         ("WAITING" . (:foreground "#4d9694" :weight bold))
@@ -259,6 +259,7 @@
 ;; Default tags
 (setq org-tag-persistent-alist '(("@work"      . ?b)
                                  ("@home"      . ?h)
+                                 ("@bookmarks" . ?m)
                                  ("@writing"   . ?w)
                                  ("@errands"   . ?e)
                                  ("@drawing"   . ?d)
@@ -272,50 +273,69 @@
 
 ;; Templates
 (setq org-capture-templates
-      '(("f" "Todo" entry
+      '(;; Some day todo task
+        ("f" "Todo" entry
          (file+function (concat org-directory "todo.org") distopico:org-ask-location)
-         "** TODO %?\n %A \n %i \n" :empty-lines-after 2 :empty-lines-before 1 :clock-resume t)
+         "** TODO %?\n%A\n%i\n" :empty-lines-after 2 :empty-lines-before 1 :clock-resume t)
+        ;; Time with specific time
         ("t" "Tasks" entry
          (file+headline (concat org-directory "todo.org") "Various Tasks")
          "** TODO %^{Task}%?\n SCHEDULED: %^t\n" :empty-lines-after 2 :empty-lines-before 1)
-        ("T" "Quick task" entry
+        ;; Task with minimum effort
+        ("T" "Quick task" item
          (file+headline (concat org-directory "todo.org") "Quick Task")
          "** TODO %^{Task}" :immediate-finish t)
+        ;; Web bookmark
+        ("B" "Bookmark" item
+         ;;(file+headline (concat org-directory "bookmarks.org") "Emacs")
+         (file+function (concat org-directory "bookmarks.org") (lambda () (distopico:org-ask-location '((nil :maxlevel . 5)))))
+         "%a \n%?%:initial\n\n" :prepend nil :empty-lines 1)
+        ;; Notes to remember with custom title
         ("n" "Note" entry
          (file+headline org-default-notes-file "General Notes")
-         "* %^{Title}\n  :PROPERTIES:\n  :CreationTime:  %U\n  :END:\n\n  %i\n\n  %a"
+         "* %^{Title}\n :PROPERTIES:\n:CREATED:%U\n:END:\n\n%i\n\n%a"
          :prepend t :empty-lines 1)
+        ;; Note to remember without tittle
         ("Q" "Quick note" item
          (file+headline org-default-notes-file "Quick notes"))
+        ;; Some unexpected idea about a project
         ("i" "Idea" entry
          (file+headline org-default-notes-file "Idea")
-         "* %^{Title}\n  %i\n %a" :prepend t :empty-lines 1)
+         "* %^{Title}\n %i\n%a" :prepend t :empty-lines 1)
+        ;; Manage contacts list
         ("c" "Contacts" entry
          (file+headline distopico:contacts-files "General")
          "** %(org-contacts-template-name)%?\n:PROPERTIES:\n:EMAIL: %(org-contacts-template-email)\n:NICKNAME: \n:END:\n"
          :empty-lines 1)
+        ;; Organized my habbits of day
         ("h" "Habit" entry
          (file+headline (concat org-directory "myday.org") "Habits")
-         "* TODO %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %h %H:%M .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n:Captured_at: %U\n:END:"
+         "* TODO %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %h %H:%M .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:CAPTURED: %U\n:END:"
          :empty-lines-after 2 :empty-lines-before 1 :clock-resume t)
+        ;; Some real life tasks
         ("l" "Life Task" entry
          (file+headline (concat org-directory "life.org") "Life Tasks")
-         "* TODO %?\n  %i\n  %a" :empty-lines 1)
+         "* TODO %?\n %i\n%a" :empty-lines 1)
+        ;; For my life
         ("b" "Stuff to buy" entry
          (file+headline (concat org-directory "life.org") "Stuff to buy")
          "* TODO %^{Title}%?\n" :prepend t :empty-lines 1)
+        ;; Notes without specific space
         ("o" "Organizer" entry
          (file+function org-default-notes-file distopico:org-ask-location)
          "** %?\n<%<%Y-%m-%d %a %T>>" :empty-lines 1)
+        ;; I haven't many events in my life
         ("e" "Event" entry
          (file+headline (concat org-directory "calendar.org")  "Events")
-         "* %^{Event}%? %^g\n %^T\n %i\n %^{APPT_WARNTIME}p\n" :empty-lines 1)
+         "* %^{Event}%? %^g\n%i\n%^T\n:PROPERTIES:\n:APPT_WARNTIME: %^{Wartime min/hour}\n:END:\n" :empty-lines 1)
+        ;; Some event in website
         ("E" "Event Link" entry
          (file+headline (concat org-directory "calendar.org")  "Events")
-         "* %^{Event}%? %^g\n %A\n %^T\n %i\n:PROPERTIES:\n:APPT_WARNTIME: %^{prompt}\n:END:\n" :empty-lines 1)
+         "* %^{Event}%? %^g\n%A\n%^T\n%i\n:PROPERTIES:\n:APPT_WARNTIME: %^{Wartime min/hour}\n:END:\n" :empty-lines 1)
+        ;; Remember response some email
         ("M" "Messages" entry
          (file+headline org-default-notes-file "Messages")
-         "* NEXT Respond to %:fromaddress on %:subject\nSCHEDULED: %t\n%U\n%a\n\n")
+         "* NEXT Respond to %:fromaddress on %:subject\nSCHEDULED: %t\n CAPTURED: %U\n%a\n" :empty-lines 1)
         ))
 
 (setq org-capture-templates-contexts
@@ -329,8 +349,8 @@
 
 ;; Org Projectile
 (setq org-projectile:projects-file  (expand-file-name "todo.org" org-directory))
-(add-to-list 'org-capture-templates
-             (org-projectile:project-todo-entry "p" "* TODO %? %a" "Project Todo"))
+;; (add-to-list 'org-capture-templates
+;;              (org-projectile:project-todo-entry "p" "* TODO %? %a" "Project Todo"))
 
 
 ;; Export
@@ -353,58 +373,17 @@
 (setq org-tags-exclude-from-inheritance '("crypt")
       org-crypt-disable-auto-save t)
 
-
-;; General Hooks
-(add-hook 'org-mode-hook 'distopico:org-init-hook)
-
-(with-eval-after-load 'org-capture
-  (add-hook 'org-capture-mode-hook #'flyspell-mode 'append)
-  (add-hook 'org-capture-before-finalize-hook #'org-align-all-tags 'append)
-  (add-hook 'org-capture-after-finalize-hook #'distopico:org-update-agenda-views 'append))
-
-(with-eval-after-load 'org-agenda
-  (add-hook 'org-agenda-mode-hook
-            (lambda ()
-              (distopico:org-update-appt)) 'append))
-
-(with-eval-after-load 'org-clock
-  (org-clock-persistence-insinuate)
-  (add-hook 'org-clock-in-hook
-            (lambda ()
-              (pomodoro)
-              (add-hook 'pomodoro-break-finished-hook 'org-clock-in-last)
-              (add-hook 'pomodoro-finished-hook 'org-clock-out)
-              (distopico:org-clock-in-set-state-to-started)) 'append)
-  (add-hook 'org-clock-out-hook
-            (lambda ()
-              (distopico:remove-empty-drawer-on-clock-out)) 'append)
-  (add-hook 'org-clock-cancel-hook
-            (lambda ()
-              (pomodoro-stop)
-              (remove-hook 'pomodoro-break-finished-hook 'org-clock-in-last)
-              (remove-hook 'pomodoro-finished-hook 'org-clock-out)
-              (distopico:remove-empty-drawer-on-clock-out)) 'append))
-
-(add-hook 'org-after-todo-state-change-hook
-          (lambda ()
-            (distopico:org-toggle-next-tag)
-            (distopico:org-insert-trigger)) 'append)
-
-;;(add-hook 'org-clock-in-prepare-hook 'distopico:org-mode-add-default-effort) I need?
-
 ;; midnight
 (setq midnight-mode t)
 (remove-hook 'midnight-hook 'clean-buffer-list)
-(add-hook 'midnight-hook (lambda()
-                           (distopico:org-update-appt)
-                           (distopico:org-show-agenda)) 'append)
+(add-hook 'midnight-hook 'distopico:org-show-agenda-appt 'append)
 
-;; or (run-at-time "24:01" nil 'distopico:org-update-appt)
+(run-at-time "9:30" nil 'distopico:org-show-agenda-appt)
 
 ;; Custom map key
-(define-key org-mode-map (kbd "C-s-<return>")  'distopico:org-insert-subheading)
+;;(define-key org-mode-map (kbd "C-s-<return>")  'org-insert-heading-respect-content)
 (define-key org-mode-map (kbd "C-M-s-<return>")  'distopico:org-insert-todo-subheading)
-(define-key org-mode-map (kbd "C-M-<return>")  'org-insert-heading-respect-content)
+(define-key org-mode-map (kbd "C-M-<return>")  'distopico:org-insert-subheading)
 (define-key org-mode-map (kbd "M-s-<return>")  'distopico:org-insert-heading-for-next-day)
 (define-key org-mode-map (kbd "C-<tab>")  'pcomplete)
 (define-key org-mode-map (kbd "C-c k")  'org-cut-subtree)
@@ -423,39 +402,10 @@
 
 (add-to-list 'org-speed-commands-user '("n" distopico:org-show-next-heading-tidily))
 (add-to-list 'org-speed-commands-user '("p" distopico:org-show-previous-heading-tidily))
+
 ;; ------------
 ;; Functions
 ;; ------------
-
-(defun distopico:org-init-hook ()
-  ;; Org mime messages to html
-  (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize)
-  ;;(turn-on-visual-line-mode)
-  (distopico:org-saveplace)
-  ;; (distopico:org-before-save-hook)
-  ;; (and buffer-file-name
-  ;;      (file-exists-p buffer-file-name)
-  ;;      (save-buffer))
-  (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
-  (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local))
-
-(defun distopico:org-after-save-hook ()
-  "Hook for after save in org-mode"
-  (when (eq major-mode 'org-mode)
-    (distopico:org-update-appt)
-    (distopico:org-remove-done-trigger)
-    (distopico:org:remove-empty-propert-drawers)
-    (message (concat "Wrote " (buffer-file-name)))))
-
-(defun distopico:org-before-save-hook ()
-  "Hook for before save in org-mode"
-  (when (eq major-mode 'org-mode)
-    (and buffer-file-name
-         (file-exists-p buffer-file-name)
-         (org-remove-redundant-tags))
-    (org-align-all-tags)
-    (org-update-all-dblocks)))
-
 (org-no-warnings (defvar date))
 (defun org-lunar-phases ()
   "Show lunar phase in Agenda buffer."
@@ -487,7 +437,7 @@ From https://github.com/thisirs/dotemacs/blob/master/init-org.el"
        t nil))))
 
 (defun distopico:org-saveplace ()
-  "Fix a problem with saveplace.el putting you back in a folded position"
+  "Fix a problem with saveplace.el putting you back in a folded position."
   (when (outline-invisible-p)
     (save-excursion
       (outline-previous-visible-heading 1)
@@ -527,7 +477,7 @@ From https://github.com/thisirs/dotemacs/blob/master/init-org.el"
     (org-cycle-show-empty-lines t) ))
 
 (defun distopico:org-insert-subheading (arg)
-  "Insert a new subheading and demote it same to org-insert-subheading
+  "Insert a new subheading `ARG' and demote it same to org-insert-subheading \
 but remove blank lines from level 1.
 Works for outline headings and for plain lists alike."
   (interactive "P")
@@ -545,7 +495,7 @@ Works for outline headings and for plain lists alike."
   (end-of-line))
 
 (defun distopico:org-insert-todo-subheading (arg)
-  "Insert a new subheading with TODO keyword or checkbox and demote it,
+  "Insert a new subheading `ARG' with TODO keyword or checkbox and demote it, \
 same to org-insert-subheading but remove blank lines from level1.
 Works for outline headings and for plain lists alike."
   (interactive "P")
@@ -562,8 +512,20 @@ Works for outline headings and for plain lists alike."
    ((org-at-item-p) (org-indent-item)))
   (end-of-line))
 
+(defun distopico:org-insert-heading-for-next-day ()
+  "Insert a same-level heading for the following day.
+from: http://pages.sachachua.com/.emacs.d/Sacha.html"
+  (interactive)
+  (let ((new-date
+         (seconds-to-time
+          (+ 86400.0
+             (float-time
+              (org-read-date nil 'to-time (elt (org-heading-components) 4)))))))
+    (org-insert-heading-after-current)
+    (insert (format-time-string "%Y-%m-%d\n\n" new-date))))
+
 (defun distopico:org-insert-trigger ()
-  "Automatically insert chain-find-next trigger when entry becomes NEXT with org-depend"
+  "Automatically insert chain-find-next trigger when entry becomes NEXT with org-depend."
   (cond ((equal org-state "NEXT")
          (unless org-depend-doing-chain-find-next
            (org-set-property "TRIGGER" "chain-find-next(NEXT,from-current,priority-up,effort-down)")))
@@ -575,7 +537,7 @@ Works for outline headings and for plain lists alike."
   "*Remove all trigger is done in current file."
   (interactive)
   (unless (eq major-mode 'org-mode)
-    (error "You need to turn on Org mode for this function."))
+    (error "You need to turn on Org mode for this function"))
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward "DONE" nil t)
@@ -586,7 +548,7 @@ Works for outline headings and for plain lists alike."
   "*Remove all empty property drawers in current file."
   (interactive)
   (unless (eq major-mode 'org-mode)
-    (error "You need to turn on Org mode for this function."))
+    (error "You need to turn on Org mode for this function"))
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward ":PROPERTIES:" nil t)
@@ -594,7 +556,7 @@ Works for outline headings and for plain lists alike."
         (org-remove-empty-drawer-at (match-beginning 0))))))
 
 (defun distopico:org-toggle-next-tag ()
-  "Org possibly toggle next tag based on todo kewyord"
+  "Org possibly toggle next tag based on todo kewyord."
   (save-excursion
     (org-back-to-heading)
     (let ((todo-is-next (equal (org-get-todo-state) "NEXT"))
@@ -602,8 +564,7 @@ Works for outline headings and for plain lists alike."
       (if (or (and todo-is-next (not next-in-tags))
               (and (not todo-is-next) next-in-tags))
           (org-toggle-tag "next" 'on)
-        (org-toggle-tag "next" 'off)
-        ))))
+        (org-toggle-tag "next" 'off)))))
 
 (defun distopico:org-add-default-effort ()
   "Add a default effort estimation."
@@ -620,7 +581,8 @@ Works for outline headings and for plain lists alike."
 (run-at-time nil 300 'distopico:org-agenda-redo-in-other-window)
 
 (defun distopico:org-show-agenda (&optional open-same-window)
-  "Switch to the org agenda, or prompt for new one if one does not exist"
+  "Switch to the org agenda, or prompt for new one if one does not exist.
+optional `OPEN-SAME-WINDOW'"
   (interactive "P")
   (let ((agenda-buffer (get-buffer "*Org Agenda*")))
     (if agenda-buffer
@@ -630,10 +592,16 @@ Works for outline headings and for plain lists alike."
       (org-agenda-list))
     (tabbar-local-mode 1)))
 
+(defun distopico:org-show-agenda-appt ()
+  "Update appt and show agenda."
+  (interactive)
+  (distopico:org-update-appt)
+  (distopico:org-show-agenda))
+
 (defun distopico:org-agenda-done (&optional arg)
-  "Mark current TODO as done.
-This changes the line at point, all other lines in the agenda referring to
-the same tree node, and the headline of the tree node in the Org-mode file.
+  "Mark current TODO as done, this change the line at point, \
+all other lines in the agenda referring to the same tree node,
+and the headline of the tree node in the Org-mode file, optional `ARG'.
 from: http://pages.sachachua.com/.emacs.d/Sacha.html"
   (interactive "P")
   (org-agenda-todo "DONE"))
@@ -678,9 +646,8 @@ this with to-do items than with projects or headings."
     (mapc
      (lambda (buf)
        (with-current-buffer buf
-         (org-agenda-redo t)
-         ))
-     (get-buffers-with-major-mode 'org-agenda-mode))) )
+         (org-agenda-redo t)))
+     (get-buffers-with-major-mode 'org-agenda-mode))))
 
 (defun distopico:remove-empty-drawer-on-clock-out ()
   "Delete clocking drawer if it is empty."
@@ -694,8 +661,8 @@ this with to-do items than with projects or headings."
         (org-remove-empty-drawer-at (match-beginning 0))))))
 
 (defun distopico:clock-in-to-next (state) ;
-  "Switch task from TODO to NEXT when clocking in.
-Skips capture tasks and tasks with subtasks"
+  "Switch task from TODO `STATE' to NEXT when clocking in \
+Skips capture tasks and tasks with subtasks."
   (if (and (string-equal state "TODO")
            (not (or (string-equal "*Remember*" (buffer-name))
                     (string-prefix-p "CAPTURE-" (buffer-name)))))
@@ -734,25 +701,13 @@ Skips capture tasks and tasks with subtasks"
        (t (if (org-get-todo-state)
               (org-todo "STARTED")))))))
 
-(defun distopico:org-insert-heading-for-next-day ()
-  "Insert a same-level heading for the following day.
-from: http://pages.sachachua.com/.emacs.d/Sacha.html"
-  (interactive)
-  (let ((new-date
-         (seconds-to-time
-          (+ 86400.0
-             (float-time
-              (org-read-date nil 'to-time (elt (org-heading-components) 4)))))))
-    (org-insert-heading-after-current)
-    (insert (format-time-string "%Y-%m-%d\n" new-date))))
-
 (defun distopico:org-capture-refile-and-jump ()
   (interactive)
   (org-capture-refile)
   (org-refile-goto-last-stored))
 
 (defun distopico:org-tree-to-indirect-buffer-renamed (subname)
-  "Like org-tree-to-indirect-buffer, with the option to give a \"subname\"
+  "Like org-tree-to-indirect-buffer, with the option to give a `SUBNAME' \
 from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
   (interactive "sNew buffer subname?: ")
   (let ((orig-buffer-name (buffer-name (current-buffer))))
@@ -762,7 +717,7 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
         (rename-buffer (format "%s(%s)" orig-buffer-name subname)))))
 
 (defun distopico:org-inherited-no-file-tags ()
-  "preserves the logic of level one groupings."
+  "Preserves the logic of level one groupings."
   (let ((tags (org-entry-get nil "ALLTAGS" 'selective))
         (ltags (org-entry-get nil "TAGS")))
     (mapc (lambda (tag)
@@ -771,45 +726,49 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
           (append org-file-tags (when ltags (split-string ltags ":" t))))
     (if (string= ":" tags) nil tags)))
 
-(defadvice org-archive-subtree (around distopico:org-archive-subtree-low-level activate)
-  "Preserve top level headings when archiving to a file."
-  (let ((tags (distopico:org-inherited-no-file-tags))
-        (org-archive-location
-         (if (save-excursion (org-back-to-heading)
-                             (> (org-outline-level) 1))
-             (concat (car (split-string org-archive-location "::"))
-                     "::* "
-                     (car (org-get-outline-path)))
-           org-archive-location)))
-    ad-do-it
-    (with-current-buffer (find-file-noselect (org-extract-archive-file))
-      (save-excursion
-        (while (org-up-heading-safe))
-        (org-set-tags-to tags)))))
-
-(defun distopico:org-ask-location ()
-  "Ask targget location"
-  (let* ((org-refile-targets '((nil :maxlevel . 9)))
+(defun distopico:org-ask-location (&optional criteria &rest args)
+  "Ask targget location, optional find under `CRITERIA' and other `ARGS'."
+  (unless criteria (setq criteria '((nil :maxlevel . 9))))
+  (let* ((org-refile-targets criteria)
          (hd (condition-case nil
                  (car (org-refile-get-location nil nil t t))
                (error (car org-refile-history)))))
     (goto-char (point-min))
     (outline-next-heading)
+    (unless (derived-mode-p 'org-mode)
+      (error
+       "Target buffer \"%s\" for file+headline should be in Org mode"
+       (current-buffer)))
+    (print hd)
     (if (re-search-forward
          (format org-complex-heading-regexp-format (regexp-quote hd))
          nil t)
         (goto-char (point-at-bol))
       (goto-char (point-max))
       (or (bolp) (insert "\n"))
-      (insert "* " hd "")))
-  (end-of-line))
+      (insert "* " hd "\n")
+      (beginning-of-line 0)))
+  (if (plist-get args :prepend)
+      (progn
+        (end-of-line)
+        (org-end-of-meta-data))
+    (org-end-of-subtree)
+    (insert "\n")))
+
+(defun distopico:org-org-annotations-bookmark ()
+  "Opens the annotations window for the currently selected bookmark file."
+  (interactive)
+  (bookmark-bmenu-other-window)
+  (org-annotate-file))
 
 (defun distopico:org-update-appt ()
+  "Update org appointments."
   (interactive)
   (setq appt-time-msg-list nil)
   (org-agenda-to-appt))
 
 (defun distopico:org-run-appt ()
+  "Run org appointments."
   (interactive)
   (setq appt-time-msg-list nil)
   (org-agenda-to-appt)
@@ -833,7 +792,7 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
    (concat "<" (org-read-date t) ">")))
 
 (defun distopico:org-reset-appts ()
-  "This also reverts all files, but it does update the appt list"
+  "This also reverts all files, but it does update the appt list."
   (interactive)
   (setq appt-time-msg-list nil)
   (cl-flet ((yes-or-no-p (x) t))
@@ -841,7 +800,7 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
   (org-agenda-to-appt))
 
 (defun distopico:open-diary ()
-  "Open diary file with popwin and prevent run diary-fancy-mode"
+  "Open diary file with popwin and prevent run diary-fancy-mode."
   (interactive)
   (if (file-regular-p diary-file)
       (progn
@@ -853,9 +812,124 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
         )
     (message "Diary file no exist")))
 
+(defun distopico:org-init-hook ()
+  ;; Org mime messages to html
+  (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize)
+  ;;(turn-on-visual-line-mode)
+  (distopico:org-saveplace)
+  ;; (distopico:org-before-save-hook)
+  ;; (and buffer-file-name
+  ;;      (file-exists-p buffer-file-name)
+  ;;      (save-buffer))
+  (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
+  (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local))
+
+(defun distopico:org-after-save-hook ()
+  "Hook for after save in `org-mode'."
+  (when (eq major-mode 'org-mode)
+    (distopico:org-update-appt)
+    (distopico:org-remove-done-trigger)
+    (distopico:org:remove-empty-propert-drawers)
+    (message (concat "Wrote " (buffer-file-name)))))
+
+(defun distopico:org-before-save-hook ()
+  "Hook for before save in `org-mode'."
+  (when (eq major-mode 'org-mode)
+    (and buffer-file-name
+         (file-exists-p buffer-file-name)
+         (org-remove-redundant-tags))
+    (org-align-all-tags)
+    (org-update-all-dblocks)))
+
+(defun distopico:org-capture-mode-hook ()
+  "Hook for `org-capture-mode'."
+  (flyspell-mode)
+  ;; Capture to be the only window when used as a popup.
+  (if (equal "emacs-capture" (frame-parameter nil 'name))
+      (delete-other-windows)))
+
+(defun distopico:org-capture-before-finalize-hook ()
+  "Hook for capture before finalized in`org-mode'."
+  (org-align-all-tags))
+
+(defun distopico:org-capture-after-finalize-hook ()
+  "Hook for capture after finalized in`org-mode'."
+  (if (equal "emacs-capture" (frame-parameter nil 'name))
+      (delete-frame))
+  (distopico:org-update-agenda-views))
+
+;; defadvice
+(defadvice org-capture-finalize
+    (after delete-capture-frame activate)
+  "Advise capture-finalize to close the frame."
+  (if (equal "emacs-capture" (frame-parameter nil 'name))
+      (delete-frame)))
+
+(defadvice org-capture-kill
+    (after delete-capture-frame activate)
+  "Advise capture-kill to close the frame."
+  (if (equal "emacs-capture" (frame-parameter nil 'name))
+      (delete-frame)))
+
+(defadvice org-archive-subtree (around distopico:org-archive-subtree-low-level activate)
+  "Preserve top level headings when archiving to a file."
+  (let ((tags (distopico:org-inherited-no-file-tags))
+        (org-archive-location
+         (if (save-excursion (org-back-to-heading)
+                             (> (org-outline-level) 1))
+             (concat (car (split-string org-archive-location "::"))
+                     "::* "
+                     (car (org-get-outline-path)))
+           org-archive-location)))
+    ad-do-it
+    (with-current-buffer (find-file-noselect (org-extract-archive-file))
+      (save-excursion
+        (while (org-up-heading-safe))
+        (org-set-tags-to tags)))))
+
+;; Hooks
+(add-hook 'org-mode-hook 'distopico:org-init-hook)
+
+(with-eval-after-load 'org-capture
+  (add-hook 'org-capture-mode-hook #'distopico:org-capture-mode-hook 'append)
+  (add-hook 'org-capture-before-finalize-hook #'distopico:org-capture-before-finalize-hook 'append)
+  (add-hook 'org-capture-after-finalize-hook #'distopico:org-capture-after-finalize-hook 'append))
+
+(with-eval-after-load 'org-agenda
+  (add-hook 'org-agenda-mode-hook
+            (lambda ()
+              (distopico:org-update-appt)) 'append))
+
+(with-eval-after-load 'org-clock
+  (org-clock-persistence-insinuate)
+  (add-hook 'org-clock-in-hook
+            (lambda ()
+              (pomodoro)
+              (add-hook 'pomodoro-break-finished-hook 'org-clock-in-last)
+              (add-hook 'pomodoro-finished-hook 'org-clock-out)
+              (distopico:org-clock-in-set-state-to-started)) 'append)
+  (add-hook 'org-clock-out-hook
+            (lambda ()
+              (distopico:remove-empty-drawer-on-clock-out)) 'append)
+  (add-hook 'org-clock-cancel-hook
+            (lambda ()
+              (pomodoro-stop)
+              (remove-hook 'pomodoro-break-finished-hook 'org-clock-in-last)
+              (remove-hook 'pomodoro-finished-hook 'org-clock-out)
+              (distopico:remove-empty-drawer-on-clock-out)) 'append))
+
+(add-hook 'org-after-todo-state-change-hook
+          (lambda ()
+            (distopico:org-toggle-next-tag)
+            (distopico:org-insert-trigger)) 'append)
+
+(add-hook 'bookmark-bmenu-mode-hook
+          (lambda ()
+            (local-set-key (kbd "a") 'bookmark-show-org-annotations)))
+
+;;(add-hook 'org-clock-in-prepare-hook 'distopico:org-mode-add-default-effort) I need?
+
 ;; ----------
-
-
 (distopico:org-run-appt) ;; Run Appt
 
 (provide 'conf-org)

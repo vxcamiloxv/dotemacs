@@ -7,7 +7,7 @@
      (add-hook 'org-present-mode-hook
                (lambda ()
                  (org-present-big)
-                 ;;(org-display-inline-images)
+                 (org-display-inline-images)
                  (org-present-hide-cursor)
                  (org-present-read-only)
                  (hide-mode-line)
@@ -16,7 +16,7 @@
      (add-hook 'org-present-mode-quit-hook
                (lambda ()
                  (org-present-small)
-                 ;;(org-remove-inline-images)
+                 (org-remove-inline-images)
                  (org-present-show-cursor)
                  (org-present-read-write)
                  (hide-mode-line)
