@@ -2,7 +2,6 @@
 (require 'anzu)
 
 (global-anzu-mode t)
-(diminish 'anzu-mode)
 
 ;; Faces
 (set-face-attribute 'anzu-mode-line nil

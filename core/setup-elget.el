@@ -18,7 +18,8 @@
  el-get-generate-autoloads t
  el-get-sources
 
- '((:name "popwin"
+ '(;; UI
+   (:name "popwin"
           :description "Popwin Mode"
           :type git
           :url "https://github.com/m2ym/popwin-el.git")
@@ -30,22 +31,11 @@
           :description "Emacs Nav Mode"
           :type git
           :url "https://github.com/ancane/emacs-nav")
-   (:name "python-django"
-          :description "Python Django"
-          :type git
-          :url "https://github.com/fgallina/python-django.el.git")
-   (:name "emacs-for-python"
-          :description "emacs-for-python"
-          :type git
-          :url "https://github.com/gabrielelanaro/emacs-for-python.git")
    (:name "project-explorer"
           :description "Project Explorer"
           :type git
           :url "https://github.com/sabof/project-explorer.git")
-   (:name "dark-theme"
-          :description "Dark theme"
-          :type http
-          :url "https://raw.github.com/suvayu/.emacs.d/master/themes/dark-emacs-theme.el")
+   ;; Utils
    (:name "highlight-sexps"
           :description "Highlight sexps"
           :type http
@@ -58,27 +48,42 @@
           :description "Hide Show Vis"
           :type git
           :url "https://github.com/sheijk/hideshowvis.git")
-   (:name "naquadah-theme"
-          :description "Naquadah theme"
-          :type git
-          :url "https://github.com/suhailshergill/naquadah-theme.git")
    (:name "kivy-mode"
           :description "Kivy highlighting mode"
           :type http
           :url "https://raw.github.com/kivy/kivy/master/kivy/tools/highlight/kivy-mode.el")
-   (:name "org-jira"
-          :description "use Jira in Emacs org-mode"
+   ;; Development
+   (:name "jdee-gradle"
+          :description "Minor mode fro gradle in jdee"
           :type git
-          :branch "restapi"
-          :url "git@github.com:vxcamiloxv/org-jira.git");;"https://github.com/baohaojun/org-jira.git"
-   (:name "org-reveal"
-          :description "reveal.js stuff for orgmode"
+          :url "https://github.com/oldButNotWise/jdee-gradle.git")
+   (:name "gradle"
+          :description "Work in emacs with Gradle build automation tool"
           :type git
-          :url "https://github.com/yjwen/org-reveal.git")
+          :url "https://github.com/vhallac/gradle-el.git")
+   (:name "python-django"
+          :description "Python Django"
+          :type git
+          :url "https://github.com/fgallina/python-django.el.git")
+   (:name "emacs-for-python"
+          :description "emacs-for-python"
+          :type git
+          :url "https://github.com/gabrielelanaro/emacs-for-python.git")
    (:name "git-modes"
           :description "multi git modes"
           :type git
           :url "https://github.com/magit/git-modes.git")
+   ;; Productive
+   (:name "org-jira"
+          :description "use Jira in Emacs org-mode"
+          :type git
+          :branch "restapi"
+          :url "https://github.com/vxcamiloxv/org-jira.git");;"https://github.com/baohaojun/org-jira.git"
+   (:name "org-reveal"
+          :description "reveal.js stuff for orgmode"
+          :type git
+          :url "https://github.com/yjwen/org-reveal.git")
+   ;; Social
    (:name "gnu-social-mode"
           :description "Emacs client for gnu-social"
           :type git
@@ -91,10 +96,19 @@
           :description "jabber.el OTR Plugin"
           :type git
           :url "https://github.com/legoscia/emacs-jabber-otr.git")
+   ;; Themes
    (:name "cyberpunk-theme"
           :description "Cyberpunk theme"
           :type git
-          :url "https://github.com/n3mo/cyberpunk-theme.el.git")))
+          :url "https://github.com/n3mo/cyberpunk-theme.el.git")
+   (:name "dark-theme"
+          :description "Dark theme"
+          :type http
+          :url "https://raw.github.com/suvayu/.emacs.d/master/themes/dark-emacs-theme.el")
+   (:name "naquadah-theme"
+          :description "Naquadah theme"
+          :type git
+          :url "https://github.com/suhailshergill/naquadah-theme.git")))
 
 (setq elget-packages
       (append
