@@ -12,7 +12,6 @@
 
 ;; Core
 (add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
-
 ;; Packages
 (require 'setup-package)
 (require 'setup-elget)
@@ -30,7 +29,6 @@
 
 ;; Load up the general config
 (require 'setup-general)
-(require 'setup-theme)
 (require 'setup-gui)
 (require 'setup-keybindings)
 
@@ -107,6 +105,7 @@
 (require 'conf-yasnippet)
 (require 'conf-magit)
 (require 'conf-css)
+(require 'conf-nxml)
 (require 'conf-web-mode)
 (require 'conf-javascript)
 (require 'conf-java)
