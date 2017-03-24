@@ -354,7 +354,9 @@ store your org-contacts."
 
             (propertize
              unread-string
-             'display img:tron-email
+             'display (if (boundp 'img:tron-email)
+                          img:tron-email
+                        "✉")
              'local-map  (make-mode-line-mouse-map 'mouse-1 #'distopico:mu4e-open)
              'help-echo (format "mu4e :: %s unread messages" unread)))))
   (force-mode-line-update)

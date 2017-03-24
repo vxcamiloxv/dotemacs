@@ -171,7 +171,9 @@
                      (format "[⇑ %s]" unread)))))
             (propertize
              unread-string
-             'display img:tron-feed
+             'display (if (boundp 'img:tron-feed)
+                          img:tron-feed
+                        "⇑")
              'local-map  (make-mode-line-mouse-map 'mouse-1 #'distopico:elfeed-open)
              'help-echo (format "elfeed :: %s unread" unread)
              ))))
