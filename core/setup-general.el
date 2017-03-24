@@ -18,6 +18,8 @@
 
 ;; Network
 (setq nsm-settings-file (in-emacs-d ".cache/network-security.data"))
+(when (boundp 'request-storage-directory)
+  (setq request-storage-directory (in-emacs-d ".cache/request")))
 
 ;; Enable async byte-compile
 (async-bytecomp-package-mode t)
