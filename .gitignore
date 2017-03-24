@@ -64,7 +64,10 @@ el-get/
 /el-get/
 
 ### Allow ###
-!.yas*
+!.yas-parents
+!.yas-setup.el
+!.yas-make-groups
+!.yas-skip
 !/emacs/
 !emacs/
 !parts/

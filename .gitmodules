@@ -1,33 +1,44 @@
 [submodule "themes/emacs-tron-theme"]
 	path = themes/emacs-tron-theme
 	url = https://github.com/ivanmarcin/emacs-tron-theme.git
+	ignore = dirty
 [submodule "themes/solarized-emacs"]
 	path = themes/solarized-emacs
 	url = https://github.com/syl20bnr/solarized-emacs.git
+	ignore = dirty
 [submodule "themes/emacs-color-theme-solarized"]
 	path = themes/emacs-color-theme-solarized
 	url = https://github.com/sellout/emacs-color-theme-solarized.git
+	ignore = dirty
 [submodule "themes/emacs-clues-theme"]
 	path = themes/emacs-clues-theme
 	url = https://github.com/emacsfodder/emacs-clues-theme.git
+	ignore = dirty
 [submodule "themes/emacs-purple-haze-theme"]
 	path = themes/emacs-purple-haze-theme
 	url = https://github.com/emacsfodder/emacs-purple-haze-theme.git
+	ignore = dirty
 [submodule "site-elisp/change-inner"]
 	path = site-elisp/change-inner
 	url = https://github.com/magnars/change-inner.el.git
+	ignore = dirty
 [submodule "snippets/yasnippet-snippets"]
 	path = snippets/yasnippet-snippets
 	url = https://github.com/AndreaCrotti/yasnippet-snippets.git
+	ignore = dirty
 [submodule "snippets/yasmate"]
 	path = snippets/yasmate
 	url = https://github.com/capitaomorte/yasmate.git
+	ignore = dirty
 [submodule "snippets/extend-snippets/text-mode"]
 	path = snippets/extend-snippets/text-mode
 	url = https://github.com/jonatkinson/yasnippet-licenses.git
+	ignore = dirty
 [submodule "snippets/extend-snippets/django-mode"]
 	path = snippets/extend-snippets/django-mode
 	url = https://github.com/jonatkinson/yasnippet-django.git
+	ignore = dirty
 [submodule "themes/emacs-bubbleberry-theme"]
 	path = themes/emacs-bubbleberry-theme
 	url = https://github.com/jasonm23/emacs-bubbleberry-theme.git
+	ignore = dirty
