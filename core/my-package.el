@@ -54,7 +54,6 @@
     iedit
     paredit
     icicles
-    diminish
     column-marker
     god-mode
     gist
@@ -106,6 +105,8 @@
     move-dup
     anaconda-mode
     jdee
+    java-snippets
+    java-imports
     android-mode
     gradle-mode
     groovy-mode
@@ -170,6 +171,7 @@
 
     ;; Gtags
     etags-select
+    ggtags
 
     ;; Dubug
     skewer-mode
