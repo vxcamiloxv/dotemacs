@@ -2,6 +2,7 @@
 (require 'emr)
 (require 'move-dup)
 
+(setq semanticdb-default-save-directory (in-emacs-d ".cache/semanticdb"))
 ;; Load several utils for programming mode
 (add-hook 'prog-mode-hook 'distopico:prog-mode-hook)
 
@@ -9,6 +10,7 @@
 
 ;; Functions
 (defun distopico:local-comment-auto-fill ()
+  "Set comment style."
   (set (make-local-variable 'comment-auto-fill-only-comments) t))
 
 (defun distopico:font-lock-comment-annotations ()
@@ -20,6 +22,7 @@ from: prelude"
           1 font-lock-warning-face t))))
 
 (defun distopico:prog-mode-hook ()
+  "Hook for all modes derivate of `prog-mode'."
   (distopico:local-comment-auto-fill)
   (distopico:font-lock-comment-annotations)
   ;; Emacs refactor
