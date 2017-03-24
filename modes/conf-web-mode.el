@@ -76,8 +76,14 @@
 
 ;; Functions
 (defun distopico:web-mode-hook ()
+  "Hooks for `web-mode'."
   ;; Company-mode
-  (set (make-local-variable 'company-backends) (append company-backends '((company-web-html company-web-jade company-yasnippet company-restclient)))))
+  (add-to-list (make-local-variable 'company-backends)
+               '(company-web-html
+                 company-web-jade company-yasnippet
+                 company-dabbrev company-capf
+                 company-keywords company-restclient
+                 company-dabbrev-code company-gtags company-etags)))
 
 (defun distopico:web-mode-before-auto-complete-hooks ()
   (let ((web-mode-cur-language

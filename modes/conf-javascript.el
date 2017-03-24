@@ -29,6 +29,8 @@
       js2-strict-trailing-comma-warning t
       js2-strict-missing-semi-warning nil
       js2-strict-inconsistent-return-warning nil
+      ;; Other
+      jshint-configuration-path "~/.jshintrc"
       ac-js2-evaluate-calls t)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
@@ -59,13 +61,6 @@
   '(define-key js2-mode-map (kbd "C-c C-b f") 'web-beautify-js))
 
 ;; Functions
-(defun distopico:locate-dominating-file (regexp)
-  "Locate a directory with a file matching REGEXP."
-  (locate-dominating-file
-   default-directory
-   (lambda (directory)
-     (> (length (directory-files directory nil regexp t)) 0))))
-
 (defun distopico:js2-mode-hook ()
   "The js2-mode hook."
   (js2-imenu-extras-mode t)
@@ -78,16 +73,15 @@
   ;; Default checker
   (flycheck-select-checker 'javascript-jshint)
   ;; Add company backend for js
-  (make-local-variable 'company-backends)
-  (setq company-backends
-        '(company-bbdb
-          company-nxml company-css
-          company-semantic company-files
-          (company-dabbrev-code company-gtags company-etags company-keywords company-tern)
-          company-oddmuse company-dabbrev company-capf))
+  (set (make-local-variable 'company-backends)
+       '(company-bbdb
+         company-nxml company-css
+         company-semantic company-files
+         (company-dabbrev-code company-gtags company-etags company-keywords company-tern :with company-yasnippet)
+         (company-dabbrev company-capf company-keywords :with company-yasnippet)))
   ;; Enable checker by project
   (cond
-   ((distopico:locate-dominating-file distopico:eslint-regexp)
+   ((distopico:locate-parent-file distopico:eslint-regexp)
     (flycheck-select-checker 'javascript-eslint))))
 
 ;; Hooks
