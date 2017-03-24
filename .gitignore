@@ -23,6 +23,7 @@ bookmarks
 ac-comphist.dat
 projectile-bookmarks.eld
 projectile.cache
+.yas-compiled-snippets.el
 
 ### Other Dirs
 var/
