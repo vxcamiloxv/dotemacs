@@ -42,3 +42,6 @@
 	path = themes/emacs-bubbleberry-theme
 	url = https://github.com/jasonm23/emacs-bubbleberry-theme.git
 	ignore = dirty
+[submodule "external/jdee-server"]
+	path = external/jdee-server
+	url = https://github.com/jdee-emacs/jdee-server.git
