@@ -45,6 +45,15 @@
       scroll-up-aggressively 0.01
       scroll-down-aggressively 0.01
       scroll-preserve-screen-position 1)
+;; Mouse scrolling
+(mwheel-install)
+
+;; Don't minimize my emacs!
+(when window-system
+  (progn
+    (setq scroll-bar-mode nil)
+    (tool-bar-mode nil)
+    (menu-bar-mode nil)))
 
 ;; Horizontal scroll
 (put 'scroll-left 'disabled nil)
@@ -127,12 +136,18 @@
 ;;-----------------
 (eval-after-load "menu-bar" '(require 'menu-bar+))
 
-;; Highlight escape sequences
-(hes-mode)
+;; Highlight
+(hes-mode) ;; escape sequences
 (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
+(global-hl-line-mode t) ;; line
+
+(when (not window-system)
+  ;;allow you to see the region when in console mode
+  (setq transient-mark-mode t))
 
 ;; Windows
 (setq zoom-window-mode-line-color (face-background 'mode-line))
+(winner-mode 1)
 
 ;; allow "restricted" features
 (put 'set-goal-column 'disabled nil)

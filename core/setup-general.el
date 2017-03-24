@@ -1,18 +1,23 @@
 ;;; Code:
+
+(require 'async)
+(require 'epa-file)
+(require 'undo-tree)
+(require 'nsm)
+
 ;; ------
 ;; Require misc stuff
 ;; ------
-(require 'async)
-(require 'epa-file)
-(require 'ibuffer)
-
 (defvar backup-dir (in-emacs-d ".cache/backup/")
-  "Place backups in `~/.backups/' directory, like a civilized program")
+  "Place backups in `~/.backups/' directory, like a civilized program.")
 (defvar distopico:after-init-load-hook nil
-  "Hook called after the `init.el' load all required dependencies")
+  "Hook called after the `init.el' load all required dependencies.")
 
 ;;Keep cache
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+
+;; Network
+(setq nsm-settings-file (in-emacs-d ".cache/network-security.data"))
 
 ;; Enable async byte-compile
 (async-bytecomp-package-mode t)
@@ -25,7 +30,6 @@
 (setq backup-directory-alist (list (cons ".*" backup-dir)))
 (setq auto-save-list-file-prefix backup-dir)
 ;;(setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
-
 
 (setq backup-by-copying t    ; Don't delink hardlinks
       delete-old-versions t  ; Clean up the backups
@@ -46,26 +50,7 @@
                  (> (- current (float-time (fifth (file-attributes file))))
                     week))
         (message "%s" file)
-        (delete-file file))))
-  )
-
-
-;; ---------
-;; Make debian/ubuntu work nicely with cvs emacs
-;; ---------
-;; (let ((startup-file "/usr/share/emacs/site-lisp/debian-startup.el"))
-;;   (if (and (or (not (fboundp 'debian-startup))
-;;                (not (boundp  'debian-emacs-flavor)))
-;;            (file-readable-p startup-file))
-;;       (progn
-;;         (load-file startup-file)
-;;         (setq debian-emacs-flavor 'emacs22)
-;;         (debian-startup debian-emacs-flavor)
-;;         (mapcar '(lambda (f)
-;;                    (and (not (string= (substring f -3) "/.."))
-;;                         (file-directory-p f)
-;;                         (add-to-list 'load-path f)))
-;;                 (directory-files "/usr/share/emacs/site-lisp" t)))))
+        (delete-file file)))))
 
 ;; ------
 ;; General config BS
@@ -81,28 +66,6 @@
       color-theme-is-global t
       truncate-partial-width-windows nil)
 
-;;Delete trailing space
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Resaltado linea
-(global-hl-line-mode t)
-
-;; Semantic | CEDET
-;;(semantic-mode 1)
-;;(global-semantic-idle-completions-mode t)
-;;(global-semantic-decoration-mode t)
-;;(global-semantic-highlight-func-mode t)
-;;(global-semantic-show-unmatched-syntax-mode t)
-
-;; winner mode
-(winner-mode 1)
-
-;;(set-window-dedicated-p (selected-window) t)
-
-(when (not window-system)
-  ;;allow you to see the region when in console mode
-  (setq transient-mark-mode t))
-
 ;; Shell stuff
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (setq shell-file-name "/bin/bash")
@@ -113,7 +76,7 @@
 (setq tex-dvi-view-command
       (if (eq window-system 'x) "xdvi" "dvi2tty * | cat -s"))
 
-                                        ; tab auto-completion cycling is evil.
+;; tab auto-completion cycling is evil.
 (setq pcomplete-cycle-completions nil)
 
 ;; Make sure that pressing middle mouse button pastes right at point,
@@ -136,7 +99,6 @@
 ;;(setq iswitchb-default-method 'samewindow)
 
 ;; Use diff -u
-
 (setq diff-switches "-u")
 
 
@@ -147,20 +109,97 @@
 ;; (display-time)
 (server-start)
 
-;; Mouse scrolling
-(mwheel-install)
+;; ---------
+;; Load some custom stuff
+;; ---------
 
-;; Don't minimize my emacs! Honestly wtf
-(when window-system
-  (progn
-    (setq scroll-bar-mode nil)
-    (tool-bar-mode nil)
-    (menu-bar-mode nil)))
+;; Swapping buffers!
+(setq distopico:swapping-buffer nil)
+(setq distopico:swapping-window nil)
 
+;;Turn off tool-bar-mode, which is slow
+(call-interactively 'tool-bar-mode)
+
+;; UTF-8 please
+(setq locale-coding-system 'utf-8) ; pretty
+(set-terminal-coding-system 'utf-8) ; pretty
+(set-keyboard-coding-system 'utf-8) ; pretty
+(set-selection-coding-system 'utf-8) ; please
+(prefer-coding-system 'utf-8) ; with sugar on top
+
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+
+;; lock files borking git-annex-assistant autocommits.  Disabling for now.
+;; We can re-enable both of these once .gitignore support comes to git-annex
+(setq create-lockfiles nil)
+;; Similarly with auto-save files :(
+(setq auto-save-default nil)
+
+;; Undo Redo
+(global-undo-tree-mode 1)
+
+;; Allow recursive minibuffers
+(setq enable-recursive-minibuffers t)
+
+;; Show me empty lines after buffer end
+(set-default 'indicate-empty-lines t)
+
+;; Show active region
+(transient-mark-mode 1)
+(make-variable-buffer-local 'transient-mark-mode)
+(put 'transient-mark-mode 'permanent-local t)
+(setq-default transient-mark-mode t)
+
+;; Remove text in active region if inserting text
+(delete-selection-mode 1)
+
+;; Transparently open compressed files
+(auto-compression-mode t)
+
+;; Move files to trash when deleting
+(setq delete-by-moving-to-trash t)
+
+;; Show keystrokes in progress
+(setq echo-keystrokes 0.1)
+
+;; Auto refresh buffers
+(global-auto-revert-mode t)
+
+;; Also auto refresh dired, but be quiet about it
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
+
+;; Don't break lines for me, please
+(setq-default truncate-lines t)
+
+;; ignore byte-compile warnings
+(setq byte-compile-warnings '(not nresolved
+                                  free-vars
+                                  callargs
+                                  redefine
+                                  obsolete
+                                  noruntime
+                                  cl-functions
+                                  interactive-only))
+
+;; Apparently I'm a crufty old timer who likes the way the old mouse
+;; and x11 pasting worked.  This sets it back
+(setq mouse-drag-copy-region nil
+      select-active-regions nil
+      x-select-enable-primary t
+      x-select-enable-clipboard t)
 
 ;; ---------
 ;; Custom funcs
 ;; ---------
+
+(defun shutdown ()
+  "Shutdown Emacs server instance.
+save buffers, Quit, and Shutdown (kill) server"
+  (interactive)
+  (save-some-buffers)
+  (kill-emacs))
 
 (defun other-window-backward (&optional n)
   "Select Nth previous window."
@@ -168,15 +207,13 @@
   (other-window (- (prefix-numeric-value n))))
 
 (defun warn-if-symlink ()
+  "Progn here to execute both as part of else statement together."
   (if (file-symlink-p buffer-file-name)
-                                        ;progn here to execute both as part of else statement together
       (message "File is a symlink")))
-
-(add-hook 'find-file-hooks 'warn-if-symlink)
 
 ;; Highlight previous (or current?) line
 (defun distopico:pg-uline (ulinechar)
-  "Underline the current or the previous line with ULINECHAR"
+  "Underline the current or the previous line with ULINECHAR."
   (interactive "cUnderline with:")
   (if (looking-at "^$")
       (next-line -1))
@@ -188,37 +225,33 @@
       (insert ulinechar)))
   (insert "\n"))
 
-;; Swapping buffers!  Can't live without this
-
-(setq cwebber/swapping-buffer nil)
-(setq cwebber/swapping-window nil)
-
-(defun cwebber/swap-buffers-in-windows ()
-  "Swap buffers between two windows"
+(defun distopico:swap-buffers-in-windows ()
+  "Swap buffers between two windows.
+From Cwebber config"
   (interactive)
-  (if (and cwebber/swapping-window
-           cwebber/swapping-buffer)
+  (if (and distopico:swapping-window
+           distopico:swapping-buffer)
       (let ((this-buffer (current-buffer))
             (this-window (selected-window)))
-        (if (and (window-live-p cwebber/swapping-window)
-                 (buffer-live-p cwebber/swapping-buffer))
-            (progn (switch-to-buffer cwebber/swapping-buffer)
-                   (select-window cwebber/swapping-window)
+        (if (and (window-live-p distopico:swapping-window)
+                 (buffer-live-p distopico:swapping-buffer))
+            (progn (switch-to-buffer distopico:swapping-buffer)
+                   (select-window distopico:swapping-window)
                    (switch-to-buffer this-buffer)
                    (select-window this-window)
                    (message "Swapped buffers."))
           (message "Old buffer/window killed.  Aborting."))
-        (setq cwebber/swapping-buffer nil)
-        (setq cwebber/swapping-window nil))
+        (setq distopico:swapping-buffer nil)
+        (setq distopico:swapping-window nil))
     (progn
-      (setq cwebber/swapping-buffer (current-buffer))
-      (setq cwebber/swapping-window (selected-window))
+      (setq distopico:swapping-buffer (current-buffer))
+      (setq distopico:swapping-window (selected-window))
       (message "Buffer and window marked for swapping."))))
 
 
 ;; other stuff
 (defun add-spaces-to-region (beginning end numspaces)
-  "Add spaces to a whole region of text"
+  "Add spaces to a whole region of text between BEGINNING and END depending of NUMSPACES."
   (interactive "r\nnNumber of spaces: ")
   (save-excursion
     (goto-char beginning)
@@ -282,102 +315,16 @@
 
 ;; En1arg3 y0ur w1|\|dow!!!
 (defun undo-or-shrink-horizontally ()
-  "Either undo or shrink horizontally, depending on whether we're
-in X or in a terminal"
+  "Either undo or shrink horizontally.
+depending on whether we're in X or in a terminal."
   (interactive)
   (if (window-system)
       (shrink-window-horizontally)
     (undo)))
 
-;; Apparently I'm a crufty old timer who likes the way the old mouse
-;; and x11 pasting worked.  This sets it back
-(setq mouse-drag-copy-region nil
-      select-active-regions nil
-      x-select-enable-primary t
-      x-select-enable-clipboard t)
-
-;; ---------
-;; Load some custom stuff
-;; ---------
-
-;;Turn off tool-bar-mode, which is slow
-(call-interactively 'tool-bar-mode)
-
-;; UTF-8 please
-(setq locale-coding-system 'utf-8) ; pretty
-(set-terminal-coding-system 'utf-8) ; pretty
-(set-keyboard-coding-system 'utf-8) ; pretty
-(set-selection-coding-system 'utf-8) ; please
-(prefer-coding-system 'utf-8) ; with sugar on top
-
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-
-
-                                        ; lock files borking git-annex-assistant autocommits.  Disabling for now.
-;; We can re-enable both of these once .gitignore support comes to git-annex
-(setq create-lockfiles nil)
-                                        ; Similarly with auto-save files :(
-(setq auto-save-default nil)
-
-;; Undo Redo
-;;(load-file "~/.emacs.d/modes/undo-tree.el")
-(require 'undo-tree)
-(global-undo-tree-mode 1)
-
-;; Shutdown Server
-;; define function to shutdown emacs server instance
-(defun shutdown ()
-  "Save buffers, Quit, and Shutdown (kill) server"
-  (interactive)
-  (save-some-buffers)
-  (kill-emacs)
-  )
-
-;; Allow recursive minibuffers
-(setq enable-recursive-minibuffers t)
-
-;; Show me empty lines after buffer end
-(set-default 'indicate-empty-lines t)
-
-;; Show active region
-(transient-mark-mode 1)
-(make-variable-buffer-local 'transient-mark-mode)
-(put 'transient-mark-mode 'permanent-local t)
-(setq-default transient-mark-mode t)
-
-;; Remove text in active region if inserting text
-(delete-selection-mode 1)
-
-;; Transparently open compressed files
-(auto-compression-mode t)
-
-;; Move files to trash when deleting
-(setq delete-by-moving-to-trash t)
-
-;; Show keystrokes in progress
-(setq echo-keystrokes 0.1)
-
-;; Auto refresh buffers
-(global-auto-revert-mode t)
-
-;; Also auto refresh dired, but be quiet about it
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
-
-;; Don't break lines for me, please
-(setq-default truncate-lines t)
-
-;; Auto copile file
+;; Hooks
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'find-file-hooks 'warn-if-symlink)
 (add-hook 'emacs-lisp-mode-hook 'byte-compile-when-save)
-
-;; ignore byte-compile warnings
-(setq byte-compile-warnings '(not nresolved
-                                  free-vars
-                                  callargs
-                                  redefine
-                                  obsolete
-                                  noruntime
-                                  cl-functions
-                                  interactive-only))
 
 (provide 'setup-general)

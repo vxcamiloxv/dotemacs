@@ -19,7 +19,8 @@
       company-dabbrev-ignore-case nil
       company-selection-wrap-around t
       company-tooltip-align-annotations t
-      company-statistics-file (in-emacs-d ".cache/company-statistics-cache.el"))
+      company-statistics-file (in-emacs-d ".cache/company-statistics-cache.el")
+      abbrev-file-name (in-emacs-d ".cache/abbrev_defs"))
 
 (add-to-list 'company-transformers
              'company-sort-by-occurrence 'append)

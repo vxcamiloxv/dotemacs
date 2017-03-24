@@ -1,3 +1,4 @@
+;;; Code:
 ;;; Color theme setup, with cycling
 ;;; -----
 
@@ -97,38 +98,38 @@ isn't."
   (interactive)
   (funcall (car theme-current)))
 
-(defun cwebber/load-primary-theme (&optional frame)
+(defun distopico:load-primary-theme (&optional frame)
   (interactive)
   (when window-system
     (if frame
         (select-frame frame))
-    ; guess I shouldn't tack this in here, but meh...
+                                        ; guess I shouldn't tack this in here, but meh...
     (set-default-font "mono-9")
     (funcall (car my-color-themes))))
 
 (setq theme-current my-color-themes)
 
-;(my-theme-set-default)
-;(global-set-key [f12] 'my-theme-cycle)
-;(global-set-key [f11] 'my-refresh-current-theme)
+                                        ;(my-theme-set-default)
+                                        ;(global-set-key [f12] 'my-theme-cycle)
+                                        ;(global-set-key [f11] 'my-refresh-current-theme)
 
-;(add-hook 'after-make-frame-functions 'cwebber/load-primary-theme)
-;; (remove-hook 'after-make-frame-functions 'cwebber/load-primary-theme)
+                                        ;(add-hook 'after-make-frame-functions 'distopico:load-primary-theme)
+;; (remove-hook 'after-make-frame-functions 'distopico:load-primary-theme)
 
 ;; (defadvice make-frame (after possibly-load-color-theme)
 ;;   "Load the color theme if we are in x, but not if in a terminal"
 ;;   (message "Hello thar")
 ;;   (message ad-return-value)
-;;   (cwebber/load-primary-theme))
+;;   (distopico:load-primary-theme))
 
 ;; (ad-activate 'make-frame)
 
 ;;;; And now, set faces
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(column-marker-1-face ((t (:background "red" :foreground "black")))))
 
 (load-file "~/.emacs.d/themes/naquadah-theme.el")
@@ -141,7 +142,7 @@ isn't."
 (load-file "~/.emacs.d/themes/dark-emacs-theme.el")
 (require 'dark-emacs-theme)
 
-(defun cwebber/fix-font-size (&optional frame)
+(defun distopico:fix-font-size (&optional frame)
   (interactive)
   (when window-system
     (if frame
@@ -154,4 +155,4 @@ isn't."
        "magenta" "cyan" "white"])
 (setq ansi-color-map (ansi-color-make-color-map))
 
-(add-hook 'after-make-frame-functions 'cwebber/fix-font-size)
+(add-hook 'after-make-frame-functions 'distopico:fix-font-size)
