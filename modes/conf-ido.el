@@ -33,6 +33,14 @@
       ido-save-directory-list-file (in-emacs-d ".cache/ido.last")
       ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".js" ".conf") )
 
+;; Disable ido-ubiquitous with incomaptible commands
+;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/11
+(dolist (command-data
+         '((disable exact "describe-function")
+           ;; (disable exact "describe-variable")
+           ))
+  (add-to-list 'ido-ubiquitous-command-overrides command-data))
+
 ;; Functions
 (defun ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido optional `SYMBOL-LIST'."
