@@ -31,6 +31,12 @@
 (global-set-key (kbd "C-c r m") 'mc/mark-more-like-this-extended)
 (global-set-key (kbd "C-c r r") 'mc/mark-all-in-region)
 
+;; Juggle around with the current cursors
+(global-set-key (kbd "C-c r u") 'mc/unmark-next-like-this)
+(global-set-key (kbd "C-c r U") 'mc/unmark-previous-like-this)
+(global-set-key (kbd "C-c r j") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-c r J") 'mc/skip-to-previous-like-this)
+
 ;; Symbol and word specific mark-more
 (global-set-key (kbd "s->") 'mc/mark-next-word-like-this)
 (global-set-key (kbd "s-<") 'mc/mark-previous-word-like-this)
