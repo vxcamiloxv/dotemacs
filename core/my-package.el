@@ -47,6 +47,7 @@
     dired-ranger
     dired-narrow
     dired-sort
+    dired-imenu
 
     ;; Ui
     hlinum

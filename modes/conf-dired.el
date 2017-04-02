@@ -10,6 +10,7 @@
 (require 'dired-narrow)
 (require 'dired-sort)
 (require 'single-dired)
+(require 'dired-imenu)
 
 ;; Autoload
 (autoload 'dired-async-mode "dired-async.el" nil t)
@@ -57,7 +58,8 @@
 (define-key dired-mode-map (kbd "C-<right>") 'dired-subtree-insert)
 (define-key dired-mode-map (kbd "C-<left>") 'dired-subtree-remove)
 (define-key dired-mode-map [mouse-3] 'dired-maybe-insert-subdir)
-(define-key dired-mode-map (kbd "C-{") 'dired-narrow-window)
+(define-key dired-mode-map (kbd "C-{") 'distopico:dired-narrow-window)
+(define-key dired-mode-map "e" 'distopico:dired-ediff-files)
 (define-key dired-mode-map
   (vector 'remap 'end-of-buffer) 'distopico:dired-jump-to-bottom)
 (define-key dired-mode-map
@@ -69,7 +71,7 @@
 (define-key image-dired-thumbnail-mode-map "x" 'image-diredx-flagged-delete)
 
 ;; Functions
-(defun dired-narrow-window ()
+(defun distopico:dired-narrow-window ()
   "Make the current dired mode window 30 chars wide."
   (interactive)
   (adjust-window-trailing-edge (selected-window) (- 30 (window-width)) t))
@@ -122,6 +124,29 @@
   (if (not (dired-move-to-filename))
       (dired-next-line 1)))
 
+(defun distopico:dired-ediff-files ()
+  "Ediff two marked files.
+from: https://oremacs.com/."
+  (interactive)
+  (let ((files (dired-get-marked-files))
+        (wnd (current-window-configuration)))
+    (if (<= (length files) 2)
+        (let ((file1 (car files))
+              (file2 (if (cdr files)
+                         (cadr files)
+                       (read-file-name
+                        "file: "
+                        (dired-dwim-target-directory)))))
+          (if (file-newer-than-file-p file1 file2)
+              (ediff-files file2 file1)
+            (ediff-files file1 file2))
+          (add-hook 'ediff-after-quit-hook-internal
+                    (lambda ()
+                      (setq ediff-after-quit-hook-internal nil)
+                      (set-window-configuration wnd))))
+      (error "No more than 2 files should be marked"))))
+
+;; Modified behavior
 (defadvice dired-insert-directory
     (before my-dired-insert-directory
             (dir switches &optional file-list wildcard hdr))
