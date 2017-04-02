@@ -325,7 +325,7 @@ depending on whether we're in X or in a terminal."
     (undo)))
 
 ;; Hooks
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'find-file-hooks 'warn-if-symlink)
 (add-hook 'emacs-lisp-mode-hook 'byte-compile-when-save)
 

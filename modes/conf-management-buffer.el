@@ -15,7 +15,6 @@ might be bad."
   (if (not (or (string= major-mode 'makefile-gmake-mode)
                (string= major-mode 'makefile-mode)))
       (untabify (point-min) (point-max)))
-  (delete-trailing-whitespace)
   (set-buffer-file-coding-system 'utf-8))
 
 (defun distopico:cleanup-buffer ()

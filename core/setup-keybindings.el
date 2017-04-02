@@ -1,5 +1,11 @@
-;;; Code:
+;;; setup-keybindings.el --- Global keybindings.
+;;
+;;; Commentary:
+;;  List of global keybindings by major-mode.
+
 (require 'region-bindings-mode)
+
+;;; Code:
 
 ;; Some bindings in active regions
 (region-bindings-mode-enable)
@@ -7,82 +13,6 @@
 ;; ---------
 ;; Generic keybindings
 ;; ---------
-
-;; (global-set-key (kbd "C-c g d") 'find-dired)
-;; (global-set-key (kbd "C-c d") 'diff-buffer-with-file)
-
-;; ;; Horizontal scrollb
-;; ;; (global-set-key (kbd "<mouse-6>") 'scroll-right)
-;; ;; (global-set-key (kbd "<mouse-7>") 'scroll-left)
-
-;; ;; Basics
-;; (global-set-key (kbd "M-v") 'browse-kill-ring)
-;; (global-set-key [mouse-2] 'clipboard-kill-ring-save)
-;; (global-set-key [mouse-2] 'mouse-yank-at-click)
-
-;; (global-set-key [next] 'gcm-scroll-down)
-;; (global-set-key [prior]  'gcm-scroll-up)
-
-;; ;; Djang
-;; (global-set-key (kbd "C-x p d") 'python-django-open-project)
-
-;; ;; Indentation
-;; (global-set-key (kbd "C-c C->") 'increase-left-margin)
-;; (global-set-key (kbd "C-c C-<") 'decrease-left-margin)
-
-;; ;; Browse URLs with C-x /
-;; (global-set-key (kbd "C-x /") 'browse-url)
-
-;; sort lines
-;; (global-set-key (kbd "C-c C-s") 'sort-lines)
-
-;; ;; window opacity utilities
-
-;; ;; C-+ will increase opacity (== decrease transparency)
-;; (global-set-key (kbd "C-<kp-add>")
-;;                 '(lambda()
-;;                    (interactive)
-;;                    (sa-opacity-modify)))
-
-;; ;; C-- will decrease opaccity (== increase transparency
-;; (global-set-key (kbd "C-<kp-subtract>")
-;;                 '(lambda()
-;;                    (interactive)
-;;                    (sa-opacity-modify t)))
-
-;; ;; C-0 will returns the state to normal
-;; (global-set-key (kbd "C-=")
-;;                 '(lambda()
-;;                    (interactive)
-;;                    (modify-frame-parameters nil `((alpha . 100)))))
-
-
-;; ;;Skewer
-;; (global-set-key (kbd "M-<f12>") 'run-skewer)
-;; (global-set-key (kbd "M-<f11>") 'skewer-start)
-;; (global-set-key (kbd "M-<f10>") 'skewer-demo)
-
-;; ;;YaSnippet
-;; ;;(define-key yas-minor-mode-map (kbd "<tab>") nil)
-;; ;;(define-key yas-minor-mode-map (kbd "TAB") nil)
-;; ;;(define-key yas-minor-mode-map (kbd "M-q") 'yas-expand)
-;; ;;(define-key yas-minor-mode-map (kbd "M-ñ") 'yas-ido-expand)
-
-;; ;; Hippie
-;; (define-key global-map (kbd "M-#") 'hippie-expand)
-
-;; ;; Highlight
-;; (global-set-key (kbd "C-c C-o") 'highlight-symbol-occur)
-;; (global-set-key (kbd "C-c M-<right>") 'highlight-symbol-next-in-defun)
-;; (global-set-key (kbd "C-c M-<left>") 'highlight-symbol-prev-in-defun)
-;; (global-set-key (kbd "s-<f1>") 'distopico:highlight-symbol-toggle)
-;; (global-set-key (kbd "s-<f2>") 'highlight-symbol-at-point)
-;; (global-set-key (kbd "s-<f3>") 'highlight-symbol-prev)
-;; (global-set-key (kbd "s-<f4>") 'highlight-symbol-next)
-;; (global-set-key (kbd "s-<f5>") 'highlight-symbol-query-replace)
-;; (global-set-key (kbd "s-<f6>") 'unhighlight-regexp)
-;; (global-set-key (kbd "s-<f7>") 'highlight-indentation-current-column-mode)
-;; (global-set-key (kbd "s-<f8>") 'highlight-indentation-mode)
 
 ;; Basic
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
@@ -153,9 +83,7 @@
 (global-set-key (kbd "<M-mouse-5>") 'text-scale-increase)
 (global-set-key (kbd "<M-mouse-4>") 'text-scale-decrease)
 (global-set-key (kbd "<C-M-mouse-1>") 'text-scale-adjust)
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C-*") 'text-scale-decrease)
-(global-set-key (kbd "C-=") 'text-scale-adjust)
+(global-set-key (kbd "<C-M-mouse-3>") (λ (text-scale-decrease 0)))
 
 ;; PopWin
 (global-set-key (kbd "C-<escape>") 'popwin:close-popup-window)
@@ -200,7 +128,7 @@
 ;; Perform general cleanup
 (global-set-key (kbd "C-c n") 'cleanup-buffer)
 (global-set-key (kbd "C-c C-n") 'distopico:cleanup-buffer)
-(global-set-key (kbd "C-c C-b") 'delete-blank-lines)
+(global-set-key (kbd "C-c C-w") 'delete-trailing-whitespace)
 
 ;; Recent Files
 (global-set-key (kbd "C-x r <down>") 'ido-recentf-open)
@@ -344,5 +272,6 @@
     (define-key map "jj" 'org-jira-todo-to-jira)
     map))
 
-
 (provide 'setup-keybindings)
+
+;;; setup-keybindings.el ends here
