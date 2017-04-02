@@ -11,6 +11,6 @@
                '(company-nxml company-dabbrev :with company-yasnippet)))
 
 ;; Hooks
-(add-hook 'nxml-mode-hook 'distopico:nxml-mode-hook)
+(add-hook 'nxml-mode-hook #'distopico:nxml-mode-hook)
 
 (provide 'conf-nxml)
