@@ -4,7 +4,7 @@
 
 ;; Author: Tom Willemsen <tom@ryuslash.org>
 ;; Created: Wed Jan 4 2012
-;; Version: 12
+;; Version: 15
 ;; Keywords: faces
 ;; URL: http://ryuslash.org/projects/tron-theme.html
 ;; Modified by Distopico Vegan <distopico@riseup.net>
@@ -63,6 +63,9 @@
 ;;    - Add local variables, enable `rainbow-mode'.
 ;; 12 - Remove quotes from :inherit properties.
 ;;    - Explicitly set colors for `fringe'.
+;; 13 - Add `tabbar-mode' faces
+;; 14 - Fix faces fro `gnusocial-mode' and `company-mode'
+;; 15 - Add `ediff-mode' faces
 
 ;;; Code:
 
@@ -299,6 +302,19 @@
  '(gnu-social-username-face ((t (:underline t :foreground "cyan" :weight bold))))
  '(gnu-social-uri-face ((t (:underline t :weight bold))))
 
+ ;; Ediff
+ '(ediff-fine-diff-A ((t (:background "#FF6600"))))
+ '(ediff-fine-diff-B ((t (:background "#00815b"))))
+ '(ediff-fine-diff-C ((t (:background "#e0c625"))))
+
+ '(ediff-current-diff-C ((t (:background "#00629D"))))
+
+ '(ediff-even-diff-A ((t (:background "#002125" :foreground "#fdf6e3" ))))
+ '(ediff-odd-diff-A ((t (:background "#002125" :foreground "cyan" ))))
+ '(ediff-even-diff-B ((t (:background "#002125" :foreground "cyan" ))))
+ '(ediff-odd-diff-B ((t (:background "#002125" :foreground "cyan" ))))
+ '(ediff-even-diff-C ((t (:background "#002125"  :foreground "#839496" ))))
+ '(ediff-odd-diff-C ((t (:background "#002125" :foreground "cyan" ))))
  ;; Secondary region
  '(secondary-selection ((((class color) (min-colors 88) (background dark)) (:background "#029cdc" :foreground "#011d2c"))))
  )
