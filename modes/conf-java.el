@@ -27,7 +27,15 @@
    ((distopico:locate-parent-file distopico:androidmanifest-regexp)
     (android-mode t))))
 
+(defun distopico:nxml-mode-hook ()
+  "Hooks for  `nxml-mode'."
+  ;; Active android-mode if match manifiest
+  (cond
+   ((distopico:locate-parent-file distopico:androidmanifest-regexp)
+    (android-mode t))))
+
 ;; Hooks
 (add-hook 'java-mode-hook #'distopico:java-mode-hook)
+(add-hook 'nxml-mode-hook 'distopico:nxml-mode-hook)
 
 (provide 'conf-java)
