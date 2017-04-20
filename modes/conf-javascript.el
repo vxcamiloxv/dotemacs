@@ -30,13 +30,15 @@
       js2-strict-missing-semi-warning nil
       js2-strict-inconsistent-return-warning nil
       ;; Other
-      jshint-configuration-path "~/.jshintrc"
       ac-js2-evaluate-calls t)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'magic-mode-alist '(".+node" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("javascript" . js2-mode))
+;; jsx
+(add-to-list 'interpreter-mode-alist '("react" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . rjsx-mode))
 
 (custom-set-faces
  '(js2-highlight-vars-face ((t (:background "royal blue" :foreground "white")))))
@@ -70,6 +72,8 @@
   (ac-js2-mode t)
   (js2-refactor-mode t)
   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
+  ;; Add node_modules to exec path
+  (distopico:add-node-modules-path)
   ;; Default checker
   (flycheck-select-checker 'javascript-jshint)
   ;; Add company backend for js
@@ -82,7 +86,36 @@
   ;; Enable checker by project
   (cond
    ((distopico:locate-parent-file distopico:eslint-regexp)
-    (flycheck-select-checker 'javascript-eslint))))
+    (flycheck-select-checker 'javascript-eslint)))
+  )
+
+(defun distopico:lint-from-node-modules ()
+  "Set executable lint by project node_modules."
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js" root)))
+         (jshint (and root
+                      (expand-file-name "node_modules/jshint/bin/jshint" root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))
+    (when (and jshint (file-executable-p eslint))
+      (setq-local flycheck-javascript-jshint-executable jshint))))
+
+(defun distopico:add-node-modules-path ()
+  "Add `node_modules' in current project to exec path.
+From: https://github.com/codesuki/add-node-modules-path"
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (path (and root
+                    (expand-file-name "node_modules/.bin/" root))))
+    (when root
+      (progn
+        (make-local-variable 'exec-path)
+        (add-to-list 'exec-path path)
+        (message "added node_modules to exec-path")))))
 
 ;; Hooks
 (add-hook 'js2-mode-hook #'distopico:js2-mode-hook)

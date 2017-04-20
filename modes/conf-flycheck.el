@@ -1,17 +1,19 @@
 ;;; Code:
 (require 'flycheck-color-mode-line)
 
-(add-hook 'after-init-hook #'global-flycheck-mode)
 (eval-after-load "flycheck"
   '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
 
-(setq flycheck-check-syntax-automatically '(mode-enabled save))
+;; Config
+(setq flycheck-check-syntax-automatically '(mode-enabled save)
+      flycheck-highlighting-mode 'symbols
+      flycheck-indication-mode 'right-fringe)
 
-(custom-set-variables
- '(flycheck-highlighting-mode 'symbols)
- '(flycheck-indication-mode 'right-fringe) )
-
+;; Faces
 (set-face-attribute 'flycheck-error nil :underline '(:style wave :color "#6D0900"))
 (set-face-attribute 'flycheck-color-mode-line-error-face '(:inherit flycheck-fringe-error :foreground "red" :weight normal))
+
+;; hooks
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 (provide 'conf-flycheck)

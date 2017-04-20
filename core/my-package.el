@@ -118,8 +118,9 @@
     emmet-mode
     js2-mode
     js2-refactor
-    xref-js2
+    rjsx-mode
     js-doc
+    xref-js2
     json-mode
     css-eldoc
     less-css-mode
