@@ -24,9 +24,9 @@
 
 ;; Auto install
 (defun distopico-packages-installed-p ()
-  (loop for pkg in distopico-packages
-        when (not (package-installed-p pkg)) do (return nil)
-        finally (return t)))
+  (cl-loop for pkg in distopico-packages
+        when (not (package-installed-p pkg)) do (cl-return nil)
+        finally (cl-return t)))
 
 (defun distopico:available-package-p (pkg)
   "Return t if NAME is an available package."
