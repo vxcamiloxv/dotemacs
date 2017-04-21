@@ -124,6 +124,8 @@
     json-mode
     css-eldoc
     less-css-mode
+    jade-mode
+    pug-mode ;; Tets what is better
     markdown-mode
     web-beautify
     smart-forward

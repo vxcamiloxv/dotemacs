@@ -5,6 +5,17 @@
 (require 'company-web-jade)
 (require 'web-beautify)
 
+;; Control
+(defcustom distopico:web-company-backends
+  '(company-yasnippet
+    company-dabbrev company-capf
+    company-keywords company-restclient
+    company-dabbrev-code company-gtags company-etags)
+  "General `company-mode' backends for diferents web modes."
+  :type 'list
+  :group 'distopico)
+
+
 ;; Baisc
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.inc\\'" . web-mode))
@@ -78,12 +89,16 @@
 (defun distopico:web-mode-hook ()
   "Hooks for `web-mode'."
   ;; Company-mode
-  (add-to-list (make-local-variable 'company-backends)
-               '(company-web-html
-                 company-web-jade company-yasnippet
-                 company-dabbrev company-capf
-                 company-keywords company-restclient
-                 company-dabbrev-code company-gtags company-etags)))
+  (add-to-list (make-local-variable 'distopico:web-company-backends) 'company-web-html)
+  (add-to-list (make-local-variable 'company-backends) distopico:web-company-backends))
+
+
+(defun distopico:pug-mode-hook ()
+  "Hooks for `pug-mode'."
+  (aggressive-indent-mode -1)
+  ;; Company-mode
+  (add-to-list (make-local-variable 'distopico:web-company-backends) 'company-web-jade)
+  (add-to-list (make-local-variable 'company-backends) distopico:web-company-backends))
 
 (defun distopico:web-mode-before-auto-complete-hooks ()
   (let ((web-mode-cur-language
@@ -98,5 +113,6 @@
 ;; Hooks
 (add-hook 'web-mode-hook 'distopico:web-mode-hook)
 (add-hook 'web-mode-before-auto-complete-hooks 'distopico:web-mode-before-auto-complete-hooks)
+(add-hook 'pug-mode-hook 'distopico:pug-mode-hook)
 
 (provide 'conf-web-mode)
