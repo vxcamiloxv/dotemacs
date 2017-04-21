@@ -1,25 +1,19 @@
 ;;; Code:
-(require 'aggressive-indent)
 
 ;; Native emacs pair
-(electric-pair-mode 1)
+(electric-pair-mode t)
 
-;; Auto indent
-(global-aggressive-indent-mode 1)
-;; Exclude some
-(dolist (source '(diary-mode css-mode less-css-mode))
-  (add-to-list 'aggressive-indent-excluded-modes source t))
-
+;; Custom keys
 (global-set-key [home] 'distopico:smart-beginning-of-line)
 (global-set-key (kbd "C-a") 'distopico:smart-beginning-of-line)
 
 ;; Functions
 (defun distopico:set-newline-and-indent ()
-  "Return and indent on prog-mode variants"
+  "Return and indent on `prog-mode' variants."
   (local-set-key [(return)] 'newline-and-indent))
 
 (defun distopico:smart-beginning-of-line ()
-  "Move point to first non-whitespace character or beginning-of-line.
+  "Move point to first non-whitespace character or `beginning-of-line'.
 
 Move point to the first non-whitespace character on this line.
 If point was already at that position, move point to beginning of line."
