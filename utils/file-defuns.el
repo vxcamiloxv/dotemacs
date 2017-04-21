@@ -22,7 +22,6 @@
   (locate-dominating-file
    default-directory
    (lambda (directory)
-     (message directory)
      (> (length (directory-files directory nil regexp t)) 0))))
 
 (defun distopico:rename-current-buffer-file ()

@@ -85,7 +85,9 @@
    ((distopico:locate-parent-file distopico:eslint-regexp)
     (flycheck-select-checker 'javascript-eslint))))
 
+;;;###autoload
 (defun distopico:lint-from-node-modules ()
+  (interactive)
   "Set executable lint by project node_modules."
   (let* ((root (locate-dominating-file
                 (or (buffer-file-name) default-directory)
@@ -99,7 +101,9 @@
     (when (and jshint (file-executable-p eslint))
       (setq-local flycheck-javascript-jshint-executable jshint))))
 
+;;;###autoload
 (defun distopico:add-node-modules-path ()
+  (interactive)
   "Add `node_modules' in current project to exec path.
 From: https://github.com/codesuki/add-node-modules-path"
   (let* ((root (locate-dominating-file
