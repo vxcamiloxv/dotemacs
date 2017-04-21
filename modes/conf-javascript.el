@@ -36,9 +36,6 @@
 (add-to-list 'magic-mode-alist '(".+node" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("javascript" . js2-mode))
-;; jsx
-(add-to-list 'interpreter-mode-alist '("react" . rjsx-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx$" . rjsx-mode))
 
 (custom-set-faces
  '(js2-highlight-vars-face ((t (:background "royal blue" :foreground "white")))))
@@ -86,8 +83,7 @@
   ;; Enable checker by project
   (cond
    ((distopico:locate-parent-file distopico:eslint-regexp)
-    (flycheck-select-checker 'javascript-eslint)))
-  )
+    (flycheck-select-checker 'javascript-eslint))))
 
 (defun distopico:lint-from-node-modules ()
   "Set executable lint by project node_modules."

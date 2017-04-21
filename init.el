@@ -108,6 +108,7 @@
 (require 'conf-nxml)
 (require 'conf-web-mode)
 (require 'conf-javascript)
+(require 'conf-jsx)
 (require 'conf-java)
 (require 'conf-python)
 (require 'conf-emmet)
