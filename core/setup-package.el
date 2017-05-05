@@ -12,8 +12,10 @@
 (require 'package)
 (require 'my-package)
 
+(setq nsm-settings-file (expand-file-name ".cache/network-security.data" user-emacs-directory))
+
 (dolist (source '(("gnu"       . "https://elpa.gnu.org/packages/")
-                  ("marmalade" . "https://marmalade-repo.org/packages/")
+                  ("marmalade" . "http://marmalade-repo.org/packages/")
                   ("melpa"     . "https://melpa.org/packages/")
                   ("org"       . "http://orgmode.org/elpa/")))
   (add-to-list 'package-archives source t))
