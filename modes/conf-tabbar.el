@@ -81,10 +81,10 @@ Return a list of one element based on major mode."
     ((memq major-mode
            '(dired-mode direx:direx-mode))
      "Dired")
-    ((memq major-mode '(python-mode php-mode emacs-lisp-mode sh-mode makefile-gmake-mode perl-mode c-mode c++-mode django-mode python-django javascript-mode js3-mode js-mode js2-mode js2-refactor java-mode))
+    ((memq major-mode '(python-mode php-mode emacs-lisp-mode sh-mode makefile-gmake-mode perl-mode c-mode c++-mode django-mode python-django javascript-mode js3-mode js-mode js2-mode js2-refactor java-mode web-jsx-mode rjsx-mode))
      "Programming"
      )
-    ((memq major-mode '(nxhtml-mode web-mode json-mode emmet-mode less-css-mode css-mode restclient-mode))
+    ((memq major-mode '(nxhtml-mode web-mode json-mode emmet-mode less-css-mode scss-mode css-mode restclient-mode))
      "Web")
     ((memq major-mode
            '(mu4e-view-mode mu4e-main-mode mu4e-headers-mode mu4e-view-raw-mode mu4e-compose-mode message-mode mail-mode))
