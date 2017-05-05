@@ -28,7 +28,9 @@
 
 ;; Nav tree
 (global-set-key [f9] 'distopico:nav-toggle)
+(global-set-key (kbd "M-<f9>") 'nav-jump-to-current-dir)
 (global-set-key [f8] 'distopico:neotree-toggle)
+(global-set-key (kbd "M-<f8>") 'neotree-refresh)
 
 ;; Buffer
 (global-set-key (kbd "C-q") 'kill-this-buffer)

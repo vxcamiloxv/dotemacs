@@ -7,6 +7,7 @@
 (setq neo-theme 'arrow
       neo-smart-open t
       neo-cwd-line-style 'button
+      neo-vc-integration '(char)
       projectile-switch-project-action 'neotree-projectile-action)
 
 ;; Funtions
