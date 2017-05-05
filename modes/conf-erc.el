@@ -26,7 +26,7 @@
       erc-input-line-position -2
       erc-auto-query 'buffer
       erc-join-buffer 'bury
-      erc-user-full-name user-full-name
+      ;; erc-user-full-name user-full-name
       erc-track-position-in-mode-line 'after-modes
       erc-current-nick-highlight-type 'nick-or-keyword
       erc-track-priority-faces-only 'all
@@ -100,8 +100,7 @@
   (when (not (get-buffer "irc.freenode.net:6667"))
     (erc :server "irc.freenode.net" :port 6667 :password "")
     ;;(erc :server "irc.radiognu.org" :port 6667 :password "")
-    (erc-tls :server "irc.indymedia.org" :port 6697 :password "")
-    ))
+    (erc-tls :server "irc.indymedia.org" :port 6697 :password "")))
 
 (defun distopico:erc-start-ask-or-switch ()
   "Connect to ERC, or switch to last active buffer"
