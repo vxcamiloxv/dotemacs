@@ -51,9 +51,9 @@
 (when (require 'mu4e nil 'noerror)
   (require 'conf-mu4e))
 (require 'conf-elfeed)
-;; (require 'conf-jabber)
+(require 'conf-jabber)
 ;; (require 'conf-gnusocial)
-;; (require 'conf-erc)
+(require 'conf-erc)
 
 ;; Basic Helpers
 (require 'conf-smex)
@@ -81,6 +81,7 @@
 (require 'conf-present)
 (require 'conf-markdown)
 (require 'conf-rst)
+(require 'conf-flyspell)
 
 ;; Utils
 (require 'conf-eshell)
@@ -114,6 +115,8 @@
 (require 'conf-emmet)
 (require 'conf-json)
 (require 'conf-dev-utils)
+;; Extra config
+(require 'conf-extra nil 'noerror)
 
 ;; Final
 ;;(run-at-time "10 seg" nil #'run-hooks 'distopico:after-init-load-hook)
