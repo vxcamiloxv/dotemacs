@@ -6,6 +6,7 @@
       magit-revert-item-confirm t
       magit-completing-read-function 'magit-ido-completing-read)
 
+(add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell);
 ;; Return to magit status
 (remove-hook 'server-switch-hook 'magit-commit-diff)
 ;; (add-to-list 'with-editor-cancel-query-functions 'distopico:close-emacs-giteditor)

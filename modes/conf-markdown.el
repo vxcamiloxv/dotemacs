@@ -50,9 +50,10 @@
               )))))))
 
 ;; Hooks
-(add-hook 'markdown-mode-hook 'orgtbl-mode)
 (add-hook 'markdown-mode-hook
           (lambda()
+            (flyspell-mode t)
+            (orgtbl-mode t)
             (add-hook 'after-save-hook 'distopico:md-convert-org-tbl  nil 'make-it-local)))
 
 (provide 'conf-markdown)
