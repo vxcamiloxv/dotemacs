@@ -1,4 +1,5 @@
 ;;; Code:
+(require 'alert)
 (require 'org)
 (require 'appt)
 (require 'diary-lib)
@@ -10,13 +11,12 @@
 (require 'org-gnus)
 (require 'org-notify)
 (require 'org-depend)
-(require 'org-mime)
+(require 'org-mime nil 'noerror)
 (require 'org-crypt)
 (require 'org-protocol)
 (require 'org-projectile)
 (require 'org-annotate-file)
 (require 'ox-rst)
-(require 'notifications)
 (require 'midnight)
 
 
@@ -25,6 +25,7 @@
 (defvar distopico:contacts-files (concat distopico:org-directory "contacts.org" ))
 (defvar distopico:icon-org-mode (in-emacs-d "themes/icons/"))
 (defvar distopico:org-clock-default-effort "1:00")
+(defvar distopico:org-appt-current nil)
 
 (setq org-modules
       (append org-modules
@@ -38,9 +39,8 @@
                 org-mime
                 org-crypt
                 org-protocol
-                org-projectile
                 ;;org-panel
-                )))
+                org-projectile)))
 
 (setq org-note-abort nil ;; Keep change when finalized
       org-log-done 'time
@@ -56,8 +56,8 @@
       org-special-ctrl-k t
       org-special-ctrl-a/e t
       ;; nil
-      org-startup-indented nil
-      org-hide-leading-stars nil
+      ;; org-startup-indented nil
+      ;; org-hide-leading-stars nil
       org-reverse-note-order nil
       org-M-RET-may-split-line nil
       org-refile-use-outline-path nil
@@ -114,8 +114,12 @@
       org-agenda-span 2
       org-agenda-day-face-function 'distopico:org-agenda-day-face-holidays-function
       org-agenda-category-icon-alist
-      '(("Emacs" "/usr/share/icons/hicolor/16x16/apps/emacs.png" nil nil :ascent center)
-        ("\\(Holidays\\|Vacation\\)"  "~/.emacs.d/themes/icons/holidays.png" nil nil :ascent center)
+      `(("Emacs" ,(if window-system
+                      "~/.emacs.d/themes/icons/emacs.png"
+                    "ξ") nil nil :ascent center)
+        ("\\(Holidays\\|Vacation\\)" ,(if window-system
+                                          "~/.emacs.d/themes/icons/holidays.png"
+                                        "☀") nil nil :ascent center)
         (".*" '(space . (:width (16)))))
       org-agenda-custom-commands
       '(("p" "Projects" todo "PROJECT"
@@ -127,8 +131,7 @@
           (org-agenda-todo-ignore-deadlines nil)))
         ("b" "Things to buy any time" tags-todo "+tobuy+SCHEDULED=\"\"")
         ("y" "Syadmin stuff to do" tags-todo "+sysadmin+SCHEDULED=\"\"")
-        ("d" "Daily tasks:" tags "daily")
-        ))
+        ("d" "Daily tasks:" tags "daily")))
 
 ;; Enable display of the time grid so we can see the marker for the current time
 ;; (setq org-agenda-time-grid (quote ((daily today remove-match)
@@ -153,31 +156,34 @@
 (add-hook 'list-diary-entries-hook 'sort-diary-entries t)
 (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
 
-;;Appoiments
+;;Appointment
 (setq appt-audible nil
       appt-display-diary nil
       appt-display-mode-line t
       appt-display-format 'window
       appt-message-warning-time 15
-      appt-display-interval 15
+      appt-display-interval 30
       appt-disp-window-function
       (lambda (left time message)
-        (notifications-notify
-         :title (concat "Appointment "
-                        (cond
-                         ((equal left "0")
-                          "now!")
-                         ((equal left "1")
-                          "in 1 minute!")
-                         (t
-                          (format "in %s minutes" left))))
-         :body message
-         :timeout 5000
-         :urgency "normal"
-         :category "emacs.message"
-         :app-icon (concat distopico:icon-org-mode "org-mode.png"))
-        )
-      appt-delete-window-function (lambda ()))
+        (add-to-list 'distopico:org-appt-current message)
+        (alert message
+               :title (concat "Appointment "
+                              (cond
+                               ((equal left "0")
+                                "now!")
+                               ((equal left "1")
+                                "in 1 minute!")
+                               (t
+                                (format "in %s minutes" left))))
+               :mode 'org-mode
+               :severity 'normal
+               :category 'emacs
+               :icon (concat distopico:icon-org-mode "org-mode.png")))
+      appt-delete-window-function
+      (lambda ()
+        (if distopico:org-appt-current
+            (setq distopico:org-appt-current
+                  (delete (nth 0 distopico:org-appt-current) distopico:org-appt-current)))))
 
 ;; Notify
 (setq org-notify-audible nil)
@@ -201,15 +207,13 @@
       org-clock-persist 'history
       org-clock-report-include-clocking-task t
       org-show-notification-handler
-      (lambda (notification)
-        (notifications-notify
-         :title "Org-mode"
-         :body notification
-         :timeout 5000
-         :urgency "normal"
-         :category "emacs.message"
-         :app-icon (concat distopico:icon-org-mode "org-mode.png"))
-        )
+      (lambda (message)
+        (alert message
+               :title "Org-mode"
+               :mode 'org-mode
+               :severity 'normal
+               :category 'emacs
+               :icon (concat distopico:icon-org-mode "org-mode.png")))
       org-clock-persist-file (in-emacs-d ".cache/org-clock-save.el")
       org-time-clocksum-format
       '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
@@ -335,20 +339,20 @@
         ;; Remember response some email
         ("M" "Messages" entry
          (file+headline org-default-notes-file "Messages")
-         "* NEXT Respond to %:fromaddress on %:subject\nSCHEDULED: %t\n CAPTURED: %U\n%a\n" :empty-lines 1)
-        ))
+         "* NEXT Respond to %:fromaddress on %:subject\nSCHEDULED: %t\n CAPTURED: %U\n%a\n" :empty-lines 1)))
 
 (setq org-capture-templates-contexts
       '(("M" ((in-mode . "mu4e-headers-mode")
-              (in-mode . "mu4e-view-mode")) )))
+              (in-mode . "mu4e-view-mode")))))
 
-;; Table of Contects
+;; Table of Contacts
 ;;      (if (require 'toc-org nil t)
 ;;          (add-hook 'org-mode-hook 'toc-org-enable)
 ;;        (warn "toc-org not found"))
 
 ;; Org Projectile
 (setq org-projectile:projects-file  (expand-file-name "todo.org" org-directory))
+(push (org-projectile-project-todo-entry) org-capture-templates)
 ;; (add-to-list 'org-capture-templates
 ;;              (org-projectile:project-todo-entry "p" "* TODO %? %a" "Project Todo"))
 
@@ -814,9 +818,12 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
 
 (defun distopico:org-init-hook ()
   ;; Org mime messages to html
-  (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize)
+  (when (fboundp 'org-mime-org-buffer-htmlize)
+    (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize))
   ;;(turn-on-visual-line-mode)
   (distopico:org-saveplace)
+  ;; Disabled flycheck
+  (flycheck-mode -1)
   ;; (distopico:org-before-save-hook)
   ;; (and buffer-file-name
   ;;      (file-exists-p buffer-file-name)
@@ -830,6 +837,7 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
     (distopico:org-update-appt)
     (distopico:org-remove-done-trigger)
     (distopico:org:remove-empty-propert-drawers)
+    (org-save-all-org-buffers)
     (message (concat "Wrote " (buffer-file-name)))))
 
 (defun distopico:org-before-save-hook ()
