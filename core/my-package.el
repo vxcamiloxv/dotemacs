@@ -22,14 +22,13 @@
 
     ;; Ido
     ido-sort-mtime
-    ido-ubiquitous
+    ido-completing-read+
     ido-vertical-mode
     ido-select-window
-    ido-exit-target
     ido-complete-space-or-hyphen
     ido-occur
     ido-at-point
-    flx-ido
+    crm-custom
 
     ;; Window
     zoom-window
@@ -63,7 +62,6 @@
     highlight-symbol
     flycheck
     flycheck-color-mode-line
-    flx
     jump-char
     smex
     perspective
@@ -102,15 +100,18 @@
     php-auto-yasnippets
     pony-mode
     jedi
+    realgud
     lua-mode
     move-dup
     anaconda-mode
     jdee
     java-snippets
     java-imports
+    meghanada
     android-mode
     gradle-mode
     groovy-mode
+    dumb-jump
 
     ;; Web
     web-mode
@@ -148,6 +149,8 @@
     multiple-cursors
     auto-async-byte-compile
     sync-recentf
+    emojify
+    flyspell-correct
 
     ;; Auto Complete
     company
@@ -165,10 +168,12 @@
     org-projectile
     org-present
     org-pomodoro
+    org-mime
     toc-org
     ox-rst
 
     ;; Activity
+    znc
     elfeed
     elfeed-org
     mu4e-maildirs-extension

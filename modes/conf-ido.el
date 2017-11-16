@@ -2,14 +2,14 @@
 ;;; Code:
 
 (require 'ido)
+(require 'icomplete)
 (require 'ido-sort-mtime)
-(require 'ido-ubiquitous)
+(require 'ido-completing-read+)
 (require 'ido-vertical-mode)
 (require 'ido-select-window)
 (require 'ido-at-point)
-;;(require 'ido-exit-target)
 (require 'ido-complete-space-or-hyphen)
-;; (require 'crm-custom)
+(require 'crm-custom)
 
 (ido-mode t)
 (ido-everywhere t)
@@ -17,29 +17,25 @@
 (ido-vertical-mode t)
 (ido-sort-mtime-mode t)
 (ido-at-point-mode t)
-;; (crm-custom-mode)
+(crm-custom-mode 1)
+(icomplete-mode 1)
 
 (setq ido-default-buffer-method 'selected-window ; Always open in the same window
       ido-create-new-buffer 'always
       ido-max-prospects 200
       ido-enable-flex-matching t
       ido-enable-dot-prefix t
-      ido-everywhere t
       ido-ignore-extensions t ; Ignore object files
       ;; ido-use-virtual-buffers t
       ido-use-filename-at-point 'guess
       ido-vertical-define-keys 'C-n-C-p-up-down-left-right ;C-n-C-p-up-down
-      ;;ido-exit-target-keymap-prefix (kbd "M-RET")
       ido-save-directory-list-file (in-emacs-d ".cache/ido.last")
       ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".js" ".conf") )
 
-;; Disable ido-ubiquitous with incomaptible commands
-;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/11
-(dolist (command-data
-         '((disable exact "describe-function")
-           ;; (disable exact "describe-variable")
-           ))
-  (add-to-list 'ido-ubiquitous-command-overrides command-data))
+;; Enable ido-cr+ fro aditional commands
+(dolist (command-name
+         '(package-install))
+  (add-to-list 'ido-cr+-nil-def-alternate-behavior-list command-name))
 
 ;; Functions
 (defun ido-goto-symbol (&optional symbol-list)
@@ -118,17 +114,5 @@
                             (and (eq major-mode the-mode)
                                  (buffer-name buf)))))
                       (buffer-list))))))))
-
-
-;; (defmacro ido-ubiquitous-use-new-completing-read (cmd package)
-;;   "Fix ido-ubiquitous for newer packages."
-;;   `(eval-after-load ,package
-;;      '(defadvice ,cmd (around ido-ubiquitous-new activate)
-;;         (let ((ido-ubiquitous-enable-compatibility nil))
-;;           ad-do-it))))
-
-;; (ido-ubiquitous-use-new-completing-read webjump 'webjump)
-;; (ido-ubiquitous-use-new-completing-read yas/expand 'yasnippet)
-;; (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file 'yasnippet)
 
 (provide 'conf-ido)
