@@ -1,9 +1,17 @@
 ;;; Code:
+(require 'ispell)
 (require 'emr)
 (require 'move-dup)
 (require 'aggressive-indent)
+(require 'dumb-jump)
 
-(setq semanticdb-default-save-directory (in-emacs-d ".cache/semanticdb"))
+(setq semanticdb-default-save-directory (in-emacs-d ".cache/semanticdb")
+      dumb-jump-selector 'ivy)
+
+;; Define additional keybindings
+
+;; Emcas refactor
+(define-key prog-mode-map (kbd "M-RET") 'emr-show-refactor-menu)
 
 ;; Exclude some modes fro agressive indent
 (dolist (source '(diary-mode css-mode less-css-mode jade-mode))
@@ -33,9 +41,13 @@ from: prelude"
   ;; Emacs refactor
   (emr-initialize)
   ;; Moving and duplicating lines or rectangles
-  (move-dup-mode))
+  (move-dup-mode)
+  ;; Search references
+  (dumb-jump-mode)
+  (when (executable-find ispell-program-name)
+    (flyspell-prog-mode)))
 
 ;; Load several utils for programming mode
-(add-hook 'prog-mode-hook 'distopico:prog-mode-hook)
+(add-hook 'prog-mode-hook #'distopico:prog-mode-hook)
 
 (provide 'conf-prog)
