@@ -1,5 +1,5 @@
 # Distopico Emacs Config
-**Version 2.0.1**
+**Version 2.0.2**
 
 My emacs configuration with many toys for programming environment mostly javascript , python , php, html
 and tools for intent be more productive and social.

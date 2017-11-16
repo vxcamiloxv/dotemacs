@@ -1,7 +1,7 @@
 {
-  "name": "Distopico-emacs.d",
-  "version": "0.1.1",
-  "description": "Dependencies for my emacs config",
+  "name": "distopico-emacs.d",
+  "version": "2.0.2",
+  "description": "Dependencies for distopico emacs config",
   "homepage": "",
   "author": "Distopico Vegan <distopico@riseup.net>",
   "licenses": [
