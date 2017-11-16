@@ -34,8 +34,9 @@
                     'c++-mode-hook))
   (add-hook hook 'hideshowvis-enable))
 
+;; (when (fboundp 'define-fringe-bitmap)
 ;;(define-fringe-bitmap 'hideshowvis-hideable-marker [0 0 254 124 56 16 0 0])
-;;(define-fringe-bitmap 'hs-marker [0 32 48 56 60 56 48 32])
+;;(define-fringe-bitmap 'hs-marker [0 32 48 56 60 56 48 32]))
 
 ;; Faces
 (custom-set-faces

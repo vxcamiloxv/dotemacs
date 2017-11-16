@@ -8,7 +8,12 @@
 ;; (define-fringe-bitmap 'empty-line (vector 2 2 4 5 4 2 2) 8 8 '(center t))
 ;; (define-fringe-bitmap 'empty-line (vector 0 0 0 8) 8 4 '(top t))
 ;; (define-fringe-bitmap 'empty-line (vector 0 8 0 0 0 8 0 0) 8 8 '(top t))
-(define-fringe-bitmap 'empty-line (vector 0 4 0 0) 8 4 '(top t))
+(when (fboundp 'define-fringe-bitmap)
+  ;; Empty lines  
+  (define-fringe-bitmap 'empty-line (vector 0 4 0 0) 8 4 '(top t))
+  ;; Delicate arrows:
+  (define-fringe-bitmap 'up-arrow (vector 8 20 34 65 0 0 0 0) 8 8 'top)
+  (define-fringe-bitmap 'down-arrow (vector 0 0 0 0 65 34 20 8) 8 8 'bottom))
 
 ;;; Top and bottom of buffer
 
@@ -22,10 +27,6 @@
 ;(define-fringe-bitmap 'top-right-angle (vector 0 1 0 1 0 1 0 1) 8 8 'bottom)
 ;(define-fringe-bitmap 'bottom-left-angle (vector 0 0 0 1 0 1 0 85) 8 8 'bottom)
 ;(define-fringe-bitmap 'left-bracket (vector 85 0 1 0 0 1 0 85) 8 8 'center)
-
-;; Delicate arrows:
-(define-fringe-bitmap 'up-arrow (vector 8 20 34 65 0 0 0 0) 8 8 'top)
-(define-fringe-bitmap 'down-arrow (vector 0 0 0 0 65 34 20 8) 8 8 'bottom)
 
 ;;; Arrows
 
