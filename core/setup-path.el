@@ -14,7 +14,9 @@
 (defvar distopico:load-path `(,core-dir ,mode-dir ,site-elisp-dir ,utils-dir ,theme-dir)
   "Directories relative to `user-emacs-directory', to be include in `load-path'.")
 (defvar distopico:exec-paths
-  '("~/.emacs.d/node_modules/.bin"
+  '("/opt/local/bin"
+    "/usr/local/bin"
+    "~/.emacs.d/node_modules/.bin"
     "~/.emacs.d/.python-environments/default/bin")
   "A list of custom bin paths.")
 (setq exec-path-from-shell-variables '("SSH_AGENT_PID" "SSH_AUTH_SOCK"))

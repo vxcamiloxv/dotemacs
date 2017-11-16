@@ -5,6 +5,10 @@
 (require 'undo-tree)
 (require 'nsm)
 
+(defcustom user-short-name ""
+  "A short user name."
+  :type 'string)
+
 ;; ------
 ;; Require misc stuff
 ;; ------
@@ -13,7 +17,12 @@
 (defvar distopico:after-init-load-hook nil
   "Hook called after the `init.el' load all required dependencies.")
 
-;;Keep cache
+;; Basic user data
+(setq user-full-name  "Distopico Vegan"
+      user-mail-address "distopico@riseup.net"
+      user-short-name "distopico")
+
+;; Keep cache
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 ;; Network
@@ -118,9 +127,6 @@
 ;; Swapping buffers!
 (setq distopico:swapping-buffer nil)
 (setq distopico:swapping-window nil)
-
-;;Turn off tool-bar-mode, which is slow
-(call-interactively 'tool-bar-mode)
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty

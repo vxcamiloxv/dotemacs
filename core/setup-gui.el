@@ -11,7 +11,6 @@
 (require 'highlight-escape-sequences)
 (require 'browse-kill-ring)
 
-
 ;;; Disabled or enabled debug:
 (setq debug-on-error nil
       debug-on-signal nil
@@ -46,14 +45,17 @@
       scroll-down-aggressively 0.01
       scroll-preserve-screen-position 1)
 ;; Mouse scrolling
-(mwheel-install)
+(if (load "mwheel" t)
+    (mwheel-install))
 
 ;; Don't minimize my emacs!
 (when window-system
   (progn
     (setq scroll-bar-mode nil)
-    (tool-bar-mode nil)
-    (menu-bar-mode nil)))
+    ;; Turn off tool-bar-mode
+    (tool-bar-mode -1)
+    ;; (call-interactively 'tool-bar-mode)
+    (menu-bar-mode -1)))
 
 ;; Horizontal scroll
 (put 'scroll-left 'disabled nil)
