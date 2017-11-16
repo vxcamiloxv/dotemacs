@@ -15,7 +15,7 @@
         yas-ido-prompt
         yas-dropdown-prompt))
 
-;; (yas-global-mode t)
+(yas-global-mode t)
 
 (setq hippie-expand-try-functions-list
       (cons 'yas/hippie-try-expand hippie-expand-try-functions-list))
@@ -60,7 +60,7 @@
 ;; Fix org-mode
 (add-hook 'org-mode-hook
           (lambda ()
-            (org-set-local 'yas-expand-from-trigger-key [tab])
+            (setq-local yas-expand-from-trigger-key [tab])
             (define-key yas-keymap [tab] 'yas-next-field-or-maybe-expand)))
 
 
