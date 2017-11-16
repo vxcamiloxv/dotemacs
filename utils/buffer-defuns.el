@@ -199,10 +199,45 @@ from: http://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/"
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
+(defun open-buffer-delete-others(buffer-name register-name action &optional open-same-window)
+  "Open buffer in fullscreen and delete other windows.
+need buffer-name: name of buffer, name-register: the name to register current window
+action: the action execute, optional, open-same-window"
+  (if (not (equal (buffer-name) buffer-name))
+      (progn
+        (window-configuration-to-register register-name)
+        (let ((name-buffer (get-buffer buffer-name)))
+          (if name-buffer
+              (if open-same-window
+                  (switch-to-buffer name-buffer)
+                (switch-to-buffer-other-window name-buffer))
+            (funcall action)))
+        (delete-other-windows))))
+
+(defun bury-buffer-restore-prev (register-name)
+  "Restore the previous window configuration by `REGISTER-NAME' and bury buffer."
+  (interactive)
+  (bury-buffer)
+  (jump-to-register-and-remove register-name))
+
+(defun jump-to-register-and-remove (register-name)
+  "Jump to `REGISTER-NAME' if exists and remove register."
+  (let ((register (get-register register-name)))
+    (when register
+      (jump-to-register register-name)
+      (delete-register register-name))))
+
+(defun delete-register (register-name)
+  "Delete `REGISTER-NAME' if exists."
+  (let ((register (get-register register-name)))
+    (when register
+      (setq register-alist (delete (cons register-name register) register-alist)))))
+
 ;; code from https://gist.github.com/anonymous/1061884
 (defun auto-byte-recompile ()
-  "If the current buffer is in emacs-lisp-mode and there already exists an `.elc'
-file corresponding to the current buffer file, then recompile the file."
+  "Recompile if the current buffer is `emacs-lisp-mode'.
+If exists an `.elc' file corresponding to the current buffer file,
+then recompile the file."
   (interactive)
   (when (and (eq major-mode 'emacs-lisp-mode)
              (file-exists-p (byte-compile-dest-file buffer-file-name)))
@@ -213,27 +248,6 @@ file corresponding to the current buffer file, then recompile the file."
   "Byte-compile all your dotfiles."
   (interactive)
   (byte-recompile-directory user-emacs-directory 0))
-
-(defun open-buffer-delete-others(buffer-name name-register action &optional open-same-window)
-  "Open buffer in fullscreen and delete other windows.
-need buffer-name: name of buffer, name-register: the name to register current window
-action: the action execute, optional, open-same-window"
-  (if (not (equal (buffer-name) buffer-name))
-      (progn
-        (window-configuration-to-register name-register)
-        (let ((name-buffer (get-buffer buffer-name)))
-          (if name-buffer
-              (if open-same-window
-                  (switch-to-buffer name-buffer)
-                (switch-to-buffer-other-window name-buffer))
-            (funcall action)))
-        (delete-other-windows))))
-
-(defun bury-buffer-restore-prev (name-register)
-  "Restores the previous window configuration and burry buffer"
-  (interactive)
-  (bury-buffer)
-  (jump-to-register name-register))
 
 (defun byte-compile-when-save()
   "When save, recompile it if already have compile file"
