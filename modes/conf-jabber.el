@@ -8,15 +8,15 @@
 
 ;; Costom vars
 (defcustom distopico:jabber-default-account "distopico@riseup.net"
-  "jabber default account"
+  "Jabber default account."
   :type 'string
   :group 'jabber)
-(defcustom distopico:jabber-default-nickname "DistopicoVegan"
-  "jabber default Nickname"
+(defcustom distopico:jabber-default-nickname "distopico"
+  "Jabber default Nickname."
   :type 'string
   :group 'jabber)
 (defcustom distopico:jabber-muc-list nil
-  "jabber muc list"
+  "Jabber muc list."
   :type 'alist
   :group 'jabber)
 
@@ -43,7 +43,7 @@
       jabber-default-show ""
       jabber-default-status "M-x mode!!"
       jabber-roster-buffer: "*jabber-roster*"
-      jabber-groupchat-buffer-format "*jabber-room: [ %b ]*"
+      jabber-groupchat-buffer-format "*jabber-room: [ %n ]*"
       jabber-chat-buffer-format "*jabber-chat: [ %n ]*"
       jabber-notifications-icon notifications-application-icon
       jabber-notifications-timeout -1
@@ -65,7 +65,8 @@
       distopico:jabber-muc-list '("veganismo@salas.suchat.org"
                                   "vegan@conference.jabber.org"
                                   "radiolibrevigo@conference.amaya.tk"
-                                  "elbinario@salas.elbinario.net"))
+                                  "elbinario@salas.xmpp.elbinario.net"
+                                  "pump.io@conference.movim.eu"))
 
 ;; Jabber Accounts
 (ignore-errors
@@ -95,7 +96,6 @@
 ;; Custom keys
 (define-key jabber-roster-mode-map (kbd "C-q") 'distopico:jabber-close)
 (define-key jabber-chat-mode-map (kbd "C-q") 'distopico:jabber-chat-burry)
-(define-key jabber-chat-mode-map (kbd "M-q") 'kill-this-buffer)
 (define-key jabber-chat-mode-map (kbd "M-u") 'jabber-muc-names)
 (define-key jabber-common-keymap (kbd "C-<tab>") 'distopico:jabber-chat-with)
 (define-key jabber-common-keymap (kbd "C-x c") 'distopico:jabber-buffer-ido)
@@ -103,12 +103,12 @@
 
 ;; Functions
 (defun distopico:jabber-display-roster ()
-  "Open rosetr jabber in fullscreen and delete other windows"
+  "Open rosetr jabber in fullscreen and delete other windows."
   (interactive)
   (open-buffer-delete-others jabber-roster-buffer :jabber-fullscreen 'jabber-switch-to-roster-buffer))
 
 (defun distopico:jabber-close ()
-  "Restores the previous window configuration and burry jabber buffer"
+  "Restore the previous window configuration and burry jabber buffer."
   (interactive)
   (bury-buffer-restore-prev :jabber-fullscreen))
 
@@ -127,7 +127,7 @@
   (ido-for-mode "Jabber:" 'jabber-chat-mode))
 
 (defun distopico:jabber-chat-with (jid &optional other-window)
-  "ido-based jabber-chat-with variant"
+  "Ido-based jabber-chat-with variant looking `JID' and optional open in `OTHER-WINDOW'."
   (interactive (list (distopico:jabber-read-jid-completing "Chat with: ")
                      current-prefix-arg))
   (let* ((jc (distopico:jabber-jid-connection jid))
@@ -137,8 +137,9 @@
       (switch-to-buffer buffer))))
 
 (defun distopico:jabber-auto-join (jc)
-  "I use multi-account and default auto-join not work for me because connect all accounts.
-And only need to connect one"
+  "Only need to connect one `JC'.
+I use multi-account and default auto-join not work
+for me because connect all accounts."
   (let* ((state-data (fsm-get-state-data jc))
          (jid (plist-get state-data :original-jid)))
     (if (equal jid distopico:jabber-default-account)
@@ -183,7 +184,7 @@ Optional argument GROUP to look."
 (defadvice jabber-muc-process-presence
     (after distopico:jabber-muc-process-presence-clear-notices)
   "Remove all muc notices.
-  use this if you don't like all those notices about people joining/leaving"
+use this if you don't like all those notices about people joining/leaving."
   (let* ((from (jabber-xml-get-attribute presence 'from))
          (group (jabber-jid-user from))
          (buffer (get-buffer (jabber-muc-get-buffer group))))
@@ -193,7 +194,7 @@ Optional argument GROUP to look."
 
 (defadvice jabber-activity-add-muc
     (around distopico:jabber-activity-add-muc (nick group buffer text proposed-alert))
-  "Add a JID to mode line when `jabber-activity-show-p' only whe is a `personal' msg"
+  "Add a JID to mode line when `jabber-activity-show-p' only whe is a `personal' msg."
   (when (funcall jabber-activity-show-p group)
     ;; No need activity if no call nick
     ;;(setq jabber-activity-jids (delete group jabber-activity-jids))
@@ -205,9 +206,9 @@ Optional argument GROUP to look."
 (ad-activate #'jabber-activity-add-muc)
 
 ;; Hooks
-;;(add-hook 'jabber-post-connect-hooks 'distopico:jabber-auto-join 'append)
-(add-hook 'jabber-chat-mode-hook 'distopico:jabber-chat-mode-hook 'append)
-(add-hook 'distopico:after-init-load-hook 'distopico:jabber-init-load-hook)
+(add-hook 'jabber-post-connect-hooks #'distopico:jabber-auto-join 'append)
+(add-hook 'jabber-chat-mode-hook #'distopico:jabber-chat-mode-hook 'append)
+(add-hook 'distopico:after-init-load-hook #'distopico:jabber-init-load-hook)
 
 
 (provide 'conf-jabber)
