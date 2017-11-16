@@ -42,7 +42,8 @@ attachment - should launch the no-attachment warning.")
 
 ;; General mu4e config
 (setq mu4e-maildir "~/.mail"
-      mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
+      ;;mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
+      mu4e-get-mail-command "offlineimap"
       mu4e-confirm-quit nil
       mu4e-compose-keep-self-cc nil
       mu4e-view-prefer-html t
@@ -57,7 +58,12 @@ attachment - should launch the no-attachment warning.")
       mu4e-headers-visible-lines 20
       mu4e-html2text-command 'mu4e-shr2text
       mu4e-headers-leave-behavior 'ask
-      mu4e~main-buffer-name "*mu4e-main*")
+      mu4e~main-buffer-name "*mu4e-main*"
+      mu4e-headers-fields '((:human-date    .   12)
+                            (:flags         .   10)
+                            (:mailing-list  .   10)
+                            (:from          .   22)
+                            (:subject       .   nil)))
 
 ;; Compose mail with gnus.
 (setq read-mail-command 'gnus
@@ -92,12 +98,23 @@ attachment - should launch the no-attachment warning.")
 (setq mu4e-maildirs-extension-use-bookmarks t)
 
 ;; Custom marks
-(setq mu4e-headers-new-mark              '("N" . "✉")
-      mu4e-headers-empty-parent-prefix '("-" . "○")
-      mu4e-headers-first-child-prefix '("\\" . "┗━❯")
-      mu4e-headers-has-child-prefix '("+" . "┗◉")
-      mu4e-headers-duplicate-prefix      '("=" . "⚌")
-      mu4e-headers-default-prefix  '("|" . "┃"))
+(setq mu4e-headers-draft-mark             '("D" . "⚒ ")
+      mu4e-headers-flagged-mark           '("F" . "✚ ")
+      mu4e-headers-new-mark               '("N" . "✱ ")
+      mu4e-headers-passed-mark            '("P" . "❯ ")
+      mu4e-headers-replied-mark           '("R" . "❮ ")
+      mu4e-headers-seen-mark              '("S" . "✔ ")
+      mu4e-headers-trashed-mark           '("T" . "⏚ ")
+      mu4e-headers-attach-mark            '("a" . "✉ ")
+      mu4e-headers-encrypted-mark         '("x" . "⚴ ")
+      mu4e-headers-signed-mark            '("s" . "☡ ")
+      mu4e-headers-unread-mark            '("u" . "⚐ ")
+      ;; Prefix
+      mu4e-headers-empty-parent-prefix    '("-" . "○")
+      mu4e-headers-first-child-prefix     '("\\" . "┗━❯")
+      mu4e-headers-has-child-prefix       '("+" . "┗◉")
+      mu4e-headers-duplicate-prefix       '("=" . "⚌")
+      mu4e-headers-default-prefix         '("|" . "┃"))
 
 ;; Fix hl unread messages with mu4e 0.9.15
 (setq mu4e-maildirs-extension-propertize-func 'distopico:mu4e-maildirs-extension-propertize-func)
@@ -115,7 +132,8 @@ attachment - should launch the no-attachment warning.")
       mu4e-view-image-max-height 200)
 (setq mu4e-msg2pdf "/usr/bin/msg2pdf")
 
-(add-hook 'message-mode-hook (lambda () (local-set-key "\C-c\M-o" 'org-mime-htmlize)))
+(when (fboundp 'org-mime-htmlize)
+  (add-hook 'message-mode-hook (lambda () (local-set-key "\C-c\M-o" 'org-mime-htmlize))))
 
 ;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
@@ -155,9 +173,7 @@ attachment - should launch the no-attachment warning.")
   (load (expand-file-name ".conf-private.gpg" "~/") t))
 
 ;; Default Account
-(setq user-mail-address "distopico@riseup.net"
-      user-full-name  "Distopico Vegan"
-      mu4e-sent-folder "/1-Distopico/Sent"
+(setq mu4e-sent-folder "/1-Distopico/Sent"
       mu4e-drafts-folder "/1-Distopico/Drafts"
       mu4e-trash-folder "/1-Distopico/Trash")
 
@@ -175,8 +191,10 @@ attachment - should launch the no-attachment warning.")
 (define-key mu4e-main-mode-map "r" 'distopico:mu4e-maildirs-force-update)
 (define-key mu4e-main-mode-map (kbd "C-q") 'distopico:mu4e-close)
 (define-key mu4e-headers-mode-map (kbd "C-q") 'distopico:mu4e-kill-close)
+(define-key mu4e-headers-mode-map (kbd "C-x k") 'distopico:mu4e-kill-close)
 (define-key mu4e-headers-mode-map (kbd "C-c o c") 'org-mu4e-store-and-capture)
 (define-key mu4e-view-mode-map (kbd "C-q") 'distopico:mu4e-kill-close)
+(define-key mu4e-view-mode-map (kbd "C-x k") 'distopico:mu4e-kill-close)
 (define-key mu4e-view-mode-map (kbd "C-c o c") 'org-mu4e-store-and-capture)
 
 ;;------------------
@@ -259,16 +277,15 @@ attachment - should launch the no-attachment warning.")
                     (not (eq curwin win))	        ;; it's not the curwin?
                     (not (one-window-p)))           ;; and not the last one?
                (delete-window win))))
-          (kill-this-buffer)
+          (kill-buffer (current-buffer))
           (mu4e~main-view))
         ;;(delete-other-windows)
         (distopico:mu4e-maildirs-force-update))
     (if (equal (buffer-name) "*mu4e-view*")
         (progn
-          (kill-this-buffer)
+          (kill-buffer (current-buffer))
           (delete-other-windows))
-      (kill-this-buffer))
-    ))
+      (kill-buffer (current-buffer)))))
 
 ;; Toggle related
 (defun distopico:mu4e-toggle-headers-include-related ()
@@ -394,7 +411,9 @@ from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
 
 (defun distopico:mu4e-index-updated-hook ()
   "Hooen when come some new message."
-  (start-process "mu4e-update" nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
+  ;;(start-process "mu4e-update" nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
+  (call-process "/bin/bash" nil 0 nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
+  ;; (shell-command-to-string (concat (in-emacs-d "/scripts/notify_mail.sh") " " (number-to-string mu4e-update-interval)))
   (distopico:mu4e-inbox-update))
 
 (defun distopico:mu4e-view-mode-hook ()
