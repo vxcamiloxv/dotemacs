@@ -33,9 +33,11 @@
 (global-set-key (kbd "M-<f8>") 'neotree-refresh)
 
 ;; Buffer
-(global-set-key (kbd "C-q") 'kill-this-buffer)
-(global-set-key (kbd "M-q") 'kill-this-buffer-and-pane)
-(global-set-key (kbd "s-q") 'bury-buffer)
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
+(global-set-key (kbd "C-c k") 'kill-this-buffer-and-pane)
+(global-set-key (kbd "C-q") 'bury-buffer)
+(global-set-key (kbd "s-k") 'kill-buffer)
+(global-set-key (kbd "s-b") 'bury-buffer)
 (global-set-key (kbd "<C-tab>") 'switch-to-previous-buffer)
 (global-set-key [C-M-next] 'next-buffer)
 (global-set-key [C-M-prior] 'previous-buffer)
@@ -52,9 +54,12 @@
 (global-set-key (kbd "C-c w r") 'distopico:rotate-windows)
 (global-set-key (kbd "C-c w s") 'windresize)
 (global-set-key (kbd "C-c w z") 'zoom-window-zoom)
-(global-set-key (kbd "M-1") 'ace-window)
-(global-set-key (kbd "M-2") 'window-toggle-split-direction) ; toggle window position
-(global-set-key (kbd "M-3") 'windresize) ; toggle window position
+(global-set-key (kbd "C-x 9") 'delete-windows-on)
+(global-set-key (kbd "M-0") 'ace-delete-window)
+(global-set-key (kbd "M-1") 'ace-delete-other-windows)
+(global-set-key (kbd "M-2") 'ace-window)
+(global-set-key (kbd "M-3") 'window-toggle-split-direction) ; toggle window position
+(global-set-key (kbd "M-4") 'windresize)
 
 ;; Reposition window
 (global-set-key (kbd "<M-s-home>") 'buf-move-up)
@@ -164,14 +169,11 @@
 (global-set-key [S-mouse-3] 'imenu)
 (global-set-key (kbd "C-c .") 'imenu-anywhere)
 
-;; Emcas refactor
-(define-key prog-mode-map (kbd "M-RET") 'emr-show-refactor-menu)
-
 ;; Go to char
 (global-set-key (kbd "C-c f") 'iy-go-to-char)
 (global-set-key (kbd "C-c F") 'iy-go-to-char-backward)
-(global-set-key (kbd "C-c ;") 'iy-go-to-or-up-to-continue)
-(global-set-key (kbd "C-c ,") 'iy-go-to-or-up-to-continue-backward)
+(global-set-key (kbd "C-c ,") 'iy-go-to-or-up-to-continue)
+(global-set-key (kbd "C-c ;") 'iy-go-to-or-up-to-continue-backward)
 
 ;; Avy
 (global-set-key (kbd "C-: c") 'avy-goto-char)
@@ -198,6 +200,7 @@
 (global-set-key (kbd "s-.") 'change-outer)
 
 ;; Actions
+(global-set-key (kbd "C-=") 'er/expand-region)
 (global-set-key (kbd "C-x <next>") 'select-current-line)
 (global-set-key (kbd "C-c <next>") 'er/expand-region)
 (global-set-key (kbd "C-c e <right>") 'select-current-line)
