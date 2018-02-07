@@ -37,6 +37,10 @@
   (web-mode-set-content-type "jsx")
   ;; Don't auto-quote attribute values
   (setq-local web-mode-enable-auto-quoting nil)
+  ;; Enable JSDoc
+  (setq-local web-mode-enable-comment-annotation t)
+  ;; Fix some indentation problems
+  (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
 
   ;; Add node_modules to exec path
   (distopico:add-node-modules-path)
