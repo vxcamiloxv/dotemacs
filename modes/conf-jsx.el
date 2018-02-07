@@ -10,8 +10,6 @@
 (add-to-list 'interpreter-mode-alist '("jsx" . web-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\index.android.js\\'" . web-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\index.ios.js\\'" . web-jsx-mode))
 (add-to-list 'magic-mode-alist '("/\\*\\* @jsx React\\.DOM \\*/" . web-jsx-mode))
 (add-to-list 'magic-mode-alist '("^import React" . web-jsx-mode))
 
@@ -26,7 +24,7 @@
 
 ;; Functions
 (defun distopico:web-jsx-mode-hook ()
-  "Adjust web-mode to accommodate jsx from spacemacs."
+  "Adjust web-mode to JSX from spacemacs."
   (emmet-mode t)
   (tern-mode t)
   ;; See https://github.com/CestDiego/emmet-mode/commit/3f2904196e856d31b9c95794d2682c4c7365db23
