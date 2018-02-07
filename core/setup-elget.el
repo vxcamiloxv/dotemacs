@@ -77,6 +77,10 @@
                :type git
                :url "https://github.com/pmd/pmd-emacs.git"
                :load-path ("src/elisp"))
+        (:name "js-align"
+               :description "Emacs JavaScript Align"
+               :type git
+               :url "https://github.com/johnhooks/js-align.git")
         ;; Productive
         (:name "org-jira"
                :description "use Jira in Emacs org-mode"
