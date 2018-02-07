@@ -3,7 +3,7 @@
 (require 'mu4e-contrib)
 
 ;; Custom vars
-(defcustom distopico:mu4e-inbox-update-modeline-interval 60
+(defcustom distopico:mu4e-inbox-update-modeline-interval 300
   "Inbox update interval."
   :type 'integer
   :group 'hardware)
@@ -73,11 +73,9 @@ attachment - should launch the no-attachment warning.")
 (setq mu4e-maildir-shortcuts
       '( ("/1-Distopico/INBOX"        . ?d)
          ("/2-vXcamiloXv/INBOX"       . ?c)
-         ;; ("/Sent"               . ?s)
-         ;; ("/Trash"              . ?t)
-         ;; ("/Drafts"             . ?d)
-         ;; ("/Queue"              . ?q)
-         ;; ("/Spam"               . ?S)
+         ("/3-AccionVisual/INBOX"     . ?a)
+         ("/4-RadioLiberacion/INBOX"  . ?r)
+         ("/5-TienditaVegan/INBOX"    . ?t)
          ))
 
 (setq mu4e-bookmarks
