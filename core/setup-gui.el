@@ -31,13 +31,7 @@
   (make-local-variable 'kill-buffer-query-functions)
   (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer))
 
-;;(setq scroll-step 1)
-;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-;;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-
-
 ;; Smoother scrolling (no multiline jumps.)
-;; (mouse-avoidance-mode 'animate)
 (setq scroll-margin 1
       scroll-step 1
       scroll-conservatively 10000
@@ -49,13 +43,10 @@
     (mwheel-install))
 
 ;; Don't minimize my emacs!
-(when window-system
-  (progn
-    (setq scroll-bar-mode nil)
-    ;; Turn off tool-bar-mode
-    (tool-bar-mode -1)
-    ;; (call-interactively 'tool-bar-mode)
-    (menu-bar-mode -1)))
+(setq scroll-bar-mode nil)
+;; Turn off tool-bar-mode
+(tool-bar-mode -1)
+(menu-bar-mode -1)
 
 ;; Horizontal scroll
 (put 'scroll-left 'disabled nil)
@@ -77,18 +68,13 @@
  ;; If there is more than one, they won't work right.
  '(current-language-environment "UTF-8")
  '(system-time-locale "C")
- ;;'(Linum-format "%7i ")
  '(column-number-mode t)
- '(menu-bar-mode nil)
  '(ediff-custom-diff-program "diff")
  '(ediff-diff-program "diff")
  '(ediff-diff3-program "diff3")
- '(fci-rule-character-color "#202")
- '(fci-rule-color "#202")
  '(indicate-buffer-boundaries (quote right))
  '(linum-delay nil)
  '(linum-eager t)
- ;;'(visible-bell t)
  '(sml-modeline-mode 1)
  '(window-left-margin 0)
  '(display-time-mode t)
@@ -98,16 +84,11 @@
  '(inhibit-startup-screen t)
  '(cursor-type 'bar)
  '(blink-cursor-mode t)
- ;;'(iswitchb-mode t)
  '(savehist-mode t nil (savehist))
  '(savehist-file (in-emacs-d ".cache/history"))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(windmove-wrap-around t)
  '(enable-local-variables :all))
-
-;; In emacs24
-(setq completion-styles '(partial-completion initials))
-(setq completion-pcm-complete-word-inserts-delimiters t)
 
 ;; hostname and buffer-name in frame title
 (setq-default frame-title-format
@@ -143,10 +124,6 @@
 (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
 (global-hl-line-mode t) ;; line
 
-(when (not window-system)
-  ;;allow you to see the region when in console mode
-  (setq transient-mark-mode t))
-
 ;; Windows
 (setq zoom-window-mode-line-color (face-background 'mode-line))
 (winner-mode 1)
@@ -162,9 +139,6 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (put 'scroll-left 'disabled nil)
-
-;; Fill column indicator
-(setq fci-rule-color "#111122")
 
 ;; Browse kill ring
 (setq browse-kill-ring-quit-action 'save-and-restore)

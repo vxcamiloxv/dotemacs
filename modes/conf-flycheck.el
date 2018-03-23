@@ -6,7 +6,7 @@
 
 ;; Config
 (setq flycheck-check-syntax-automatically '(mode-enabled save)
-      flycheck-highlighting-mode 'symbols
+      flycheck-highlighting-mode 'lines
       flycheck-indication-mode 'right-fringe)
 
 ;; Faces
