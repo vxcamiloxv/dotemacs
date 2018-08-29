@@ -369,7 +369,7 @@
    (css . t)
    (latex . t)
    (python . t)
-   (sh . t)))
+   (shell . t)))
 
 ;; Crypt
 (org-crypt-use-before-save-magic)
