@@ -95,7 +95,7 @@
         (:name "gnu-social-mode"
                :description "Emacs client for gnu-social"
                :type git
-               :url "https://github.com/bashrc/gnu-social-mode.git");; "http://git.savannah.gnu.org/r/gnu-social-mode.git"
+               :url "https://git.savannah.nongnu.org/git/gnu-social-mode.git")
         (:name "jabber"
                :description "Emacs jabber client"
                :type git
