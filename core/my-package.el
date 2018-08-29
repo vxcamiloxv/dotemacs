@@ -169,6 +169,7 @@
     org-present
     org-pomodoro
     org-mime
+    org-link-types
     toc-org
     ox-rst
 

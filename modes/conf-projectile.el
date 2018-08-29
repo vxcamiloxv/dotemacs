@@ -2,7 +2,7 @@
 (require 'projectile)
 (require 'project-explorer)
 
-(projectile-global-mode)
+(projectile-mode)
 (setq projectile-enable-caching t
       projectile-cache-file (in-emacs-d ".cache/projectile.cache")
       projectile-known-projects-file (in-emacs-d ".cache/projectile-bookmarks.eld")
