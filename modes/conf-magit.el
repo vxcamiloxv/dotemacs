@@ -16,4 +16,10 @@
 ;;   (if (equal "emacs-giteditor" (frame-parameter nil 'name))
 ;;       (delete-frame)))
 
+(defun distopico:magit-popup-mode-hook ()
+  "Hook when a magit popup is open."
+  (tabbar-local-mode))
+
+(add-hook 'magit-popup-mode-hook #'distopico:magit-popup-mode-hook)
+
 (provide 'conf-magit)
