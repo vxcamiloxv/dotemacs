@@ -12,6 +12,7 @@
                  (org-present-read-only)
                  (hide-mode-line)
                  (toggle-frame-fullscreen)
+                 (visual-line-mode 1)
                  (tabbar-local-mode 1)))
      (add-hook 'org-present-mode-quit-hook
                (lambda ()
@@ -21,6 +22,7 @@
                  (org-present-read-write)
                  (hide-mode-line)
                  (toggle-frame-fullscreen)
+                 (visual-line-mode -1)
                  (tabbar-local-mode -1)))))
 
 (provide 'conf-present)
