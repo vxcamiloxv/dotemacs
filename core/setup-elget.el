@@ -81,6 +81,10 @@
                :description "Emacs JavaScript Align"
                :type git
                :url "https://github.com/johnhooks/js-align.git")
+        (:name "flycheck-xo"
+               :description "flycheck for xo linter"
+               :type git
+               :url "https://github.com/alexmurray/flycheck-xo.git")
         ;; Productive
         (:name "org-jira"
                :description "use Jira in Emacs org-mode"
