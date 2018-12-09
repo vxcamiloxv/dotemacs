@@ -11,6 +11,9 @@
 
 (add-to-list 'projectile-globally-ignored-directories "node_modules")
 
+;; keymap prefixes
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
 ;; Project Explorer
 (setq pe/width 20
       pe/cache-directory (in-emacs-d ".cache/project-explorer-cache/")
