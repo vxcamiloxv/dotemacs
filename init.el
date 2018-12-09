@@ -77,7 +77,6 @@
 ;; Write and organize
 (require 'conf-pomodoro)
 (require 'conf-org)
-;; (require 'conf-jira)
 (require 'conf-present)
 (require 'conf-markdown)
 (require 'conf-rst)
