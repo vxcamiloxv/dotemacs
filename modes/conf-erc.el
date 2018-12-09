@@ -360,7 +360,7 @@ send notification when `distopico:erc-alert-important-p' is non-nil"
             (setq alert-message (buffer-string))
           (setq distopico:erc-alert-last-message message)
           (setq alert-message
-                (concat "\\<"
+                (concat "<"
                         (nth 0 (erc-parse-user nickuserhost))
                         "> " message)))
         ;; Send alert but the rules filter what will shown
@@ -451,12 +451,12 @@ send notification when `distopico:erc-alert-important-p' is non-nil"
 
 ;; Hooks
 ;;(add-hook 'erc-before-connect #'distopico:erc-before-connect-hook)
-(add-hook 'erc-after-connect #'distopico:erc-after-connect-hook)
+;; (add-hook 'erc-insert-pre-hook #'erc-ignore-unimportant)
 ;; (add-hook 'erc-disconnected-hook #'distopico:erc-disconnected-hook)
 (add-hook 'erc-insert-post-hook #'erc-truncate-buffer)
 (add-hook 'erc-text-matched-hook 'distopico:erc-matched-or-insert-hook)
 (add-hook 'erc-insert-modify-hook 'distopico:erc-matched-or-insert-hook)
-;; (add-hook 'erc-insert-pre-hook #'erc-ignore-unimportant)
+(add-hook 'erc-after-connect #'distopico:erc-after-connect-hook)
 (add-hook 'distopico:after-init-load-hook #'distopico:erc-init-load-hook)
 
 (provide 'conf-erc)
