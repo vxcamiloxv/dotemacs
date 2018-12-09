@@ -22,6 +22,10 @@
       user-mail-address "distopico@riseup.net"
       user-short-name "distopico")
 
+;; Save custom variables in another file
+(setq custom-file (in-emacs-d "custom.el"))
+(load custom-file 'noerror)
+
 ;; Keep cache
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
