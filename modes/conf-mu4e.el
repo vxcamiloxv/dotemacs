@@ -338,7 +338,7 @@ store your org-contacts."
        (format "%s"
                (mapconcat (lambda (fmt)
                             (format fmt name))
-                          '("flag:unread AND maildir:/%s/INBOX")
+                          '("flag:unread AND maildir:'/%s/INBOX'")
                           " "))))
    distopico:mu4e-account-alist
    " OR "))
@@ -351,11 +351,11 @@ store your org-contacts."
 (defun distopico:mu4e-get-unread-command ()
   "Get unread messages fro mu4e binary."
   (replace-regexp-in-string
-   "[ \t\n\r]" ""
+   "[\t\n\r]" ""
    (shell-command-to-string
     (concat "echo -n $( " mu4e-mu-binary " find "
             (distopico:mu4e-unread-mail-query)
-            " 2>/dev/null | wc -l )")) ))
+            " 2>/dev/null | wc -l )"))))
 
 (defun distopico:mu4e-inbox-update ()
   "Print tooltip help and icon for unread messages."
@@ -378,7 +378,7 @@ store your org-contacts."
   (sit-for 0))
 
 (defun distopico:mu4e-maildirs-force-update()
-  "Clear cache and insert maildirs summary and reload"
+  "Clear cache and insert maildirs summary and reload."
   (interactive)
   (mu4e-message "Updating index & cache...")
   (mu4e-update-index)
