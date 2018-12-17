@@ -161,7 +161,6 @@
     company-anaconda
     company-statistics
     company-quickhelp
-    ac-js2
 
     ;; Org
     org-plus-contrib

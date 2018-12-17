@@ -2,7 +2,6 @@
 (require 'js2-mode)
 (require 'js2-refactor)
 (require 'js2-imenu-extras)
-(require 'ac-js2)
 (require 'xref-js2)
 (require 'web-beautify)
 (require 'company-tern)
@@ -29,10 +28,8 @@
       js2-mode-show-strict-warnings t
       js2-strict-trailing-comma-warning t
       js2-strict-missing-semi-warning nil
-      js2-strict-inconsistent-return-warning nil
       ;; js2-bounce-indent-p t TODO: works for better indentation?
-      ;; Other
-      ac-js2-evaluate-calls t)
+      js2-strict-inconsistent-return-warning nil)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'magic-mode-alist '(".+node" . js2-mode))
@@ -45,8 +42,6 @@
 ;; unbind keys
 (define-key tern-mode-keymap (kbd "M-.") nil)
 (define-key tern-mode-keymap (kbd "M-,") nil)
-(define-key ac-js2-mode-map (kbd "M-.") nil)
-(define-key ac-js2-mode-map (kbd "M-,") nil)
 
 ;; Custom keys
 (js2r-add-keybindings-with-prefix "C-c C-m")
@@ -68,7 +63,6 @@
   (js2-imenu-extras-setup)
   (rainbow-delimiters-mode t)
   (tern-mode t)
-  (ac-js2-mode t)
   (js2-refactor-mode t)
   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
   (distopico:js-common-setup))
