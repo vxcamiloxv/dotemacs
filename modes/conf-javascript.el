@@ -24,7 +24,6 @@
       js2-include-browser-externs t
       js2-highlight-level 3
       js2-move-point-on-right-click t
-      js2-build-imenu-callbacks t
       ;; Let js2-mode warn some errors
       js2-mode-show-parse-errors t
       js2-mode-show-strict-warnings t
@@ -72,10 +71,11 @@
   (ac-js2-mode t)
   (js2-refactor-mode t)
   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
-  ;; Add node_modules to exec path
-  (distopico:add-node-modules-path)
-  ;; Default checker
-  (flycheck-select-checker 'javascript-jshint)
+  (distopico:js-common-setup))
+
+;;;###autoload
+(defun distopico:js-common-setup ()
+  "Common setup to JS and JSX."
   ;; Add company backend for js
   (set (make-local-variable 'company-backends)
        '(company-bbdb
@@ -83,15 +83,18 @@
          company-semantic company-files
          (company-dabbrev-code company-gtags company-etags company-keywords company-tern :with company-yasnippet)
          (company-dabbrev company-capf company-keywords :with company-yasnippet)))
+  ;; Add node_modules to exec path
+  (distopico:add-node-modules-path)
+  ;; Default checker
+  (flycheck-select-checker 'javascript-jshint)
   ;; Enable checker by project
-  (cond
-   ((distopico:locate-parent-file distopico:eslint-regexp)
-    (flycheck-select-checker 'javascript-eslint))))
+  (when (distopico:locate-parent-file distopico:eslint-regexp)
+    (flycheck-select-checker 'javascript-eslint)))
 
 ;;;###autoload
 (defun distopico:lint-from-node-modules ()
-  (interactive)
   "Set executable lint by project node_modules."
+  (interactive)
   (let* ((root (locate-dominating-file
                 (or (buffer-file-name) default-directory)
                 "node_modules"))
@@ -106,9 +109,10 @@
 
 ;;;###autoload
 (defun distopico:add-node-modules-path ()
-  (interactive)
   "Add `node_modules' in current project to exec path.
 From: https://github.com/codesuki/add-node-modules-path"
+  (interactive)
+  ;; TODO: make async
   (let* ((root (locate-dominating-file
                 (or (buffer-file-name) default-directory)
                 "node_modules"))

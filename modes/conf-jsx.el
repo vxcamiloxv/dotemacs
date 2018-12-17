@@ -40,21 +40,8 @@
   ;; Fix some indentation problems
   (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
 
-  ;; Add node_modules to exec path
-  (distopico:add-node-modules-path)
-  ;; Default checker
-  (flycheck-select-checker 'javascript-jshint)
-  ;; Add company backend for js
-  (set (make-local-variable 'company-backends)
-       '(company-bbdb
-         company-nxml company-css
-         company-semantic company-files
-         (company-dabbrev-code company-gtags company-etags company-keywords company-tern :with company-yasnippet)
-         (company-dabbrev company-capf company-keywords :with company-yasnippet)))
-  ;; Enable checker by project
-  (cond
-   ((distopico:locate-parent-file distopico:eslint-regexp)
-    (flycheck-select-checker 'javascript-eslint))))
+  ;; Common JS setup
+  (distopico:js-common-setup))
 
 ;; Hooks
 (add-hook 'web-jsx-mode-hook 'distopico:web-jsx-mode-hook)
