@@ -5,13 +5,16 @@
 (require 'aggressive-indent)
 (require 'dumb-jump)
 
+(defconst distopico:editorconfig-regexp
+  (concat "\\`" (regexp-quote ".editorconfig") "\\'"))
+
 (setq semanticdb-default-save-directory (in-emacs-d ".cache/semanticdb")
       dumb-jump-selector 'ivy)
 
 ;; Define additional keybindings
 
 ;; Emcas refactor
-(define-key prog-mode-map (kbd "M-RET") 'emr-show-refactor-menu)
+(define-key prog-mode-map (kbd "C-M-<return>") 'emr-show-refactor-menu)
 
 ;; Exclude some modes fro agressive indent
 (dolist (source '(diary-mode css-mode less-css-mode jade-mode))
@@ -44,6 +47,11 @@ from: prelude"
   (move-dup-mode)
   ;; Search references
   (dumb-jump-mode)
+  ;; If editorconfig not found clean but only
+  ;; if the whitespace in the buffer was initially clean
+  (unless (distopico:locate-parent-file distopico:editorconfig-regexp)
+    (whitespace-cleanup-mode t))
+
   (when (executable-find ispell-program-name)
     (flyspell-prog-mode)))
 
