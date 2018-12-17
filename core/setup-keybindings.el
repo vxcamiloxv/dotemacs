@@ -105,7 +105,6 @@
 (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
 (define-key isearch-mode-map [next] 'isearch-repeat-forward)
 (define-key isearch-mode-map [prior] 'isearch-repeat-backward)
-(define-key isearch-mode-map (kbd "M-o") 'distopico:isearch-process-search-char)
 
 ;; Toogle whitespace
 (global-set-key (kbd "C-x w") 'whitespace-mode)
@@ -149,6 +148,7 @@
 (global-set-key (kbd "C-c h i") 'helm-mini)
 (global-set-key (kbd "C-c h I") 'helm-swoop-from-isearch)
 (global-set-key (kbd "C-c h s") 'helm-swoop)
+(global-set-key (kbd "C-c h o") 'helm-occur)
 (global-set-key (kbd "C-c h S") 'helm-semantic-or-imenu)
 (global-set-key (kbd "C-c h k") 'helm-show-kill-ring)
 (global-set-key (kbd "C-c h x") 'helm-M-x)
@@ -165,9 +165,9 @@
 (global-set-key (kbd "C-x o") 'ido-select-window)
 
 ;; Imenu
-(global-set-key (kbd "C-.") 'imenu)
+(global-set-key (kbd "C-x c") 'imenu)
+(global-set-key (kbd "C-c m") 'helm-imenu)
 (global-set-key [S-mouse-3] 'imenu)
-(global-set-key (kbd "C-c .") 'imenu-anywhere)
 
 ;; Go to char
 (global-set-key (kbd "C-c f") 'iy-go-to-char)

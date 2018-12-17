@@ -11,37 +11,35 @@
 (add-hook 'isearch-mode-end-hook 'distopico:goto-match-beginning)
 
 ;; Functions
-(defun distopico:isearch-process-search-char()
-  (interactive)
-  (isearch-process-search-char ?\n))
-
 (defun distopico:goto-match-beginning ()
-  "Position of the Cursor after Searching"
+  "Position of the Cursor after Searching."
   (when (and isearch-forward isearch-other-end)
     (goto-char isearch-other-end)))
 
-(defadvice isearch-exit (after my-goto-match-beginning activate)
+(defadvice isearch-exit (after distopico:goto-match-beginning activate)
   "Go to beginning of match."
   (when (and isearch-forward isearch-other-end)
     (goto-char isearch-other-end)))
 
-(defvar isearch-initial-string nil)
-(defun isearch-set-initial-string ()
+(defvar distopico:isearch-initial-string nil)
+(defun distopico:isearch-set-initial-string ()
   "I-search with initial contents."
-  (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
-  (setq isearch-string isearch-initial-string)
+  (remove-hook 'isearch-mode-hook 'distopico:isearch-set-initial-string)
+  (setq isearch-string distopico:isearch-initial-string)
   (isearch-search-and-update))
 
-(defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
-  "Interactive search forward for the symbol at point."
+(defun distopico:isearch-forward-at-point (&optional regexp-p no-recursive-edit)
+  "Interactive search forward for the symbol at point.
+Options `REGEXP-P' and `NO-RECURSIVE-EDIT',
+DEPRECATED: Emacs 26 has `isearch-forward-symbol-at-point'."
   (interactive "P\np")
   (if regexp-p (isearch-forward regexp-p no-recursive-edit)
     (let* ((end (progn (skip-syntax-forward "w_") (point)))
            (begin (progn (skip-syntax-backward "w_") (point))))
       (if (eq begin end)
           (isearch-forward regexp-p no-recursive-edit)
-        (setq isearch-initial-string (buffer-substring begin end))
-        (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
+        (setq distopico:isearch-initial-string (buffer-substring begin end))
+        (add-hook 'isearch-mode-hook 'distopico:isearch-set-initial-string)
         (isearch-forward regexp-p no-recursive-edit)))))
 
 (provide 'conf-isearch)
