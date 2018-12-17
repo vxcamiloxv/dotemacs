@@ -17,8 +17,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.gradle\\'" . groovy-mode))
 
-;; Remove auto jdee auto-init
-(setq auto-mode-alist (remove '("\\.java\\'" . jdee-mode) auto-mode-alist))
+;; Another opportunity to jdee
+;; (setq auto-mode-alist (remove '("\\.java\\'" . jdee-mode) auto-mode-alist))
 
 ;; Functions
 (defun distopico:point-in-defun-declaration-p ()
@@ -40,8 +40,8 @@
   (ggtags-mode t)
   (gradle-mode t)
 
-  ;; meghanada-mode on
-  (meghanada-mode t)
+  ;; meghanada-mode off and I should test lsp-mode more in the future
+  ;; (meghanada-mode t)
   ;; Fix anotation indexation
   (make-local-variable 'c-comment-start-regexp)
   (setq c-comment-start-regexp "(@|/(/|[*][*]?))")

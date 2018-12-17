@@ -122,7 +122,7 @@
             (jabber-switch-to-roster-buffer))
         (delete-frame))))
 
-(defun distopico:jabber-buffer-ido()
+(defun distopico:jabber-buffer-ido ()
   (interactive)
   (ido-for-mode "Jabber:" 'jabber-chat-mode))
 
