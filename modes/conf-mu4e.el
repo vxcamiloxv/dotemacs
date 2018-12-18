@@ -79,16 +79,17 @@ attachment - should launch the no-attachment warning.")
          ))
 
 (setq mu4e-bookmarks
-      '(
+      '(("maildir:/\/*\/INBOX/" "All Inbox" ?i)
         ("maildir:/1-Distopico/INBOX" "[Distopico] All" ?D)
         ("flag:unread AND maildir:/1-Distopico/INBOX" "[Distopico] Unread Inbox" ?d)
         ("maildir:/2-vXcamiloXv/INBOX" "[vXcamiloXv] All" ?C)
         ("flag:unread AND maildir:/2-vXcamiloXv/INBOX" "[vXcamiloXv] Unread Inbox" ?c)
-        ("flag:unread AND NOT flag:trashed AND NOT maildir:/*/Spam* AND NOT maildir:/*/Trash*" "Unread messages" ?u)
-        ("date:today..now AND NOT maildir:/*/Spam*" "Today's messages" ?t)
-        ("date:7d..now AND NOT maildir:/*/Spam*" "Last 7 days" ?w)
-        ("mime:image/* AND NOT maildir:/*/Spam*" "Messages with images" ?p)
-        ("flag:unread AND NOT flag:trashed AND NOT maildir:/*/Trash AND maildir:/*/Spam*" "Unread spam" ?s)))
+        ("flag:unread AND NOT flag:trashed AND NOT maildir:/\/*\/Spam*/ AND NOT maildir:/\/*\/Trash*/" "Unread All Inbox" ?u)
+        ("flag:unread" "Unread All" ?U)
+        ("date:today..now AND NOT maildir:/\/*\/Spam*/" "Today's messages" ?t)
+        ("date:7d..now AND NOT maildir:/\/*\/Spam*/" "Last 7 days" ?w)
+        ("mime:image/* AND NOT maildir:/\/*\/Spam*/" "Messages with images" ?p)
+        ("flag:unread AND maildir:/\/*\/Spam*/" "Unread spam" ?s)))
 
 ;; Enable account structure
 (require 'mu4e-maildirs-extension)
