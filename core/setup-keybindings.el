@@ -31,6 +31,7 @@
 (global-set-key (kbd "M-<f9>") 'nav-jump-to-current-dir)
 (global-set-key [f8] 'distopico:neotree-toggle)
 (global-set-key (kbd "M-<f8>") 'neotree-refresh)
+(global-set-key (kbd "C-<f11>") 'dired-jump-other-window)
 
 ;; Buffer
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
@@ -125,11 +126,8 @@
 (global-set-key (kbd "C-<f2>") 'menu-bar-mode)
 
 ;; Projects
-(global-set-key (kbd "C-<f7>") 'direx:jump-to-directory)
 (global-set-key (kbd "C-<f8>") 'project-explorer-open)
-(global-set-key (kbd "C-<f9>") 'direx:jump-to-directory-other-window)
-(global-set-key (kbd "C-<f10>") 'direx-project:jump-to-project-root-other-window)
-(global-set-key (kbd "C-<f11>") 'dired-jump-other-window)
+(global-set-key (kbd "C-<f9>") 'direx-project:jump-to-project-root-other-window)
 
 ;; Perform general cleanup
 (global-set-key (kbd "C-c n") 'cleanup-buffer)

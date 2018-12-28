@@ -22,6 +22,10 @@
                :description "Popwin Mode"
                :type git
                :url "https://github.com/m2ym/popwin-el.git")
+        (:name "dired-single"
+               :description "Dired Single"
+               :type git
+               :url "https://github.com/crocket/dired-single")
         (:name "neotree"
                :description "Neotree Mode"
                :type git
@@ -116,11 +120,7 @@
         (:name "dark-theme"
                :description "Dark theme"
                :type http
-               :url "https://raw.github.com/suvayu/.emacs.d/master/themes/dark-emacs-theme.el")
-        (:name "naquadah-theme"
-               :description "Naquadah theme"
-               :type git
-               :url "https://github.com/suhailshergill/naquadah-theme.git")))
+               :url "https://raw.github.com/suvayu/.emacs.d/master/themes/dark-emacs-theme.el")))
 
 (setq elget-packages
       (append

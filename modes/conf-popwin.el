@@ -48,8 +48,7 @@
         ("*Ibuffer*" :position bottom :height 0.2)
         ("*Ido Completions*" :noselect t :height 0.3)
         ("*imenu-tree*" :position left :width 50 :stick t)
-        (direx:direx-mode :position left :width 35 :dedicated t)
-        (dired-mode :position top)
+        (direx:direx-mode :position left :width 50 :dedicated t)
 
         ("*gists*" :height 0.3)
         ("*sldb.*":regexp t :height 0.3)

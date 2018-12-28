@@ -15,7 +15,7 @@
 ;; Autoload
 (autoload 'dired-async-mode "dired-async.el" nil t)
 
-;; Async mdoe
+;; Async mode
 (dired-async-mode t)
 
 ;; Config
