@@ -26,12 +26,12 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "s-x") 'execute-extended-command)
 
-;; Nav tree
+;; Navigation
+(global-set-key [f7] 'dired-jump-other-window)
 (global-set-key [f9] 'distopico:nav-toggle)
 (global-set-key (kbd "M-<f9>") 'nav-jump-to-current-dir)
 (global-set-key [f8] 'distopico:neotree-toggle)
 (global-set-key (kbd "M-<f8>") 'neotree-refresh)
-(global-set-key (kbd "C-<f11>") 'dired-jump-other-window)
 
 ;; Buffer
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
@@ -48,7 +48,7 @@
 (global-set-key (kbd "C-c b f") 'distopico:rename-current-buffer-file)
 (global-set-key (kbd "C-c b d") 'rename-buffer-with-directory)
 ;; Revert without any fuss
-(global-set-key (kbd "s-w") (λ (revert-buffer t t)))
+(global-set-key (kbd "C-c b c") (λ (revert-buffer t)))
 
 ;; Window
 (global-set-key (kbd "C-c w t") 'distopico:toggle-window-split)
@@ -126,6 +126,7 @@
 (global-set-key (kbd "C-<f2>") 'menu-bar-mode)
 
 ;; Projects
+;; TODO: remove this because has the same behavior of neotree and nav
 (global-set-key (kbd "C-<f8>") 'project-explorer-open)
 (global-set-key (kbd "C-<f9>") 'direx-project:jump-to-project-root-other-window)
 
@@ -212,19 +213,19 @@
 ;; Magit
 (global-set-key (kbd "C-x g s") 'magit-status)
 
-;; ;; Mail
+;; Mail
 (global-set-key (kbd "C-x M-m") 'distopico:mu4e-open)
 
-;; ;; News
+;; News
 (global-set-key (kbd "C-x M-n") 'distopico:elfeed-open)
 
 ;; Pomodoro
 (global-set-key (kbd "C-x M-p") 'pomodoro-action)
 
-;; ;; Erc
+;; Erc
 (global-set-key (kbd "C-x M-e") 'distopico:erc-start-ask-or-switch)
 
-;; ;; GnuSocial
+;; GnuSocial
 (global-set-key (kbd "C-x M-g") 'distopico:gnusocial-open)
 (define-key global-map (kbd "C-c g")
   (let ((map (make-sparse-keymap)))
@@ -276,5 +277,4 @@
     map))
 
 (provide 'setup-keybindings)
-
 ;;; setup-keybindings.el ends here
