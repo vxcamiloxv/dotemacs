@@ -64,7 +64,6 @@
       ;; Custom
       distopico:jabber-muc-list '("veganismo@salas.suchat.org"
                                   "vegan@conference.jabber.org"
-                                  "radiolibrevigo@conference.amaya.tk"
                                   "elbinario@salas.xmpp.elbinario.net"
                                   "pump.io@conference.movim.eu"))
 
@@ -82,8 +81,8 @@
                      (propertize
                       (or (cdr (assoc (get buddy 'show) jabber-presence-strings))
                           (get buddy 'show)) 'face
-                          (or (cdr (assoc (get buddy 'show) jabber-presence-faces))
-                              'jabber-roster-user-online))))
+                      (or (cdr (assoc (get buddy 'show) jabber-presence-faces))
+                          'jabber-roster-user-online))))
         " • " (:eval (jabber-fix-status (get (jabber-jid-symbol jabber-chatting-with) 'status)))
         (:eval (when (not (eq jabber-events-message ""))
                  " " jabber-events-messag))
