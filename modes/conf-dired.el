@@ -9,7 +9,6 @@
 (require 'dired-ranger)
 (require 'dired-narrow)
 (require 'dired-sort)
-(require 'single-dired)
 (require 'dired-imenu)
 
 ;; Autoload
@@ -19,11 +18,12 @@
 (dired-async-mode t)
 
 ;; Config
-(setq dired-omit-files-p t
+(setq dired-find-subdir t
+      dired-dwim-target t ;; Move files between split panes
+      dired-omit-files-p t
       dired-omit-mode t
       dired-omit-files "^\\..*[a-zA-Z]"
       dired-listing-switches "-al"
-      dired-dwim-target t ;; Move files between split panes
       dired-details-hidden-string " "
       diredp-font-lock-keywords-1
       (append
@@ -57,6 +57,7 @@
 ;; Custom keymap
 (define-key dired-mode-map (kbd "C-<right>") 'dired-subtree-insert)
 (define-key dired-mode-map (kbd "C-<left>") 'dired-subtree-remove)
+(define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
 (define-key dired-mode-map [mouse-3] 'dired-maybe-insert-subdir)
 (define-key dired-mode-map (kbd "C-{") 'distopico:dired-narrow-window)
 (define-key dired-mode-map "e" 'distopico:dired-ediff-files)
@@ -71,11 +72,6 @@
 (define-key image-dired-thumbnail-mode-map "x" 'image-diredx-flagged-delete)
 
 ;; Functions
-(defun distopico:dired-narrow-window ()
-  "Make the current dired mode window 30 chars wide."
-  (interactive)
-  (adjust-window-trailing-edge (selected-window) (- 30 (window-width)) t))
-
 (defun distopico:dired-mode-hook ()
   "Enable modes in dired."
   (visual-line-mode 0) ;; unwrap lines.
@@ -85,7 +81,7 @@
   (font-lock-mode 1) ;; Switch-on font-lock
 
   ;; Use the same buffer for visited directories
-  (toggle-diredp-find-file-reuse-dir 1)
+  (diredp-toggle-find-file-reuse-dir 1)
 
   ;; Set omit-mode by default
   (dired-omit-mode 1)
@@ -95,8 +91,14 @@
        (cons '(dired-font-lock-keywords diredp-font-lock-keywords-1)
              (cdr font-lock-defaults))))
 
-;; Hooks
-(add-hook 'dired-mode-hook 'distopico:dired-mode-hook)
+(defun distopico:dired-after-readin-hook ()
+  "Set custom name to dired buffers."
+  (rename-buffer (format "dired:%s" (generate-new-buffer-name dired-directory))))
+
+(defun distopico:dired-narrow-window ()
+  "Make the current dired mode window 30 chars wide."
+  (interactive)
+  (adjust-window-trailing-edge (selected-window) (- 30 (window-width)) t))
 
 (defun distopico:dired-back-to-top ()
   "Make `end-of-buffer' and `beginning-of-buffer' behave properly."
@@ -161,5 +163,10 @@ from: https://oremacs.com/."
           wdired-abort-changes)
   (eval `(defadvice ,it (after revert-buffer activate)
            (revert-buffer))))
+
+
+;; Hooks
+(add-hook 'dired-mode-hook 'distopico:dired-mode-hook)
+(add-hook 'dired-after-readin-hook 'distopico:dired-after-readin-hook)
 
 (provide 'conf-dired)

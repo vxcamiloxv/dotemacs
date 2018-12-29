@@ -22,10 +22,6 @@
                :description "Popwin Mode"
                :type git
                :url "https://github.com/m2ym/popwin-el.git")
-        (:name "dired-single"
-               :description "Dired Single"
-               :type git
-               :url "https://github.com/crocket/dired-single")
         (:name "neotree"
                :description "Neotree Mode"
                :type git
