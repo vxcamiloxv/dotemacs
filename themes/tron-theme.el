@@ -3,11 +3,12 @@
 ;; Copyright (C) 2012 Tom Willemsen <tom@ryuslash.org>
 
 ;; Author: Tom Willemsen <tom@ryuslash.org>
+;;         Distopico <distopico@riseup.net>
 ;; Created: Wed Jan 4 2012
-;; Version: 15
+;; Version: 16
 ;; Keywords: faces
 ;; URL: http://ryuslash.org/projects/tron-theme.html
-;; Modified by Distopico Vegan <distopico@riseup.net>
+;; Maintainer: Distopico <distopico@riseup.net>
 
 ;; This file is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
@@ -64,24 +65,23 @@
 ;; 12 - Remove quotes from :inherit properties.
 ;;    - Explicitly set colors for `fringe'.
 ;; 13 - Add `tabbar-mode' faces
-;; 14 - Fix faces fro `gnusocial-mode' and `company-mode'
+;; 14 - Fix faces for `gnusocial-mode' and `company-mode'
 ;; 15 - Add `ediff-mode' faces
+;; 16 - Add `ido-mode' faces
 
 ;;; Code:
 
 (deftheme tron
-  "Create 2012-01-01")
+  "Updated 2019-12-28")
 
 (require 'ezimage)
 
 (custom-theme-set-variables
  'tron
-
  '(powerline-active1 "#00779a")
  '(powerline-active2 "#00475a")
  '(linum-format "%6d") ;; Default 7i
- '(fringe-mode 10 nil (fringe))
- )
+ '(fringe-mode 10 nil (fringe)))
 
 (custom-theme-set-faces
  'tron
@@ -139,6 +139,13 @@
  '(eshell-prompt-face ((t (:foreground "#e0c625"))))
  '(eshell-test-failed-face ((t (:foreground "OrangeRed" :bold t))))
  '(eshell-test-ok-face ((t (:foreground "#05e4a5" :bold t))))
+
+ ;; Ido
+ '(ido-subdir ((t (:foreground "#ccff66"))))
+ '(ido-first-match ((t (:foreground "#24c6e0" :bold t))))
+ '(ido-only-match ((t (:foreground "#05e4a5" :bold t))))
+ '(ido-indicator ((t (:foreground "#001E21" :background "#ccff66"))))
+ '(ido-incomplete-regexp ((t (:foreground "#001E21" :background "#24c6e0"))))
 
  ;; font-lock
  '(font-lock-builtin-face ((t (:foreground "#029cdc"))))
