@@ -24,3 +24,4 @@ then
     body=""
     notify-send -a ${appname} -i ${icon} -c ${category} -u  ${urgency} -t ${timeout} "${summary}" "${body}" &
 fi
+exit 0
