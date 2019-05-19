@@ -96,6 +96,7 @@
     elisp-slime-nav
     expand-region
     flycheck
+    flycheck-gradle
     js-doc
     magit
     move-dup
@@ -112,6 +113,7 @@
     ;; Languages
     anaconda-mode
     android-mode
+    android-env ;; I should merge android-mode and android-env in a single package
     gradle-mode
     groovy-mode
     java-imports
@@ -189,9 +191,7 @@
     ;; Ctags/Gtags
     ggtags
     ctags-update
-    counsel-gtags
-    )
-  "A list of packages to ensure are installed at launch."
-  )
+    counsel-gtags)
+  "A list of packages to ensure are installed at launch.")
 
 (provide 'my-package)

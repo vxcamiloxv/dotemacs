@@ -1,21 +1,16 @@
 ;;; Code:
 (require 'jdee)
 (require 'meghanada)
-(autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
+(require 'java-imports)
 
-;; Control
-(defconst distopico:androidmanifest-regexp
-  (concat "\\`" (regexp-quote "AndroidManifest.xml") "\\'"))
-
-;; Config
+;; Configuration
 (setq jdee-maven-disabled-p nil
       jdee-launch-beanshell-on-demand-p nil
       jdee-complete-add-space-after-method t
       jdee-mode-line-format (distopico:powerline-theme)
+      java-imports-find-block-function 'java-imports-find-place-sorted-block
       jdee-server-dir (in-emacs-d "external/jdee-server/target/")
       meghanada-server-install-dir (in-emacs-d "external/meghanada-server/"))
-
-(add-to-list 'auto-mode-alist '("\\.gradle\\'" . groovy-mode))
 
 ;; Disable jdee but left package just to test with non-android projects
 (setq auto-mode-alist (remove '("\\.java\\'" . jdee-mode) auto-mode-alist))
@@ -45,30 +40,14 @@
   (make-local-variable 'c-comment-start-regexp)
   (setq c-comment-start-regexp "(@|/(/|[*][*]?))")
   (modify-syntax-entry ?@ "< b" java-mode-syntax-table)
-
-  ;; Ignore some files by default
-  (add-to-list (make-local-variable 'projectile-globally-ignored-directories) ".meghanada")
   ;; use code format
   ;; (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
-  
-  (when (boundp 'company-backends)
-    (make-local-variable 'company-backends)
-    ;; Remove eclim backend
-    (setq company-backends (delete 'company-eclim company-backends)))
-  ;; Active android-mode if match manifiest
-  (cond
-   ((distopico:locate-parent-file distopico:androidmanifest-regexp)
-    (android-mode t))))
 
-(defun distopico:nxml-mode-hook ()
-  "Hooks for  `nxml-mode'."
-  ;; Active android-mode if match manifiest
-  (cond
-   ((distopico:locate-parent-file distopico:androidmanifest-regexp)
-    (android-mode t))))
+  ;; Ignore some files by default
+  (add-to-list (make-local-variable 'projectile-globally-ignored-directories) ".meghanada"))
 
 ;; Hooks
 (add-hook 'java-mode-hook #'distopico:java-mode-hook)
-(add-hook 'nxml-mode-hook #'distopico:nxml-mode-hook)
+(add-hook 'java-mode-hook #'java-imports-scan-file)
 
 (provide 'conf-java)

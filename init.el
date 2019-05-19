@@ -82,7 +82,7 @@
 (require 'conf-rst)
 (require 'conf-flyspell)
 
-;; Utils
+;; Utilities
 (require 'conf-eshell)
 (require 'conf-text)
 (require 'conf-tramp)
@@ -109,6 +109,9 @@
 (require 'conf-web-mode)
 (require 'conf-javascript)
 (require 'conf-jsx)
+(require 'conf-gradle)
+(require 'conf-android)
+(require 'conf-kotlin)
 (require 'conf-java)
 (require 'conf-python)
 (require 'conf-emmet)
