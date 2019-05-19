@@ -17,8 +17,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.gradle\\'" . groovy-mode))
 
-;; Another opportunity to jdee
-;; (setq auto-mode-alist (remove '("\\.java\\'" . jdee-mode) auto-mode-alist))
+;; Disable jdee but left package just to test with non-android projects
+(setq auto-mode-alist (remove '("\\.java\\'" . jdee-mode) auto-mode-alist))
 
 ;; Functions
 (defun distopico:point-in-defun-declaration-p ()
@@ -39,9 +39,8 @@
   "The jdee-mode hook."
   (ggtags-mode t)
   (gradle-mode t)
-
-  ;; meghanada-mode off and I should test lsp-mode more in the future
-  ;; (meghanada-mode t)
+  ;; meghanada-mode another opportunity, I test lsp-mode with java but not works fine with android
+  (meghanada-mode t)
   ;; Fix anotation indexation
   (make-local-variable 'c-comment-start-regexp)
   (setq c-comment-start-regexp "(@|/(/|[*][*]?))")
