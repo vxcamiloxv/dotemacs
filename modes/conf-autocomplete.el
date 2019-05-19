@@ -19,6 +19,8 @@
       company-dabbrev-ignore-case nil
       company-selection-wrap-around t
       company-tooltip-align-annotations t
+      company-backends (delete 'company-eclim company-backends)
+      ;;company-transformers (company-sort-by-backend-importance company-sort-by-occurrence company-sort-prefer-same-case-prefix)
       company-statistics-file (in-emacs-d ".cache/company-statistics-cache.el")
       abbrev-file-name (in-emacs-d ".cache/abbrev_defs"))
 
