@@ -58,32 +58,22 @@
     rainbow-mode
     smex
     tabbar
-    whitespace-cleanup-mode
 
     ;; TODO: check those modes/libraries
     dropdown-list
-    elisp-slime-nav
-    gist
-    god-mode
-    htmlize
-    icicles
     iedit
     misc-cmds
-    mouse-slider-mode
-    paredit
-    simple-httpd
-    smart-tabs-mode
     smartparens
 
     ;; Helm
     helm
     helm-css-scss
     helm-emmet
-    helm-projectile
     helm-swoop
 
     ;; Projects
     projectile
+    helm-projectile
     find-file-in-project
 
     ;; Auto Complete
@@ -103,12 +93,15 @@
     dumb-jump
     editorconfig
     emr
+    elisp-slime-nav
     expand-region
     flycheck
     js-doc
     magit
     move-dup
     xref-js2
+    smartscan
+    simple-httpd
 
     ;; Debug
     nodejs-repl
@@ -143,7 +136,7 @@
     less-css-mode
     markdown-mode
     mmm-mode
-    pug-mode ;; Tets what is better
+    pug-mode ;; Test what is better
     restclient
     rjsx-mode
     smart-forward
@@ -152,6 +145,7 @@
     yaml-mode
 
     ;; Utilities
+    htmlize
     auto-async-byte-compile
     avy
     avy-zap
@@ -164,6 +158,7 @@
     sync-recentf
     tramp-term
     yasnippet
+    whitespace-cleanup-mode
 
     ;; Helpers
     anzu
@@ -192,9 +187,9 @@
     znc
 
     ;; Ctags/Gtags
-    etags-select
     ggtags
     ctags-update
+    counsel-gtags
     )
   "A list of packages to ensure are installed at launch."
   )
