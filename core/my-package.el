@@ -3,188 +3,198 @@
 (defvar distopico-packages
   '(
     ;; Basic
-    s
     cl
-    dash
     cl-lib
+    dash
     es-lib
+    exec-path-from-shell
     log4e
     paradox
-    exec-path-from-shell
-
-    ;; Helpers
-    which-key
-    change-inner
-    goto-last-change
-    region-bindings-mode
-    misc-cmds
-    buffer-move
+    s
 
     ;; Ido
-    ido-sort-mtime
-    ido-completing-read+
-    ido-vertical-mode
-    ido-select-window
-    ido-complete-space-or-hyphen
-    ido-occur
-    ido-at-point
     crm-custom
+    ido-at-point
+    ido-complete-space-or-hyphen
+    ido-completing-read+
+    ido-occur
+    ido-select-window
+    ido-sort-mtime
+    ido-vertical-mode
 
     ;; Window
-    zoom-window
-    windresize
     ace-window
     es-windows
+    windresize
+    zoom-window
 
     ;; Dired
-    direx
     dired+
     dired-details+
-    image-dired+
     dired-hacks-utils
-    dired-subtree
-    dired-ranger
-    dired-narrow
-    dired-sort
     dired-imenu
+    dired-narrow
+    dired-ranger
+    dired-sort
+    dired-subtree
+    direx
+    image-dired+
 
-    ;; Ui
-    hlinum
-    linum-off
-    iedit
-    paredit
-    icicles
-    column-marker
-    god-mode
-    gist
-    tabbar
-    htmlize
-    highlight-symbol
-    flycheck
-    flycheck-color-mode-line
-    jump-char
-    smex
-    perspective
-    smartparens
-    aggressive-indent
-    projectile
-    simple-httpd
-    rainbow-mode
-    rainbow-identifiers
-    rainbow-delimiters
-    mouse-slider-mode
-    highlight-escape-sequences
-    whitespace-cleanup-mode
-    elisp-slime-nav
-    dropdown-list
-    smart-tabs-mode
-    fill-column-indicator
+    ;; UI/UX
     browse-kill-ring
+    column-marker
+    fill-column-indicator
+    flycheck-color-mode-line
+    highlight-escape-sequences
     highlight-indentation
-    find-file-in-project
+    highlight-symbol
+    hlinum
+    jump-char
+    linum-off
+    perspective
     powerline
+    rainbow-delimiters
+    rainbow-identifiers
+    rainbow-mode
+    smex
+    tabbar
+    whitespace-cleanup-mode
+
+    ;; TODO: check those modes/libraries
+    dropdown-list
+    elisp-slime-nav
+    gist
+    god-mode
+    htmlize
+    icicles
+    iedit
+    misc-cmds
+    mouse-slider-mode
+    paredit
+    simple-httpd
+    smart-tabs-mode
+    smartparens
 
     ;; Helm
     helm
-    helm-swoop
-    helm-projectile
     helm-css-scss
     helm-emmet
+    helm-projectile
+    helm-swoop
 
-    ;; Programing
+    ;; Projects
+    projectile
+    find-file-in-project
+
+    ;; Auto Complete
+    company-anaconda
+    company-jedi
+    company-lsp
+    company-quickhelp
+    company-restclient
+    company-statistics
+    company-tern
+    company-web
+    company
+
+    ;; Development
     ag
+    aggressive-indent
+    dumb-jump
+    editorconfig
     emr
-    nodejs-repl
-    php-mode
-    php-extras
-    php-auto-yasnippets
-    pony-mode
-    jedi
-    realgud
-    lua-mode
+    expand-region
+    flycheck
+    js-doc
+    magit
     move-dup
+    xref-js2
+
+    ;; Debug
+    nodejs-repl
+    realgud
+    skewer-less
+    skewer-mode
+
+    ;; Languages
     anaconda-mode
-    jdee
-    java-snippets
-    java-imports
-    meghanada
     android-mode
     gradle-mode
     groovy-mode
-    dumb-jump
+    java-imports
+    java-snippets
+    jdee
+    jedi
+    kotlin-mode
+    lsp-mode
+    lua-mode
+    meghanada
+    php-mode
+    pony-mode
 
     ;; Web
-    web-mode
-    restclient
+    angular-snippets
+    css-eldoc
     emmet-mode
+    jade-mode
     js2-mode
     js2-refactor
-    rjsx-mode
-    js-doc
-    xref-js2
     json-mode
-    css-eldoc
     less-css-mode
-    jade-mode
-    pug-mode ;; Tets what is better
     markdown-mode
-    web-beautify
+    mmm-mode
+    pug-mode ;; Tets what is better
+    restclient
+    rjsx-mode
     smart-forward
-    angular-snippets
+    web-beautify
+    web-mode
+    yaml-mode
 
-    ;; Utils
-    magit
-    anzu
-    editorconfig
-    iy-go-to-char
-    quickrun
-    minimap
-    fic-mode
-    multi-term
-    tramp-term
-    expand-region
-    yasnippet
+    ;; Utilities
+    auto-async-byte-compile
     avy
     avy-zap
-    multiple-cursors
-    auto-async-byte-compile
-    sync-recentf
     emojify
+    fic-mode
+    minimap
+    multi-term
+    multiple-cursors
+    quickrun
+    sync-recentf
+    tramp-term
+    yasnippet
+
+    ;; Helpers
+    anzu
+    buffer-move
+    change-inner
+    goto-last-change
+    iy-go-to-char
+    region-bindings-mode
+    which-key
+
+    ;; Org / Productivity
     flyspell-correct
-
-    ;; Auto Complete
-    company
-    company-web
-    company-tern
-    company-restclient
-    company-jedi
-    company-anaconda
-    company-statistics
-    company-quickhelp
-
-    ;; Org
-    org-plus-contrib
-    org-projectile
-    org-present
-    org-pomodoro
-    org-mime
     org-link-types
-    toc-org
+    org-mime
+    org-plus-contrib
+    org-pomodoro
+    org-present
+    org-projectile
     ox-rst
+    toc-org
 
     ;; Activity
-    znc
     elfeed
     elfeed-org
     mu4e-maildirs-extension
+    znc
 
-    ;; Gtags
+    ;; Ctags/Gtags
     etags-select
     ggtags
-
-    ;; Dubug
-    skewer-mode
-    skewer-less
+    ctags-update
     )
   "A list of packages to ensure are installed at launch."
   )
