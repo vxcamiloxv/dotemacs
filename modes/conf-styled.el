@@ -1,4 +1,3 @@
-(require 'polymode)
 (require 'multi-web-mode)
 
 ;; (define-hostmode poly-styled-hostmode
@@ -39,4 +38,4 @@
 (setq mmm-global-mode 'web-mode)
 (mmm-add-mode-ext-class 'web-mode "\\.styles.js\\'" 'js-css)
 
-(provide 'poly-styled)
+(provide 'conf-styled)
