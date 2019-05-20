@@ -96,7 +96,6 @@
 
 (defun distopico:pug-mode-hook ()
   "Hooks for `pug-mode'."
-  (aggressive-indent-mode -1)
   ;; Company-mode
   (add-to-list (make-local-variable 'distopico:web-company-backends) 'company-web-jade)
   (add-to-list (make-local-variable 'company-backends) distopico:web-company-backends))
@@ -116,4 +115,4 @@
 (add-hook 'web-mode-before-auto-complete-hooks 'distopico:web-mode-before-auto-complete-hooks)
 (add-hook 'pug-mode-hook 'distopico:pug-mode-hook)
 
-(provide 'conf-web-mode)
+(provide 'conf-web)
