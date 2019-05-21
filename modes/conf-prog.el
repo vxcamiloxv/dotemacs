@@ -53,10 +53,15 @@ from: prelude"
 
 (defun distopico:prog-mode-hook ()
   "Hook for all modes derivate of `prog-mode'."
-  (distopico:local-comment-auto-fill)
-  (distopico:font-lock-comment-annotations)
   ;; Return and indent
   (local-set-key [(return)] 'newline-and-indent)
+  ;; Custom behavior
+  (distopico:local-comment-auto-fill)
+  (distopico:font-lock-comment-annotations)
+  ;; Automatic symbol highlighting
+  (highlight-symbol-mode)
+  ;; Enable docs
+  (eldoc-mode)
   ;; Emacs refactor
   (emr-initialize)
   ;; Moving and duplicating lines or rectangles

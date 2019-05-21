@@ -32,6 +32,7 @@
     dired+
     dired-details+
     dired-hacks-utils
+
     dired-imenu
     dired-narrow
     dired-ranger
@@ -45,8 +46,7 @@
     column-marker
     fill-column-indicator
     flycheck-color-mode-line
-    highlight-escape-sequences
-    highlight-indentation
+    highlight-indent-guides
     highlight-symbol
     hlinum
     jump-char

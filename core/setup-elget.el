@@ -42,7 +42,7 @@
         (:name "highlight-parentheses"
                :description "Highlight parentheses"
                :type git
-               :url "https://github.com/nschum/highlight-parentheses.el.git")
+               :url "https://github.com/tsdh/highlight-parentheses.el.git")
         (:name "hideshowvis"
                :description "Hide Show Vis"
                :type git
@@ -53,7 +53,7 @@
                :url "https://raw.github.com/kivy/kivy/master/kivy/tools/highlight/kivy-mode.el")
         ;; Development
         (:name "jdee-gradle"
-               :description "Minor mode fro gradle in jdee"
+               :description "Minor mode for gradle in jdee"
                :type git
                :url "https://github.com/oldButNotWise/jdee-gradle.git")
         (:name "gradle"

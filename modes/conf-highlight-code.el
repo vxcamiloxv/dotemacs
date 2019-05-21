@@ -1,6 +1,6 @@
 ;;; Code:
 (require 'highlight-parentheses)
-(require 'highlight-indentation)
+(require 'highlight-indent-guides)
 (require 'highlight-symbol)
 
 ;; Highlight parentheses
@@ -23,20 +23,17 @@
 (setq show-paren-delay 0
       blink-matching-paren t
       show-paren-style 'mixed)
-(set-face-background 'show-paren-match "cyan")
-(set-face-foreground 'show-paren-match "#000000")
 
 ;; Highlight symbol
 (setq highlight-symbol-on-navigation-p t
-      highlight-symbol-idle-delay 1
+      highlight-symbol-idle-delay 2
       highlight-symbol-foreground-color "white"
       highlight-symbol-colors
       '("DarkCyan" "DeepPink" "MediumPurple1"
         "DarkOrange" "HotPink1" "RoyalBlue1" "OliveDrab"))
 
 ;; Highlight indentation
-(set-face-background 'highlight-indentation-face "gray5")
-(set-face-background 'highlight-indentation-current-column-face "#2f4f4f")
+(setq highlight-indent-guides-method 'character)
 
 ;; Functions
 (define-globalized-minor-mode global-highlight-parentheses-mode
@@ -45,27 +42,12 @@
     (highlight-parentheses-mode t)))
 
 (defun distopico:highlight-symbol-toggle ()
-  "Toggle automatic and manual symbol highlighting for Emacs"
+  "Toggle automatic and manual symbol highlighting for Emacs."
   (interactive)
   (highlight-symbol-mode)
   (highlight-symbol-nav-mode))
 
-(defadvice show-paren-function
-    (after show-matching-paren-offscreen activate)
-  "If the matching paren is offscreen, show the matching line in the
-    echo area. Has no effect if the character before point is not of
-    the syntax class ')'."
-  (interactive)
-  (let* ((cb (char-before (point)))
-         (matching-text (and cb
-                             (char-equal (char-syntax cb) ?\) )
-                             (blink-matching-open))))
-    (when matching-text (message matching-text))))
-
-
-;; Hooks
-(add-hook 'emacs-lisp-mode-hook 'highlight-parentheses-mode)
-;; Enable
+;; Enable custom global mode
 (global-highlight-parentheses-mode t)
 
 (provide 'conf-highlight-code)
