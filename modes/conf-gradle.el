@@ -20,8 +20,8 @@
 ;; Hooks
 (mapc
  (lambda (mode)
-   (add-hook mode #'distopico:gradle-hook)
-   (add-hook mode #'flycheck-gradle-setup))
+   ;;(add-hook mode #'flycheck-gradle-setup)
+   (add-hook mode #'distopico:gradle-hook))
  '(java-mode-hook kotlin-mode-hook nxml-mode-hook))
 
 (provide 'conf-gradle)

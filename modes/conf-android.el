@@ -1,6 +1,7 @@
 ;;; Code:
 (require 'android-mode)
 (require 'android-env)
+(require 'meghanada)
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
 
 ;; Control
@@ -13,8 +14,8 @@
   ;; Active android-mode if match manifest
   (cond
    ((distopico:locate-parent-file distopico:android-manifest-regexp)
+    (setq-local meghanada-javac-xlint "-Xlint:all,-processing")
     (android-mode t))))
-
 
 ;; Hooks
 (mapc
