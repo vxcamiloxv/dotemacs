@@ -387,7 +387,7 @@ store your org-contacts."
   ;;(mu4e-maildirs-extension-index-updated-handler)
   (distopico:mu4e-inbox-update))
 
-(defun mbork/message-attachment-present-p ()
+(defun distopico:message-attachment-present-p ()
   "Return t if an attachment is found in the current message."
   (save-excursion
     (save-restriction
