@@ -5,7 +5,7 @@
 ;; Author: Tom Willemsen <tom@ryuslash.org>
 ;;         Distopico <distopico@riseup.net>
 ;; Created: Wed Jan 4 2012
-;; Version: 16
+;; Version: 17
 ;; Keywords: faces
 ;; URL: http://ryuslash.org/projects/tron-theme.html
 ;; Maintainer: Distopico <distopico@riseup.net>
@@ -64,15 +64,16 @@
 ;;    - Add local variables, enable `rainbow-mode'.
 ;; 12 - Remove quotes from :inherit properties.
 ;;    - Explicitly set colors for `fringe'.
-;; 13 - Add `tabbar-mode' faces
+;; 13 - Add `tabbar-mode' faces.
 ;; 14 - Fix faces for `gnusocial-mode' and `company-mode'
-;; 15 - Add `ediff-mode' faces
-;; 16 - Add `ido-mode' faces
+;; 15 - Add `ediff-mode' faces.
+;; 16 - Add `ido-mode' faces.
+;; 17 - Add `highlight-symbol-mode' and `show-paren' faces.
 
 ;;; Code:
 
 (deftheme tron
-  "Updated 2019-12-28")
+  "Updated 2019-05-20")
 
 (require 'ezimage)
 
@@ -91,17 +92,18 @@
  '(default ((t (:background "#00080A" :foreground "#15abc3" :family "Hack" :height 90))))
  '(header-line ((t (:inherit mode-line))))
  '(mouse ((t (:foreground "#e0c625"))))
- '(region ((t (:background "#e0c625" :foreground "#000000"))))
+ '(region ((t (:background "#e0c625" :foreground "black"))))
  '(highlight ((t (:background "#001E21" ))))
  '(hl-line ((t (:background "gray13" ))))
  '(linum ((t (:background "#00080A" :foreground "#005050" :height 70))))
  '(linum-highlight-face ((t (:background "#00080A" :foreground "cyan" :height 70))))
- ;;'(show-paren-match-face ((t (:weight bold))))
- ;;'(fringe ((t (:background "#000000" :foreground "#15abc3"))))
+ '(show-paren-match ((t (:background "cyan" :foreground "black"))))
+ '(show-paren-mismatch ((t (:background "purple" :foreground "white"))))
+ ;;'(fringe ((t (:background "black" :foreground "#15abc3"))))
  ;;'(linum ((t (:inherit default))))
 
- ;; Cursorg
- ;;'(cursor ((t (:foreground "#ffffff" :background "#013d4c"))))
+ ;; Cursor
+ ;;'(cursor ((t (:foreground "white" :background "#013d4c"))))
 
  ;; Margin Fringes
  '(fringe ((t ( :background "#001214" :foreground "#006060" ))))
@@ -111,9 +113,9 @@
    ((t (:foreground "#FF6600" :background "#011d2c"))))
 
  ;; column-marker
- '(column-marker-1 ((t (:background "#a3e8ef" :foreground "#000000"))))
- '(column-marker-2 ((t (:background "#55c3f8" :foreground "#000000"))))
- '(column-marker-3 ((t (:background "#f6faf9" :foreground "#000000"))))
+ '(column-marker-1 ((t (:background "#a3e8ef" :foreground "black"))))
+ '(column-marker-2 ((t (:background "#55c3f8" :foreground "black"))))
+ '(column-marker-3 ((t (:background "#f6faf9" :foreground "black"))))
 
  ;; css
  '(css-property ((t (:inherit font-lock-variable-name-face))))
@@ -188,7 +190,6 @@
  '(tabbar-highlight ((t (:underline nil :box (:line-width 1 :color "#0cd6e4") ))))
  '(tabbar-button ((t (:inherit tabbar-default :box (:line-width 1 :color "#001214" :style none) ))))
  '(tabbar-button-highlight ((t (:inherit tabbar-button))))
-
  '(tabbar-separator ((t (:inherit tabbar-default :height 0.5))))
 
  ;; mode-line
@@ -196,7 +197,7 @@
  ;;'(mode-line-buffer-id ((t (:weight bold))))
  ;;'(mode-line-inactive ((t (:foreground "#15abc3" :background nil :box nil))))
  '(mode-line ((t (:background "#0b2c2d" :box nil :foreground "#0cd6e4" :height 90))))
- '(mode-line-inactive ((t (:weight light :box nil :background "#002329" :foreground "#ffffff" :inherit (mode-line)))))
+ '(mode-line-inactive ((t (:weight light :box nil :background "#002329" :foreground "white" :inherit (mode-line)))))
  '(mode-line-emphasis ((t (:weight bold))))
  '(mode-line-highlight ((t (:box nil (t (:inherit (highlight)))))))
  '(mode-line-buffer-id ((t (:weight bold :box nil))))
@@ -211,6 +212,9 @@
  '(rainbow-delimiters-depth-7-face ((t (:foreground "#51d7f0"))))
  '(rainbow-delimiters-depth-8-face ((t (:foreground "#be9194"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "#94949c"))))
+
+ ;; highlight symbol
+ '(highlight-symbol-face ((t (:background "#001517"))))
 
  ;; rst
  '(rst-level-1-face ((t (:inherit rainbow-delimiters-depth-1-face :weight bold))))
@@ -256,7 +260,7 @@
 
  ;; Minibuffer
  '(minibuffer-prompt ((t (:weight bold :foreground "#e0c625"))))
- '(minibuffer-message ((t (:foreground "#ffffff"))))
+ '(minibuffer-message ((t (:foreground "white"))))
 
  ;; Helm
  '(helm-selection ((t (:background "#15abc3" :foreground "#001214"))))
@@ -295,7 +299,7 @@
  '(company-tooltip-selection ((t (:inherit font-lock-function-name-face :background "#0cd6e4" :foreground "#0b2c2d"))))
  '(company-tooltip-mouse ((t (:inherit (company-tooltip-selection)))))
  '(company-tooltip-common ((t (:inherit font-lock-constant-face :background "#0cd6e4" :foreground "#0b2c2d"))))
- '(company-tooltip-common-selection ((t (:background "#001E21" :foreground "#ffffff"))))
+ '(company-tooltip-common-selection ((t (:background "#001E21" :foreground "white"))))
  '(company-tooltip-annotation ((t (:foreground "#f0dfff" :inherit (company-tooltip)))))
 
  ;; Auto-complete
