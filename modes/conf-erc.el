@@ -129,41 +129,6 @@
 (define-key erc-mode-map (kbd "C-q") 'distopico:erc-close)
 
 ;; Functions
-(defsubst erc-server-reconnect-p (event)
-  "Return non-nil if ERC should attempt to reconnect automatically.
-EVENT is the message received from the closed connection process.
-This version fix re-connection removing validation `erc-server-error-occurred'
-Taken From: https://github.com/emacs-mirror/emacs/blob/master/lisp/erc/erc-backend.el"
-  (message event)
-  (or erc-server-reconnecting
-      (and erc-server-auto-reconnect
-           (not erc-server-banned)
-           ;; make sure we don't infinitely try to reconnect, unless the
-           ;; user wants that
-           (or (eq erc-server-reconnect-attempts t)
-               (and (integerp erc-server-reconnect-attempts)
-                    (< erc-server-reconnect-count
-                       erc-server-reconnect-attempts)))
-           ;; erc-server-timed-out
-           ;; (or erc-server-timed-out
-           ;;     (not (string-match "^deleted" event)))
-           ;; open-network-stream-nowait error for connection refused
-           (if (string-match "^failed with code 111" event) 'nonblocking t))))
-
-(defun erc-server-delayed-reconnect (event buffer)
-  "Overwrite this function for catch error and try to reconnect.
-When the error occur at `erc-process-sentinel-2#run-at-time' no catch the error,
-send again with `EVENT' and `BUFFER' arguments."
-  (if (buffer-live-p buffer)
-      (with-current-buffer buffer
-        (condition-case nil
-            (erc-server-reconnect)
-          (error (unless (integerp erc-server-reconnect-attempts)
-                   (message "%s ... %s"
-                            "Reconnecting until we succeed"
-                            "kill the ERC server buffer to stop"))
-                 (erc-process-sentinel-1 event buffer))))))
-
 (defun distopico:erc-ignore-unimportant (msg)
   "Ignore some IRC `MSG', less noise in `erc-mode'."
   (if (or (string-match "*** localhost has changed mode for &bitlbee to" msg)

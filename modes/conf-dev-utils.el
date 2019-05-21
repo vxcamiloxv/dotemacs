@@ -1,7 +1,6 @@
 ;;; Code:
 (require 'skewer-mode)
 (require 'skewer-repl)
-(require 'mouse-slider-mode)
 ;;(require 'simple-httpd)
 ;;(require 'skewer-mode)
 ;; (require 'skewer-html)
@@ -24,8 +23,5 @@
   (let ((httpd-port 8024))
     (run-skewer)
     (skewer-repl)))
-
-(add-to-list 'mouse-slider-mode-eval-funcs
-             '(js2-mode . skewer-eval-defun))
 
 (provide 'conf-dev-utils)
