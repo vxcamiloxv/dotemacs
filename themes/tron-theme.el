@@ -5,7 +5,7 @@
 ;; Author: Tom Willemsen <tom@ryuslash.org>
 ;;         Distopico <distopico@riseup.net>
 ;; Created: Wed Jan 4 2012
-;; Version: 17
+;; Version: 18
 ;; Keywords: faces
 ;; URL: http://ryuslash.org/projects/tron-theme.html
 ;; Maintainer: Distopico <distopico@riseup.net>
@@ -69,11 +69,13 @@
 ;; 15 - Add `ediff-mode' faces.
 ;; 16 - Add `ido-mode' faces.
 ;; 17 - Add `highlight-symbol-mode' and `show-paren' faces.
+;; 18 - Improve faces for docs/annotation comments
+;;      in `web-mode', `js-paren' and `java-mode|jdee-mode' faces.
 
 ;;; Code:
 
 (deftheme tron
-  "Updated 2019-05-20")
+  "Updated 2019-05-22")
 
 (require 'ezimage)
 
@@ -214,7 +216,7 @@
  '(rainbow-delimiters-depth-9-face ((t (:foreground "#94949c"))))
 
  ;; highlight symbol
- '(highlight-symbol-face ((t (:background "#001517"))))
+ '(highlight-symbol-face ((t (:background "#00171A"))))
 
  ;; rst
  '(rst-level-1-face ((t (:inherit rainbow-delimiters-depth-1-face :weight bold))))
@@ -328,6 +330,27 @@
  '(ediff-odd-diff-C ((t (:background "#002125" :foreground "cyan" ))))
  ;; Secondary region
  '(secondary-selection ((((class color) (min-colors 88) (background dark)) (:background "#029cdc" :foreground "#011d2c"))))
+
+ ;; Docs
+ '(c-annotation-face ((t (:foreground "SlateGray"))))
+ '(jdee-font-lock-doc-tag-face ((t (:inherit font-lock-constant-face))))
+ '(web-mode-annotation-face ((t (:inherit font-lock-doc-face))))
+ '(web-mode-annotation-tag-face ((t (:inherit font-lock-constant-face))))
+ '(web-mode-annotation-type-face ((t (:foreground "SteelBlue"))))
+ '(web-mode-annotation-value-face ((t (:foreground "PeachPuff3"))))
+ '(web-mode-annotation-html-face ((t (:foreground "SlateGray"))))
+ '(js2-jsdoc-tag ((t (:inherit font-lock-constant-face))))
+ '(js2-jsdoc-type ((t (:foreground "SteelBlue"))))
+ '(js2-jsdoc-value ((t (:foreground "PeachPuff3"))))
+ '(js2-jsdoc-html-tag-name ((t (:foreground "SlateGra2"))))
+ '(js2-jsdoc-html-tag-delimiter ((t (:foreground "SlateGra2"))))
+
+ ;; web-mode
+ '(web-mode-constant-face ((t (:inherit font-lock-constant-face))))
+
+ ;; js2-mode
+ '(js2-object-property ((t (:inherit font-lock-variable-name-face))))
+ '(js2-function-call ((t (:inherit font-lock-function-name-face))))
  )
 
 ;; Icons
