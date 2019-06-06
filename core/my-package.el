@@ -180,6 +180,7 @@
     org-present
     org-projectile
     ox-rst
+    ox-hugo
     toc-org
 
     ;; Activity

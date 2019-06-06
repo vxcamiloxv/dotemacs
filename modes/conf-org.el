@@ -16,9 +16,10 @@
 (require 'org-protocol)
 (require 'org-projectile)
 (require 'org-annotate-file)
-(require 'ox-rst)
 (require 'midnight)
-
+(with-eval-after-load 'ox
+  (require 'ox-rst)
+  (require 'ox-hugo))
 
 ;; Vars
 (defvar distopico:org-directory (expand-file-name "~/Documents/org/"))
@@ -62,7 +63,7 @@
       org-M-RET-may-split-line nil
       org-refile-use-outline-path nil
       ;; org-indirect-buffer-display 'current-window
-      org-cycle-separator-lines 1
+      org-cycle-separator-lines 2
       org-tags-match-list-sublevels 'indented
       org-blank-before-new-entry '((heading . auto) (plain-list-item . auto))
       org-refile-allow-creating-parent-nodes 'confirm
@@ -410,7 +411,7 @@
 ;; ------------
 ;; Functions
 ;; ------------
-(org-no-warnings (defvar date))
+(with-no-warnings (defvar date))
 (defun org-lunar-phases ()
   "Show lunar phase in Agenda buffer."
   (require 'lunar)
@@ -817,17 +818,17 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
     (message "Diary file no exist")))
 
 (defun distopico:org-init-hook ()
-  ;; Org mime messages to html
+  "Hook for set up `org-mode' on init."
+  ;; Org mime messages to HTML
   (when (fboundp 'org-mime-org-buffer-htmlize)
     (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize))
-  ;;(turn-on-visual-line-mode)
+  (turn-on-visual-line-mode)
   (distopico:org-saveplace)
+  ;; Try to keep org indentation beautify
+  (aggressive-indent-mode)
   ;; Disabled flycheck
   (flycheck-mode -1)
-  ;; (distopico:org-before-save-hook)
-  ;; (and buffer-file-name
-  ;;      (file-exists-p buffer-file-name)
-  ;;      (save-buffer))
+  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t)
   (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
   (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local))
 
