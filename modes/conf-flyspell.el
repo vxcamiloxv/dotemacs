@@ -19,7 +19,18 @@
     (setq-local flyspell-prog-text-faces
                 '(font-lock-comment-face font-lock-doc-face))))
 
+(defun distopico:flyspell-enable-hook ()
+  "Function to enable spell in deferments modes hooks."
+  (when (executable-find ispell-program-name)
+    (flyspell-mode)
+    (add-hook 'flyspell-mode-hook 'distopico:flyspell-auto-dictionary nil 'make-it-local)))
+
+(defun distopico:flyspell-auto-dictionary ()
+  "Enabled auto directory per mode."
+  (auto-dictionary-mode))
+
 ;; Hooks
 (add-hook 'flyspell-prog-mode-hook #'distopico:flyspell-prog-mode-hook)
+(add-hook 'org-mode-hook #'distopico:flyspell-enable-hook)
 
 (provide 'conf-flyspell)
