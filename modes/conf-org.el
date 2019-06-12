@@ -115,12 +115,14 @@
       org-agenda-span 2
       org-agenda-day-face-function 'distopico:org-agenda-day-face-holidays-function
       org-agenda-category-icon-alist
-      `(("Emacs" ,(if window-system
-                      "~/.emacs.d/themes/icons/emacs.png"
-                    "ξ") nil nil :ascent center)
-        ("\\(Holidays\\|Vacation\\)" ,(if window-system
-                                          "~/.emacs.d/themes/icons/holidays.png"
-                                        "☀") nil nil :ascent center)
+      `(("Emacs"
+         ,(if window-system
+              "~/.emacs.d/themes/icons/emacs.png"
+            (list "ξ")) nil nil :ascent center)
+        ("\\(Holidays\\|Vacation\\)"
+         ,(if window-system
+              "~/.emacs.d/themes/icons/holidays.png"
+            (list "☀")) nil nil :ascent center)
         (".*" '(space . (:width (16)))))
       org-agenda-custom-commands
       '(("p" "Projects" todo "PROJECT"
@@ -133,11 +135,6 @@
         ("b" "Things to buy any time" tags-todo "+tobuy+SCHEDULED=\"\"")
         ("y" "Syadmin stuff to do" tags-todo "+sysadmin+SCHEDULED=\"\"")
         ("d" "Daily tasks:" tags "daily")))
-
-;; Enable display of the time grid so we can see the marker for the current time
-;; (setq org-agenda-time-grid (quote ((daily today remove-match)
-;;                                    #("----------------" 0 16 (org-heading t))
-;;                                    (0900 1100 1300 1500 1700))))
 
 ;; Diary TODO: Move to calendar.el
 (setq diary-file (concat org-directory "diary")
@@ -835,7 +832,7 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
 (defun distopico:org-after-save-hook ()
   "Hook for after save in `org-mode'."
   (when (eq major-mode 'org-mode)
-    (distopico:org-update-appt)
+    ;; (distopico:org-update-appt)
     (distopico:org-remove-done-trigger)
     (distopico:org:remove-empty-propert-drawers)
     (org-save-all-org-buffers)
