@@ -24,8 +24,8 @@
 (defvar distopico:jabber-mode-line-format nil
   "String to display in the mode line.")
 (defvar distopico:jid-history '())
-(defvar distopico:jabber-account-alist)
-(defvar distopico:jabber-invalid-certificate-servers)
+(defvar distopico:jabber-account-alist nil)
+(defvar distopico:jabber-invalid-certificate-servers nil)
 
 ;; Basic
 (setq jabber-history-enabled t
@@ -176,8 +176,10 @@ Optional argument GROUP to look."
   (autosmiley-mode)
   ;;(tabbar-local-mode -1)
   )
+
 (defun distopico:jabber-init-load-hook ()
-  (jabber-connect-all))
+  (when jabber-account-list
+    (jabber-connect-all)))
 
 ;; Rewrite functions
 (defadvice jabber-muc-process-presence

@@ -50,8 +50,8 @@
 ;; Social
 (when (require 'mu4e nil 'noerror)
   (require 'conf-mu4e))
-(require 'conf-elfeed)
-(require 'conf-jabber)
+(require 'conf-elfeed nil 'noerror)
+(require 'conf-jabber nil 'noerror)
 ;; (require 'conf-gnusocial)
 (require 'conf-erc)
 
