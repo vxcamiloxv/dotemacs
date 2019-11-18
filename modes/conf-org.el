@@ -117,7 +117,7 @@
       org-agenda-category-icon-alist
       `(("Emacs"
          ,(if window-system
-              "~/.emacs.d/themes/icons/emacs.png"
+            "~/.emacs.d/themes/icons/emacs.png"
             (list "ξ")) nil nil :ascent center)
         ("\\(Holidays\\|Vacation\\)"
          ,(if window-system
@@ -383,7 +383,6 @@
 (run-at-time "9:30" nil 'distopico:org-show-agenda-appt)
 
 ;; Custom map key
-;;(define-key org-mode-map (kbd "C-s-<return>")  'org-insert-heading-respect-content)
 (define-key org-mode-map (kbd "C-M-s-<return>")  'distopico:org-insert-todo-subheading)
 (define-key org-mode-map (kbd "C-M-<return>")  'distopico:org-insert-subheading)
 (define-key org-mode-map (kbd "M-s-<return>")  'distopico:org-insert-heading-for-next-day)
@@ -483,7 +482,7 @@ From https://github.com/thisirs/dotemacs/blob/master/init-org.el"
 but remove blank lines from level 1.
 Works for outline headings and for plain lists alike."
   (interactive "P")
-  (org-insert-heading arg)
+  (org-insert-heading-respect-content arg)
   (let ((pos (point)))
     (let ((cur-level (org-current-level))
           (prev-level (org-get-previous-line-level)))
@@ -501,7 +500,7 @@ Works for outline headings and for plain lists alike."
 same to org-insert-subheading but remove blank lines from level1.
 Works for outline headings and for plain lists alike."
   (interactive "P")
-  (org-insert-todo-heading arg)
+  (org-insert-todo-heading-respect-content arg)
   (let ((pos (point)))
     (let ((cur-level (org-current-level))
           (prev-level (org-get-previous-line-level)))
@@ -524,7 +523,7 @@ from: http://pages.sachachua.com/.emacs.d/Sacha.html"
              (float-time
               (org-read-date nil 'to-time (elt (org-heading-components) 4)))))))
     (org-insert-heading-after-current)
-    (insert (format-time-string "%Y-%m-%d\n\n" new-date))))
+    (insert (format-time-string "%Y-%m-%d\n" new-date))))
 
 (defun distopico:org-insert-trigger ()
   "Automatically insert chain-find-next trigger when entry becomes NEXT with org-depend."
