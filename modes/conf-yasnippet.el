@@ -57,11 +57,4 @@
         (insert key)
         (yas-expand)))))
 
-;; Fix org-mode
-(add-hook 'org-mode-hook
-          (lambda ()
-            (setq-local yas-expand-from-trigger-key [tab])
-            (define-key yas-keymap [tab] 'yas-next-field-or-maybe-expand)))
-
-
 (provide 'conf-yasnippet)
