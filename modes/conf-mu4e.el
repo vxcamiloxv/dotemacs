@@ -43,7 +43,7 @@ attachment - should launch the no-attachment warning.")
 ;; General mu4e config
 (setq mu4e-maildir "~/.mail"
       ;;mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
-      mu4e-get-mail-command "offlineimap"
+      mu4e-get-mail-command "flock -n /tmp/offlineimap.lock offlineimap"
       mu4e-confirm-quit nil
       mu4e-compose-keep-self-cc nil
       mu4e-view-prefer-html t
@@ -158,9 +158,8 @@ attachment - should launch the no-attachment warning.")
 (setq mu4e-attachment-dir  "~/Downloads")
 
 ;; Send async
-(require 'smtpmail-async) ;;async-smtpmail-send-it - smtpmail-send-it
-(setq ;;send-mail-function 'async-smtpmail-send-it
- message-send-mail-function 'smtpmail-send-it)
+(require 'smtpmail-async)
+(setq message-send-mail-function 'smtpmail-send-it) ;;allow: async-smtpmail-send-it or smtpmail-send-it
 
 ;; Not start in queuing mode
 (setq smtpmail-queue-mail nil
@@ -278,7 +277,6 @@ attachment - should launch the no-attachment warning.")
                (delete-window win))))
           (kill-buffer (current-buffer))
           (mu4e~main-view))
-        ;;(delete-other-windows)
         (distopico:mu4e-maildirs-force-update))
     (if (equal (buffer-name) "*mu4e-view*")
         (progn
@@ -329,8 +327,6 @@ store your org-contacts."
     (when (fboundp 'org-capture)
       (org-capture nil key))))
 
-
-;; Minor mode mu4e-mode-line
 (defun distopico:mu4e-unread-mail-query ()
   "The query to look for unread messages in all account INBOXes."
   (mapconcat
@@ -410,6 +406,7 @@ from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
 
 (defun distopico:mu4e-index-updated-hook ()
   "Hooen when come some new message."
+  (message "new message")
   ;;(start-process "mu4e-update" nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
   (call-process "/bin/bash" nil 0 nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
   ;; (shell-command-to-string (concat (in-emacs-d "/scripts/notify_mail.sh") " " (number-to-string mu4e-update-interval)))
