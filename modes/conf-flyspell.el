@@ -22,7 +22,7 @@
 (defun distopico:flyspell-enable-hook ()
   "Function to enable spell in deferments modes hooks."
   (when (executable-find ispell-program-name)
-    (flyspell-mode 1)
+    (flyspell-mode)
     (add-hook 'flyspell-mode-hook 'distopico:flyspell-auto-dictionary nil 'make-it-local)))
 
 (defun distopico:flyspell-auto-dictionary ()
