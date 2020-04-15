@@ -182,8 +182,7 @@ Optional argument GROUP to look."
     (jabber-connect-all)))
 
 ;; Rewrite functions
-(defadvice jabber-muc-process-presence
-    (after distopico:jabber-muc-process-presence-clear-notices)
+(defun distopico:jabber-muc-process-presence ()
   "Remove all muc notices.
 use this if you don't like all those notices about people joining/leaving."
   (let* ((from (jabber-xml-get-attribute presence 'from))
@@ -193,18 +192,64 @@ use this if you don't like all those notices about people joining/leaving."
         (with-current-buffer buffer
           (ewoc-filter jabber-chat-ewoc (lambda (elt) (not (eq (car elt) :muc-notice))))))))
 
-(defadvice jabber-activity-add-muc
-    (around distopico:jabber-activity-add-muc (nick group buffer text proposed-alert))
-  "Add a JID to mode line when `jabber-activity-show-p' only whe is a `personal' msg."
+(defun distopico:jabber-activity-add-muc (orig-fun nick group buffer text proposed-alert)
+  "Advice `ORIG-FUN' `jabber-activity-add-muc' for only personal mentions.
+Add a JID to mode line when `jabber-activity-show-p' needs `NICK' name from
+the `GROUP' chat, also require `TEXT' to check if the message has name,
+Optional `BUFFER' and `PROPOSED-ALERT'"
   (when (funcall jabber-activity-show-p group)
     ;; No need activity if no call nick
-    ;;(setq jabber-activity-jids (delete group jabber-activity-jids))
+    (add-to-list 'jabber-activity-jids group)
     (when (distopico:jabber-muc-looks-like-personal-p text group)
       (add-to-list 'jabber-activity-personal-jids group))
     (jabber-activity-mode-line-update)))
 
-(ad-activate #'jabber-muc-process-presence)
-(ad-activate #'jabber-activity-add-muc)
+(defun distopico:jabber-activity-mode-line-update (orig-fun)
+  "Advice `ORIG-FUN' `jabber-activity-mode-line-update' to avoid duplicate.
+Update the string shown in the mode line using `jabber-activity-make-string'
+on JIDs where `jabber-activity-show-p'.
+Optional not-nil GROUP mean that message come from MUC.
+Optional TEXT used with one-to-one or MUC chats and may be used to identify
+personal MUC message.
+Optional PRESENCE mean personal presence request or alert."
+  (setq jabber-activity-mode-string
+  	(if jabber-activity-jids
+	    (mapconcat
+	     (lambda (x)
+	       (let ((item (cdr x))
+                 (jid (car (cdr x)))
+                 (name (cdr (cdr x))))
+		 (jabber-propertize
+		  name
+		  'face (if (member jid jabber-activity-personal-jids)
+			    'jabber-activity-personal-face
+			  'jabber-activity-face)
+		  'local-map (when (fboundp 'make-mode-line-mouse-map)
+			       (make-mode-line-mouse-map
+				'mouse-1 `(lambda ()
+					    (interactive "@")
+					    (jabber-activity-switch-to
+					     ,jid))))
+		  'help-echo (concat "Jump to "
+				     (jabber-jid-displayname jid)
+				     "'s buffer"))))
+           (let (result)
+             (dolist (elt (mapcar #'jabber-activity-lookup-name
+                                  jabber-activity-jids)
+                          result)
+               (let ((sofar (assoc (jabber-jid-displayname (car elt)) result)))
+                 (unless sofar
+                   (push (cons (jabber-jid-displayname (car elt)) elt) result)))))
+	     ",")
+	  ""))
+  (setq jabber-activity-count-string
+	(number-to-string (length jabber-activity-jids)))
+  (force-mode-line-update 'all)
+  (run-hooks 'jabber-activity-update-hook))
+
+(advice-add 'jabber-muc-process-presence :after #'distopico:jabber-muc-process-presence)
+(advice-add 'jabber-activity-add-muc :around #'distopico:jabber-activity-add-muc)
+(advice-add 'jabber-activity-mode-line-update :around #'distopico:jabber-activity-mode-line-update)
 
 ;; Hooks
 (add-hook 'jabber-post-connect-hooks #'distopico:jabber-auto-join 'append)
