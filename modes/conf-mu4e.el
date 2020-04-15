@@ -414,7 +414,8 @@ from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
 
 (defun distopico:mu4e-view-mode-hook ()
   "Enable/disable some mode in `mu4e-view-mode'."
-  (tabbar-local-mode 1))
+  (tabbar-local-mode 1)
+  (visual-line-mode))
 
 (defun distopico:mu4e-init-load-hook ()
   "Run mu4e in startup."
