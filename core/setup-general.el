@@ -75,8 +75,6 @@
       pop-up-frames nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(setq max-specpdl-size 9000)
-
 (setq font-lock-maximum-decoration t
       color-theme-is-global t
       truncate-partial-width-windows nil)
@@ -90,9 +88,6 @@
 
 (setq tex-dvi-view-command
       (if (eq window-system 'x) "xdvi" "dvi2tty * | cat -s"))
-
-;; tab auto-completion cycling is evil.
-(setq pcomplete-cycle-completions nil)
 
 ;; Make sure that pressing middle mouse button pastes right at point,
 ;; not where the mouse cursor is.
@@ -109,9 +104,6 @@
 (setq inhibit-splash-screen t)
 
 (setq visual-line-fringe-indicators '(t t))
-
-;; Don't switch to another frame with iswitchb
-;;(setq iswitchb-default-method 'samewindow)
 
 ;; Use diff -u
 (setq diff-switches "-u")
@@ -141,10 +133,6 @@
 
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
-
-;; lock files borking git-annex-assistant autocommits.  Disabling for now.
-;; We can re-enable both of these once .gitignore support comes to git-annex
-(setq create-lockfiles nil)
 ;; Similarly with auto-save files :(
 (setq auto-save-default nil)
 

@@ -112,11 +112,7 @@
         (:name "cyberpunk-theme"
                :description "Cyberpunk theme"
                :type git
-               :url "https://github.com/n3mo/cyberpunk-theme.el.git")
-        (:name "dark-theme"
-               :description "Dark theme"
-               :type http
-               :url "https://raw.github.com/suvayu/.emacs.d/master/themes/dark-emacs-theme.el")))
+               :url "https://github.com/n3mo/cyberpunk-theme.el.git")))
 
 (setq elget-packages
       (append
