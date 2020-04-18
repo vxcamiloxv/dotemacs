@@ -57,14 +57,6 @@
 (defvar distopico:erc-alert-last-message nil
   "Last alert message send.")
 
-;; Features
-;; (erc-log-mode t)
-;; (erc-track-mode t)
-;; (erc-scrolltobottom-mode t)
-;; (erc-autojoin-mode t)
-;; (erc-services-mode t)
-;; (erc-truncate-mode +1)
-
 ;; Basic
 (setq erc-header-line-uses-tabbar-p t
       erc-server-auto-reconnect t
@@ -78,7 +70,6 @@
       ;; nil
       erc-prompt-for-nickserv-password nil
       ;; String
-      ;; erc-max-buffer-size 100000
       erc-input-line-position -1
       erc-auto-query 'buffer
       erc-join-buffer 'bury
@@ -115,9 +106,8 @@
       erc-log-channels-directory (in-emacs-d ".cache/erc/logs/")
       erc-autojoin-channels-alist
       '((".*\\.freenode.net" "#emacs" "#gnu" "#emacs-es" "##vegan"
-         "#social" "#isso" "#libre.fm" "#parabola" "#trisquel-es" "#trisquel"
-         "#lorea" "#mediagoblin" "#org-mode" "#pump.io" "#radioliberacion"
-         "#indieweb" "#social")
+         "#social" "#libre.fm" "#parabola" "#trisquel-es" "#trisquel"
+         "#mediagoblin" "#org-mode" "#pump.io" "#indieweb" "#social")
         (".*\\.w3.org", "#social")
         (".*\\.indymedia.org" "#riseup")))
 
