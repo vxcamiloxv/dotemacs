@@ -5,7 +5,7 @@
 ;; Author: Tom Willemsen <tom@ryuslash.org>
 ;;         Distopico <distopico@riseup.net>
 ;; Created: Wed Jan 4 2012
-;; Version: 18
+;; Version: 19
 ;; Keywords: faces
 ;; URL: http://ryuslash.org/projects/tron-theme.html
 ;; Maintainer: Distopico <distopico@riseup.net>
@@ -71,11 +71,13 @@
 ;; 17 - Add `highlight-symbol-mode' and `show-paren' faces.
 ;; 18 - Improve faces for docs/annotation comments
 ;;      in `web-mode', `js-paren' and `java-mode|jdee-mode' faces.
+;; 19 - Not force a specific font-size font
+;;    - Change color to have a better contrast to read
 
 ;;; Code:
 
 (deftheme tron
-  "Updated 2019-05-22")
+  "Updated 2020-04-17")
 
 (require 'ezimage)
 
@@ -83,29 +85,26 @@
  'tron
  '(powerline-active1 "#00779a")
  '(powerline-active2 "#00475a")
- '(linum-format "%6d") ;; Default 7i
+ '(linum-format "%6d ") ;; Default 7i
  '(fringe-mode 10 nil (fringe)))
 
 (custom-theme-set-faces
  'tron
  '(bold ((t (:foreground "#24c6e0" :weight bold))))
  '(bold-italic ((t (:inherit bold :slant italic))))
- '(cursor ((t (:background "#15abc3"))))
- '(default ((t (:background "#00080A" :foreground "#15abc3" :family "Hack" :height 90))))
+ '(cursor ((t (:background "cyan"))))
+ '(default ((t (:background "#000E10" :foreground "#15abc3"))))
  '(header-line ((t (:inherit mode-line))))
  '(mouse ((t (:foreground "#e0c625"))))
  '(region ((t (:background "#e0c625" :foreground "black"))))
  '(highlight ((t (:background "#001E21" ))))
  '(hl-line ((t (:background "gray13" ))))
- '(linum ((t (:background "#00080A" :foreground "#005050" :height 70))))
- '(linum-highlight-face ((t (:background "#00080A" :foreground "cyan" :height 70))))
+ '(linum ((t (:background "#000E10" :foreground "#005050" :height 0.9))))
+ '(linum-highlight-face ((t (:background "#000E10" :foreground "cyan" :height 0.9))))
  '(show-paren-match ((t (:background "cyan" :foreground "black"))))
  '(show-paren-mismatch ((t (:background "purple" :foreground "white"))))
- ;;'(fringe ((t (:background "black" :foreground "#15abc3"))))
- ;;'(linum ((t (:inherit default))))
 
  ;; Cursor
- ;;'(cursor ((t (:foreground "white" :background "#013d4c"))))
 
  ;; Margin Fringes
  '(fringe ((t ( :background "#001214" :foreground "#006060" ))))
@@ -184,25 +183,26 @@
  '(magit-item-mark ((t (:background "#808080"))))
 
  ;; Tabbar
- '(tabbar-default ((t (:inherit variable-pitch :height 0.8 :background "#001214"))))
- '(tabbar-unselected ((t (:inherit tabbar-default :background "#001214" :foreground "white" :box (:line-width 1 :color "cyan" ) ))))
- '(tabbar-selected ((t (:inherit tabbar-default :background "cyan" :foreground "#001214" :box (:line-width 1 :color "cyan" ) ))))
- '(tabbar-modified ((t (:inherit tabbar-default :background "#001214" :foreground "green" :box (:line-width 1 :color "cyan" ) ))))
- '(tabbar-selected-modified ((t (:inherit tabbar-default :background "cyan" :foreground "#001214" :box (:line-width 1 :color "cyan" ) ))))
+ '(tabbar-default ((t (:inherit variable-pitch :height 0.8 :background "#001214" :weight normal))))
+ '(tabbar-unselected ((t (:inherit tabbar-default :background "#001214" :foreground "white" :box (:line-width 1 :color "cyan")))))
+ '(tabbar-selected ((t (:inherit tabbar-default :background "cyan" :foreground "#001214" :box (:line-width 1 :color "cyan")))))
+ '(tabbar-modified ((t (:inherit tabbar-default :background "#001214" :foreground "green" :box (:line-width 1 :color "cyan")))))
+ '(tabbar-selected-modified ((t (:inherit tabbar-default :background "cyan" :foreground "#001214" :box (:line-width 1 :color "cyan")))))
  '(tabbar-highlight ((t (:underline nil :box (:line-width 1 :color "#0cd6e4") ))))
  '(tabbar-button ((t (:inherit tabbar-default :box (:line-width 1 :color "#001214" :style none) ))))
  '(tabbar-button-highlight ((t (:inherit tabbar-button))))
  '(tabbar-separator ((t (:inherit tabbar-default :height 0.5))))
 
  ;; mode-line
- ;;'(mode-line ((t (:foreground "#e0c625" :background nil :box nil))))
- ;;'(mode-line-buffer-id ((t (:weight bold))))
- ;;'(mode-line-inactive ((t (:foreground "#15abc3" :background nil :box nil))))
- '(mode-line ((t (:background "#0b2c2d" :box nil :foreground "#0cd6e4" :height 90))))
- '(mode-line-inactive ((t (:weight light :box nil :background "#002329" :foreground "white" :inherit (mode-line)))))
+ '(mode-line ((t (:weight normal :background "#0b2c2d" :box nil :foreground "#0cd6e4" :height 1.0))))
+ '(mode-line-inactive ((t (:weight normal :box nil :background "#002329" :foreground "white" :inherit (mode-line)))))
  '(mode-line-emphasis ((t (:weight bold))))
  '(mode-line-highlight ((t (:box nil (t (:inherit (highlight)))))))
  '(mode-line-buffer-id ((t (:weight bold :box nil))))
+
+ ;; powerline
+ '(powerline-active1 ((t (:foreground "#f9f9f9" :background "#123550" :box nil :weight normal))))
+ '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil :weight normal))))
 
  ;; rainbow-delimiters
  '(rainbow-delimiters-depth-1-face ((t (:foreground "#a3e8ef"))))
@@ -268,7 +268,7 @@
  '(helm-selection ((t (:background "#15abc3" :foreground "#001214"))))
 
  ;; Org
- '(org-hide ((t (:foreground "#00080A"))))
+ '(org-hide ((t (:foreground "#000E10"))))
  '(org-level-1 ((t (:inherit rainbow-delimiters-depth-1-face :weight bold))))
  '(org-level-2 ((t (:inherit rainbow-delimiters-depth-2-face :weight bold))))
  '(org-level-3 ((t (:inherit rainbow-delimiters-depth-3-face :weight bold))))
@@ -329,7 +329,7 @@
  '(ediff-even-diff-C ((t (:background "#002125"  :foreground "#839496" ))))
  '(ediff-odd-diff-C ((t (:background "#002125" :foreground "cyan" ))))
  ;; Secondary region
- '(secondary-selection ((((class color) (min-colors 88) (background dark)) (:background "#029cdc" :foreground "#011d2c"))))
+ '(secondary-selection ((((class color) (min-colors 88) (background dark)) (:background "#029cdc" :foreground "cyan"))))
 
  ;; Docs
  '(c-annotation-face ((t (:foreground "SlateGray"))))
@@ -351,6 +351,9 @@
  ;; js2-mode
  '(js2-object-property ((t (:inherit font-lock-variable-name-face))))
  '(js2-function-call ((t (:inherit font-lock-function-name-face))))
+
+ ;; Elfeed
+ '(elfeed-search-title-face ((t (:foreground "#15abc3"))))
  )
 
 ;; Icons
