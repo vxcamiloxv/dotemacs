@@ -1,8 +1,6 @@
 ;;; Code:
-(require 'context-menu)
 (require 'zoom-window)
 (require 'windresize)
-(require 'nifty-defuns) ;; window opacity utilities
 (require 'zoom-frm) ;; Make zooming affect frame instead of buffers
 (require 'squeeze-view) ;; squeeze view, give yourself a write-room/typewriter like writing page
 (require 'scroll-bell-fix)
@@ -10,6 +8,11 @@
 (require 'fill-column-indicator)
 (require 'highlight-escape-sequences)
 (require 'browse-kill-ring)
+
+;;; Font
+(add-to-list 'default-frame-alist
+             '(font . "Hack-10"))
+(setq-default line-spacing 1)
 
 ;;; Disabled or enabled debug:
 (setq debug-on-error nil
@@ -62,10 +65,6 @@
     (setq automatic-hscrolling t)))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(current-language-environment "UTF-8")
  '(system-time-locale "C")
  '(column-number-mode t)
@@ -107,11 +106,11 @@
 ;;-----------------------------------------------------------------
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
-(setq c-basic-offset 4)
-(setq sgml-basic-offset 4)
-(setq css-indent-offset 4)
-(setq nxml-child-indent 4)
-(setq py-indent-offset 4)
+(setq-default c-basic-offset 4)
+(setq-default sgml-basic-offset 4)
+(setq-default css-indent-offset 4)
+(setq-default nxml-child-indent 4)
+(setq-default py-indent-offset 4)
 (setq-default tab-stop-list (number-sequence 4 120 4))
 
 ;;----------------
