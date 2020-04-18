@@ -1,14 +1,16 @@
 ;;; Code:
-
 (require 'magit)
 
-(setq magit-last-seen-setup-instructions "1.4.0"
-      magit-revert-item-confirm t
+(setq transient-history-file (in-emacs-d ".cache/transientl/history.el")
       magit-completing-read-function 'magit-ido-completing-read)
 
 (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell);
-;; Return to magit status
+
+;; By default the diff for the changes that are about to be committed
+;;  are automatically shown when invoking the commit
+;; Remove this prevent that
 (remove-hook 'server-switch-hook 'magit-commit-diff)
+
 ;; (add-to-list 'with-editor-cancel-query-functions 'distopico:close-emacs-giteditor)
 ;; (add-to-list 'with-editor-finish-query-functions 'distopico:close-emacs-giteditor)
 
