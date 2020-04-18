@@ -6,7 +6,7 @@
 (require 'js2r-defuns)
 (require 'lisp-defuns)
 (require 'misc-defuns)
-(require 'nifty-defuns)
+(require 'frame-defuns)
 (require 'project-defuns)
 (require 'window-defuns)
 (require 'snippet-helpers)
