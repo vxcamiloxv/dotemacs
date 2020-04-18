@@ -11,10 +11,18 @@
   "Jabber default account."
   :type 'string
   :group 'jabber)
+
 (defcustom distopico:jabber-default-nickname "distopico"
   "Jabber default Nickname."
   :type 'string
   :group 'jabber)
+
+(defcustom distopico:jabber-muc-exclude-regexp
+  (concat "^\\bsubject\\b\:")
+  "This regexp matches unwanted noise on jabber track muc."
+  :type 'regexp
+  :group 'jabber)
+
 (defcustom distopico:jabber-muc-list nil
   "Jabber muc list."
   :type 'alist
@@ -32,15 +40,16 @@
       jabber-auto-reconnect t
       jabber-mode-line-mode t
       jabber-vcard-avatars-retrieve t
+      jabber-avatar-max-width 40
+      jabber-avatar-max-height 40
+      jabber-backlog-number 40
+      jabber-backlog-days 30
       ;; nil
       jabber-show-resources nil
       jabber-use-global-history nil
       jabber-show-offline-contacts nil
       jabber-message-alert-same-buffer nil
       ;; String
-      jabber-avatar-max-width 40
-      jabber-avatar-max-height 40
-      jabber-default-show ""
       jabber-default-status "M-x mode!!"
       jabber-roster-buffer: "*jabber-roster*"
       jabber-groupchat-buffer-format "*jabber-room: [ %n ]*"
@@ -94,11 +103,16 @@
 
 ;; Custom keys
 (define-key jabber-roster-mode-map (kbd "C-q") 'distopico:jabber-close)
-(define-key jabber-chat-mode-map (kbd "C-q") 'distopico:jabber-chat-burry)
+(define-key jabber-chat-mode-map (kbd "C-c C-j") 'distopico:jabber-chat-bury)
 (define-key jabber-chat-mode-map (kbd "M-u") 'jabber-muc-names)
 (define-key jabber-common-keymap (kbd "C-<tab>") 'distopico:jabber-chat-with)
 (define-key jabber-common-keymap (kbd "C-x c") 'distopico:jabber-buffer-ido)
 
+;; Message alert hooks
+(define-jabber-alert echo "Show a message in the echo area (it not focus/active)"
+  (lambda (text &optional title)
+    (unless (minibuffer-prompt)
+      (message "%s" (or title text)))))
 
 ;; Functions
 (defun distopico:jabber-display-roster ()
@@ -111,8 +125,8 @@
   (interactive)
   (bury-buffer-restore-prev :jabber-fullscreen))
 
-(defun distopico:jabber-chat-burry ()
-  "Burry frame or delete frame if exit more than one."
+(defun distopico:jabber-chat-bury ()
+  "Bury frame or delete frame if exit more than one."
   (interactive)
   (if (eq 'jabber-chat-mode major-mode)
       (if (< (length (frame-list)) 3)
@@ -146,12 +160,21 @@ for me because connect all accounts."
           (dolist (room distopico:jabber-muc-list)
             (jabber-groupchat-join jc room distopico:jabber-default-nickname))))))
 
+(defun distopico:jabber-muc-looks-ignore-p (message)
+  "Return non-nil if jabber MESSAGE must be ignored."
+  (if message
+      (string-match distopico:jabber-muc-exclude-regexp message)
+  nil))
+
 (defun distopico:jabber-muc-looks-like-personal-p (message &optional group)
   "Return non-nil if jabber MESSAGE if I mentioned.
 Optional argument GROUP to look."
-  (if message (string-match (concat "\\b"
-                                    (regexp-quote (jabber-my-nick group))
-                                    "\\b") message) nil))
+  (if message
+      (string-match (concat "\\b"
+                            (regexp-quote (jabber-my-nick group))
+                            "\\b")
+                    message)
+    nil))
 
 (defun distopico:jabber-read-jid-completing (prompt)
   (let* ((hist-items (remove-duplicates distopico:jid-history :test #'equal))
@@ -181,9 +204,9 @@ Optional argument GROUP to look."
   (when jabber-account-list
     (jabber-connect-all)))
 
-;; Rewrite functions
-(defun distopico:jabber-muc-process-presence ()
-  "Remove all muc notices.
+;; Advice functions
+(defun distopico:jabber-muc-process-presence (jc presence)
+  "Remove all muc notices based on the `PRESENCE', `JC' from original function.
 use this if you don't like all those notices about people joining/leaving."
   (let* ((from (jabber-xml-get-attribute presence 'from))
          (group (jabber-jid-user from))
@@ -197,12 +220,13 @@ use this if you don't like all those notices about people joining/leaving."
 Add a JID to mode line when `jabber-activity-show-p' needs `NICK' name from
 the `GROUP' chat, also require `TEXT' to check if the message has name,
 Optional `BUFFER' and `PROPOSED-ALERT'"
-  (when (funcall jabber-activity-show-p group)
-    ;; No need activity if no call nick
+(when (funcall jabber-activity-show-p group)
+  (unless (distopico:jabber-muc-looks-ignore-p text)
+    ;; No need activity if no call nick or is a ignored message
     (add-to-list 'jabber-activity-jids group)
     (when (distopico:jabber-muc-looks-like-personal-p text group)
       (add-to-list 'jabber-activity-personal-jids group))
-    (jabber-activity-mode-line-update)))
+    (jabber-activity-mode-line-update))))
 
 (defun distopico:jabber-activity-mode-line-update (orig-fun)
   "Advice `ORIG-FUN' `jabber-activity-mode-line-update' to avoid duplicate.
@@ -214,7 +238,7 @@ personal MUC message.
 Optional PRESENCE mean personal presence request or alert."
   (setq jabber-activity-mode-string
   	(if jabber-activity-jids
-	    (mapconcat
+	    (concat (mapconcat
 	     (lambda (x)
 	       (let ((item (cdr x))
                  (jid (car (cdr x)))
@@ -240,7 +264,7 @@ Optional PRESENCE mean personal presence request or alert."
                (let ((sofar (assoc (jabber-jid-displayname (car elt)) result)))
                  (unless sofar
                    (push (cons (jabber-jid-displayname (car elt)) elt) result)))))
-	     ",")
+	     ",") " ")
 	  ""))
   (setq jabber-activity-count-string
 	(number-to-string (length jabber-activity-jids)))
