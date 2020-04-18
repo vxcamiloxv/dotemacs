@@ -8,12 +8,6 @@
 ;; Basic
 (setq powerline-default-separator 'wave)
 
-;; ;; Faces
-(custom-set-faces
- '(powerline-active1 ((t (:foreground "#f9f9f9" :background "#123550" :box nil))))
- '(powerline-active2 ((t (:foreground "#f9f9f9" :background "#112230" :box nil)))))
-
-
 (defun distopico:cycle-powerline-separators (&optional reverse)
   "Set Powerline separators in turn.  If REVERSE is not nil, go backwards."
   (interactive)
@@ -67,7 +61,9 @@
   '("%e"
     (:eval
      (let* ((active (powerline-selected-window-active))
+            (mode-line-buffer-id (if active 'mode-line-buffer-id 'mode-line-buffer-id-inactive))
             (mode-line (if active 'mode-line 'mode-line-inactive))
+            (face0 (if active 'powerline-active0 'powerline-inactive0))
             (face1 (if active 'powerline-active1 'powerline-inactive1))
             (face2 (if active 'powerline-active2 'powerline-inactive2))
             (separator-left (intern (format "powerline-%s-%s"
@@ -76,38 +72,42 @@
             (separator-right (intern (format "powerline-%s-%s"
                                              powerline-default-separator
                                              (cdr powerline-default-separator-dir))))
-            (lhs (list (powerline-raw "%*" nil 'l)
+            (lhs (list (powerline-raw "%*" face0 'l)
                        ;; (powerline-buffer-size nil 'l)
                        ;; (powerline-raw mode-line-mule-info nil 'l)
                        ;; (powerline-buffer-id nil 'l)
+                       (when powerline-display-mule-info
+                         (powerline-raw mode-line-mule-info face0 'l))
                        (powerline-raw '(:eval
                                         (propertize
                                          "%b " 'help-echo
                                          (if (eq major-mode 'erc-mode)
-                                             (powerline-raw mode-line-buffer-identification face2 'l)
-                                           (buffer-file-name)))) nil 'l)
-                       (powerline-raw " ")
+                                             (powerline-raw mode-line-buffer-identification face0 'l)
+                                           (buffer-file-name))))
+                                      face0 'l)
+                       (powerline-raw "" face0)
                        (funcall separator-left mode-line face1)
                        (powerline-major-mode face1 'l)
                        (powerline-process face1)
-                       ;;(powerline-minor-modes face1 'l)
+                       ;; (powerline-minor-modes face1 'l)
                        (powerline-narrow face1 'l)
                        (powerline-raw " " face1)
                        (funcall separator-left face1 face2)
-                       (powerline-raw '(:eval (format " Proj[%s] "
-                                                      (projectile-project-name))) face2)
-                       ;;(powerline-vc face2 'r)
+                       (powerline-raw '(:eval
+                                        (format " Proj[%s]" (projectile-project-name)))
+                                      face2 'r)
                        (powerline-raw (distopico:vc-modeline) face2 'r)
                        (powerline-raw (distopico:which-function-modeline) face2 'l)))
             (rhs (list (when (eq major-mode 'jabber-chat-mode)
                          (powerline-raw distopico:jabber-mode-line-format face2 'r))
-                       (when (boundp 'erc-modified-channels-object)
-                         (powerline-raw '(t erc-modified-channels-object) face2 'l))
+                       (when (and (boundp 'erc-track-minor-mode) erc-track-minor-mode)
+                         (powerline-raw erc-modified-channels-object face1 'l))
                        (when (eq major-mode 'erc-mode)
                          (powerline-raw '(:eval (distopico:erc-mode-line)) face2 'l))
                        (when (eq major-mode 'gnu-social-mode)
                          (powerline-raw '(:eval
-                                          (format "%s " (gnu-social-mode-line-buffer-identification))) face2 'l))
+                                          (format "%s " (gnu-social-mode-line-buffer-identification)))
+                                        face2 'l))
                        (when (and (boundp 'distopico:mu4e-mode-line-format) distopico:mu4e-mode-line-format)
                          (powerline-raw distopico:mu4e-mode-line-format face2 'r))
                        (when (and (boundp 'distopico:elfeed-mode-line-format) distopico:elfeed-mode-line-format)
@@ -115,19 +115,23 @@
                        (powerline-raw "•" face2 'r)
                        (powerline-raw global-mode-string face2 'r)
                        (funcall separator-right face2 face1)
+                       (unless window-system
+                         (powerline-raw (char-to-string #xe0a1) face1 'l))
                        (powerline-raw "%2l" face1 'l)
-                       (powerline-raw ":" face1 'l)
-                       (powerline-raw '(:eval
-                                        (propertize "%2c" 'face
-                                                    (if (>= (current-column) 90)
-                                                        'font-lock-warning-face 'nil))) face1 'l)
                        (powerline-raw "•" face1 'l)
+                       (powerline-raw '(:eval
+                                        (propertize "%3c" 'face
+                                                    (if (>= (current-column) 90)
+                                                        'font-lock-warning-face 'nil)))
+                                      face1 'r)
                        ;;(powerline-raw (distopico:selection-info-modeline) face1 'l)
-                       (funcall separator-right face1 mode-line)
-                       (powerline-raw " ")
-                       (powerline-raw "%5p" mode-line 'r)
+                       (funcall separator-right face1 face0)
+                       (powerline-raw " " face0)
+                       (powerline-raw "%4p" face0 'r)
                        (when powerline-display-hud
-                         (powerline-hud mode-line face1)))))
+                         (powerline-hud face1 face2))
+                       (powerline-fill face0 0)
+                       )))
        (concat (powerline-render lhs)
                (powerline-fill face2 (powerline-width rhs))
                (powerline-render rhs))))))
