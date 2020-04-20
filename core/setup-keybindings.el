@@ -32,6 +32,9 @@
 (global-set-key (kbd "M-<f9>") 'nav-jump-to-current-dir)
 (global-set-key [f8] 'distopico:neotree-toggle)
 (global-set-key (kbd "M-<f8>") 'neotree-refresh)
+(global-set-key (kbd "M-s-n") 'distopico:next-link)
+(global-set-key (kbd "M-s-p") 'distopico:previous-link)
+(global-set-key (kbd "M-s-<return>") 'distopico:show-link-url)
 
 ;; Buffer
 (global-set-key (kbd "C-x k") 'kill-this-buffer)

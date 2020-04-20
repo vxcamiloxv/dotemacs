@@ -17,6 +17,34 @@
 (create-simple-keybinding-command f11 "<f11>")
 (create-simple-keybinding-command f12 "<f12>")
 
+(defun distopico:next-link ()
+  "Move point to next link."
+  (interactive)
+  (condition-case nil
+    (or (let ((next-link (shr-next-link)))
+          (unless (equal next-link "No next link")
+            next-link))
+        ;; Works across all modes
+        (org-next-link))
+    (error nil)))
+
+(defun distopico:previous-link ()
+  "Move point to previous link."
+  (interactive)
+  (condition-case nil
+  (or (let ((previous-link (shr-previous-link)))
+        (unless (equal previous-link "No previous link")
+          previous-link))
+      ;; Works across all modes
+      (org-previous-link))
+  (error nil)))
+
+(defun distopico:show-link-url ()
+  "Return url of link at point."
+  (interactive)
+  (message (or (shr-url-at-point nil)
+      (thing-at-point-url-at-point t))))
+
 (defun goto-line-with-feedback ()
   "Show line numbers temporarily, while prompting for the line number input"
   (interactive)
@@ -48,12 +76,6 @@
      ,@body))
 
 (global-set-key (kbd "s-l") (λ (insert "\u03bb")))
-
-;; command to help set up magit-gh-pulls
-(defun magit-gh-pulls-setup (repoid)
-  (interactive "suser/repo: ")
-  (shell-command "git config --add magit.extension gh-pulls")
-  (shell-command (concat "git config magit.gh-pulls-repo " repoid)))
 
 ;; Increase/decrease selective display
 (defun inc-selective-display (arg)
