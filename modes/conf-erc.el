@@ -113,7 +113,7 @@
 
 
 ;; Custom keys
-(define-key erc-mode-map (kbd "C-c C-b") 'distopico:erc-ido-switch-buffer)
+(define-key erc-mode-map (kbd "C-x c") 'distopico:erc-ido-switch-buffer)
 (define-key erc-mode-map (kbd "C-c C-r") 'distopico:erc-reset-track-mode)
 (define-key erc-mode-map (kbd "C-c M-a") 'erc-track-switch-buffer)
 (define-key erc-mode-map (kbd "C-q") 'distopico:erc-close)
@@ -230,12 +230,7 @@
 (defun distopico:erc-ido-switch-buffer ()
   "Switch to ERC buffer using IDO to choose which one, or start ERC if not already started."
   (interactive)
-  (eval-when-compile
-    (require 'ido))
-  (let ((final-list (distopico:erc-buffer-list)))
-    (if final-list
-        (switch-to-buffer (ido-completing-read "ERC Buffer: " final-list))
-      (call-interactively 'erc))))
+  (ido-for-mode "ERC:" 'erc-mode))
 
 (defun distopico:erc-switch-to-irc ()
   "Switch to an IRC channel buffer, or run `erc-select'.
