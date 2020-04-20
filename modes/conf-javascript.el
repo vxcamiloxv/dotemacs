@@ -26,7 +26,7 @@
       ;; Let js2-mode warn some errors
       js2-mode-show-parse-errors t
       js2-mode-show-strict-warnings t
-      js2-strict-trailing-comma-warning t
+      js2-strict-trailing-comma-warning nil
       js2-strict-missing-semi-warning nil
       ;; js2-bounce-indent-p t TODO: works for better indentation?
       js2-strict-inconsistent-return-warning nil)
