@@ -54,6 +54,8 @@
       jabber-roster-buffer: "*jabber-roster*"
       jabber-groupchat-buffer-format "*jabber-room: [ %n ]*"
       jabber-chat-buffer-format "*jabber-chat: [ %n ]*"
+      jabber-chat-time-format "%H:%M"
+      jabber-chat-delayed-time-format "%H:%M"
       jabber-notifications-icon notifications-application-icon
       jabber-notifications-timeout -1
       ;; jabber-muc-default-nicknames "DistopicoVegan"
@@ -136,6 +138,7 @@
         (delete-frame))))
 
 (defun distopico:jabber-buffer-ido ()
+  "Switch to Jabber buffer using IDO to choose one."
   (interactive)
   (ido-for-mode "Jabber:" 'jabber-chat-mode))
 
@@ -164,7 +167,7 @@ for me because connect all accounts."
   "Return non-nil if jabber MESSAGE must be ignored."
   (if message
       (string-match distopico:jabber-muc-exclude-regexp message)
-  nil))
+  t))
 
 (defun distopico:jabber-muc-looks-like-personal-p (message &optional group)
   "Return non-nil if jabber MESSAGE if I mentioned.
@@ -177,6 +180,7 @@ Optional argument GROUP to look."
     nil))
 
 (defun distopico:jabber-read-jid-completing (prompt)
+  "Get JIDs candidates for ido completing, `PROMPT' to show in mini-buffer."
   (let* ((hist-items (remove-duplicates distopico:jid-history :test #'equal))
          (choices
           (mapcar #'symbol-name (jabber-concat-rosters))))
@@ -187,6 +191,7 @@ Optional argument GROUP to look."
                          nil nil nil 'distopico:jid-history)))
 
 (defun distopico:jabber-jid-connection (jid)
+  "Check if the `JID' has connection."
   (or (find-if
        #'(lambda (jc)
            (cl-find jid (plist-get (fsm-get-state-data jc) :roster)
@@ -196,11 +201,13 @@ Optional argument GROUP to look."
       (error "cannot determine connection for %s" jid)))
 
 (defun distopico:jabber-chat-mode-hook ()
+  "Hooks for `jabber-chat-mode'."
   (autosmiley-mode)
   ;;(tabbar-local-mode -1)
   )
 
 (defun distopico:jabber-init-load-hook ()
+  "Hooks on init jabber for connect all accounts."
   (when jabber-account-list
     (jabber-connect-all)))
 
@@ -215,18 +222,21 @@ use this if you don't like all those notices about people joining/leaving."
         (with-current-buffer buffer
           (ewoc-filter jabber-chat-ewoc (lambda (elt) (not (eq (car elt) :muc-notice))))))))
 
-(defun distopico:jabber-activity-add-muc (orig-fun nick group buffer text proposed-alert)
+(defun distopico:jabber-activity-add-muc (orig-fun &rest args)
   "Advice `ORIG-FUN' `jabber-activity-add-muc' for only personal mentions.
 Add a JID to mode line when `jabber-activity-show-p' needs `NICK' name from
 the `GROUP' chat, also require `TEXT' to check if the message has name,
 Optional `BUFFER' and `PROPOSED-ALERT'"
-(when (funcall jabber-activity-show-p group)
-  (unless (distopico:jabber-muc-looks-ignore-p text)
-    ;; No need activity if no call nick or is a ignored message
-    (add-to-list 'jabber-activity-jids group)
-    (when (distopico:jabber-muc-looks-like-personal-p text group)
-      (add-to-list 'jabber-activity-personal-jids group))
-    (jabber-activity-mode-line-update))))
+  ;; nick group buffer text proposed-alert
+  (let ((group (nth 1 args))
+        (text (nth 3 args)))
+    (when (funcall jabber-activity-show-p group)
+      (unless (distopico:jabber-muc-looks-ignore-p text)
+        ;; No need activity if no call nick or is a ignored message
+        (add-to-list 'jabber-activity-jids group)
+        (when (distopico:jabber-muc-looks-like-personal-p text group)
+          (add-to-list 'jabber-activity-personal-jids group))
+        (jabber-activity-mode-line-update)))))
 
 (defun distopico:jabber-activity-mode-line-update (orig-fun)
   "Advice `ORIG-FUN' `jabber-activity-mode-line-update' to avoid duplicate.
