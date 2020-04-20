@@ -1,6 +1,5 @@
 ;;; Code:
 (require 'buffer-defuns)
-(require 'clj-defuns)
 (require 'editing-defuns)
 (require 'file-defuns)
 (require 'js2r-defuns)
