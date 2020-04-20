@@ -5,7 +5,7 @@
 ;; Author: Tom Willemsen <tom@ryuslash.org>
 ;;         Distopico <distopico@riseup.net>
 ;; Created: Wed Jan 4 2012
-;; Version: 19
+;; Version: 20
 ;; Keywords: faces
 ;; URL: http://ryuslash.org/projects/tron-theme.html
 ;; Maintainer: Distopico <distopico@riseup.net>
@@ -73,11 +73,12 @@
 ;;      in `web-mode', `js-paren' and `java-mode|jdee-mode' faces.
 ;; 19 - Not force a specific font-size font
 ;;    - Change color to have a better contrast to read
+;; 20 - Fix faces for `jabber-mode'
 
 ;;; Code:
 
 (deftheme tron
-  "Updated 2020-04-17")
+  "Updated 2020-04-20")
 
 (require 'ezimage)
 
@@ -245,11 +246,11 @@
  '(markdown-header-face-6 ((t (:inherit org-level-6))))
 
  ;; jabber
- '(jabber-chat-prompt-local ((t (:foreground "#15abc3"  :weight bold))))
- '(jabber-chat-prompt-foreign ((t (:inherit font-lock-function-name-face))))
+ '(jabber-chat-prompt-local ((t (:foreground "cyan"  :weight bold))))
+ '(jabber-chat-prompt-foreign ((t (:foreground "#00815b" :weight bold))))
  '(jabber-chat-prompt-system ((t (:inherit font-lock-doc-face))))
- '(jabber-chat-text-local ((t (:foreground "#15abc3"))))
- '(jabber-chat-text-foreign ((t (:inherit font-lock-function-name-face :weight normal))))
+ '(jabber-chat-text-local ((t (:foreground "#15abc3" :weight normal))))
+ '(jabber-chat-text-foreign ((t (:foreground "#15abc3" :weight normal))))
  '(jabber-activity-face ((t (:foreground "#00815b"))))
  '(jabber-activity-personal-face ((t (:foreground "OrangeRed"))))
  '(jabber-roster-user-online ((t (:foreground "#05e4a5"))))
@@ -258,7 +259,7 @@
  ;; erc
  '(erc-default-face ((t (:inherit jabber-chat-text-local))))
  '(erc-input-face ((t (:inherit jabber-chat-text-foreign))))
- '(erc-nick-default-face ((t (:inherit jabber-chat-prompt-system))))
+ '(erc-nick-default-face ((t (:inherit jabber-chat-prompt-foreign))))
 
  ;; Minibuffer
  '(minibuffer-prompt ((t (:weight bold :foreground "#e0c625"))))
