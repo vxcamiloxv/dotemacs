@@ -51,7 +51,6 @@ return return a string of those available."
   "Set and update available dictionaries."
   (interactive)
   (ispell-set-spellchecker-params)
-  (ispell-buffer-local-dict 'no-reload)
   (setq ispell-dictionary (distopico:flyspell-get-available-dictionaries))
   ;; ispell-set-spellchecker-params has to be called
   ;; to setup the dictionaries path
