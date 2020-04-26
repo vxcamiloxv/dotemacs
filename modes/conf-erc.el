@@ -78,15 +78,12 @@
       erc-track-priority-faces-only 'all
       erc-echo-notice-hook '(erc-echo-notice-in-minibuffer)
       ;; Erc modules
-      erc-modules '(pcomplete
+      erc-modules '(pcomplete notifications spelling
                     netsplit fill button match readonly
                     track completion networks ring autojoin
                     noncommands irccontrols move-to-prompt
                     stamp menu list services truncate log
-                    scrolltobottom);; notifications)
-      ;; erc-track-faces-priority-list '(erc-current-nick-face
-      ;;                                 erc-direct-msg-face
-      ;;                                 erc-keyword-face)
+                    scrolltobottom)
       erc-track-faces-priority-list '(erc-error-face
                                       erc-current-nick-face
                                       erc-keyword-face
@@ -98,19 +95,19 @@
       ;; erc-user-full-name user-full-name
       erc-user-full-name "DistopicoVegan"
       erc-nick '("distopico" "DistopicoVegan")
-      erc-keywords '("\\distopico[-a-z]*\\b")
+      erc-keywords '("\\bdistopico\\b[^\]]")
       erc-mode-line-format "%a %t %o"
-      erc-hide-list '("MODE")
+      ;; TODO: less silent tracking
+      erc-hide-list '("JOIN" "PART" "QUIT")
       erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                 "324" "329" "332" "333" "353" "477")
       erc-log-channels-directory (in-emacs-d ".cache/erc/logs/")
       erc-autojoin-channels-alist
       '((".*\\.freenode.net" "#emacs" "#gnu" "#emacs-es" "##vegan"
          "#social" "#libre.fm" "#parabola" "#trisquel-es" "#trisquel"
-         "#mediagoblin" "#org-mode" "#pump.io" "#indieweb" "#social")
+         "#mediagoblin" "#org-mode" "#pump.io" "#indieweb" "#social") ;
         (".*\\.w3.org", "#social")
         (".*\\.indymedia.org" "#riseup")))
-
 
 ;; Custom keys
 (define-key erc-mode-map (kbd "C-x c") 'distopico:erc-ido-switch-buffer)
