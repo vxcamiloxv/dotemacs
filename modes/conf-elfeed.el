@@ -10,7 +10,8 @@
 
 (defcustom distopico:elfeed-update-at-time "9:30"
   "Feeds update in specific hour."
-  :group 'elfeed)
+  :group 'elfeed
+  :type 'string)
 
 (defcustom distopico:elfeed-update-modeline-interval 60
   "Feeds update interval of modeline."
@@ -42,11 +43,6 @@
 
 ;; Prevent 'Queue timeout exceeded'
 (setf url-queue-timeout 30)
-
-;; Change titles
-;; (defadvice elfeed-search-update (before nullprogram activate)
-;;   (let ((feed (elfeed-db-get-feed "https://feeds.feedburner.com/DebianHackers")))
-;;     (setf (elfeed-feed-title feed) "DebianHackers")))
 
 ;; Custom key map
 (define-key elfeed-search-mode-map (kbd "C-q") 'distopico:elfeed-close)
@@ -239,6 +235,7 @@
 (defun distopico:elfeed-show-mode-hook ()
   "Hook when enter in show mode."
   (tabbar-local-mode 1)
+  (buffer-face-set 'message-read-face)
   (visual-line-mode))
 
 ;;;###autoload

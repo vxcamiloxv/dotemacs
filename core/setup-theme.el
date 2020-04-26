@@ -39,6 +39,7 @@
         (distopico:enable-theme distopico:cli-theme)
       (distopico:enable-theme distopico:gui-theme))))
 
+;;;###autoload
 (defun distopico:enable-theme (theme)
   "Check if THEME is loaded and enable."
   (when (not (equal theme nil))

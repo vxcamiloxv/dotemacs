@@ -47,6 +47,7 @@ attachment - should launch the no-attachment warning.")
       mu4e-confirm-quit nil
       mu4e-compose-keep-self-cc nil
       mu4e-view-prefer-html t
+      mu4e-view-use-gnus t
       ;;mu4e-html2text-command "html2text"
       mu4e-compose-complete-addresse t
       mu4e-compose-dont-reply-to-self t
@@ -414,8 +415,14 @@ from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
 
 (defun distopico:mu4e-view-mode-hook ()
   "Enable/disable some mode in `mu4e-view-mode'."
+  (buffer-face-set 'mu4e-view-body-face)
   (tabbar-local-mode 1)
   (visual-line-mode))
+
+(defun distopico:mu4e-compose-mode-hook ()
+  "Enable/disable some mode in `mu4e-compose-mode'."
+  (distopico:mu4e-view-mode-hook)
+  (mml-secure-message-sign-pgpmime))
 
 (defun distopico:mu4e-init-load-hook ()
   "Run mu4e in startup."
@@ -440,7 +447,7 @@ from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
 (add-hook 'mu4e-compose-pre-hook #'distopico:mu4e-set-account)
 (add-hook 'mu4e-index-updated-hook #'distopico:mu4e-index-updated-hook)
 (add-hook 'mu4e-view-mode-hook #'distopico:mu4e-view-mode-hook)
-(add-hook 'mu4e-compose-mode-hook #'mml-secure-message-sign-pgpmime)
+(add-hook 'mu4e-compose-mode-hook #'distopico:mu4e-compose-mode-hook)
 (add-hook 'message-send-hook #'distopico:message-warn-if-no-attachments)
 (add-hook 'distopico:after-init-load-hook #'distopico:mu4e-init-load-hook)
 

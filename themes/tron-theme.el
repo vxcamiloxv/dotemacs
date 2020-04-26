@@ -5,7 +5,7 @@
 ;; Author: Tom Willemsen <tom@ryuslash.org>
 ;;         Distopico <distopico@riseup.net>
 ;; Created: Wed Jan 4 2012
-;; Version: 20
+;; Version: 21
 ;; Keywords: faces
 ;; URL: http://ryuslash.org/projects/tron-theme.html
 ;; Maintainer: Distopico <distopico@riseup.net>
@@ -74,13 +74,19 @@
 ;; 19 - Not force a specific font-size font
 ;;    - Change color to have a better contrast to read
 ;; 20 - Fix faces for `jabber-mode'
+;; 12 - Add custom face to read/write modes
 
 ;;; Code:
 
 (deftheme tron
-  "Updated 2020-04-20")
+  "Updated 2020-04-24")
 
 (require 'ezimage)
+
+(defface message-read-face
+  '((t :inherit default))
+  "Face for messages or for read."
+  :group 'basic-faces)
 
 (custom-theme-set-variables
  'tron
@@ -104,6 +110,9 @@
  '(linum-highlight-face ((t (:background "#000E10" :foreground "cyan" :height 0.9))))
  '(show-paren-match ((t (:background "cyan" :foreground "black"))))
  '(show-paren-mismatch ((t (:background "purple" :foreground "white"))))
+
+ ;; Custom faces
+ '(message-read-face ((t (:inherit default :height 1.1 :foreground "#B3D0DD"))))
 
  ;; Cursor
 
@@ -353,8 +362,11 @@
  '(js2-object-property ((t (:inherit font-lock-variable-name-face))))
  '(js2-function-call ((t (:inherit font-lock-function-name-face))))
 
- ;; Elfeed
+ ;; elfeed
  '(elfeed-search-title-face ((t (:foreground "#15abc3"))))
+
+ ;; mu4e
+ '(mu4e-view-body-face ((t (:inherit message-read-face))))
  )
 
 ;; Icons
