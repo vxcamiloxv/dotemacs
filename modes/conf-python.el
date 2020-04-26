@@ -4,7 +4,6 @@
 (require 'python-environment)
 (require 'pony-mode)
 (require 'company)
-;;(require 'python-django)
 
 ;; Autoload
 (autoload 'jedi "jedi" "Jedi for python" t)
@@ -14,18 +13,16 @@
 (setq python-indent-offset 4
       python-environment-virtualenv '("virtualenv2" "--system-site-packages" "--quiet")
       python-indent-guess-indent-offset nil
-      python-environment-directory (in-emacs-d ".virtualenv/")
+      python-environment-directory user-emacs-directory
       python-environment-default-root-name "distopico")
+
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-;;(add-to-list 'auto-mode-alist '("\\.dtpl$" . pony-tpl-mode))
 
 ;; Jedi
 (setq jedi:setup-keys t
       jedi:complete-on-dot t
       jedi:tooltip-method '(popup)
       jedi:tooltip-show nil)
-(eval-after-load "python"
-  '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
 
 ;; Functions
 (defun distopico:python-mode-hook()
@@ -46,8 +43,5 @@
 
 ;; Hooks
 (add-hook 'python-mode-hook 'distopico:python-mode-hook)
-(add-hook 'jedi-mode-hook 'jedi-direx:setup)
-
-
 
 (provide 'conf-python)
