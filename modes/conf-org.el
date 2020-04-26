@@ -8,6 +8,7 @@
 (require 'org-clock)
 (require 'org-contacts)
 (require 'org-habit)
+(require 'org-goto)
 (require 'org-gnus)
 (require 'org-notify)
 (require 'org-depend)
@@ -23,7 +24,8 @@
 
 ;; Vars
 (defvar distopico:org-directory (expand-file-name "~/Documents/org/"))
-(defvar distopico:contacts-files (concat distopico:org-directory "contacts.org" ))
+(defvar distopico:org-agenda-files '("daily.org" "calendar.org" "notes.org" "life.org" "todo.org" "contacts.org"))
+(defvar distopico:special-categories '("Holiday", "Birthday", "Vacation"))
 (defvar distopico:icon-org-mode (in-emacs-d "themes/icons/"))
 (defvar distopico:org-clock-default-effort "1:00")
 (defvar distopico:org-appt-current nil)
@@ -40,13 +42,12 @@
                 org-mime
                 org-crypt
                 org-protocol
-                ;;org-panel
                 org-projectile)))
 
-(setq org-note-abort nil ;; Keep change when finalized
+;; General settings
+(setq org-directory distopico:org-directory
       org-log-done 'time
       org-log-into-drawer t
-      org-completion-use-ido t
       org-auto-align-tags t
       org-support-shift-select t
       org-track-ordered-property-with-tag t
@@ -56,192 +57,58 @@
       org-use-speed-commands t
       org-special-ctrl-k t
       org-special-ctrl-a/e t
-      ;; nil
       ;; org-startup-indented nil
       ;; org-hide-leading-stars nil
       org-reverse-note-order nil
       org-M-RET-may-split-line nil
-      org-refile-use-outline-path nil
-      ;; org-indirect-buffer-display 'current-window
       org-cycle-separator-lines 2
-      org-tags-match-list-sublevels 'indented
-      org-blank-before-new-entry '((heading . auto) (plain-list-item . auto))
+      org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)) ;; TODO: check this if have problems with blank spaces
+      org-tags-column -120
+      org-refile-use-outline-path nil
       org-refile-allow-creating-parent-nodes 'confirm
       org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
       org-goto-interface 'outline
-      org-goto-max-level 10
-      org-tags-column -120
-      ;; org-src-window-setup 'current-window
-      org-stuck-projects
-      '("TODO=\"PROJECT\""
-        ("TODO" "STARTED" "NEXT" "REWORK" "VERIFY" "DELEGATED")
-        nil "")
-      org-todo-state-tags-triggers '(("CANCELLED" ("ARCHIVE" . t))))
-
-;; Default directory
-(setq org-directory distopico:org-directory)
+      org-goto-max-level 10)
 
 ;; Contacts
-(setq org-contacts-files (list distopico:contacts-files))
+(setq org-contacts-files (list (expand-file-name "contacts.org" org-directory)))
+
+;; Diary
+(setq  org-agenda-diary-file (expand-file-name "daily.org" org-directory))
 
 ;;Archive
 (setq org-archive-location (expand-file-name "archive/archive_%s::" org-directory))
 
 ;; General Notes
-(setq org-default-notes-file (expand-file-name "organizer.org" org-directory))
+(setq org-default-notes-file (expand-file-name "notes.org" org-directory))
 
 ;; Annotation
-(setq org-annotate-file-storage-file (expand-file-name "annotated.org" org-directory)
+(setq org-annotate-file-storage-file (expand-file-name "notes.org" org-directory)
       org-annotate-file-add-search t)
 
-;; Agenda
-(setq org-agenda-files (file-expand-wildcards (concat org-directory "*.org"))) ;; I'm not sure if it's good idea include all files
-
-(setq org-agenda-window-setup 'only-window
-      org-agenda-restore-windows-after-quit t
-      org-agenda-skip-deadline-prewarning-if-scheduled t
-      org-agenda-skip-timestamp-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-insert-diary-extract-time t
-      org-agenda-todo-list-sublevels t
-      org-agenda-dim-blocked-tasks t
-      ;; nil
-      org-agenda-include-diary nil
-      org-agenda-sticky nil
-      org-agenda-remove-tags nil
-      ;; Other
-      org-agenda-tags-column -102
-      org-agenda-span 2
-      org-agenda-day-face-function 'distopico:org-agenda-day-face-holidays-function
-      org-agenda-category-icon-alist
-      `(("Emacs"
-         ,(if window-system
-            "~/.emacs.d/themes/icons/emacs.png"
-            (list "ξ")) nil nil :ascent center)
-        ("\\(Holidays\\|Vacation\\)"
-         ,(if window-system
-              "~/.emacs.d/themes/icons/holidays.png"
-            (list "☀")) nil nil :ascent center)
-        (".*" '(space . (:width (16)))))
-      org-agenda-custom-commands
-      '(("p" "Projects" todo "PROJECT"
-         ((org-agenda-dim-blocked-tasks t)
-          (org-agenda-skip-scheduled-if-done nil)
-          (org-agenda-skip-deadline-if-done nil)
-          (org-agenda-todo-ignore-with-date nil)
-          (org-agenda-todo-ignore-scheduled nil)
-          (org-agenda-todo-ignore-deadlines nil)))
-        ("b" "Things to buy any time" tags-todo "+tobuy+SCHEDULED=\"\"")
-        ("y" "Syadmin stuff to do" tags-todo "+sysadmin+SCHEDULED=\"\"")
-        ("d" "Daily tasks:" tags "daily")))
-
-;; Diary TODO: Move to calendar.el
-(setq diary-file (concat org-directory "diary")
-      calendar-mark-diary-entries-flag t
-      calendar-mark-holidays-flag t
-      diary-number-of-entries 2
-      lunar-phase-names
-      '("● New Moon"
-        "☽ First Quarter Moon"
-        "○ Full Moon"
-        "☾ Last Quarter Moon")
-      )
-(add-to-list 'auto-mode-alist '("diary" . diary-mode))
-(add-hook 'diary-display-hook 'appt-make-list)
-(add-hook 'diary-hook (lambda()
-                        (tabbar-local-mode -1)))
-(add-hook 'list-diary-entries-hook 'sort-diary-entries t)
-(add-hook 'calendar-today-visible-hook 'calendar-mark-today)
-
-;;Appointment
-(setq appt-audible nil
-      appt-display-diary nil
-      appt-display-mode-line t
-      appt-display-format 'window
-      appt-message-warning-time 15
-      appt-display-interval 30
-      appt-disp-window-function
-      (lambda (left time message)
-        (add-to-list 'distopico:org-appt-current message)
-        (alert message
-               :title (concat "Appointment "
-                              (cond
-                               ((equal left "0")
-                                "now!")
-                               ((equal left "1")
-                                "in 1 minute!")
-                               (t
-                                (format "in %s minutes" left))))
-               :mode 'org-mode
-               :severity 'normal
-               :category 'emacs
-               :icon (concat distopico:icon-org-mode "org-mode.png")))
-      appt-delete-window-function
-      (lambda ()
-        (if distopico:org-appt-current
-            (setq distopico:org-appt-current
-                  (delete (nth 0 distopico:org-appt-current) distopico:org-appt-current)))))
-
-;; Notify
-(setq org-notify-audible nil)
-(org-notify-add 'appt
-                '(:time "-1s" :period "20s" :duration 10
-                        :actions (-message -ding))
-                '(:time "15m" :period "2m" :duration 100
-                        :actions -notify)
-                '(:time "2h" :period "5m" :actions -message)
-                '(:time "3d" :actions -email))
-
-;; Clocks
-(setq org-clock-auto-clock-resolution 'when-no-clock-is-running
-      org-clock-clocktable-default-properties '(:maxlevel 3 :scope file)
-      org-clock-history-length 20
-      org-clock-in-resume t
-      org-clock-in-switch-to-state 'distopico:clock-in-to-next
-      org-clock-out-remove-zero-time-clocks t
-      org-clock-out-when-done '("HOLD" "WAITING" "CANCELLED" "DONE")
-      org-clock-into-drawer t
-      org-clock-persist 'history
-      org-clock-report-include-clocking-task t
-      org-show-notification-handler
-      (lambda (message)
-        (alert message
-               :title "Org-mode"
-               :mode 'org-mode
-               :severity 'normal
-               :category 'emacs
-               :icon (concat distopico:icon-org-mode "org-mode.png")))
-      org-clock-persist-file (in-emacs-d ".cache/org-clock-save.el")
-      org-time-clocksum-format
-      '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
-
-;; Habits
-(setq org-habit-graph-column 60
-      org-habit-show-done-always-green t)
-
-;; Todo
+;;  Workflow definition
 (setq org-use-fast-todo-selection t
       org-enforce-todo-dependencies t
       org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "STARTED(s!)" "|" "DONE(d!)")
         (sequence "HOLD(h)" "WAITING(w@/!)" "|" "CANCELED(c@/!)")
-        (sequence "PROJECT(p!)" "|" "SOMEDAY(m)")
-        ))
-
-;; Custom faces
-(setq org-todo-keyword-faces
+        (sequence "PROJECT(p!)" "|" "SOMEDAY(m)"))
+      org-stuck-projects
+      '("TODO=\"HOLD\"|TODO=\"PROJECT\"|@distopia/-DONE"
+        ("TODO" "NEXT" "STARTED" "WAITING")
+        nil "")
+      org-todo-state-tags-triggers '(("CANCELLED" ("ARCHIVE" . t)))
+      org-clock-out-when-done '("HOLD" "WAITING" "CANCELLED" "DONE")
+      org-todo-keyword-faces
       '(("TODO" . (:foreground "#df3800" :weight bold))
-        ("STARTED" . (:foreground "PaleGreen" :weight bold)) ;; #566ea2
+        ("STARTED" . (:foreground "#566ea2" :weight bold))
         ("NEXT" . (:foreground "DeepPink2" :weight bold))
         ("HOLD" . (:foreground "#b68800" :weight bold))
         ("WAITING" . (:foreground "#4d9694" :weight bold))
         ("CANCELED" . (:foreground "#e00051" :weight bold))
         ("DONE" . (:foreground "#448c27" :weight bold))
-        ("PROJECT" . (:foreground "orchid" :weight bold))))
-
-;; Priorities
-(setq org-default-priority ?D
+        ("PROJECT" . (:foreground "orchid" :weight bold)))
+      org-default-priority ?D
       org-lowest-priority ?E
       org-priority-faces
       '((?A . "#f01a0f")
@@ -249,29 +116,19 @@
         (?C . "light sea green")
         (?D . "slate blue")))
 
-;; (setq org-todo-keyword-faces            ; What they look like.
-;;       '(("TODO"        :foreground "red")
-;;         ("IN PROGRESS" :foreground "yellow")
-;;         ("DONE"        :foreground "forest green")
-;;         ("SUCCEEDED"   :foreground "forest green")
-;;         ("WAITING"     :foreground "orange")
-;;         ("CANCELLED"   :foreground "orangered")
-;;         ("FAILED"      :foreground "orangered")))
-
 ;; Default tags
-(setq org-tag-persistent-alist '(("@work"      . ?b)
-                                 ("@home"      . ?h)
-                                 ("@bookmarks" . ?m)
-                                 ("@writing"   . ?w)
-                                 ("@errands"   . ?e)
-                                 ("@drawing"   . ?d)
-                                 ("@haking"    . ?c)
-                                 ("@reading"   . ?r)
-                                 ("@laptop"    . ?l)
-                                 ("@pc"        . ?p)
-                                 ("lowenergy"  . ?0)
-                                 ("highenergy" . ?1)
-                                 ("TOC"        . ?T)))
+(setq org-tag-persistent-alist
+      '(("@work"      . ?b)
+        ("@home"      . ?h)
+        ("@bookmarks" . ?m)
+        ("@writing"   . ?w)
+        ("@errands"   . ?e)
+        ("@haking"    . ?c)
+        ("@reading"   . ?r)
+        ("@laptop"    . ?l)
+        ("@pc"        . ?p)
+        ("@weekly"    . ?W)
+        ("@family"    . ?f)))
 
 ;; Templates
 (setq org-capture-templates
@@ -289,7 +146,6 @@
          "** TODO %^{Task}" :immediate-finish t)
         ;; Web bookmark
         ("B" "Bookmark" item
-         ;;(file+headline (concat org-directory "bookmarks.org") "Emacs")
          (file+function (concat org-directory "bookmarks.org") (lambda () (distopico:org-ask-location '((nil :maxlevel . 5)))))
          "%a \n%?%:initial\n\n" :prepend nil :empty-lines 1)
         ;; Notes to remember with custom title
@@ -311,7 +167,7 @@
          :empty-lines 1)
         ;; Organized my habbits of day
         ("h" "Habit" entry
-         (file+headline (concat org-directory "myday.org") "Habits")
+         (file+headline (concat org-directory "daily.org") "Habits")
          "* TODO %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %h %H:%M .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:CAPTURED: %U\n:END:"
          :empty-lines-after 2 :empty-lines-before 1 :clock-resume t)
         ;; Some real life tasks
@@ -339,14 +195,108 @@
          (file+headline org-default-notes-file "Messages")
          "* NEXT Respond to %:fromaddress on %:subject\nSCHEDULED: %t\n CAPTURED: %U\n%a\n" :empty-lines 1)))
 
+;; Agenda
+(setq org-agenda-files (mapcar (lambda (x) (expand-file-name x org-directory)) distopico:org-agenda-files)
+      org-agenda-window-setup 'only-window
+      org-agenda-restore-windows-after-quit t
+      org-agenda-skip-deadline-prewarning-if-scheduled t
+      org-agenda-skip-timestamp-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-insert-diary-extract-time t
+      org-agenda-todo-list-sublevels t
+      org-agenda-dim-blocked-tasks t
+      ;; nil
+      org-agenda-include-diary nil
+      org-agenda-sticky nil
+      org-agenda-remove-tags nil
+      ;; Other
+      org-agenda-tags-column -102
+      org-agenda-span 2
+      org-agenda-day-face-function 'distopico:org-agenda-day-face-holidays-function
+      org-agenda-category-icon-alist
+      `(("Emacs"
+         ,(if window-system
+            "~/.emacs.d/themes/icons/emacs.png"
+            (list "ξ")) nil nil :ascent center)
+        ("Holiday\\|Vacation"
+         ,(if window-system
+              "~/.emacs.d/themes/icons/holidays.png"
+            (list "☀")) nil nil :ascent center)
+        (".*" '(space . (:width (16)))))
+      org-agenda-custom-commands
+      '(("p" "Projects" tags "@distopia|PROJECT"
+         ((org-agenda-dim-blocked-tasks t)
+          (org-agenda-skip-scheduled-if-done nil)
+          (org-agenda-skip-deadline-if-done nil)
+          (org-agenda-todo-ignore-with-date nil)
+          (org-agenda-todo-ignore-scheduled nil)
+          (org-agenda-todo-ignore-deadlines nil)))
+        ("N" "Next to do" tags-todo "next|NEXT|SCHEDULED=\".*\"")
+        ("b" "Things to buy any time" tags-todo "+tobuy+SCHEDULED=\"\"")
+        ("y" "Syadmin stuff to do" tags-todo "+sysadmin+SCHEDULED=\"\"")
+        ("d" "Daily tasks:" tags "daily|CATEGORY=\"daily\"|STYLE=\"habit\"")))
+
+;; Calendar
+(setq diary-file (concat org-directory "diary")
+      calendar-mark-diary-entries-flag t
+      calendar-mark-holidays-flag t
+      lunar-phase-names
+      '("● New Moon"
+        "☽ First Quarter Moon"
+        "○ Full Moon"
+        "☾ Last Quarter Moon")
+      )
+;;(add-to-list 'auto-mode-alist '("diary" . diary-mode))
+(add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+
+;;Appointment
+(setq appt-audible nil
+      appt-display-diary nil
+      appt-display-mode-line t
+      appt-display-format 'window
+      appt-message-warning-time 16
+      appt-display-interval 8
+      appt-disp-window-function (lambda (&rest args) (apply 'distopico:org-appt-disp-window-function args))
+      appt-delete-window-function `distopico:org-appt-delete-window-function)
+
+;; Notify
+(setq org-notify-audible nil)
+(org-notify-add 'default
+                '(:time "16m" :duration 20 :actions -notify)
+                '(:time "2h" :actions -message)
+                '(:time "3d" :actions -email))
+
+;; Clocks
+(setq org-clock-auto-clock-resolution 'when-no-clock-is-running
+      org-clock-clocktable-default-properties '(:maxlevel 3 :scope file)
+      org-clock-history-length 20
+      org-clock-in-resume t
+      org-clock-in-switch-to-state 'distopico:clock-in-to-next
+      org-clock-out-remove-zero-time-clocks t
+      org-clock-into-drawer t
+      org-clock-persist 'history
+      org-clock-report-include-clocking-task t
+      org-show-notification-handler
+      (lambda (message)
+        (alert message
+               :title "Org-mode"
+               :mode 'org-mode
+               :severity 'normal
+               :category 'emacs
+               :icon (concat distopico:icon-org-mode "org-mode.png")))
+      org-clock-persist-file (in-emacs-d ".cache/org-clock-save.el")
+      org-time-clocksum-format
+      '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+
+;; Habits
+(setq org-habit-graph-column 60
+      org-habit-show-done-always-green t)
+
+;; mu4e
 (setq org-capture-templates-contexts
       '(("M" ((in-mode . "mu4e-headers-mode")
               (in-mode . "mu4e-view-mode")))))
-
-;; Table of Contacts
-;;      (if (require 'toc-org nil t)
-;;          (add-hook 'org-mode-hook 'toc-org-enable)
-;;        (warn "toc-org not found"))
 
 ;; Org Projectile
 (setq org-projectile:projects-file  (expand-file-name "todo.org" org-directory))
@@ -386,7 +336,6 @@
 (define-key org-mode-map (kbd "C-M-s-<return>")  'distopico:org-insert-todo-subheading)
 (define-key org-mode-map (kbd "C-M-<return>")  'distopico:org-insert-subheading)
 (define-key org-mode-map (kbd "M-s-<return>")  'distopico:org-insert-heading-for-next-day)
-(define-key org-mode-map (kbd "C-<tab>")  'pcomplete)
 (define-key org-mode-map (kbd "C-c k")  'org-cut-subtree)
 (define-key org-mode-map (kbd "C-c q")  'org-copy-subtree)
 (define-key org-mode-map (kbd "C-c y")  'org-paste-subtree)
@@ -408,7 +357,7 @@
 ;; Functions
 ;; ------------
 (with-no-warnings (defvar date))
-(defun org-lunar-phases ()
+(defun distopico:org-lunar-phases ()
   "Show lunar phase in Agenda buffer."
   (require 'lunar)
   (let* ((phase-list (lunar-phase-list (nth 0 date) (nth 2 date)))
@@ -418,7 +367,31 @@
       (setq ret (concat (lunar-phase-name (nth 2 phase)) " "
                         (substring (nth 1 phase) 0 5))))))
 
-(defun org-remove-redundant-tags ()
+(defun distopico:org-appt-disp-window-function (left time message)
+  "Show notification on appointments based on `LEFT' `TIME' `MESSAGE'."
+  (add-to-list 'distopico:org-appt-current message)
+  (alert message
+         :title (concat "Appointment "
+                        (cond
+                         ((equal left "0")
+                          "now!")
+                         ((equal left "1")
+                          "in 1 minute!")
+                         (t
+                          (format "in %s minutes" left))))
+         :mode 'org-mode
+         :severity 'moderate
+         :style 'libnotify
+         :category 'emacs
+         :icon (concat distopico:icon-org-mode "org-mode.png")))
+
+(defun distopico:org-appt-delete-window-function ()
+    "Delete appointment after show it."
+      (if distopico:org-appt-current
+          (setq distopico:org-appt-current
+                (delete (nth 0 distopico:org-appt-current) distopico:org-appt-current))))
+
+(defun distopico:org-remove-redundant-tags ()
   "Remove redundant tags of headlines in current buffer.
 A tag is considered redundant if it is local to a headline and
 inherited by a parent headline.
@@ -615,7 +588,7 @@ from: http://pages.sachachua.com/.emacs.d/Sacha.html"
   (interactive)
   (org-agenda-todo "DONE")
   (org-agenda-switch-to)
-  (org-capture 0"t"))
+  (org-capture 0 "t"))
 
 (defun distopico:org-agenda-new ()
   "Create a new note or task at the current agenda item.
@@ -625,20 +598,19 @@ this with to-do items than with projects or headings."
   (org-agenda-switch-to)
   (org-capture 0))
 
-(defun distopico:org-agenda-day-face-holidays-function (date)
-  "Compute DATE face for holidays."
-  (unless (org-agenda-todayp date)
+(defun distopico:org-agenda-day-face-special-function (date)
+  "Compute DATE face for holidays/vacations/birthday."
+  (unless (org-agenda-today-p date)
     (dolist (file (org-agenda-files nil 'ifmode))
       (let ((face
              (dolist (entry (org-agenda-get-day-entries file date))
                (let ((category (with-temp-buffer
                                  (insert entry)
                                  (org-get-category (point-min)))))
-                 (cond ((or (string= "Holidays" category)
-                            (string= "Birthday" category)
-                            (string= "Vacation" category))
-                        (return 'org-agenda-date-weekend))
-                       ))) ))
+                 (when (string-match
+                        (mapconcat 'downcase distopico:special-categories "\\|")
+                        category)
+                        (return 'org-agenda-date-weekend))))))
         (when face (return face))))))
 
 (defun distopico:org-update-agenda-views ()
@@ -707,16 +679,6 @@ Skips capture tasks and tasks with subtasks."
   (org-capture-refile)
   (org-refile-goto-last-stored))
 
-(defun distopico:org-tree-to-indirect-buffer-renamed (subname)
-  "Like org-tree-to-indirect-buffer, with the option to give a `SUBNAME' \
-from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
-  (interactive "sNew buffer subname?: ")
-  (let ((orig-buffer-name (buffer-name (current-buffer))))
-    (org-tree-to-indirect-buffer)
-    (other-window 1)
-    (if (not (equal subname ""))
-        (rename-buffer (format "%s(%s)" orig-buffer-name subname)))))
-
 (defun distopico:org-inherited-no-file-tags ()
   "Preserves the logic of level one groupings."
   (let ((tags (org-entry-get nil "ALLTAGS" 'selective))
@@ -772,8 +734,8 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
   "Run org appointments."
   (interactive)
   (setq appt-time-msg-list nil)
-  (org-agenda-to-appt)
-  (appt-activate t))
+  (appt-activate 1)
+  (org-agenda-to-appt))
 
 (defun distopico:org-appt-add-hook-async ()
   (async-start
@@ -799,69 +761,6 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
   (cl-flet ((yes-or-no-p (x) t))
     (org-revert-all-org-buffers))
   (org-agenda-to-appt))
-
-(defun distopico:open-diary ()
-  "Open diary file with popwin and prevent run diary-fancy-mode."
-  (interactive)
-  (if (file-regular-p diary-file)
-      (progn
-        (find-file-noselect diary-file)
-        (message "Opening diary...")
-        (popwin:display-buffer-1
-         (or (get-buffer "diary"))
-         :default-config-keywords '(:position :bottom :height 10 :stick t))
-        )
-    (message "Diary file no exist")))
-
-(defun distopico:org-init-hook ()
-  "Hook for set up `org-mode' on init."
-  ;; Org mime messages to HTML
-  (when (fboundp 'org-mime-org-buffer-htmlize)
-    (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize))
-  (turn-on-visual-line-mode)
-  (distopico:org-saveplace)
-  ;; Try to keep org indentation beautify
-  (aggressive-indent-mode)
-  ;; Disabled flycheck
-  (flycheck-mode -1)
-  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t)
-  (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
-  (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local))
-
-(defun distopico:org-after-save-hook ()
-  "Hook for after save in `org-mode'."
-  (when (eq major-mode 'org-mode)
-    ;; (distopico:org-update-appt)
-    (distopico:org-remove-done-trigger)
-    (distopico:org:remove-empty-propert-drawers)
-    (org-save-all-org-buffers)
-    (message (concat "Wrote " (buffer-file-name)))))
-
-(defun distopico:org-before-save-hook ()
-  "Hook for before save in `org-mode'."
-  (when (eq major-mode 'org-mode)
-    (and buffer-file-name
-         (file-exists-p buffer-file-name)
-         (org-remove-redundant-tags))
-    (org-align-all-tags)
-    (org-update-all-dblocks)))
-
-(defun distopico:org-capture-mode-hook ()
-  "Hook for `org-capture-mode'."
-  (flyspell-mode)
-  ;; Capture to be the only window when used as a popup.
-  (if (equal "emacs-capture" (frame-parameter nil 'name))
-      (delete-other-windows)))
-
-(defun distopico:org-capture-before-finalize-hook ()
-  "Hook for capture before finalized in`org-mode'."
-  (org-align-all-tags))
-
-(defun distopico:org-capture-after-finalize-hook ()
-  "Hook for capture after finalized in`org-mode'."
-  (if (equal "emacs-capture" (frame-parameter nil 'name))
-      (delete-frame))
-  (distopico:org-update-agenda-views))
 
 ;; defadvice
 (defadvice org-capture-finalize
@@ -893,6 +792,62 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
         (org-set-tags-to tags)))))
 
 ;; Hooks
+(defun distopico:org-init-hook ()
+  "Hook for set up `org-mode' on init."
+  ;; Org mime messages to HTML
+  (when (fboundp 'org-mime-org-buffer-htmlize)
+    (local-set-key "\C-c\M-o" 'org-mime-org-buffer-htmlize))
+  ;; (turn-on-visual-line-mode) TODO: enable for blogging
+  ;; (distopico:org-saveplace) TODO: check if already need it
+  ;; Try to keep org indentation beautify
+  (aggressive-indent-mode)
+  ;; Disabled flycheck and enable flyspell
+  (flycheck-mode -1)
+  ;;(flyspell-mode)
+  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil 'make-it-local)
+  (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
+  (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local))
+
+(defun distopico:org-after-save-hook ()
+  "Hook for after save in `org-mode'."
+  (when (eq major-mode 'org-mode)
+    ;; (distopico:org-update-appt)
+    (distopico:org-remove-done-trigger)
+    (distopico:org:remove-empty-propert-drawers)
+    (org-save-all-org-buffers)
+    (message (concat "Wrote " (buffer-file-name)))))
+
+(defun distopico:org-before-save-hook ()
+  "Hook for before save in `org-mode'."
+  (when (eq major-mode 'org-mode)
+    (and buffer-file-name
+         (file-exists-p buffer-file-name)
+         (distopico:org-remove-redundant-tags))
+    (org-align-all-tags)
+    (org-update-all-dblocks)))
+
+(defun distopico:org-capture-mode-hook ()
+  "Hook for `org-capture-mode'."
+  (flyspell-mode)
+  ;; Capture to be the only window when used as a popup.
+  (if (equal "emacs-capture" (frame-parameter nil 'name))
+      (delete-other-windows)))
+
+(defun distopico:org-capture-before-finalize-hook ()
+  "Hook for capture before finalized in`org-mode'."
+  (org-align-all-tags))
+
+(defun distopico:org-capture-after-finalize-hook ()
+  "Hook for capture after finalized in`org-mode'."
+  (if (equal "emacs-capture" (frame-parameter nil 'name))
+      (delete-frame))
+  (distopico:org-update-agenda-views))
+
+(defun distopico:org-init-load-hook ()
+  "Hook when Emacs load."
+  (distopico:org-run-appt)
+  (org-notify-start))
+
 (add-hook 'org-mode-hook 'distopico:org-init-hook)
 
 (with-eval-after-load 'org-capture
@@ -901,9 +856,7 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
   (add-hook 'org-capture-after-finalize-hook #'distopico:org-capture-after-finalize-hook 'append))
 
 (with-eval-after-load 'org-agenda
-  (add-hook 'org-agenda-mode-hook
-            (lambda ()
-              (distopico:org-update-appt)) 'append))
+  (add-hook 'org-agenda-mode-hook #'distopico:org-update-appt 'append))
 
 (with-eval-after-load 'org-clock
   (org-clock-persistence-insinuate)
@@ -930,11 +883,8 @@ from: https://github.com/cwebber/cwebbers-emacs-config/blob/master/modes/org.el"
 
 (add-hook 'bookmark-bmenu-mode-hook
           (lambda ()
-            (local-set-key (kbd "a") 'bookmark-show-org-annotations)))
+            (local-set-key (kbd "a") 'bookmark-show-org-annotations))) ;; TODO: fix it
 
-;;(add-hook 'org-clock-in-prepare-hook 'distopico:org-mode-add-default-effort) I need?
-
-;; ----------
-(distopico:org-run-appt) ;; Run Appt
+(add-hook 'distopico:after-init-load-hook #'distopico:org-init-load-hook)
 
 (provide 'conf-org)
