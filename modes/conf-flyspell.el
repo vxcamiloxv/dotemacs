@@ -7,8 +7,8 @@
 ;; but my `org-mode' notes/todos or my attempt of blog are a
 ;; mix between English/Spanish, so I was looking for an alternative
 ;; to have spellchecker in both languages, ideally at the same time
-;; or per buffer, after test `auto-dictionary' and `guess-language'
-;; even `spell-fu' those no  solved my needs, so after read the docs
+;; or per buffer, after tested `auto-dictionary' and `guess-language'
+;; even `spell-fu' no of those solved my needs, so after read the docs
 ;; of `aspell' I found out it has a option for multi-dictionaries
 ;; `--add-extra-dicts' but not worked to me, in reddit I found
 ;; the solution with `hunspell' the works really great with
@@ -66,20 +66,9 @@ return return a string of those available."
                 '(font-lock-comment-face font-lock-doc-face))))
 
 (defun distopico:flyspell-enable-hook ()
-  "Function to enable spell in deferments modes hooks."
+  "Enable spell in different modes hooks."
   (when (executable-find ispell-program-name)
-    (flyspell-mode)
-    (add-hook 'flyspell-mode-hook 'distopico:flyspell-auto-dictionary nil 'make-it-local)))
-
-(defun distopico:flyspell-auto-dictionary ()
-  "Enabled auto directory per mode."
-  (auto-dictionary-mode 1))
-
-(defun distopico:adict-set-local-dictionary ()
-  "Set the local dictionary if not nil."
-  (when (and (fboundp 'adict-change-dictionary)
-             ispell-local-dictionary)
-    (adict-change-dictionary ispell-local-dictionary)))
+    (flyspell-mode)))
 
 ;; Advice
 (defun distopico:ispell-init-process (orig-fun &rest args)
