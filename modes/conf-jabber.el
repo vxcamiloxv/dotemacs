@@ -96,7 +96,7 @@
                           'jabber-roster-user-online))))
         " • " (:eval (jabber-fix-status (get (jabber-jid-symbol jabber-chatting-with) 'status)))
         (:eval (when (not (eq jabber-events-message ""))
-                 " " jabber-events-messag))
+                 " " jabber-events-message))
         (:eval (when (not (eq jabber-chatstates-message ""))
                  " " jabber-chatstates-message)))
       jabber-muc-header-line-format
