@@ -12,34 +12,34 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://gitorious.org/distopico/distopico-dotemacs.git"
+    "url": "https://framagit.org/distopico/dotemacs"
   },
   "maintainers": [
     {
       "name": "Distopico Vegan",
       "email": "distopico@riseup.net",
-      "web": "http://distopico.info"
+      "web": "https://distopico.info"
     }
   ],
   "contributors": [],
   "engine": {
-    "node": ">=0.8"
+    "node": ">=10"
   },
   "preferGlobal": "true",
   "devDependencies": {},
   "dependencies": {
-    "csslint": "^1.0.4",
-    "eslint": "^3.11.0",
-    "js-beautify": "^1.6.4",
-    "jshint": "^2.9.6",
-    "jsonlint": "^1.6.2",
-    "prettier": "^1.13.5",
-    "tern": "^0.21.0"
+    "csslint": "^1.0.5",
+    "eslint": "^6.8.0",
+    "js-beautify": "^1.11.0",
+    "jshint": "^2.11.0",
+    "jsonlint": "^1.6.3",
+    "prettier": "^2.0.5",
+    "tern": "^0.24.3"
   },
   "keywords": [
     "emacs.d"
   ],
   "jshintConfig": {
-    "esversion": 6
+    "esversion": 10
   }
 }
