@@ -1,21 +1,20 @@
 # Distopico Emacs Config
-**Version 2.0.2**
+**Version 2.1.0**
 
-My emacs configuration with many toys for programming environment mostly javascript , python , php, html
+My emacs configuration with many toys for programming environment mostly javascript , python , java, html
 and tools for intent be more productive and social.
 
 ### Requirements ###
-- Node.js v0.12 or higher
-- Python 2.7 or 3.x
+- Node.js v10.x or higher
+- Python 3.x
 - Pip
 
 Install
 -------
 ```shell
   npm install
-
-  virtualenv .virtualenv/$USER
-  source .virtualenv/$USER/bin/activate
+  python3 -m venv .virtualenv
+  source .virtualenv/bin/activate
   pip install -r requirements.txt
 ```
 
