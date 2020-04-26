@@ -49,11 +49,13 @@
                         )))))
               )))))))
 
+(defun distopico:markdown-mode-hook ()
+  "Hook when `markdown-mode-hook' is enable."
+  (flyspell-mode)
+  (orgtbl-mode)
+  (add-hook 'after-save-hook 'distopico:md-convert-org-tbl  nil 'make-it-local))
+
 ;; Hooks
-(add-hook 'markdown-mode-hook
-          (lambda()
-            (flyspell-mode t)
-            (orgtbl-mode t)
-            (add-hook 'after-save-hook 'distopico:md-convert-org-tbl  nil 'make-it-local)))
+(add-hook 'markdown-mode-hook #'distopico:markdown-mode-hook)
 
 (provide 'conf-markdown)
