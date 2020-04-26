@@ -6,7 +6,6 @@
 (require 'web-beautify)
 (require 'company-tern)
 
-
 ;; Control
 (defconst distopico:jshint-regexp
   (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
@@ -32,7 +31,6 @@
       js2-strict-inconsistent-return-warning nil)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'magic-mode-alist '(".+node" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("javascript" . js2-mode))
 
@@ -67,16 +65,19 @@
   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
   (distopico:js-common-setup))
 
+(defun distopico:js2-company-setup ()
+  (distopico:backend-with-yas
+   '(company-nxml
+     company-css
+     company-semantic company-files
+     (company-dabbrev-code company-gtags company-etags company-keywords company-tern)
+     (company-dabbrev company-capf company-keywords))))
+
 ;;;###autoload
 (defun distopico:js-common-setup ()
   "Common setup to JS and JSX."
   ;; Add company backend for js
-  (set (make-local-variable 'company-backends)
-       '(company-bbdb
-         company-nxml company-css
-         company-semantic company-files
-         (company-dabbrev-code company-gtags company-etags company-keywords company-tern :with company-yasnippet)
-         (company-dabbrev company-capf company-keywords :with company-yasnippet)))
+  (set (make-local-variable 'company-backends) (distopico:js2-company-setup))
   ;; Add node_modules to exec path
   (distopico:add-node-modules-path)
   ;; Default checker

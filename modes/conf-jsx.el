@@ -9,7 +9,6 @@
 (add-to-list 'interpreter-mode-alist '("react" . web-jsx-mode))
 (add-to-list 'interpreter-mode-alist '("jsx" . web-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-jsx-mode))
 (add-to-list 'magic-mode-alist '("/\\*\\* @jsx React\\.DOM \\*/" . web-jsx-mode))
 (add-to-list 'magic-mode-alist '("^import React" . web-jsx-mode))
 

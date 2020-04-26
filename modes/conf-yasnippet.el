@@ -7,36 +7,17 @@
         "~/.emacs.d/snippets/yasnippet-snippets"    ;; third party snippets
         "~/.emacs.d/snippets/yasmate/snippets"      ;; the yasmate collection
         "~/.emacs.d/snippets/extend-snippets"       ;; Extend basic snippets
-        "~/.emacs.d/snippets"                       ;; Basic folder
         )
       yas-prompt-functions
-      '(yas-popup-isearch-prompt,
+      '(yas-maybe-ido-prompt
         yas-completing-prompt
-        yas-ido-prompt
-        yas-dropdown-prompt))
-
-(yas-global-mode t)
-
-(setq hippie-expand-try-functions-list
-      (cons 'yas/hippie-try-expand hippie-expand-try-functions-list))
+        yas-no-prompt)
+      hippie-expand-try-functions-list
+      (cons 'yas-hippie-try-expand hippie-expand-try-functions-list))
 
 ;; Functions
-(defun yas-popup-isearch-prompt (prompt choices &optional display-fn)
-  (when (featurep 'popup)
-    (popup-menu*
-     (mapcar
-      (lambda (choice)
-        (popup-make-item
-         (or (and display-fn (funcall display-fn choice))
-             choice)
-         :value choice))
-      choices)
-     :prompt prompt
-     ;; start isearch mode immediately
-     :isearch t)))
-
 (defun yas-ido-expand ()
-  "Lets you select (and expand) a yasnippet key with ido"
+  "Lets you select (and expand) a yasnippet key with ido."
   (interactive)
   (let ((original-point (point)))
     (while (and
@@ -56,5 +37,8 @@
         (delete-char (- init-word original-point))
         (insert key)
         (yas-expand)))))
+
+;; Enable
+(yas-global-mode t)
 
 (provide 'conf-yasnippet)
