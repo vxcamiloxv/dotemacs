@@ -60,7 +60,7 @@ return return a string of those available."
   (setq ispell-local-pdict ispell-dictionary))
 
 (defun distopico:flyspell-prog-mode-hook ()
-  "Hook when turn on `flyspell-prog-mode'."
+  "Hook when turn on `flyspell-prog-mode' to only check in comments."
   (when distopico:flyspell-prog-only-comments
     (setq-local flyspell-prog-text-faces
                 '(font-lock-comment-face font-lock-doc-face))))
