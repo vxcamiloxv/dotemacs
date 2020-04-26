@@ -96,6 +96,8 @@
                        (powerline-raw '(:eval
                                         (format " Proj[%s]" (projectile-project-name)))
                                       face2 'r)
+                       (when (and (boundp 'multiple-cursors-mode) multiple-cursors-mode)
+                         (powerline-raw mc/mode-line face2 'r))
                        (powerline-raw (distopico:vc-modeline) face2 'r)
                        (powerline-raw (distopico:which-function-modeline) face2 'l)))
             (rhs (list (when (eq major-mode 'jabber-chat-mode)

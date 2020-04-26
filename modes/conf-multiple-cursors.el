@@ -41,6 +41,7 @@
 (global-set-key (kbd "s->") 'mc/mark-next-word-like-this)
 (global-set-key (kbd "s-<") 'mc/mark-previous-word-like-this)
 (global-set-key (kbd "C-c r w") 'mc/mark-all-words-like-this)
+(global-set-key (kbd "C-c r S") 'mc/sort-regions)
 
 (global-set-key (kbd "C-s->") 'mc/mark-next-symbol-like-this)
 (global-set-key (kbd "C-s-<") 'mc/mark-previous-symbol-like-this)
