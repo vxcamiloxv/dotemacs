@@ -1,6 +1,7 @@
 ;;; Code:
 (require 'mu4e)
 (require 'mu4e-contrib)
+(require 'mu4e-maildirs-extension)
 
 ;; Custom vars
 (defcustom distopico:mu4e-inbox-update-modeline-interval 300
@@ -42,6 +43,7 @@ attachment - should launch the no-attachment warning.")
 
 ;; General mu4e config
 (setq mu4e-maildir "~/.mail"
+      mu4e-mu-home "~/.mu"
       ;;mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
       mu4e-get-mail-command "flock -n /tmp/offlineimap.lock offlineimap"
       mu4e-confirm-quit nil
@@ -93,9 +95,10 @@ attachment - should launch the no-attachment warning.")
         ("flag:unread AND maildir:/\/*\/Spam*/" "Unread spam" ?s)))
 
 ;; Enable account structure
-(require 'mu4e-maildirs-extension)
 (mu4e-maildirs-extension)
 (setq mu4e-maildirs-extension-use-bookmarks t)
+(setq mu4e-maildirs-extension-count-command-format
+      (concat mu4e-mu-binary " find --muhome=" mu4e-mu-home " %s --fields 'i' | wc -l"))
 
 ;; Custom marks
 (setq mu4e-headers-draft-mark             '("D" . "⚒ ")
@@ -115,9 +118,6 @@ attachment - should launch the no-attachment warning.")
       mu4e-headers-has-child-prefix       '("+" . "┗◉")
       mu4e-headers-duplicate-prefix       '("=" . "⚌")
       mu4e-headers-default-prefix         '("|" . "┃"))
-
-;; Fix hl unread messages with mu4e 0.9.15
-(setq mu4e-maildirs-extension-propertize-func 'distopico:mu4e-maildirs-extension-propertize-func)
 
 ;; Config Mesagges
 (setq message-kill-buffer-on-exit t
@@ -160,7 +160,7 @@ attachment - should launch the no-attachment warning.")
 
 ;; Send async
 (require 'smtpmail-async)
-(setq message-send-mail-function 'smtpmail-send-it) ;;allow: async-smtpmail-send-it or smtpmail-send-it
+(setq message-send-mail-function 'smtpmail-send-it) ;; allow: async-smtpmail-send-it or smtpmail-send-it
 
 ;; Not start in queuing mode
 (setq smtpmail-queue-mail nil
@@ -197,24 +197,8 @@ attachment - should launch the no-attachment warning.")
 (define-key mu4e-view-mode-map (kbd "C-c o c") 'org-mu4e-store-and-capture)
 
 ;;------------------
-;; Useful functions
+;; Functions
 ;;------------------
-
-;; hl unread messages
-(defun distopico:mu4e-maildirs-extension-propertize-func (m)
-  "Propertize the maildir text using M plist."
-  (let ((unread (or (plist-get m :unread) 0))
-        (total (or (plist-get m :total) 0)))
-    (setq msg-face (cond
-                    ((> unread 0) 'mu4e-maildirs-extension-maildir-hl-face)
-                    (t            'mu4e-maildirs-extension-maildir-face)))
-    (format "\t%s%s %s (%s/%s)"
-            (propertize (plist-get m :indent) 'face msg-face)
-            (propertize (plist-get m :prefix) 'face msg-face)
-            (propertize (plist-get m :name) 'face msg-face)
-            (propertize (number-to-string unread) 'face msg-face)
-            (propertize (number-to-string total) 'face msg-face))))
-
 ;; Set Account
 (defun distopico:mu4e-set-account ()
   "Set the account for composing a message."
@@ -352,6 +336,7 @@ store your org-contacts."
    "[\t\n\r]" ""
    (shell-command-to-string
     (concat "echo -n $( " mu4e-mu-binary " find "
+            "--muhome=" mu4e-mu-home " "
             (distopico:mu4e-unread-mail-query)
             " 2>/dev/null | wc -l )"))))
 
@@ -406,11 +391,13 @@ from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
       (keyboard-quit))))
 
 (defun distopico:mu4e-index-updated-hook ()
-  "Hooen when come some new message."
+  "Hook when it get new message."
   (message "new message")
+  ;; Sync command to show notification
+  ;; (call-process "/bin/bash" nil 0 nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
+  ;; Async command to show notification
   ;;(start-process "mu4e-update" nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
-  (call-process "/bin/bash" nil 0 nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
-  ;; (shell-command-to-string (concat (in-emacs-d "/scripts/notify_mail.sh") " " (number-to-string mu4e-update-interval)))
+  (shell-command-to-string (concat (in-emacs-d "/scripts/notify_mail.sh") " " (number-to-string mu4e-update-interval)))
   (distopico:mu4e-inbox-update))
 
 (defun distopico:mu4e-view-mode-hook ()
