@@ -128,11 +128,6 @@
 (global-set-key (kbd "C-<f1>") 'tool-bar-mode)
 (global-set-key (kbd "C-<f2>") 'menu-bar-mode)
 
-;; Projects
-;; TODO: remove this because has the same behavior of neotree and nav
-(global-set-key (kbd "C-<f8>") 'project-explorer-open)
-(global-set-key (kbd "C-<f9>") 'direx-project:jump-to-project-root-other-window)
-
 ;; Perform general cleanup
 (global-set-key (kbd "C-c n") 'cleanup-buffer)
 (global-set-key (kbd "C-c C-n") 'distopico:cleanup-buffer)
@@ -187,9 +182,9 @@
 (global-set-key (kbd "M-Z") 'avy-zap-up-to-char-dwim)
 
 ;; Move-dup
-;; default M-<up> md/move-lines-up / M-<down> md/move-lines-down
-(global-set-key (kbd "M-s-<up>") 'md/duplicate-up)
-(global-set-key (kbd "M-s-<down>") 'md/duplicate-down)
+;; default M-<up> md-move-lines-up / M-<down> md-move-lines-down
+(global-set-key (kbd "M-s-<up>") 'md-duplicate-up)
+(global-set-key (kbd "M-s-<down>") 'md-duplicate-down)
 
 ;; smart-forward
 (global-set-key (kbd "C-s-<up>") 'smart-up)
@@ -202,13 +197,8 @@
 (global-set-key (kbd "s-.") 'change-outer)
 
 ;; Actions
-(global-set-key (kbd "C-=") 'er/expand-region)
 (global-set-key (kbd "C-x <next>") 'select-current-line)
-(global-set-key (kbd "C-c <next>") 'er/expand-region)
 (global-set-key (kbd "C-c e <right>") 'select-current-line)
-(global-set-key (kbd "C-c e <left>") 'er/expand-region)
-(global-set-key (kbd "C-c e w") 'er/mark-word)
-(global-set-key (kbd "C-c e c") 'er/mark-comment)
 
 ;; HideShow
 (global-set-key (kbd "C-x |") 'toggle-hiding)
@@ -263,7 +253,7 @@
     (define-key map "C" 'org-clock-goto)
     (define-key map "p" 'pomodoro-org)
     (define-key map "u" 'distopico:org-update-appt)
-    (define-key map "P" 'org-projectile:project-todo-completing-read)
+    (define-key map "P" 'org-projectile-project-todo-completing-read)
     (define-key map "r" 'org-refile)
     (define-key map "R" 'distopico:org-capture-refile-and-jump)
     (define-key map "n" 'org-annotate-file)

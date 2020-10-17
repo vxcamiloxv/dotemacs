@@ -5,6 +5,14 @@
 (require 'expand-region)
 (require 'iy-go-to-char)
 
+;; Expand region
+(global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C-c <next>") 'er/expand-region)
+(global-set-key (kbd "C-c e <left>") 'er/expand-region)
+(global-set-key (kbd "C-c e w") 'er/mark-word)
+(global-set-key (kbd "C-c e c") 'er/mark-comment)
+(global-set-key (kbd "C-c e s") 'er/mark-symbol)
+
 ;; Set th cache
 (setq mc/list-file (in-emacs-d ".cache/mc-lists.el"))
 
