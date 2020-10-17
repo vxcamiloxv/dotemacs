@@ -32,16 +32,14 @@
     dired+
     dired-details+
     dired-hacks-utils
-
     dired-imenu
     dired-narrow
-    dired-ranger
     dired-sort
     dired-subtree
-    direx
     image-dired+
 
     ;; UI/UX
+    whitespace-cleanup-mode
     browse-kill-ring
     column-marker
     fill-column-indicator
@@ -65,17 +63,6 @@
     misc-cmds
     smartparens
 
-    ;; Helm
-    helm
-    helm-css-scss
-    helm-emmet
-    helm-swoop
-
-    ;; Projects
-    projectile
-    helm-projectile
-    find-file-in-project
-
     ;; Auto Complete
     company-anaconda
     company-jedi
@@ -89,8 +76,8 @@
 
     ;; Development
     ag
+    yasnippet
     aggressive-indent
-    dumb-jump
     editorconfig
     emr
     elisp-slime-nav
@@ -99,10 +86,13 @@
     flycheck-gradle
     js-doc
     magit
-    move-dup
-    xref-js2
     smartscan
     simple-httpd
+    move-dup
+    dumb-jump
+    xref-js2
+    ggtags
+    counsel-etags
 
     ;; Debug
     nodejs-repl
@@ -159,8 +149,6 @@
     quickrun
     sync-recentf
     tramp-term
-    yasnippet
-    whitespace-cleanup-mode
 
     ;; Helpers
     anzu
@@ -171,6 +159,11 @@
     region-bindings-mode
     which-key
 
+    ;; Projects
+    projectile
+    org-projectile
+    find-file-in-project
+
     ;; Org / Productivity
     flyspell-correct
     org-link-types
@@ -178,7 +171,6 @@
     org-plus-contrib
     org-pomodoro
     org-present
-    org-projectile
     ox-rst
     ox-hugo
     toc-org
@@ -187,12 +179,7 @@
     elfeed
     elfeed-org
     mu4e-maildirs-extension
-    znc
-
-    ;; Ctags/Gtags
-    ggtags
-    ctags-update
-    counsel-gtags)
+    znc)
   "A list of packages to ensure are installed at launch.")
 
-(provide 'my-package)
+(provide 'packages)
