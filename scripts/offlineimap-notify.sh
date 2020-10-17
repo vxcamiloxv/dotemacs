@@ -43,7 +43,7 @@ function offlineimap_notify {
     # run OfflineIMAP once, with quiet interface
     offlineimap -o -u quiet -a $account
 
-    maildirnew="$HOME/mail/$account/INBOX/new"
+    maildirnew="$HOME/.mail/$account/INBOX/new"
     if [ ! -e "$previousmessages" ] ; then
         touch "$previousmessages"
     fi
