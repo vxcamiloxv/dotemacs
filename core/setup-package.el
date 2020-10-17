@@ -10,7 +10,7 @@
     (setq load-path (remove package-el-site-lisp-dir load-path))))
 
 (require 'package)
-(require 'my-package)
+(require 'packages)
 
 (setq nsm-settings-file (expand-file-name ".cache/network-security.data" user-emacs-directory))
 
