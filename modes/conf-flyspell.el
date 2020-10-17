@@ -24,7 +24,7 @@
   "Non-nil means Flyspell reports comments in `prog-mode'."
   :group 'flyspell
   :type 'boolean)
-(defcustom distopico:default-dictionaries '("en_GB" "en_US" "es_ANY")
+(defcustom distopico:default-dictionaries '("en_GB" "en_US" "en" "es_ANY" "es_CO" "es_MX")
   "List of dictionaries to load global by default."
   :group 'flyspell
   :type 'list)
