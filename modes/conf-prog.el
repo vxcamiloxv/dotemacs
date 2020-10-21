@@ -24,21 +24,8 @@
 
 ;; Define additional/custom keybindings
 (define-key prog-mode-map (kbd "C-M-<return>") 'emr-show-refactor-menu)
-(global-set-key [home] 'distopico:smart-beginning-of-line)
-(global-set-key (kbd "C-a") 'distopico:smart-beginning-of-line)
 
 ;; Functions
-(defun distopico:smart-beginning-of-line ()
-  "Move point to first non-whitespace character or `beginning-of-line'.
-
-Move point to the first non-whitespace character on this line.
-If point was already at that position, move point to beginning of line."
-  (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
-  (let ((oldpos (point)))
-    (back-to-indentation)
-    (and (= oldpos (point))
-         (beginning-of-line))))
-
 (defun distopico:local-comment-auto-fill ()
   "Set comment style."
   (set (make-local-variable 'comment-auto-fill-only-comments) t))
