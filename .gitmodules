@@ -33,3 +33,6 @@
 [submodule "external/jdee-server"]
 	path = external/jdee-server
 	url = https://github.com/jdee-emacs/jdee-server.git
+[submodule "scripts/offlineimap-notify"]
+	path = scripts/offlineimap-notify
+	url = https://framagit.org/distopico/offlineimap-notify

@@ -7,13 +7,15 @@
 (defcustom distopico:mu4e-inbox-update-modeline-interval 300
   "Inbox update interval."
   :type 'integer
-  :group 'hardware)
+  :group 'mu4e)
 
 (defcustom distopico:message-attachment-reminder
   "Are you sure you want to send this message without any attachment? "
   "The default question asked when trying to send a message \
 containing `distopico:message-attachment-intent-re' without an
-actual attachment.")
+actual attachment."
+  :type 'string
+  :group 'mu4e)
 
 (defcustom distopico:message-attachment-intent-re
   (regexp-opt '("I attach"
@@ -32,6 +34,10 @@ actual attachment.")
   "A regex which - if found in the message, and if there is no \
 attachment - should launch the no-attachment warning.")
 
+(defvar distopico:mu4e-get-mail-command
+  (concat "flock -E 0 -n /tmp/offlineimap.lock python2 "
+          (in-emacs-d "scripts/offlineimap-notify/offlineimap_notify.py"))
+  "The default mu4e command to get emails.")
 (defvar distopico:mu4e-new-mail nil
   "Boolean to represent if there is new mail.")
 (defvar distopico:mu4e-mode-line-format nil
@@ -44,8 +50,7 @@ attachment - should launch the no-attachment warning.")
 ;; General mu4e config
 (setq mu4e-maildir "~/.mail"
       mu4e-mu-home "~/.mu"
-      ;;mu4e-get-mail-command "~/.emacs.d/scripts/offlineimap_notify.py"
-      mu4e-get-mail-command "flock -n /tmp/offlineimap.lock offlineimap"
+      mu4e-get-mail-command distopico:mu4e-get-mail-command
       mu4e-confirm-quit nil
       mu4e-compose-keep-self-cc nil
       mu4e-view-prefer-html t

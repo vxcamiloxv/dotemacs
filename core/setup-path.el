@@ -14,11 +14,11 @@
 (defvar distopico:load-path `(,core-dir ,mode-dir ,site-elisp-dir ,utils-dir ,theme-dir)
   "Directories relative to `user-emacs-directory', to be include in `load-path'.")
 (defvar distopico:exec-paths
-  '("/opt/local/bin"
-    "/usr/local/bin"
-    "~/.emacs.d/node_modules/.bin"
-    "~/.emacs.d/.python-environments/default/bin")
+  '((concat user-emacs-directory "scripts")
+    (concat user-emacs-directory "node_modules/.bin")
+    (concat user-emacs-directory "virtualenv/bin"))
   "A list of custom bin paths.")
+
 (setq exec-path-from-shell-variables '("SSH_AGENT_PID" "SSH_AUTH_SOCK"))
 
 ;; General Paths
@@ -125,10 +125,6 @@ containing code under the control of the user."
   (interactive)
   (dolist (path-dir distopico:load-path)
     (distopico:load-path-subdir path-dir))
-  ;; (dolist (abs-dir (arv/startup-get-all-user-lisp-dirs))
-  ;;   (add-to-list 'load-path abs-dir))
-  ;; Add cutoms exec-path
-  ;; (setenv "PATH" (mapconcat 'identity my-exec-paths  ":") )
   (exec-path-from-shell-initialize)
   (setenv "PATH" (concat (getenv "PATH") ":" (mapconcat 'identity distopico:exec-paths ":") ))
   (setq exec-path (append exec-path distopico:exec-paths)))

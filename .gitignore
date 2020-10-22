@@ -30,6 +30,7 @@ var/
 url/
 savefile/
 node_modules/
+virtualenv
 project-explorer-cache/
 
 ### Emacs ###
