@@ -33,7 +33,7 @@ appname="mu4e"
 icon=$HOME/.icons/emacs/mail-unread.svg
 category="email"
 urgency=normal
-timeout=5000
+timeout=12000
 
 if [ $NMAIL -eq 1 ]
 then
