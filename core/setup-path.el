@@ -5,7 +5,7 @@
   "All essencial settings.")
 (defvar mode-dir (concat user-emacs-directory "modes")
   "My config for Emacs modes.")
-(defvar site-elisp-dir  (concat user-emacs-directory "site-elisp")
+(defvar site-elisp-dir (concat user-emacs-directory "site-elisp")
   "Extenal Emacs libs/modes.")
 (defvar utils-dir (concat user-emacs-directory "utils")
   "Useful functions to live in Emacs.")
@@ -14,7 +14,7 @@
 (defvar distopico:load-path `(,core-dir ,mode-dir ,site-elisp-dir ,utils-dir ,theme-dir)
   "Directories relative to `user-emacs-directory', to be include in `load-path'.")
 (defvar distopico:exec-paths
-  '((concat user-emacs-directory "scripts")
+   (list (concat user-emacs-directory "scripts")
     (concat user-emacs-directory "node_modules/.bin")
     (concat user-emacs-directory "virtualenv/bin"))
   "A list of custom bin paths.")
