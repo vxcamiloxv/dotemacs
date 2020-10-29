@@ -76,6 +76,7 @@
 
     ;; Development
     ag
+    paredit
     yasnippet
     aggressive-indent
     editorconfig
@@ -116,6 +117,7 @@
     meghanada
     php-mode
     pony-mode
+    geiser
 
     ;; Web
     angular-snippets
