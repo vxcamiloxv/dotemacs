@@ -1,8 +1,6 @@
 ;;; Code:
 
 ;; Initialized package
-(package-initialize)
-
 (message "      ______                          ")
 (message "     / ____/___ ___  ____ ___________ ")
 (message "    / __/ / __ `__ \/ __ `/ ___/ ___/ ")
