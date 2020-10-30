@@ -58,7 +58,6 @@
     tabbar
 
     ;; TODO: check those modes/libraries
-    dropdown-list
     iedit
     misc-cmds
     paredit
@@ -167,14 +166,15 @@
 
     ;; Org / Productivity
     flyspell-correct
-    org-link-types
-    org-mime
     org-plus-contrib
+    org-link-types
     org-pomodoro
     org-present
+    org-mime
+    toc-org
     ox-rst
     ox-hugo
-    toc-org
+    ox-gfm
 
     ;; Activity
     elfeed
