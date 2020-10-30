@@ -4,14 +4,13 @@
 (require 'zoom-frm) ;; Make zooming affect frame instead of buffers
 (require 'squeeze-view) ;; squeeze view, give yourself a write-room/typewriter like writing page
 (require 'scroll-bell-fix)
-(require 'dropdown-list)
 (require 'fill-column-indicator)
 (require 'highlight-escape-sequences)
 (require 'browse-kill-ring)
 
 ;;; Font
 (add-to-list 'default-frame-alist
-             '(font . "Hack-10"))
+             '(font . "Hack-10.5"))
 (setq-default line-spacing 1)
 
 ;;; Disabled or enabled debug:
