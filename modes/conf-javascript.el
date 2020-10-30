@@ -6,6 +6,7 @@
 (require 'web-beautify)
 (require 'rainbow-delimiters)
 (require 'company-tern)
+(require 'flycheck)
 
 ;; Control
 (defconst distopico:jshint-regexp
@@ -66,6 +67,8 @@
   (distopico:js-common-setup))
 
 (defun distopico:js2-company-setup ()
+  "Setup JavaScript company/code completion back-ends.
+All the inherits `company-yasnippet' back-end."
   (distopico:backend-with-yas
    '(company-nxml
      company-css
@@ -108,15 +111,11 @@
 From: https://github.com/codesuki/add-node-modules-path"
   (interactive)
   ;; TODO: make async
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules"))
-         (path (and root
-                    (expand-file-name "node_modules/.bin/" root))))
-    (when root
+  (let ((node-path (shell-command-to-string "npm bin")))
+    (when node-path
       (progn
         (make-local-variable 'exec-path)
-        (add-to-list 'exec-path path)
+        (add-to-list 'exec-path (string-trim node-path))
         (message "added node_modules to exec-path")))))
 
 ;; Hooks
