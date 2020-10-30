@@ -39,6 +39,7 @@
     image-dired+
 
     ;; UI/UX
+    highlight-escape-sequences
     whitespace-cleanup-mode
     browse-kill-ring
     column-marker
@@ -52,7 +53,6 @@
     perspective
     powerline
     rainbow-delimiters
-    rainbow-identifiers
     rainbow-mode
     smex
     tabbar
@@ -61,6 +61,7 @@
     dropdown-list
     iedit
     misc-cmds
+    paredit
     smartparens
 
     ;; Auto Complete
@@ -70,13 +71,11 @@
     company-quickhelp
     company-restclient
     company-statistics
-    company-tern
     company-web
     company
 
     ;; Development
     ag
-    paredit
     yasnippet
     aggressive-indent
     editorconfig
@@ -85,6 +84,7 @@
     expand-region
     flycheck
     flycheck-gradle
+    flycheck-guile
     js-doc
     magit
     smartscan
@@ -112,7 +112,7 @@
     jdee
     jedi
     kotlin-mode
-    lsp-mode
+    tern ;; I should try eglot
     lua-mode
     meghanada
     php-mode
@@ -120,23 +120,22 @@
     geiser
 
     ;; Web
-    angular-snippets
     css-eldoc
-    emmet-mode
-    jade-mode
+    less-css-mode
+    web-mode
+    rjsx-mode
     js2-mode
     js2-refactor
+    emmet-mode
+    yaml-mode
     json-mode
-    less-css-mode
     markdown-mode
     mmm-mode
+    jade-mode
     pug-mode ;; Test what is better
     restclient
-    rjsx-mode
     smart-forward
     web-beautify
-    web-mode
-    yaml-mode
 
     ;; Utilities
     htmlize

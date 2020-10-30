@@ -111,6 +111,7 @@
 (require 'conf-kotlin)
 (require 'conf-java)
 (require 'conf-python)
+(require 'conf-scheme)
 (require 'conf-emmet)
 (require 'conf-json)
 (require 'conf-dev-utils)
