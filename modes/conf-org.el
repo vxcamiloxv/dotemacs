@@ -9,7 +9,6 @@
 (require 'org-contacts)
 (require 'org-habit)
 (require 'org-goto)
-(require 'org-gnus)
 (require 'org-notify)
 (require 'org-depend)
 (require 'org-mime nil 'noerror)
@@ -34,9 +33,9 @@
       (append org-modules
               '(org-contacts
                 org-habit
-                org-gnus
                 org-toc
                 org-notify
+                ol-gnus
                 ;;org-pomodoro
                 org-depend
                 org-mime
@@ -217,7 +216,7 @@
       org-agenda-category-icon-alist
       `(("Emacs"
          ,(if window-system
-            "~/.emacs.d/themes/icons/emacs.png"
+              "~/.emacs.d/themes/icons/emacs.png"
             (list "ξ")) nil nil :ascent center)
         ("Holiday\\|Vacation"
          ,(if window-system
@@ -257,8 +256,8 @@
       appt-display-format 'window
       appt-message-warning-time 16
       appt-display-interval 8
-      appt-disp-window-function (lambda (&rest args) (apply 'distopico:org-appt-disp-window-function args))
-      appt-delete-window-function `distopico:org-appt-delete-window-function)
+      appt-disp-window-function 'distopico:org-appt-disp-window-function
+      appt-delete-window-function 'distopico:org-appt-delete-window-function)
 
 ;; Notify
 (setq org-notify-audible nil)
@@ -277,17 +276,8 @@
       org-clock-into-drawer t
       org-clock-persist 'history
       org-clock-report-include-clocking-task t
-      org-show-notification-handler
-      (lambda (message)
-        (alert message
-               :title "Org-mode"
-               :mode 'org-mode
-               :severity 'normal
-               :category 'emacs
-               :icon (concat distopico:icon-org-mode "org-mode.png")))
-      org-clock-persist-file (in-emacs-d ".cache/org-clock-save.el")
-      org-time-clocksum-format
-      '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+      org-show-notification-handler 'distopico:show-notification-handler
+      org-clock-persist-file (in-emacs-d ".cache/org-clock-save.el"))
 
 ;; Habits
 (setq org-habit-graph-column 60
@@ -299,7 +289,7 @@
               (in-mode . "mu4e-view-mode")))))
 
 ;; Org Projectile
-(setq org-projectile:projects-file  (expand-file-name "todo.org" org-directory))
+(setq org-projectile-projects-file (expand-file-name "todo.org" org-directory))
 (push (org-projectile-project-todo-entry) org-capture-templates)
 ;; (add-to-list 'org-capture-templates
 ;;              (org-projectile:project-todo-entry "p" "* TODO %? %a" "Project Todo"))
@@ -359,7 +349,6 @@
 (with-no-warnings (defvar date))
 (defun distopico:org-lunar-phases ()
   "Show lunar phase in Agenda buffer."
-  (require 'lunar)
   (let* ((phase-list (lunar-phase-list (nth 0 date) (nth 2 date)))
          (phase (cl-find-if (lambda (phase) (equal (car phase) date))
                             phase-list)))
@@ -367,29 +356,39 @@
       (setq ret (concat (lunar-phase-name (nth 2 phase)) " "
                         (substring (nth 1 phase) 0 5))))))
 
+(defun distopico:show-notification-handler (message)
+  "Handler for `org-mode' notifications using `alert' mode.
+Display the `MESSAGE' as body notification.
+TODO: make this generic to replace `distopico:org-appt-disp-window-function'."
+  (progn
+    (alert message
+           :title "Org-mode"
+           :mode 'org-mode
+           :severity 'normal
+           :style 'libnotify
+           :category 'emacs
+           :icon (concat distopico:icon-org-mode "org-mode.png"))))
+
 (defun distopico:org-appt-disp-window-function (left time message)
   "Show notification on appointments based on `LEFT' `TIME' `MESSAGE'."
-  (add-to-list 'distopico:org-appt-current message)
-  (alert message
-         :title (concat "Appointment "
-                        (cond
-                         ((equal left "0")
-                          "now!")
-                         ((equal left "1")
-                          "in 1 minute!")
-                         (t
-                          (format "in %s minutes" left))))
-         :mode 'org-mode
-         :severity 'moderate
-         :style 'libnotify
-         :category 'emacs
-         :icon (concat distopico:icon-org-mode "org-mode.png")))
+  (progn
+    (add-to-list 'distopico:org-appt-current message)
+    (alert message
+           :title (concat "Appointment "
+                          (cond ((equal left "0") "now!")
+                                ((equal left "1") "in 1 minute!")
+                                (t (format "in %s minutes" left))))
+           :mode 'org-mode
+           :severity 'moderate
+           :style 'libnotify
+           :category 'emacs
+           :icon (concat distopico:icon-org-mode "org-mode.png"))))
 
 (defun distopico:org-appt-delete-window-function ()
-    "Delete appointment after show it."
-      (if distopico:org-appt-current
-          (setq distopico:org-appt-current
-                (delete (nth 0 distopico:org-appt-current) distopico:org-appt-current))))
+  "Delete appointment after show it."
+  (if distopico:org-appt-current
+      (setq distopico:org-appt-current
+            (delete (nth 0 distopico:org-appt-current) distopico:org-appt-current))))
 
 (defun distopico:org-remove-redundant-tags ()
   "Remove redundant tags of headlines in current buffer.
@@ -508,7 +507,7 @@ from: http://pages.sachachua.com/.emacs.d/Sacha.html"
          (message (concat "Change to " org-state)))))
 
 (defun distopico:org-remove-done-trigger ()
-  "*Remove all trigger is done in current file."
+  "Remove all trigger is done in current file."
   (interactive)
   (unless (eq major-mode 'org-mode)
     (error "You need to turn on Org mode for this function"))
@@ -516,10 +515,10 @@ from: http://pages.sachachua.com/.emacs.d/Sacha.html"
     (goto-char (point-min))
     (while (re-search-forward "DONE" nil t)
       (save-excursion
-        (org-delete-property "TRIGGER" )))))
+        (org-delete-property "TRIGGER")))))
 
 (defun distopico:org:remove-empty-propert-drawers ()
-  "*Remove all empty property drawers in current file."
+  "Remove all empty property drawers in current file."
   (interactive)
   (unless (eq major-mode 'org-mode)
     (error "You need to turn on Org mode for this function"))
@@ -610,7 +609,7 @@ this with to-do items than with projects or headings."
                  (when (string-match
                         (mapconcat 'downcase distopico:special-categories "\\|")
                         category)
-                        (return 'org-agenda-date-weekend))))))
+                   (return 'org-agenda-date-weekend))))))
         (when face (return face))))))
 
 (defun distopico:org-update-agenda-views ()
@@ -812,7 +811,7 @@ Skips capture tasks and tasks with subtasks."
   "Hook for after save in `org-mode'."
   (when (eq major-mode 'org-mode)
     ;; (distopico:org-update-appt)
-    (distopico:org-remove-done-trigger)
+    ;;(distopico:org-remove-done-trigger)
     (distopico:org:remove-empty-propert-drawers)
     (org-save-all-org-buffers)
     (message (concat "Wrote " (buffer-file-name)))))
