@@ -32,7 +32,9 @@ actual attachment."
                 "adjunto va"
                 "archivo adjunto"))
   "A regex which - if found in the message, and if there is no \
-attachment - should launch the no-attachment warning.")
+attachment - should launch the no-attachment warning."
+  :type 'list
+  :group 'mu4e)
 
 (defvar distopico:mu4e-get-mail-command
   (concat "flock -E 0 -n /tmp/offlineimap.lock python2 "
@@ -402,6 +404,7 @@ from: http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e"
   ;; (call-process "/bin/bash" nil 0 nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
   ;; Async command to show notification
   ;;(start-process "mu4e-update" nil (in-emacs-d "/scripts/notify_mail.sh") (number-to-string mu4e-update-interval))
+  ;; Sync command to show notification
   (shell-command-to-string (concat (in-emacs-d "/scripts/notify_mail.sh") " " (number-to-string mu4e-update-interval)))
   (distopico:mu4e-inbox-update))
 
