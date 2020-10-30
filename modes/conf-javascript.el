@@ -4,6 +4,7 @@
 (require 'js2-imenu-extras)
 (require 'xref-js2)
 (require 'web-beautify)
+(require 'rainbow-delimiters)
 (require 'company-tern)
 
 ;; Control
@@ -59,7 +60,6 @@
   "The js2-mode hook."
   (js2-imenu-extras-mode t)
   (js2-imenu-extras-setup)
-  (rainbow-delimiters-mode t)
   (tern-mode t)
   (js2-refactor-mode t)
   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)

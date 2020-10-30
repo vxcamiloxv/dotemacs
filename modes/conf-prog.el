@@ -46,15 +46,17 @@ from: prelude"
   (distopico:local-comment-auto-fill)
   (distopico:font-lock-comment-annotations)
   ;; Automatic symbol highlighting
-  (highlight-symbol-mode)
+  (highlight-symbol-mode t)
+  ;; delimiters highlighting
+  (rainbow-delimiters-mode t)
   ;; Enable docs
-  (eldoc-mode)
+  (eldoc-mode t)
+  ;; Moving and duplicating lines or rectangles
+  (move-dup-mode t)
+  ;; Search references
+  (dumb-jump-mode t)
   ;; Emacs refactor
   (emr-initialize)
-  ;; Moving and duplicating lines or rectangles
-  (move-dup-mode)
-  ;; Search references
-  (dumb-jump-mode)
   ;; If editorconfig not found clean but only
   ;; if the whitespace in the buffer was initially clean
   (unless (distopico:locate-parent-file distopico:editorconfig-regexp)
