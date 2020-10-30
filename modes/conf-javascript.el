@@ -107,8 +107,7 @@ All the inherits `company-yasnippet' back-end."
 
 ;;;###autoload
 (defun distopico:add-node-modules-path ()
-  "Add `node_modules' in current project to exec path.
-From: https://github.com/codesuki/add-node-modules-path"
+  "Add `node_modules' in current project to exec path."
   (interactive)
   ;; TODO: make async
   (let ((node-path (shell-command-to-string "npm bin")))
