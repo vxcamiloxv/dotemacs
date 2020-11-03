@@ -568,7 +568,6 @@ optional `OPEN-SAME-WINDOW'"
 (defun distopico:org-show-agenda-appt ()
   "Update appt and show agenda."
   (interactive)
-  (distopico:org-update-appt)
   (distopico:org-show-agenda))
 
 (defun distopico:org-agenda-done (&optional arg)
@@ -723,17 +722,12 @@ Skips capture tasks and tasks with subtasks."
   (bookmark-bmenu-other-window)
   (org-annotate-file))
 
-(defun distopico:org-update-appt ()
-  "Update org appointments."
-  (interactive)
-  (setq appt-time-msg-list nil)
-  (org-agenda-to-appt))
-
 (defun distopico:org-run-appt ()
   "Run org appointments."
   (interactive)
   (setq appt-time-msg-list nil)
-  (appt-activate 1)
+  (when (not appt-timer)
+    (appt-activate 1))
   (org-agenda-to-appt))
 
 (defun distopico:org-appt-add-hook-async ()
@@ -748,6 +742,7 @@ Skips capture tasks and tasks with subtasks."
                     ))) 'ignore))
 
 (defun distopico:org-add-appt ()
+  "Add appointment property inside active level."
   (interactive)
   (org-set-property
    "APPOINTMENT"
@@ -802,7 +797,7 @@ Skips capture tasks and tasks with subtasks."
   (aggressive-indent-mode)
   ;; Disabled flycheck and enable flyspell
   (flycheck-mode -1)
-  ;;(flyspell-mode)
+  (flyspell-mode 1)
   (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil 'make-it-local)
   (add-hook 'before-save-hook 'distopico:org-before-save-hook nil 'make-it-local)
   (add-hook 'after-save-hook 'distopico:org-after-save-hook nil 'make-it-local))
@@ -848,14 +843,13 @@ Skips capture tasks and tasks with subtasks."
   (org-notify-start))
 
 (add-hook 'org-mode-hook 'distopico:org-init-hook)
+(add-hook 'org-agenda-mode-hook #'distopico:org-run-appt 'append)
 
 (with-eval-after-load 'org-capture
   (add-hook 'org-capture-mode-hook #'distopico:org-capture-mode-hook 'append)
   (add-hook 'org-capture-before-finalize-hook #'distopico:org-capture-before-finalize-hook 'append)
   (add-hook 'org-capture-after-finalize-hook #'distopico:org-capture-after-finalize-hook 'append))
 
-(with-eval-after-load 'org-agenda
-  (add-hook 'org-agenda-mode-hook #'distopico:org-update-appt 'append))
 
 (with-eval-after-load 'org-clock
   (org-clock-persistence-insinuate)
