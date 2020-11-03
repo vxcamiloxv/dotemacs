@@ -66,7 +66,6 @@
     ;; Auto Complete
     company-anaconda
     company-jedi
-    company-lsp
     company-quickhelp
     company-restclient
     company-statistics
@@ -149,6 +148,7 @@
     quickrun
     sync-recentf
     tramp-term
+    guix
 
     ;; Helpers
     anzu
