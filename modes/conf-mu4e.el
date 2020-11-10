@@ -37,7 +37,7 @@ attachment - should launch the no-attachment warning."
   :group 'mu4e)
 
 (defvar distopico:mu4e-get-mail-command
-  (concat "flock -E 0 -n /tmp/offlineimap.lock python2 "
+  (concat "flock -E 0 /tmp/offlineimap.lock python2 "
           (in-emacs-d "scripts/offlineimap-notify/offlineimap_notify.py"))
   "The default mu4e command to get emails.")
 (defvar distopico:mu4e-new-mail nil
@@ -57,8 +57,7 @@ attachment - should launch the no-attachment warning."
       mu4e-compose-keep-self-cc nil
       mu4e-view-prefer-html t
       mu4e-view-use-gnus t
-      ;;mu4e-html2text-command "html2text"
-      mu4e-compose-complete-addresse t
+      mu4e-compose-complete-addresses t
       mu4e-compose-dont-reply-to-self t
       mu4e-hide-index-messages t
       mu4e-headers-auto-update t
@@ -68,7 +67,6 @@ attachment - should launch the no-attachment warning."
       mu4e-headers-visible-lines 20
       mu4e-html2text-command 'mu4e-shr2text
       mu4e-headers-leave-behavior 'ask
-      mu4e~main-buffer-name "*mu4e-main*"
       mu4e-headers-fields '((:human-date    .   12)
                             (:flags         .   10)
                             (:mailing-list  .   10)
@@ -81,12 +79,11 @@ attachment - should launch the no-attachment warning."
 
 ;; Bookmarks and shortcuts
 (setq mu4e-maildir-shortcuts
-      '( ("/1-Distopico/INBOX"        . ?d)
-         ("/2-vXcamiloXv/INBOX"       . ?c)
-         ("/3-AccionVisual/INBOX"     . ?a)
-         ("/4-RadioLiberacion/INBOX"  . ?r)
-         ("/5-TienditaVegan/INBOX"    . ?t)
-         ))
+      '(("/1-Distopico/INBOX"        . ?d)
+        ("/2-vXcamiloXv/INBOX"       . ?c)
+        ("/3-AccionVisual/INBOX"     . ?a)
+        ("/4-RadioLiberacion/INBOX"  . ?r)
+        ("/5-TienditaVegan/INBOX"    . ?t)))
 
 (setq mu4e-bookmarks
       '(("maildir:/\/*\/INBOX/" "All Inbox" ?i)

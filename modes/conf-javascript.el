@@ -17,8 +17,9 @@
 ;; Base config
 ;; TODO: some cool stuff: https://github.com/foretagsplatsen/emacs-js
 (setq js-indent-level 4
-      js2-basic-offset 4
       js-indent-first-init "dynamic"
+      ;; js-indent-align-list-continuation nil ;; TODO: align parameter to next line
+      js2-basic-offset 4
       js2-skip-preprocessor-directives t
       js2-include-node-externs t
       js2-include-browser-externs t
