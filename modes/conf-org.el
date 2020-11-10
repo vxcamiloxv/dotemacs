@@ -805,7 +805,7 @@ Skips capture tasks and tasks with subtasks."
 (defun distopico:org-after-save-hook ()
   "Hook for after save in `org-mode'."
   (when (eq major-mode 'org-mode)
-    ;; (distopico:org-update-appt)
+    (distopico:org-run-appt)
     ;;(distopico:org-remove-done-trigger)
     (distopico:org:remove-empty-propert-drawers)
     (org-save-all-org-buffers)
@@ -843,7 +843,6 @@ Skips capture tasks and tasks with subtasks."
   (org-notify-start))
 
 (add-hook 'org-mode-hook 'distopico:org-init-hook)
-(add-hook 'org-agenda-mode-hook #'distopico:org-run-appt 'append)
 
 (with-eval-after-load 'org-capture
   (add-hook 'org-capture-mode-hook #'distopico:org-capture-mode-hook 'append)

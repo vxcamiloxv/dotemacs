@@ -233,7 +233,7 @@ attachment - should launch the no-attachment warning."
 (defun distopico:mu4e-open ()
   "Open mu4e and remove other windows, save the state."
   (interactive)
-  (open-buffer-delete-others mu4e~main-buffer-name :mu4e-fullscreen 'mu4e))
+  (open-buffer-delete-others mu4e-main-buffer-name :mu4e-fullscreen 'mu4e))
 
 (defun distopico:mu4e-close ()
   "Restore the previous window configuration and burry buffer."
