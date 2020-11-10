@@ -3,14 +3,15 @@
 (defvar distopico-packages
   '(
     ;; Basic
+    s
     cl
     cl-lib
     dash
+    dash-functional ;; require by company-tern
     es-lib
-    exec-path-from-shell
     log4e
     paradox
-    s
+    exec-path-from-shell
 
     ;; Ido
     crm-custom
@@ -22,11 +23,12 @@
     ido-sort-mtime
     ido-vertical-mode
 
-    ;; Window
+    ;; Window/Buffer
     ace-window
     es-windows
     windresize
     zoom-window
+    buffer-move
 
     ;; Dired
     dired+
@@ -74,24 +76,30 @@
 
     ;; Development
     ag
+    magit
+    quickrun
     yasnippet
-    aggressive-indent
     editorconfig
+    aggressive-indent
     emr
-    elisp-slime-nav
-    expand-region
+    js-doc
+    js2-refactor
     flycheck
     flycheck-gradle
     flycheck-guile
-    js-doc
-    magit
-    smartscan
     simple-httpd
+    smartscan ;; Test if we should use it
     move-dup
     dumb-jump
+    change-inner
+    expand-region
+    smart-forward
     xref-js2
+    elisp-slime-nav
     ggtags
     counsel-etags
+    tern ;; I should try eglot
+    geiser
 
     ;; Debug
     nodejs-repl
@@ -105,17 +113,16 @@
     android-env ;; I should merge android-mode and android-env in a single package
     gradle-mode
     groovy-mode
+    meghanada
     java-imports
-    java-snippets
+    java-snippets ;; Move to sub-modules as the other snippets?
+    javadoc-lookup
     jdee
     jedi
     kotlin-mode
-    tern ;; I should try eglot
     lua-mode
-    meghanada
     php-mode
     pony-mode
-    geiser
 
     ;; Web
     css-eldoc
@@ -123,7 +130,6 @@
     web-mode
     rjsx-mode
     js2-mode
-    js2-refactor
     emmet-mode
     yaml-mode
     json-mode
@@ -131,29 +137,24 @@
     mmm-mode
     jade-mode
     pug-mode ;; Test what is better
-    restclient
-    smart-forward
     web-beautify
+    restclient
 
     ;; Utilities
-    htmlize
-    auto-async-byte-compile
     avy
     avy-zap
+    auto-async-byte-compile
+    htmlize
     emojify
     fic-mode
-    minimap
     multi-term
     multiple-cursors
-    quickrun
     sync-recentf
     tramp-term
     guix
 
     ;; Helpers
     anzu
-    buffer-move
-    change-inner
     goto-last-change
     iy-go-to-char
     region-bindings-mode

@@ -93,9 +93,10 @@
                        (powerline-narrow face1 'l)
                        (powerline-raw " " face1)
                        (funcall separator-left face1 face2)
-                       (powerline-raw '(:eval
-                                        (format " Proj[%s]" (projectile-project-name)))
-                                      face2 'r)
+                       (when (and (boundp 'projectile-project-name) projectile-project-name)
+                                  (powerline-raw '(:eval
+                                                   (format " Proj[%s]" (projectile-project-name)))
+                                                 face2 'r))
                        (when (and (boundp 'multiple-cursors-mode) multiple-cursors-mode)
                          (powerline-raw mc/mode-line face2 'r))
                        (powerline-raw (distopico:vc-modeline) face2 'r)

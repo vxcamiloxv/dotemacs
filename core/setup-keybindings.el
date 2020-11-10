@@ -26,12 +26,12 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "s-x") 'execute-extended-command)
 
-;; Navigation
+;; File manager
 (global-set-key [f7] 'dired-jump-other-window)
-(global-set-key [f9] 'distopico:nav-toggle)
-(global-set-key (kbd "M-<f9>") 'nav-jump-to-current-dir)
 (global-set-key [f8] 'distopico:neotree-toggle)
 (global-set-key (kbd "M-<f8>") 'neotree-refresh)
+
+;; Navigation
 (global-set-key (kbd "M-s-n") 'distopico:next-link)
 (global-set-key (kbd "M-s-p") 'distopico:previous-link)
 (global-set-key (kbd "M-s-<return>") 'distopico:show-link-url)
@@ -133,26 +133,8 @@
 (global-set-key (kbd "C-c C-n") 'distopico:cleanup-buffer)
 (global-set-key (kbd "C-c C-w") 'delete-trailing-whitespace)
 
-;; Recent Files
-(global-set-key (kbd "C-x r <down>") 'ido-recentf-open)
-(global-set-key (kbd "C-c h r") 'helm-recentf)
-
-;; Helm
-(global-set-key (kbd "<backtab>") 'helm-buffers-list)
-(global-set-key (kbd "C-c h f") 'helm-for-files)
-(global-set-key (kbd "C-c h b") 'helm-buffers-list)
-(global-set-key (kbd "C-c h m") 'helm-imenu)
-(global-set-key (kbd "C-c h i") 'helm-mini)
-(global-set-key (kbd "C-c h I") 'helm-swoop-from-isearch)
-(global-set-key (kbd "C-c h s") 'helm-swoop)
-(global-set-key (kbd "C-c h o") 'helm-occur)
-(global-set-key (kbd "C-c h S") 'helm-semantic-or-imenu)
-(global-set-key (kbd "C-c h k") 'helm-show-kill-ring)
-(global-set-key (kbd "C-c h x") 'helm-M-x)
-(global-set-key (kbd "C-c h p") 'helm-projectile)
-(global-set-key (kbd "C-c h y") 'helm-show-kill-ring)
-
 ;; Ido
+(global-set-key (kbd "C-x r <down>") 'ido-recentf-open)
 (global-set-key (kbd "C-c i r") 'ido-recentf-open)
 (global-set-key (kbd "C-c i s") 'ido-goto-symbol)
 (global-set-key (kbd "C-c i b") 'ido-switch-buffer)

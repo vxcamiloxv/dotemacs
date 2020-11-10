@@ -1,6 +1,4 @@
 ;;; Code:
-
-(require 'nav)
 (require 'neotree)
 
 ;; Basic
@@ -18,14 +16,6 @@
       (progn
         (kill-buffer "*nav*")
         (neotree-toggle))
-    (neotree-toggle)
-    )
-  )
-(defun distopico:nav-toggle ()
-  "Close neotree and open nav"
-  (interactive)
-  (neotree-hide)
-  (nav-toggle)
-  )
+    (neotree-toggle)))
 
 (provide 'conf-nav)

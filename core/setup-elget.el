@@ -26,14 +26,6 @@
                :description "Neotree Mode"
                :type git
                :url "https://github.com/jaypei/emacs-neotree.git")
-        (:name "emacs-nav"
-               :description "Emacs Nav Mode"
-               :type git
-               :url "https://github.com/ancane/emacs-nav")
-        (:name "project-explorer"
-               :description "Project Explorer"
-               :type git
-               :url "https://github.com/sabof/project-explorer.git")
         ;; Utils
         (:name "highlight-sexps"
                :description "Highlight sexps"
@@ -47,10 +39,6 @@
                :description "Hide Show Vis"
                :type git
                :url "https://github.com/sheijk/hideshowvis.git")
-        (:name "kivy-mode"
-               :description "Kivy highlighting mode"
-               :type http
-               :url "https://raw.github.com/kivy/kivy/master/kivy/tools/highlight/kivy-mode.el")
         ;; Development
         (:name "jdee-gradle"
                :description "Minor mode for gradle in jdee"
@@ -60,14 +48,6 @@
                :description "Work in emacs with Gradle build automation tool"
                :type git
                :url "https://github.com/vhallac/gradle-el.git")
-        (:name "python-django"
-               :description "Python Django"
-               :type git
-               :url "https://github.com/fgallina/python-django.el.git")
-        (:name "emacs-for-python"
-               :description "emacs-for-python"
-               :type git
-               :url "https://github.com/gabrielelanaro/emacs-for-python.git")
         (:name "git-modes"
                :description "multi git modes"
                :type git
@@ -90,7 +70,7 @@
                :description "use Jira in Emacs org-mode"
                :type git
                :branch "restapi"
-               :url "https://github.com/vxcamiloxv/org-jira.git");;"https://github.com/baohaojun/org-jira.git"
+               :url "https://github.com/vxcamiloxv/org-jira.git")
         (:name "org-reveal"
                :description "reveal.js stuff for orgmode"
                :type git

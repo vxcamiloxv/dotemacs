@@ -2,7 +2,6 @@
 (require 'zoom-window)
 (require 'windresize)
 (require 'zoom-frm) ;; Make zooming affect frame instead of buffers
-(require 'squeeze-view) ;; squeeze view, give yourself a write-room/typewriter like writing page
 (require 'scroll-bell-fix)
 (require 'fill-column-indicator)
 (require 'highlight-escape-sequences)
@@ -101,7 +100,7 @@
                                         ;(setq frame-title-format '("%b %I %+%@%t%Z %m %n %e"))
 
 ;;-----------------------------------------------------------------
-;; Indentation
+;; Default Indentation
 ;;-----------------------------------------------------------------
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -111,11 +110,6 @@
 (setq-default nxml-child-indent 4)
 (setq-default py-indent-offset 4)
 (setq-default tab-stop-list (number-sequence 4 120 4))
-
-;;----------------
-;; MenuBar+
-;;-----------------
-(eval-after-load "menu-bar" '(require 'menu-bar+))
 
 ;; Highlight
 (hes-mode) ;; escape sequences

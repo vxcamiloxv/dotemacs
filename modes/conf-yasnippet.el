@@ -1,6 +1,5 @@
 ;;; Code:
 (require 'yasnippet)
-(require 'angular-snippets)
 
 (setq yas-snippet-dirs
       '("~/.emacs.d/snippets/my-snippets"                    ;; personal snippets

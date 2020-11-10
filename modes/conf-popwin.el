@@ -1,7 +1,7 @@
 ;;; Code:
 
-(require 'setup-path)
 (require 'popwin)
+(require 'setup-path)
 ;; Add popwin msic
 (add-to-list 'load-path (distopico:path-join el-get-dir "popwin/misc"))
 (require 'popwin-term)
