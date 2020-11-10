@@ -3,10 +3,10 @@
 (require 'angular-snippets)
 
 (setq yas-snippet-dirs
-      '("~/.emacs.d/snippets/my-snippets"           ;; personal snippets
-        "~/.emacs.d/snippets/yasnippet-snippets"    ;; third party snippets
-        "~/.emacs.d/snippets/yasmate/snippets"      ;; the yasmate collection
-        "~/.emacs.d/snippets/extend-snippets"       ;; Extend basic snippets
+      '("~/.emacs.d/snippets/my-snippets"                    ;; personal snippets
+        "~/.emacs.d/snippets/yasnippet-snippets/snippets"    ;; third party snippets
+        "~/.emacs.d/snippets/yasmate/snippets"               ;; the yasmate collection
+        "~/.emacs.d/snippets/extend-snippets"                ;; Extend basic snippets
         )
       yas-prompt-functions
       '(yas-maybe-ido-prompt
@@ -39,6 +39,6 @@
         (yas-expand)))))
 
 ;; Enable
-(yas-global-mode t)
+(yas-global-mode 1)
 
 (provide 'conf-yasnippet)
