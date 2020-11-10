@@ -26,20 +26,45 @@
                         (re-search-forward "{")
                         (point)))))
 
+(defun distopico:inside-defun-declaration-p ()
+  "Returns true if point is the first statement inside of a lambda"
+  (save-excursion
+    (back-to-indentation)
+    (looking-at "\\(new\s+\\|(\\(.*\\))\s+\\)")))
+
 (defun distopico:arglist-cont-nonempty-indentation (arg)
   "Fix `ARG' list indentation."
-  (unless (distopico:point-in-defun-declaration-p) '++))
+  (if (distopico:inside-defun-declaration-p)
+      '+
+    (unless (distopico:point-in-defun-declaration-p)
+      '+)))
+
+(defun distopico:c-lineup-arglist-operators (arg)
+  (save-excursion
+    (back-to-indentation)
+    (when (looking-at "[-+:?|&*%<>=]\\|\\(/[^/*]\\)")
+      '+)))
+
+(defun distopico:setup-java-style ()
+  ;; Fix indentation annotation inside params/functions
+  (c-set-offset 'inexpr-class '0)
+  ;; Fix indentation multi-line args
+  (c-set-offset 'arglist-intro '+)
+  ;; Fix indentation args list
+  (c-set-offset 'arglist-cont-nonempty '(distopico:arglist-cont-nonempty-indentation c-lineup-gcc-asm-reg c-lineup-arglist))
+  ;; Fix indentation args operators
+  (c-set-offset 'arglist-cont '(distopico:c-lineup-arglist-operators 0))
+  ;; Fix indentation switch case
+  (c-set-offset 'case-label '+))
 
 (defun distopico:java-mode-hook ()
   "The jdee-mode hook."
   (ggtags-mode t)
   (gradle-mode t)
+  ;; Setup custom java style
+  (distopico:setup-java-style)
   ;; meghanada-mode another opportunity, I test lsp-mode with java but not works fine with android
   (meghanada-mode t)
-  ;; Fix anotation indexation
-  (make-local-variable 'c-comment-start-regexp)
-  (setq c-comment-start-regexp "(@|/(/|[*][*]?))")
-  (modify-syntax-entry ?@ "< b" java-mode-syntax-table)
   ;; use code format
   ;; (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
 
