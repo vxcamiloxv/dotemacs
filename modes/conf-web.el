@@ -7,10 +7,9 @@
 
 ;; Control
 (defcustom distopico:web-company-backends
-  '(company-yasnippet
-    company-dabbrev company-capf
-    company-keywords company-restclient
-    company-dabbrev-code company-gtags company-etags)
+  '(company-yasnippet company-capf
+     (company-dabbrev-code company-gtags company-etags)
+     company-keywords company-dabbrev)
   "General `company-mode' backends for diferents web modes."
   :type 'list
   :group 'distopico)

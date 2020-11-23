@@ -12,16 +12,25 @@
 (add-hook 'html-mode-hook 'skewer-html-mode)
 
 ;; Functions
-(defun skewer-start ()
+(defun distopico:skewer-start ()
   (interactive)
   (let ((httpd-port 8023))
     (httpd-start)
     (message "Ready to skewer the browser. Now jack in with the bookmarklet.")))
 
-(defun skewer-demo ()
+(defun distopico:skewer-demo ()
   (interactive)
   (let ((httpd-port 8024))
     (run-skewer)
     (skewer-repl)))
 
+(defun distopico:restclient-mode-hook ()
+  "Hooks for setup `restclient-mode'."
+  (add-to-list (make-local-variable 'company-backends) 'company-restclient))
+
+;; Hooks
+(add-hook 'restclient-mode-hook #'distopico:restclient-mode-hook)
+
 (provide 'conf-dev-utils)
+
+;;; conf-dev-utils.el ends here
