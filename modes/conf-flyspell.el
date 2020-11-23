@@ -20,10 +20,6 @@
 (require 'flyspell-correct)
 (require 'flyspell-correct-ido)
 
-(defcustom distopico:flyspell-prog-only-comments t
-  "Non-nil means Flyspell reports comments in `prog-mode'."
-  :group 'flyspell
-  :type 'boolean)
 (defcustom distopico:default-dictionaries '("en_GB" "en_US" "en" "es_ANY" "es_CO" "es_MX")
   "List of dictionaries to load global by default."
   :group 'flyspell
@@ -57,12 +53,6 @@ return return a string of those available."
   (ispell-hunspell-add-multi-dic ispell-dictionary)
   ;; Defines as local dictionary to avoid kill/start ispell all the time
   (setq ispell-local-pdict ispell-dictionary))
-
-(defun distopico:flyspell-prog-mode-hook ()
-  "Hook when turn on `flyspell-prog-mode' to only check in comments."
-  (when distopico:flyspell-prog-only-comments
-    (setq-local flyspell-prog-text-faces
-                '(font-lock-comment-face font-lock-doc-face))))
 
 (defun distopico:flyspell-enable-hook ()
   "Enable spell in different modes hooks."
@@ -98,13 +88,11 @@ show the message if not a interactive call."
 (advice-add 'ispell-init-process :around #'distopico:ispell-init-process)
 (advice-add 'ispell-kill-ispell :around #'distopico:ispell-kill-ispell)
 
-;; Hooks
-(add-hook 'flyspell-prog-mode-hook #'distopico:flyspell-prog-mode-hook)
-
 ;; Init
 (with-eval-after-load "ispell"
-  (setq flyspell-use-meta-tab nil
-        ispell-program-name (executable-find "hunspell"))
+  (setq ispell-program-name (executable-find "hunspell")
+        flyspell-use-meta-tab nil
+        flyspell-prog-text-faces '(font-lock-comment-face font-lock-doc-face))
   ;; Update available dictionaries
   (distopico:flyspell-update-dictionaries)
   ;; Re-define some keys
