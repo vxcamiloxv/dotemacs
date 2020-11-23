@@ -71,17 +71,15 @@
   "Setup JavaScript company/code completion back-ends.
 All the inherits `company-yasnippet' back-end."
   (distopico:backend-with-yas
-   '(company-nxml
-     company-css
-     company-semantic company-files
-     (company-dabbrev-code company-gtags company-etags company-keywords company-tern)
-     (company-dabbrev company-capf company-keywords))))
+   '(company-semantic company-files
+     (company-dabbrev-code company-gtags company-tern)
+     (company-capf company-dabbrev company-keywords))))
 
 ;;;###autoload
 (defun distopico:js-common-setup ()
   "Common setup to JS and JSX."
   ;; Add company backend for js
-  (set (make-local-variable 'company-backends) (distopico:js2-company-setup))
+  (setq-local company-backends (distopico:js2-company-setup))
   ;; Add node_modules to exec path
   (distopico:add-node-modules-path)
   ;; Default checker
