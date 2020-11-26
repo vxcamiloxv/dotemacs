@@ -1,6 +1,6 @@
+;;; Code:
 (require 'markdown-mode)
 (require 'org-table)
-;;; Code:
 
 ;; Functions
 (defun distopico:md-convert-org-tbl ()
@@ -51,7 +51,6 @@
 
 (defun distopico:markdown-mode-hook ()
   "Hook when `markdown-mode-hook' is enable."
-  (flyspell-mode)
   (orgtbl-mode)
   (add-hook 'after-save-hook 'distopico:md-convert-org-tbl  nil 'make-it-local))
 
@@ -59,3 +58,4 @@
 (add-hook 'markdown-mode-hook #'distopico:markdown-mode-hook)
 
 (provide 'conf-markdown)
+;;; conf-markdown.el ends here

@@ -7,6 +7,7 @@
 ;; Functions
 (defun distopico:text-mode-hook ()
   "Hook when `text-mode' is enable."
+  (auto-fill-mode 1)
   (flyspell-mode))
 
 ;; Hooks
