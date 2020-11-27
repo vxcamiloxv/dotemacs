@@ -17,3 +17,4 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (provide 'conf-flycheck)
+;;; conf-flycheck ends here

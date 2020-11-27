@@ -99,26 +99,28 @@
 (require 'conf-editorconfig)
 
 ;; Development
+(require 'conf-dev-utils)
 (require 'conf-yasnippet)
 (require 'conf-magit)
+(require 'conf-emmet)
+(require 'conf-gradle)
 (require 'conf-css)
 (require 'conf-nxml)
 (require 'conf-web)
 (require 'conf-javascript)
 (require 'conf-jsx)
-(require 'conf-gradle)
 (require 'conf-android)
 (require 'conf-kotlin)
 (require 'conf-java)
 (require 'conf-python)
 (require 'conf-scheme)
 (require 'conf-lisp)
-(require 'conf-emmet)
 (require 'conf-json)
-(require 'conf-dev-utils)
+(require 'conf-rust)
 ;; Extra config
 (require 'conf-extra nil 'noerror)
 
 ;; Final
 ;;(run-at-time "10 seg" nil #'run-hooks 'distopico:after-init-load-hook)
 (run-hooks 'distopico:after-init-load-hook)
+;;; init.el ends here

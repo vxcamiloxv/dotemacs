@@ -29,9 +29,9 @@
 ;; Functions
 (defun distopico:web-jsx-mode-hook ()
   "Adjust web-mode to JSX from spacemacs."
-  (emmet-mode t)
-  (tern-mode t)
-  (ggtags-mode t)
+  (emmet-mode 1)
+  (tern-mode 1)
+  (ggtags-mode 1)
   ;; Support to imenu
   (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
   ;; See https://github.com/CestDiego/emmet-mode/commit/3f2904196e856d31b9c95794d2682c4c7365db23
@@ -56,5 +56,4 @@
 
 
 (provide 'conf-jsx)
-
 ;;; conf-jsx.el ends here
