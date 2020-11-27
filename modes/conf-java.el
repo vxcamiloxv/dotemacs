@@ -1,19 +1,10 @@
 ;;; Code:
-(require 'jdee)
 (require 'meghanada)
 (require 'java-imports)
 
 ;; Configuration
-(setq jdee-maven-disabled-p nil
-      jdee-launch-beanshell-on-demand-p nil
-      jdee-complete-add-space-after-method t
-      jdee-mode-line-format (distopico:powerline-theme)
-      java-imports-find-block-function 'java-imports-find-place-sorted-block
-      jdee-server-dir (in-emacs-d "external/jdee-server/target/")
+(setq java-imports-find-block-function 'java-imports-find-place-sorted-block
       meghanada-server-install-dir (in-emacs-d "external/meghanada-server/"))
-
-;; Disable jdee but left package just to test with non-android projects
-(setq auto-mode-alist (remove '("\\.java\\'" . jdee-mode) auto-mode-alist))
 
 ;; Functions
 (defun distopico:point-in-defun-declaration-p ()
@@ -27,25 +18,27 @@
                         (point)))))
 
 (defun distopico:inside-defun-declaration-p ()
-  "Returns true if point is the first statement inside of a lambda"
+  "Return non-nil if the point is the first statement inside of a lambda."
   (save-excursion
     (back-to-indentation)
     (looking-at "\\(new\s+\\|(\\(.*\\))\s+\\)")))
 
-(defun distopico:arglist-cont-nonempty-indentation (arg)
-  "Fix `ARG' list indentation."
+(defun distopico:arglist-cont-nonempty-indentation (_)
+  "Fix parameters list indentation in function."
   (if (distopico:inside-defun-declaration-p)
       '+
     (unless (distopico:point-in-defun-declaration-p)
       '+)))
 
-(defun distopico:c-lineup-arglist-operators (arg)
+(defun distopico:c-lineup-arglist-operators (_)
+  "Check if there java operator to setup indentation."
   (save-excursion
     (back-to-indentation)
     (when (looking-at "[-+:?|&*%<>=]\\|\\(/[^/*]\\)")
       '+)))
 
 (defun distopico:setup-java-style ()
+  "Setup a more common/generic java indentation style."
   ;; Fix indentation annotation inside params/functions
   (c-set-offset 'inexpr-class '0)
   ;; Fix indentation multi-line args
@@ -58,7 +51,7 @@
   (c-set-offset 'case-label '+))
 
 (defun distopico:java-mode-hook ()
-  "The jdee-mode hook."
+  "The `java-mode' hook."
   (ggtags-mode t)
   (gradle-mode t)
   ;; Setup custom java style
@@ -76,3 +69,4 @@
 (add-hook 'java-mode-hook #'java-imports-scan-file)
 
 (provide 'conf-java)
+;;; conf-java.el ends here

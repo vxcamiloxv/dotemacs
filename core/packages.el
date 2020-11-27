@@ -54,6 +54,7 @@
     linum-off
     perspective
     powerline
+    diminish
     rainbow-delimiters
     rainbow-mode
     smex
@@ -111,14 +112,13 @@
     anaconda-mode
     android-mode
     android-env ;; I should merge android-mode and android-env in a single package
-    gradle-mode
-    groovy-mode
     meghanada
+    jedi
     java-imports
     java-snippets ;; Move to sub-modules as the other snippets?
     javadoc-lookup
-    jdee
-    jedi
+    gradle-mode
+    groovy-mode
     kotlin-mode
     lua-mode
     php-mode
