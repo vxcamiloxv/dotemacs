@@ -54,7 +54,6 @@
 (require 'conf-erc)
 
 ;; Basic Helpers
-(require 'conf-smex)
 (require 'conf-fringe)
 (require 'conf-linum)
 (require 'conf-guide-key)
