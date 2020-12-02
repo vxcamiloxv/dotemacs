@@ -1,5 +1,6 @@
 ;;; Code:
 (require 'elfeed)
+(require 'elfeed-show)
 (require 'elfeed-org)
 
 ;; Control vars
@@ -33,6 +34,9 @@
 
 (defvar distopico:elfeed-mode-line-format nil
   "Format to display in the mode line.")
+
+(defvar distopico:elfeed-old-entries-read (elfeed-make-tagger :before "2 weeks ago" :remove 'unread)
+  "Mark as unread old entries.")
 
 ;; Basic
 (setq rmh-elfeed-org-files (list "~/Documents/org/feeds.org"))
@@ -111,12 +115,13 @@
 
 (defun distopico:elfeed-switch-pane (buff)
   "Display BUFF in a popup window."
-  (popwin:popup-buffer buff
-                       :position distopico:elfeed-entry-pane-position
-                       :width distopico:elfeed-entry-pane-size
-                       :height distopico:elfeed-entry-pane-size
-                       :stick t
-                       :dedicated t))
+  (popwin:popup-buffer
+   buff
+   :position distopico:elfeed-entry-pane-position
+   :width distopico:elfeed-entry-pane-size
+   :height distopico:elfeed-entry-pane-size
+   :stick t
+   :dedicated t))
 
 (defun distopico:elfeed-delete-pane (&optional nodelete)
   "Delete the *elfeed-entry* split pane, optional `NODELETE'."
@@ -179,13 +184,16 @@
 (defun distopico:elfeed-group-filter (&optional unread)
   "Filter by group, optional show `UNREAD'."
   (let ((default-filter
-          (concat "@6-months-ago"
-                  (if unread
-                      " +unread"
-                    ""))) tags-alist)
+          (concat
+           "@6-months-ago"
+           (if unread
+               " +unread"
+             "")))
+        (default-value "*NONE*")
+        tags-alist)
     (setq tags-alist
           (append
-           (list (cons "*NONE*" default-filter))
+           (list (cons default-value default-filter))
            (mapcar
             #'(lambda (x)
                 (let ((tag-name (symbol-name (car x)))
@@ -197,7 +205,8 @@
         (let ((elfeed-search-filter-active :live)
               (choose (completing-read
                        (concat "Filter: " default-filter " +")
-                       (mapcar #'car tags-alist))))
+                       (mapcar #'car tags-alist)
+                       nil nil nil t default-value)))
           (setq elfeed-search-filter
                 (cdr (assoc choose tags-alist))))
       (elfeed-search-update :force))))
@@ -218,11 +227,11 @@
   (rmh-elfeed-org-process rmh-elfeed-org-files rmh-elfeed-org-tree-id)
   (elfeed-update))
 
-(defun distopico:elfeed-new-entry-hook ()
-  "Run hook after new feed entry."
+(defun distopico:elfeed-new-entry-hook (entry)
+  "Run hook after get new feed `ENTRY'."
   ;; TODO: notify new entry
-  ;;(distopico:elfeed-unread-update)
-  )
+  (distopico:elfeed-unread-update)
+  (distopico:elfeed-old-entries-read entry))
 
 (defun distopico:elfeed-init-load-hook ()
   "Run hook after load init.el file."
@@ -272,3 +281,4 @@
 (add-hook 'distopico:after-init-load-hook 'distopico:elfeed-init-load-hook)
 
 (provide 'conf-elfeed)
+;;; conf-elfeed.el ends here
