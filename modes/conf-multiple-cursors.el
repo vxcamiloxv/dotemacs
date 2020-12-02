@@ -3,7 +3,6 @@
 (require 'multiple-cursors)
 (require 'region-bindings-mode)
 (require 'expand-region)
-(require 'iy-go-to-char)
 
 ;; Expand region
 (global-set-key (kbd "C-=") 'er/expand-region)
@@ -15,9 +14,6 @@
 
 ;; Set th cache
 (setq mc/list-file (in-emacs-d ".cache/mc-lists.el"))
-
-;; To make iy-go-to-char works better with multiple-cursors
-(add-to-list 'mc/cursor-specific-vars 'iy-go-to-char-start-pos)
 
 ;; Experimental multiple-cursors
 (global-set-key (kbd "C-c r l") 'mc/edit-lines)
