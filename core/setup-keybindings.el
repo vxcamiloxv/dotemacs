@@ -21,11 +21,6 @@
 (global-set-key (kbd "C-c c w") 'copy-whole-lines)
 (global-set-key (kbd "<C-S-SPC>") 'cua-rectangle-mark-mode)
 
-;; Smex
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "s-x") 'execute-extended-command)
-
 ;; File manager
 (global-set-key [f7] 'dired-jump-other-window)
 (global-set-key [f8] 'distopico:neotree-toggle)
@@ -147,12 +142,6 @@
 (global-set-key (kbd "C-x c") 'imenu)
 (global-set-key (kbd "C-c m") 'helm-imenu)
 (global-set-key [S-mouse-3] 'imenu)
-
-;; Go to char
-(global-set-key (kbd "C-c f") 'iy-go-to-char)
-(global-set-key (kbd "C-c F") 'iy-go-to-char-backward)
-(global-set-key (kbd "C-c ,") 'iy-go-to-or-up-to-continue)
-(global-set-key (kbd "C-c ;") 'iy-go-to-or-up-to-continue-backward)
 
 ;; Avy
 (global-set-key (kbd "C-: c") 'avy-goto-char)
