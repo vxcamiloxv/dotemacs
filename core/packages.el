@@ -41,6 +41,7 @@
     image-dired+
 
     ;; UI/UX
+    anzu
     highlight-escape-sequences
     whitespace-cleanup-mode
     browse-kill-ring
@@ -57,7 +58,6 @@
     diminish
     rainbow-delimiters
     rainbow-mode
-    smex
     tabbar
 
     ;; TODO: check those modes/libraries
@@ -77,6 +77,7 @@
 
     ;; Development
     ag
+    eglot
     magit
     quickrun
     yasnippet
@@ -120,6 +121,7 @@
     gradle-mode
     groovy-mode
     kotlin-mode
+    rust-mode
     lua-mode
     php-mode
     pony-mode
@@ -154,9 +156,7 @@
     guix
 
     ;; Helpers
-    anzu
     goto-last-change
-    iy-go-to-char
     region-bindings-mode
     which-key
 
