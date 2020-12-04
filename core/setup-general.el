@@ -7,15 +7,25 @@
 
 (defcustom user-short-name ""
   "A short user name."
-  :type 'string)
+  :type 'string
+  :group 'distopico)
+
+(defcustom distopico:after-init-load-hook nil
+  "Hook called after the `init.el' load all required dependencies."
+  :type 'list
+  :group 'distopico)
 
 ;; ------
 ;; Require misc stuff
 ;; ------
-(defvar backup-dir (in-emacs-d ".cache/backup/")
-  "Place backups in `~/.backups/' directory, like a civilized program.")
-(defvar distopico:after-init-load-hook nil
-  "Hook called after the `init.el' load all required dependencies.")
+(defvar distopico:backup-dir (in-emacs-d ".cache/backup/")
+  "Place backups in `~/.emacs.d/.cache/backups/' directory, like a civilized program.")
+(defvar distopico:auto-save-dir (in-emacs-d ".cache/auto-save-list/")
+  "Place auto-save files in `~/.cache/auto-save-list/' directory, like a civilized program.")
+(defvar distopico:swapping-buffer nil
+  "Control of swapping buffers.")
+(defvar distopico:swapping-window nil
+  "Control of swapping window.")
 
 ;; Basic user data
 (setq user-full-name  "Distopico Vegan"
@@ -38,13 +48,12 @@
 (async-bytecomp-package-mode t)
 
 ;; Create directory if no exist
-(when (and (not (file-directory-p backup-dir)))
-  (make-directory backup-dir t))
+(when (and (not (file-directory-p distopico:backup-dir)))
+  (make-directory distopico:backup-dir t))
 
-;; Defined backup directory
-(setq backup-directory-alist (list (cons ".*" backup-dir)))
-(setq auto-save-list-file-prefix backup-dir)
-;;(setq auto-save-file-name-transforms '((".*" ,backup-dir t)))
+;; Defined backup/auto-save directories
+(setq backup-directory-alist (list (cons ".*" distopico:backup-dir))
+      auto-save-list-file-prefix (concat distopico:auto-save-dir ".saves-"))
 
 (setq backup-by-copying t    ; Don't delink hardlinks
       delete-old-versions t  ; Clean up the backups
@@ -52,15 +61,12 @@
       kept-new-versions 3    ; keep some new versions
       kept-old-versions 2)   ; and some old ones, too
 
-;; Make backups of files, even when they're in version control
-(setq vc-make-backup-files t)
-
 ;; Delete old backups
-(if (file-directory-p backup-dir)
+(if (file-directory-p distopico:backup-dir)
     (message "Deleting old backup files...")
   (let ((week (* 60 60 24 7))
         (current (float-time (current-time))))
-    (dolist (file (directory-files backup-dir t))
+    (dolist (file (directory-files distopico:backup-dir t))
       (when (and (backup-file-name-p file)
                  (> (- current (float-time (fifth (file-attributes file))))
                     week))
@@ -76,15 +82,12 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq font-lock-maximum-decoration t
-      color-theme-is-global t
       truncate-partial-width-windows nil)
 
 ;; Shell stuff
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (setq shell-file-name "/bin/bash")
 (setq explicit-shell-file-name "/bin/bash")
-
-(setq ispell-alternate-dictionary "/etc/dictionaries-common/words")
 
 (setq tex-dvi-view-command
       (if (eq window-system 'x) "xdvi" "dvi2tty * | cat -s"))
@@ -114,15 +117,11 @@
 ;; ------
 
 ;; (display-time)
-(server-start)
+;; (server-start)
 
 ;; ---------
 ;; Load some custom stuff
 ;; ---------
-
-;; Swapping buffers!
-(setq distopico:swapping-buffer nil)
-(setq distopico:swapping-window nil)
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
@@ -132,9 +131,6 @@
 (prefer-coding-system 'utf-8) ; with sugar on top
 
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-
-;; Similarly with auto-save files :(
-(setq auto-save-default nil)
 
 ;; Undo Redo
 (global-undo-tree-mode 1)
@@ -191,7 +187,7 @@
       x-select-enable-clipboard t)
 
 ;; ---------
-;; Custom funcs
+;; Custom functions
 ;; ---------
 
 (defun shutdown ()
@@ -206,28 +202,14 @@ save buffers, Quit, and Shutdown (kill) server"
   (interactive "P")
   (other-window (- (prefix-numeric-value n))))
 
-(defun warn-if-symlink ()
+(defun distopico:warn-if-symlink ()
   "Progn here to execute both as part of else statement together."
   (if (file-symlink-p buffer-file-name)
       (message "File is a symlink")))
 
-;; Highlight previous (or current?) line
-(defun distopico:pg-uline (ulinechar)
-  "Underline the current or the previous line with ULINECHAR."
-  (interactive "cUnderline with:")
-  (if (looking-at "^$")
-      (next-line -1))
-  (end-of-line)
-  (let ((linelen (current-column)))
-    (insert "\n")
-    (while (> linelen 0)
-      (setq linelen (1- linelen))
-      (insert ulinechar)))
-  (insert "\n"))
-
 (defun distopico:swap-buffers-in-windows ()
   "Swap buffers between two windows.
-From Cwebber config"
+From: https://github.com/cwebber/cwebbers-emacs-config"
   (interactive)
   (if (and distopico:swapping-window
            distopico:swapping-buffer)
@@ -250,28 +232,6 @@ From Cwebber config"
 
 
 ;; other stuff
-(defun add-spaces-to-region (beginning end numspaces)
-  "Add spaces to a whole region of text between BEGINNING and END depending of NUMSPACES."
-  (interactive "r\nnNumber of spaces: ")
-  (save-excursion
-    (goto-char beginning)
-    (beginning-of-line)
-    (while (< (point) end)
-      (let ((bol-point 0)
-            (eol-point 0))
-        (save-excursion
-          (end-of-line)
-          (setq eol-point (point))
-          (beginning-of-line)
-          (setq bol-point (point)))
-        (if (not (equal bol-point eol-point))
-            (progn
-              (beginning-of-line)
-              (dotimes (i numspaces)
-                (insert " ")))))
-      (forward-line)
-      (beginning-of-line))))
-
 (defun rename-buffer-with-directory (&optional arg)
   "Useful for when you're dealing with multiple files with the
   same name in different directories.  No more file.txt<2>!
@@ -285,7 +245,8 @@ From Cwebber config"
   If you are accessing a file over Tramp, it will add 'host:' to
   the parenthesis.. so if you were accessing
   /ssh:example.org:/home/foobar/emacs/ChangeLog, you'd get:
-  'ChangeLog(example.org:emacs/)'"
+  'ChangeLog(example.org:emacs/)'
+  from: https://github.com/cwebber/cwebbers-emacs-config"
   (interactive "^p")
   (let ((dir-name nil)
         (split-path (eshell-split-path
@@ -302,29 +263,9 @@ From Cwebber config"
                   "(" (aref tramp-data 2) ":" dir-name ")")
                (concat "(" dir-name ")"))))))
 
-
-(defun insert-virtualenv-load-line (virtualenv-dir)
-  (interactive "DVirtualenv directory: ")
-  (let ((activate-file (expand-file-name (concat virtualenv-dir "./bin/activate_this.py"))))
-    (if (file-exists-p activate-file)
-        (insert
-         (concat "execfile('" activate-file
-                 "', dict(__file__='" activate-file "'))"))
-      (error "No ./bin/activate_this.py in that virtualenv (maybe update virtualenv?)"))))
-
-
-;; En1arg3 y0ur w1|\|dow!!!
-(defun undo-or-shrink-horizontally ()
-  "Either undo or shrink horizontally.
-depending on whether we're in X or in a terminal."
-  (interactive)
-  (if (window-system)
-      (shrink-window-horizontally)
-    (undo)))
-
 ;; Hooks
 ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(add-hook 'find-file-hooks 'warn-if-symlink)
+(add-hook 'find-file-hook 'distopico:warn-if-symlink)
 (add-hook 'emacs-lisp-mode-hook 'byte-compile-when-save)
 
 (provide 'setup-general)
