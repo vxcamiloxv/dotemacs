@@ -17,6 +17,19 @@
 (create-simple-keybinding-command f11 "<f11>")
 (create-simple-keybinding-command f12 "<f12>")
 
+(defun distopico:pg-uline (ulinechar)
+  "Underline the current or the previous line with ULINECHAR."
+  (interactive "cUnderline with:")
+  (if (looking-at "^$")
+      (next-line -1))
+  (end-of-line)
+  (let ((linelen (current-column)))
+    (insert "\n")
+    (while (> linelen 0)
+      (setq linelen (1- linelen))
+      (insert ulinechar)))
+  (insert "\n"))
+
 (defun distopico:next-link ()
   "Move point to next link."
   (interactive)
