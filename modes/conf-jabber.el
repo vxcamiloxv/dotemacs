@@ -1,7 +1,4 @@
 ;;; Code:
-
-(require 'tls)
-(require 'starttls)
 (require 'jabber)
 (require 'jabber-otr)
 (require 'autosmiley)
@@ -198,13 +195,12 @@ Optional argument GROUP to look."
                     :key #'symbol-name
                     :test #'equal))
        jabber-connections)
-      (error "cannot determine connection for %s" jid)))
+      (error "Cannot determine connection for %s" jid)))
 
 (defun distopico:jabber-chat-mode-hook ()
   "Hooks for `jabber-chat-mode'."
   (autosmiley-mode)
-  ;;(tabbar-local-mode -1)
-  )
+  (visual-fill-column))
 
 (defun distopico:jabber-init-load-hook ()
   "Hooks on init jabber for connect all accounts."
@@ -224,9 +220,9 @@ use this if you don't like all those notices about people joining/leaving."
 
 (defun distopico:jabber-activity-add-muc (orig-fun &rest args)
   "Advice `ORIG-FUN' `jabber-activity-add-muc' for only personal mentions.
-Add a JID to mode line when `jabber-activity-show-p' needs `NICK' name from
-the `GROUP' chat, also require `TEXT' to check if the message has name,
-Optional `BUFFER' and `PROPOSED-ALERT'"
+Add a JID to mode line when `jabber-activity-show-p' needs from `ARGS' such as
+ `NICK' name from the `GROUP' chat, also require `TEXT' to check if the message
+ has name, Optional `BUFFER' and `PROPOSED-ALERT'"
   ;; nick group buffer text proposed-alert
   (let ((group (nth 1 args))
         (text (nth 3 args)))
@@ -290,5 +286,5 @@ Optional PRESENCE mean personal presence request or alert."
 (add-hook 'jabber-chat-mode-hook #'distopico:jabber-chat-mode-hook 'append)
 (add-hook 'distopico:after-init-load-hook #'distopico:jabber-init-load-hook)
 
-
 (provide 'conf-jabber)
+;;; conf-jabber.el ends here
