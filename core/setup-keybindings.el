@@ -21,6 +21,9 @@
 (global-set-key (kbd "C-c c w") 'copy-whole-lines)
 (global-set-key (kbd "<C-S-SPC>") 'cua-rectangle-mark-mode)
 
+;; Command with default hard keys such ^
+(global-set-key (kbd "M--") 'delete-indentation)
+
 ;; File manager
 (global-set-key [f7] 'dired-jump-other-window)
 (global-set-key [f8] 'distopico:neotree-toggle)
@@ -32,6 +35,7 @@
 (global-set-key (kbd "M-s-<return>") 'distopico:show-link-url)
 
 ;; Buffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 (global-set-key (kbd "C-c k") 'kill-this-buffer-and-pane)
 (global-set-key (kbd "C-q") 'bury-buffer)
@@ -41,10 +45,11 @@
 (global-set-key [C-M-next] 'next-buffer)
 (global-set-key [C-M-prior] 'previous-buffer)
 (global-set-key (kbd "C-c b b") 'ibuffer-other-window)
-(global-set-key (kbd "C-c b r") 'rename-buffer)
-(global-set-key (kbd "C-c b m") 'switch-to-minibuffer)
-(global-set-key (kbd "C-c b f") 'distopico:rename-current-buffer-file)
 (global-set-key (kbd "C-c b d") 'rename-buffer-with-directory)
+(global-set-key (kbd "C-c b m") 'switch-to-minibuffer)
+(global-set-key (kbd "C-c b r") 'rename-buffer)
+(global-set-key (kbd "C-c b f") 'distopico:rename-current-buffer-file)
+(global-set-key (kbd "C-c b k") 'distopico:delete-current-buffer-file)
 ;; Revert without any fuss
 (global-set-key (kbd "C-c b c") (λ (revert-buffer t)))
 
