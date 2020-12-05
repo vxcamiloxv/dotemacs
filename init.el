@@ -45,24 +45,19 @@
 ;; Config Modes
 ;; ----------------
 
-;; Social
-(when (require 'mu4e nil 'noerror)
-  (require 'conf-mu4e))
-(require 'conf-elfeed nil 'noerror)
-(require 'conf-jabber nil 'noerror)
-;; (require 'conf-gnusocial)
-(require 'conf-erc)
+;; Enhancements/Basic stuff
+(require 'conf-ido)
+(require 'conf-icomplete)
+(require 'conf-management-buffer)
+(require 'conf-management-file)
 
 ;; Basic Helpers
 (require 'conf-fringe)
 (require 'conf-linum)
 (require 'conf-guide-key)
 (require 'conf-powerline)
-(require 'conf-management-buffer)
-(require 'conf-management-file)
 
 ;; Navigation
-(require 'conf-ido)
 (require 'conf-nav)
 (require 'conf-tabbar)
 (require 'conf-ibuffer)
@@ -116,6 +111,14 @@
 (require 'conf-lisp)
 (require 'conf-json)
 (require 'conf-rust)
+
+;; Social
+(require 'conf-erc)
+(require 'conf-mu4e nil 'noerror)
+(require 'conf-elfeed nil 'noerror)
+(require 'conf-jabber nil 'noerror)
+;; (require 'conf-gnusocial)
+
 ;; Extra config
 (require 'conf-extra nil 'noerror)
 

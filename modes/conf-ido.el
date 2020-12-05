@@ -1,41 +1,31 @@
-
 ;;; Code:
 
 (require 'ido)
-(require 'icomplete)
 (require 'ido-sort-mtime)
-(require 'ido-completing-read+)
-(require 'ido-vertical-mode)
+;; (require 'ido-vertical-mode)
 (require 'ido-select-window)
 (require 'ido-at-point)
 (require 'ido-complete-space-or-hyphen)
-(require 'crm-custom)
 
-(ido-mode t)
-(ido-everywhere t)
-(ido-ubiquitous-mode t)
-(ido-vertical-mode t)
-(ido-sort-mtime-mode t)
-(ido-at-point-mode t)
-(crm-custom-mode 1)
-(icomplete-mode 1)
+(ido-mode 1)
+(ido-everywhere 1)
+;; (ido-vertical-mode 1)
+(ido-sort-mtime-mode 1)
+(ido-at-point-mode 1)
 
 (setq ido-default-buffer-method 'selected-window ; Always open in the same window
       ido-create-new-buffer 'always
-      ido-max-prospects 200
+      ;; ido-max-prospects 200
+      ido-max-window-height 3 ; to looks similar to icomplete
       ido-enable-flex-matching t
       ido-enable-dot-prefix t
       ido-ignore-extensions t ; Ignore object files
-      ;; ido-use-virtual-buffers t
       ido-use-filename-at-point 'guess
       ido-vertical-define-keys 'C-n-C-p-up-down-left-right ;C-n-C-p-up-down
       ido-save-directory-list-file (in-emacs-d ".cache/ido.last")
-      ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".js" ".conf") )
-
-;; Enable ido-cr+ fro aditional commands
-(dolist (command-name
-         '(package-install))
-  (add-to-list 'ido-cr+-nil-def-alternate-behavior-list command-name))
+      ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".js" ".conf")
+      ido-ignore-directories (append ido-ignore-directories '(".git" ".svn" ".hg"))
+      ido-ignore-files (append ido-ignore-files '("^\\." ".elc" ".ctags")))
 
 ;; Functions
 (defun ido-goto-symbol (&optional symbol-list)
