@@ -45,6 +45,7 @@
 
 ;; General settings
 (setq org-directory distopico:org-directory
+      org-startup-folded 'content
       org-log-done 'time
       org-log-into-drawer t
       org-auto-align-tags t
@@ -100,11 +101,11 @@
       org-clock-out-when-done '("HOLD" "WAITING" "CANCELLED" "DONE")
       org-todo-keyword-faces
       '(("TODO" . (:foreground "#df3800" :weight bold))
-        ("STARTED" . (:foreground "#566ea2" :weight bold))
+        ("STARTED" . (:foreground "#e0c625" :weight bold))
         ("NEXT" . (:foreground "DeepPink2" :weight bold))
         ("HOLD" . (:foreground "#b68800" :weight bold))
         ("WAITING" . (:foreground "#4d9694" :weight bold))
-        ("CANCELED" . (:foreground "#e00051" :weight bold))
+        ("CANCELED" . (:foreground "#566ea2" :weight bold))
         ("DONE" . (:foreground "#448c27" :weight bold))
         ("PROJECT" . (:foreground "orchid" :weight bold)))
       org-default-priority ?D
@@ -154,11 +155,11 @@
          :prepend t :empty-lines 1)
         ;; Note to remember without tittle
         ("Q" "Quick note" item
-         (file+headline org-default-notes-file "Quick notes"))
+         (file+headline org-default-notes-file "Quick Notes"))
         ;; Some unexpected idea about a project
         ("i" "Idea" entry
          (file+headline org-default-notes-file "Idea")
-         "* %^{Title}\n %i\n%a" :prepend t :empty-lines 1)
+         "* %^{Title}\n %i" :prepend t :empty-lines 1)
         ;; Manage contacts list
         ("c" "Contacts" entry
          (file+headline distopico:contacts-files "General")
